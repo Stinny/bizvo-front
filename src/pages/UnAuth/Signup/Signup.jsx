@@ -13,7 +13,7 @@ const Signup = () => {
     ? JSON.parse(Cookies.get('currentUser'))
     : null;
 
-  //signup API query
+  //signup API hook
   const [signup, { result }] = useSignupMutation();
 
   //form state
@@ -25,7 +25,7 @@ const Signup = () => {
   const handleSignup = async (e) => {
     e.preventDefault();
 
-    if (!email || !pass) {
+    if (!email.trim() || !pass.trim()) {
       setError('Email or password missing');
       return;
     }
@@ -59,7 +59,7 @@ const Signup = () => {
         setEmail(err?.data?.email);
         setPass(err?.data?.pass);
         if (err?.data?.msg === 'Email in use') {
-          setError('An account with this email already exists');
+          setError('Email in use');
 
           return;
         }
@@ -87,6 +87,7 @@ const Signup = () => {
       setPass={setPass}
       handleSignup={handleSignup}
       error={error}
+      setError={setError}
     />
   );
 

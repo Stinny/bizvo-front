@@ -3,17 +3,19 @@ import { Link } from 'react-router-dom';
 import Navbar from '../../../components/Navbar/Navbar';
 import img from '../../../assets/onlinePay.svg';
 import Features from '../../../components/Landing/Features';
+import Subscribe from '../../../components/Landing/Subscribe';
+import Footer from '../../../components/Footer/Footer';
 
 const Landing = () => {
   return (
-    <div className="flex flex-col gap-10 max-w-3xl mx-auto">
+    <div className="flex flex-col gap-20 max-w-3xl mx-auto relative">
       <Navbar />
       <div className="mx-auto flex items-center">
         <div className="w-6/12 mx-auto flex flex-col gap-4 items-start">
           <p className="text-2xl text-left text-stone-800 font-bold">
             Quick, Easy, and Fast Invoicing
           </p>
-          <p className="text-sm text-stone-600 text-left">
+          <p className="text-sm text-stone-700 text-left">
             Easy invoicing for small businesses, freelancers, and creators.
             Spend more time on the fun stuff and less on the paperwork.
           </p>
@@ -30,6 +32,8 @@ const Landing = () => {
         </div>
       </div>
       <Features />
+      <Subscribe />
+      <Footer />
     </div>
   );
 };

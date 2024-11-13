@@ -3,10 +3,10 @@ import { apiSlice } from './apiSlice';
 export const authApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     login: builder.mutation({
-      query: (credentials) => ({
+      query: ({ email, pass }) => ({
         url: '/auth/login',
         method: 'POST',
-        body: { ...credentials },
+        body: { email: email, pass: pass },
       }),
     }),
     signup: builder.mutation({
@@ -16,7 +16,30 @@ export const authApiSlice = apiSlice.injectEndpoints({
         body: { email: email, pass: pass },
       }),
     }),
+    googleLogin: builder.mutation({
+      query: ({ code }) => ({
+        url: '/auth/login/google',
+        method: 'POST',
+        body: {
+          code: code,
+        },
+      }),
+    }),
+    googleSignup: builder.mutation({
+      query: ({ code }) => ({
+        url: '/auth/signup/google',
+        method: 'POST',
+        body: {
+          code: code,
+        },
+      }),
+    }),
   }),
 });
 
-export const { useLoginMutation, useSignupMutation } = authApiSlice;
+export const {
+  useLoginMutation,
+  useSignupMutation,
+  useGoogleLoginMutation,
+  useGoogleSignupMutation,
+} = authApiSlice;

@@ -1,8 +1,9 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import Navbar from '../../../components/Navbar/Navbar';
-import { FcGoogle } from 'react-icons/fc';
-import { X } from 'react-feather';
+import { AlertOctagon, X } from 'react-feather';
+import SignupGBtn from '../../../components/Auth/SignupGBtn';
+import Footer from '../../../components/Footer/Footer';
 
 const Desktop = ({
   email,
@@ -10,42 +11,35 @@ const Desktop = ({
   setEmail,
   setPass,
   handleSignup,
-  handleGoogSignup,
   error,
+  setError,
 }) => {
   return (
-    <div className="flex flex-col max-w-3xl mx-auto">
+    <div className="flex flex-col max-w-3xl mx-auto relative h-screen">
       <Navbar />
       <div className="w-80 flex flex-col items-start mx-auto gap-2 mt-32">
-        <div className="flex flex-col items-start w-full">
+        <div className="flex flex-col items-start w-full text-left">
           <p className="text-lg text-stone-800">Signup</p>
-          <p className="text-stone-700 text-sm">
-            Create an account below to send your first invoice
-          </p>
+          <p className="text-stone-700 text-sm">Start sending invoices today</p>
         </div>
         <div className="mx-auto flex flex-col w-80 gap-2 p-2 border border-gray-200 bg-white rounded-md">
           {error ? (
             <div className="w-full flex items-center justify-start gap-2 border border-gray-200 rounded-md p-2">
-              <X size={16} className="text-red-500" />
+              <AlertOctagon size={16} className="text-red-500" />
               <p className="text-stone-800 text-xs">{error}</p>
             </div>
           ) : (
             ''
           )}
           <form className="flex flex-col gap-2 w-full">
-            <button
-              type="button"
-              onClick={handleGoogSignup}
-              className="p-2 w-full border border-gray-200 bg-gray-200 text-stone-800 rounded-md text-xs flex items-center justify-center gap-1"
-            >
-              <FcGoogle className="text-lg" /> Google
-            </button>
+            <SignupGBtn setError={setError} />
 
             <div className="flex items-center w-full">
               <div className="flex-grow border-t w-full border-gray-200 h-0"></div>
               <span className="mx-4 text-xs text-stone-800">or</span>
               <div className="flex-grow border-t w-full border-gray-200 h-0"></div>
             </div>
+
             <input
               type="email"
               placeholder="Email"
@@ -78,6 +72,7 @@ const Desktop = ({
           </Link>
         </div>
       </div>
+      <Footer />
     </div>
   );
 };

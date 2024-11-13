@@ -1,7 +1,9 @@
 import React from 'react';
-import { FcGoogle } from 'react-icons/fc';
 import { Link } from 'react-router-dom';
 import Navbar from '../../../components/Navbar/Navbar';
+import { AlertOctagon, X } from 'react-feather';
+import LoginGBtn from '../../../components/Auth/LoginGBtn';
+import Footer from '../../../components/Footer/Footer';
 
 const Desktop = ({
   email,
@@ -9,42 +11,35 @@ const Desktop = ({
   setEmail,
   setPass,
   handleLogin,
-  handleGoogLogin,
+  error,
+  setError,
 }) => {
   return (
-    <div className="flex flex-col max-w-3xl mx-auto">
+    <div className="flex flex-col max-w-3xl mx-auto h-screen relative">
       <Navbar />
       <div className="w-80 flex flex-col items-start mx-auto gap-2 mt-32">
-        <div className="flex flex-col items-start w-full">
+        <div className="flex flex-col items-start w-full text-left">
           <p className="text-lg text-stone-800">Login</p>
-          <p className="text-stone-700 text-sm">
-            Welcome back! Login to your account below
-          </p>
+          <p className="text-stone-700 text-sm">Enter details to continue</p>
         </div>
         <div className="mx-auto flex flex-col w-80 gap-2 p-2 border border-gray-200 bg-white rounded-md">
-          <form className="flex flex-col gap-2 w-full">
-            <button
-              type="button"
-              onClick={handleGoogLogin}
-              className="p-2 w-full border border-gray-200 bg-gray-200 text-stone-800 rounded-md text-xs flex items-center justify-center gap-1"
-              // onMouseOver={() => setShowTooltip(true)}
-              // onMouseOut={() => setShowTooltip(false)}
-            >
-              <FcGoogle className="text-lg" /> Google
-              {/* {showTooltip ? (
-              'Coming soon!'
-            ) : (
-              <>
-                <FcGoogle className="text-lg" /> Google
-              </>
-            )} */}
-            </button>
+          {error ? (
+            <div className="w-full flex items-center justify-start gap-2 border border-gray-200 rounded-md p-2">
+              <AlertOctagon size={16} className="text-red-500" />
+              <p className="text-stone-800 text-xs">{error}</p>
+            </div>
+          ) : (
+            ''
+          )}
+          <form onSubmit={handleLogin} className="flex flex-col gap-2 w-full">
+            <LoginGBtn setError={setError} />
 
             <div className="flex items-center w-full">
               <div className="flex-grow border-t w-full border-gray-200 h-0"></div>
               <span className="mx-4 text-xs text-stone-800">or</span>
               <div className="flex-grow border-t w-full border-gray-200 h-0"></div>
             </div>
+
             <input
               type="email"
               placeholder="Email"
@@ -59,14 +54,10 @@ const Desktop = ({
               onChange={(e) => setPass(e.target.value)}
               value={pass}
             />
+            <button className="p-2 w-full border border-stone-800 font-bold text-stone-800 rounded-md text-xs">
+              Login
+            </button>
           </form>
-          <button
-            type="button"
-            className="p-2 w-full border border-stone-800 font-bold text-stone-800 rounded-md text-xs"
-            onClick={handleLogin}
-          >
-            Login
-          </button>
         </div>
         <div className="w-full flex justify-between">
           <Link
@@ -83,6 +74,7 @@ const Desktop = ({
           </Link>
         </div>
       </div>
+      <Footer />
     </div>
   );
 };

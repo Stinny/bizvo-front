@@ -3,14 +3,14 @@ import Navbar from '../../../components/Navbar/Navbar';
 import Sidenav from '../../../components/Sidenav/Sidenav';
 import Footer from '../../../components/Footer/Footer';
 
-const Home = () => {
+const Desktop = () => {
   return (
-    <div className="mx-auto max-w-3xl flex flex-col items-start gap-2 h-screen relative">
+    <div className="mx-auto max-w-3xl flex flex-col gap-2 h-screen relative">
       <Navbar />
-      <div className="flex items-start gap-2 w-full">
+      <div className="flex items-start gap-2">
         <Sidenav />
         <div className="w-10/12 bg-white border rounded-md border-gray-200 p-2 h-96 flex items-center justify-center">
-          <p className="text-xs text-stone-800">Dashboard</p>
+          <p className="text-xs text-stone-800">Customers</p>
         </div>
       </div>
       <Footer />
@@ -18,4 +18,4 @@ const Home = () => {
   );
 };
 
-export default Home;
+export default Desktop;
