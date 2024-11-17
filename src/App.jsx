@@ -14,6 +14,9 @@ import Settings from './pages/Auth/Settings/Settings';
 import NewInvo from './pages/Auth/NewInvo/NewInvo';
 import Message from './pages/UnAuth/Message/Message';
 import Reviews from './pages/Auth/Reviews/Reviews';
+import NewCustomer from './pages/Auth/NewCustomer/NewCustomer';
+import CustomerDetail from './pages/Auth/CustomerDetail/CustomerDetail';
+import Add from './pages/Auth/Add/Add';
 
 const App = () => {
   return (
@@ -34,11 +37,20 @@ const App = () => {
 
             <Route path="dashboard" element={<Home />} />
 
+            <Route path="dashboard/add" element={<Add />} />
+
             <Route path="dashboard/invoices" element={<Invoices />} />
 
-            <Route path="dashboard/invoices/create" element={<NewInvo />} />
+            <Route path="dashboard/invoices/add" element={<NewInvo />} />
 
             <Route path="dashboard/customers" element={<Customers />} />
+
+            <Route path="dashboard/customers/add" element={<NewCustomer />} />
+
+            <Route
+              path="dashboard/customers/:customerId"
+              element={<CustomerDetail />}
+            />
 
             <Route path="dashboard/reviews" element={<Reviews />} />
 

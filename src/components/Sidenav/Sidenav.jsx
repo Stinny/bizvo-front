@@ -30,8 +30,7 @@ const Sidenav = () => {
         <Link
           to="/dashboard/invoices"
           className={
-            path === '/dashboard/invoices' ||
-            path === '/dashboard/invoices/create'
+            path === '/dashboard/invoices' || path === '/dashboard/invoices/add'
               ? activeLink
               : notActiveLink
           }
@@ -42,7 +41,7 @@ const Sidenav = () => {
         <Link
           to="/dashboard/customers"
           className={
-            path === '/dashboard/customers' ? activeLink : notActiveLink
+            path.startsWith('/dashboard/customers') ? activeLink : notActiveLink
           }
         >
           <Users size={14} className="text-stone-800" />
@@ -72,10 +71,10 @@ const Sidenav = () => {
           <p className="text-xs text-stone-800">Settings</p>
         </Link>
         <Link
-          to="/dashboard/invoices/create"
+          to="/dashboard/add"
           className="w-full flex items-center justify-center gap-1 border border-stone-800 rounded-md p-1"
         >
-          <p className="text-xs font-bold text-stone-800">New</p>
+          <p className="text-xs text-stone-800">New</p>
           <Plus size={12} className="text-stone-800 font-bold" />
         </Link>
       </div>
