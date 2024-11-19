@@ -4,10 +4,10 @@ import Sidenav from '../../../components/Sidenav/Sidenav';
 import Footer from '../../../components/Footer/Footer';
 import { Link } from 'react-router-dom';
 import CustSelect from './CustSelect';
-import { ChevronLeft, ChevronRight } from 'react-feather';
+import { ChevronLeft, ChevronRight, ChevronsLeft } from 'react-feather';
 import Details from './Details';
 
-const Desktop = ({ handleSaveInvoice, custOpts }) => {
+const Desktop = ({ handleSaveInvoice, custOpts, items, setItems }) => {
   const [step, setStep] = useState('cust');
 
   return (
@@ -38,51 +38,78 @@ const Desktop = ({ handleSaveInvoice, custOpts }) => {
                 Create
               </button>
             </div> */}
-            {step === 'dets' ? (
+
+            <div className="flex items-center gap-1">
+              <Link
+                to="/dashboard/invoices"
+                className="p-1 border border-red-400 text-red-400 text-xs rounded-md"
+              >
+                Cancel
+              </Link>
+              <button
+                type="button"
+                // onClick={() => setStep('dets')}
+                className="p-1 flex items-center border border-stone-800 text-stone-800 text-xs rounded-md"
+              >
+                Save
+              </button>
+              <button
+                type="button"
+                // onClick={() => setStep('dets')}
+                className="p-1 flex items-center border border-stone-800 text-stone-800 text-xs rounded-md"
+              >
+                Save & Send
+              </button>
+            </div>
+          </div>
+
+          {step === 'cust' ? <CustSelect custOpts={custOpts} /> : ''}
+
+          {step === 'dets' ? <Details items={items} setItems={setItems} /> : ''}
+
+          <div className="w-full flex justify-end">
+            {step === 'cust' ? (
               <div className="flex items-center gap-1">
-                <Link
-                  to="/dashboard/invoices"
-                  className="p-1 border border-red-400 text-red-400 text-xs rounded-md"
-                >
-                  Cancel
-                </Link>
                 <button
                   type="button"
-                  onClick={() => setStep('cust')}
-                  className="p-1 flex items-center border border-stone-800 text-stone-800 text-xs rounded-md"
+                  disabled
+                  className="p-1 border border-gray-200 rounded-md text-gray-200"
                 >
                   <ChevronLeft size={12} />
-                  Customer
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setStep('dets')}
+                  disabled
+                  className="p-1 border border-stone-800 rounded-md text-stone-800"
+                >
+                  <ChevronRight size={12} />
                 </button>
               </div>
             ) : (
               ''
             )}
-
-            {step === 'cust' ? (
+            {step === 'dets' ? (
               <div className="flex items-center gap-1">
-                <Link
-                  to="/dashboard/invoices"
-                  className="p-1 border border-red-400 text-red-400 text-xs rounded-md"
-                >
-                  Cancel
-                </Link>
                 <button
                   type="button"
-                  onClick={() => setStep('dets')}
-                  className="p-1 flex items-center border border-stone-800 text-stone-800 text-xs rounded-md"
+                  onClick={() => setStep('cust')}
+                  className="p-1 border border-stone-800 rounded-md text-stone-800"
                 >
-                  Details <ChevronRight size={12} />
+                  <ChevronLeft size={12} />
+                </button>
+                <button
+                  type="button"
+                  className="p-1 border border-gray-200 rounded-md text-gray-200"
+                  disabled
+                >
+                  <ChevronRight size={12} />
                 </button>
               </div>
             ) : (
               ''
             )}
           </div>
-
-          {step === 'cust' ? <CustSelect custOpts={custOpts} /> : ''}
-
-          {step === 'dets' ? <Details /> : ''}
         </div>
       </div>
       <Footer />

@@ -26,7 +26,12 @@ const NewInvo = () => {
     content = <Loading />;
   } else {
     content = (
-      <Desktop handleSaveInvoice={handleSaveInvoice} custOpts={custOpts} />
+      <Desktop
+        handleSaveInvoice={handleSaveInvoice}
+        custOpts={custOpts}
+        items={items}
+        setItems={setItems}
+      />
     );
   }
   return content;

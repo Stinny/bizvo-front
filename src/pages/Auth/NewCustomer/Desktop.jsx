@@ -43,14 +43,14 @@ const Desktop = ({
             <div className="flex items-center gap-2">
               <Link
                 to="/dashboard/customers"
-                className="p-1 border border-red-400 text-red-400 font-bold text-xs rounded-md"
+                className="p-1 border border-red-400 text-red-400 text-xs rounded-md"
               >
                 Cancel
               </Link>
               <button
                 type="button"
                 onClick={handleCreateCustomer}
-                className="p-1 border border-stone-800 text-stone-800 font-bold text-xs rounded-md"
+                className="p-1 border border-stone-800 text-stone-800 text-xs rounded-md"
               >
                 Create
               </button>

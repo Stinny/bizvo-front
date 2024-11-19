@@ -1,7 +1,7 @@
 import React from 'react';
 import Items from './Items';
 
-const Details = () => {
+const Details = ({ items, setItems }) => {
   return (
     <div className="flex gap-2 items-start w-full">
       <div className="flex flex-col gap-2 w-6/12">
@@ -28,7 +28,7 @@ const Details = () => {
       <div className="flex flex-col gap-2 w-6/12">
         <div className="flex flex-col items-start w-full">
           <p className="text-xs text-stone-700">Items</p>
-          <Items />
+          <Items items={items} setItems={setItems} />
         </div>
       </div>
     </div>
