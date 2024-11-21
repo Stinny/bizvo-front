@@ -30,9 +30,7 @@ const Sidenav = () => {
         <Link
           to="/dashboard/invoices"
           className={
-            path === '/dashboard/invoices' || path === '/dashboard/invoices/add'
-              ? activeLink
-              : notActiveLink
+            path.startsWith('/dashboard/invoices') ? activeLink : notActiveLink
           }
         >
           <FileText size={14} className="text-stone-800" />

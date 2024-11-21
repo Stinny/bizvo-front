@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Desktop from './Desktop';
 import { useGetInvoicesQuery } from '../../../api/invoicesApiSlice';
 import Loading from '../../../components/Loading';
@@ -10,6 +10,10 @@ const Invoices = () => {
     isSuccess,
     refetch,
   } = useGetInvoicesQuery();
+
+  useEffect(() => {
+    refetch();
+  }, []);
 
   let content;
 

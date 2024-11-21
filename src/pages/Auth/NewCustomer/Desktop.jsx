@@ -146,6 +146,12 @@ const Desktop = ({
                       zIndex: 999,
                       fontSize: '12px',
                     }),
+                    input: (base) => ({
+                      ...base,
+                      'input:focus': {
+                        boxShadow: 'none',
+                      },
+                    }),
                     option: (provided, state) => ({
                       ...provided,
                       backgroundColor: state.isSelected

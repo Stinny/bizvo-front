@@ -3,7 +3,8 @@ import Navbar from '../../../components/Navbar/Navbar';
 import Sidenav from '../../../components/Sidenav/Sidenav';
 import Footer from '../../../components/Footer/Footer';
 import { Link } from 'react-router-dom';
-import { Plus } from 'react-feather';
+import { MoreVertical, Plus, Send } from 'react-feather';
+import { Badge } from 'flowbite-react';
 
 const Desktop = ({ invoices }) => {
   let content;
@@ -24,15 +25,43 @@ const Desktop = ({ invoices }) => {
           </Link>
         </div>
       </div>
-      <div className="flex flex-col w-full gap-2">
+      <div className="grid grid-cols-3 w-full gap-2">
         {invoices?.map((invoice, index) => (
           <Link
-            to={`/dashboard/customers/${invoice?._id}`}
-            className="w-full bg-white hover:border-stone-800 border border-gray-200 rounded-md p-2 grid grid-cols-4 items-center"
+            to={`/dashboard/invoices/${invoice?._id}`}
+            className="w-full bg-white hover:border-stone-800 border border-gray-200 rounded-md flex flex-col items-start relative"
             key={index}
           >
-            <div className="w-full flex justify-start">
-              <p className="text-xs text-stone-800">{invoice?.title}</p>
+            <div className="absolute top-0 right-0 mt-1 mr-1">
+              {invoice?.sent ? (
+                <Send size={16} className="text-stone-800" />
+              ) : (
+                <Send size={16} className="text-gray-200" />
+              )}
+            </div>
+            <div className="w-full flex flex-col items-start gap-1 p-2">
+              <div className="flex flex-col items-start">
+                <p className="text-xs text-stone-700">Title</p>
+                <p className="text-xs text-stone-800">{invoice?.title}</p>
+              </div>
+              <div className="flex flex-col items-start">
+                <p className="text-xs text-stone-700">Customer</p>
+                <p className="text-xs text-stone-800">
+                  {invoice?.customer?.name}
+                </p>
+              </div>
+            </div>
+            <div className="w-full flex justify-between border-t border-gray-200 p-2">
+              <p className="text-xs text-stone-800">$125.00</p>
+              {invoice?.paid ? (
+                <Badge size="xs" color="success">
+                  Paid
+                </Badge>
+              ) : (
+                <Badge size="xs" color="pink">
+                  Unpaid
+                </Badge>
+              )}
             </div>
           </Link>
         ))}

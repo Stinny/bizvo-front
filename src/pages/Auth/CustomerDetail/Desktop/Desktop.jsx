@@ -97,7 +97,7 @@ const Desktop = ({ customer, isLoading, isSuccess, refetch }) => {
           </div>
         </div>
         <form className="flex items-start gap-2 w-full">
-          <div className="flex flex-col gap-2 items-start w-6/12">
+          <div className="flex flex-col gap-2 items-start w-full">
             <div className="flex flex-col items-start w-full">
               <p className="text-xs text-stone-700">Name</p>
               <input
@@ -121,7 +121,7 @@ const Desktop = ({ customer, isLoading, isSuccess, refetch }) => {
             <div className="flex flex-col items-start w-full">
               <p className="text-xs text-stone-700">Phone</p>
               <input
-                type="text"
+                type="tel"
                 placeholder="(123)-456-7890"
                 className="text-xs bg-gray-50 border border-gray-50 focus:outline-none text-stone-800 ring-0 w-full rounded-md p-2"
                 disabled
@@ -130,15 +130,21 @@ const Desktop = ({ customer, isLoading, isSuccess, refetch }) => {
             </div>
             <div className="flex flex-col items-start w-full">
               <p className="text-xs text-stone-700">Description</p>
-              <textarea
-                placeholder="About this customer.."
-                className="text-xs bg-gray-50 border border-gray-50 focus:outline-none text-stone-800 ring-0 w-full rounded-md p-2 resize-none h-24"
-                disabled
-                value={desc}
-              />
+              {desc ? (
+                <textarea
+                  placeholder="About this customer.."
+                  className="text-xs bg-gray-50 border border-gray-50 focus:outline-none text-stone-800 ring-0 w-full rounded-md p-2 resize-none h-24"
+                  disabled
+                  value={desc}
+                />
+              ) : (
+                <div className="bg-gray-50 w-full h-20 flex items-center justify-center border border-gray-50 rounded-md">
+                  <p className="text-xs text-stone-700">No description</p>
+                </div>
+              )}
             </div>
           </div>
-          <div className="flex flex-col gap-2 items-start w-6/12">
+          <div className="flex flex-col gap-2 items-start w-full">
             <div className="flex flex-col items-start w-full">
               <p className="text-xs text-stone-700">Country</p>
               <input

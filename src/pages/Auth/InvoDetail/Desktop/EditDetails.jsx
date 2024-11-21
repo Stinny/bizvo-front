@@ -1,7 +1,7 @@
 import React from 'react';
-import Items from './Items';
+import EditItems from './EditItems';
 
-const Details = ({ items, setItems, title, setTitle, desc, setDesc }) => {
+const EditDetails = ({ items, setItems, title, setTitle, desc, setDesc }) => {
   return (
     <div className="flex gap-2 items-start w-full">
       <div className="flex flex-col gap-2 w-6/12">
@@ -28,11 +28,11 @@ const Details = ({ items, setItems, title, setTitle, desc, setDesc }) => {
       <div className="flex flex-col gap-2 w-6/12">
         <div className="flex flex-col items-start w-full">
           <p className="text-xs text-stone-700">Items</p>
-          <Items items={items} setItems={setItems} />
+          <EditItems items={items} setItems={setItems} />
         </div>
       </div>
     </div>
   );
 };
 
-export default Details;
+export default EditDetails;

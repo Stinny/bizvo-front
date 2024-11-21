@@ -1,6 +1,7 @@
 import React from 'react';
 import { useLocation, Navigate, Outlet } from 'react-router-dom';
 import Cookies from 'js-cookie';
+import AccSetup from '../pages/Auth/AccSetup/AccSetup';
 
 const AuthRequired = () => {
   const location = useLocation();
@@ -12,7 +13,7 @@ const AuthRequired = () => {
   let content;
 
   if (currentUser) {
-    content = <Outlet />;
+    content = currentUser?.setup ? <Outlet /> : <AccSetup />;
   } else {
     content = <Navigate to="/" state={{ from: location }} replace />;
   }

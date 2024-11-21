@@ -4,12 +4,30 @@ import Sidenav from '../../../components/Sidenav/Sidenav';
 import Footer from '../../../components/Footer/Footer';
 import { Link } from 'react-router-dom';
 import CustSelect from './CustSelect';
-import { ChevronLeft, ChevronRight, ChevronsLeft } from 'react-feather';
+import {
+  AlertOctagon,
+  ChevronLeft,
+  ChevronRight,
+  ChevronsLeft,
+} from 'react-feather';
 import Details from './Details';
 
-const Desktop = ({ handleSaveInvoice, custOpts, items, setItems }) => {
-  const [step, setStep] = useState('cust');
-
+const Desktop = ({
+  handleSaveInvoice,
+  custOpts,
+  items,
+  title,
+  setTitle,
+  desc,
+  setDesc,
+  setItems,
+  custSelected,
+  customer,
+  setCustomer,
+  step,
+  setStep,
+  error,
+}) => {
   return (
     <div className="mx-auto max-w-3xl flex flex-col gap-2 h-screen relative">
       <Navbar />
@@ -48,7 +66,7 @@ const Desktop = ({ handleSaveInvoice, custOpts, items, setItems }) => {
               </Link>
               <button
                 type="button"
-                // onClick={() => setStep('dets')}
+                onClick={() => handleSaveInvoice()}
                 className="p-1 flex items-center border border-stone-800 text-stone-800 text-xs rounded-md"
               >
                 Save
@@ -63,9 +81,38 @@ const Desktop = ({ handleSaveInvoice, custOpts, items, setItems }) => {
             </div>
           </div>
 
-          {step === 'cust' ? <CustSelect custOpts={custOpts} /> : ''}
+          {error ? (
+            <div className="w-full flex items-center justify-start gap-2 border border-gray-200 rounded-md p-2">
+              <AlertOctagon size={16} className="text-red-500" />
+              <p className="text-stone-800 text-xs">{error}</p>
+            </div>
+          ) : (
+            ''
+          )}
 
-          {step === 'dets' ? <Details items={items} setItems={setItems} /> : ''}
+          {step === 'cust' ? (
+            <CustSelect
+              custOpts={custOpts}
+              customer={customer}
+              setCustomer={setCustomer}
+              custSelected={custSelected}
+            />
+          ) : (
+            ''
+          )}
+
+          {step === 'dets' ? (
+            <Details
+              items={items}
+              setItems={setItems}
+              title={title}
+              setTitle={setTitle}
+              desc={desc}
+              setDesc={setDesc}
+            />
+          ) : (
+            ''
+          )}
 
           <div className="w-full flex justify-end">
             {step === 'cust' ? (
@@ -77,14 +124,23 @@ const Desktop = ({ handleSaveInvoice, custOpts, items, setItems }) => {
                 >
                   <ChevronLeft size={12} />
                 </button>
-                <button
-                  type="button"
-                  onClick={() => setStep('dets')}
-                  disabled
-                  className="p-1 border border-stone-800 rounded-md text-stone-800"
-                >
-                  <ChevronRight size={12} />
-                </button>
+                {custSelected ? (
+                  <button
+                    type="button"
+                    onClick={() => setStep('dets')}
+                    className="p-1 border border-stone-800 rounded-md text-stone-800"
+                  >
+                    <ChevronRight size={12} />
+                  </button>
+                ) : (
+                  <button
+                    type="button"
+                    className="p-1 border border-gray-200 rounded-md text-gray-200"
+                    disabled
+                  >
+                    <ChevronRight size={12} />
+                  </button>
+                )}
               </div>
             ) : (
               ''

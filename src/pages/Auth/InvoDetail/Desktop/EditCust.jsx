@@ -1,18 +1,18 @@
 import React from 'react';
+import Select from 'react-select';
 import { Plus } from 'react-feather';
 import { Link } from 'react-router-dom';
-import Select from 'react-select';
 
-const CustSelect = ({ custOpts, setCustomer, customer, custSelected }) => {
+const EditCust = ({ custOpts, setCustomer, customer }) => {
   return (
-    <div className="flex flex-col items-center justify-center h-52">
+    <div className="w-full flex flex-col items-center justify-center h-52">
       <div className="flex flex-col items-start text-left w-72">
         <p className="text-xs text-stone-700">Who will this be sent to?</p>
         <div className="flex flex-col gap-2 items-center w-full">
           <Select
             options={custOpts}
             onChange={(value) => setCustomer(value)}
-            value={custSelected ? customer : null}
+            value={customer}
             placeholder="Customer"
             menuPortalTarget={document.body}
             menuPosition={'fixed'}
@@ -46,12 +46,6 @@ const CustSelect = ({ custOpts, setCustomer, customer, custSelected }) => {
                 zIndex: 999,
                 fontSize: '12px',
               }),
-              input: (base) => ({
-                ...base,
-                'input:focus': {
-                  boxShadow: 'none',
-                },
-              }),
               option: (provided, state) => ({
                 ...provided,
                 backgroundColor: state.isSelected
@@ -77,4 +71,4 @@ const CustSelect = ({ custOpts, setCustomer, customer, custSelected }) => {
   );
 };
 
-export default CustSelect;
+export default EditCust;

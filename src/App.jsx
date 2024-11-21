@@ -17,6 +17,7 @@ import Reviews from './pages/Auth/Reviews/Reviews';
 import NewCustomer from './pages/Auth/NewCustomer/NewCustomer';
 import CustomerDetail from './pages/Auth/CustomerDetail/CustomerDetail';
 import Add from './pages/Auth/Add/Add';
+import InvoDetail from './pages/Auth/InvoDetail/InvoDetail';
 
 const App = () => {
   return (
@@ -42,6 +43,11 @@ const App = () => {
             <Route path="dashboard/invoices" element={<Invoices />} />
 
             <Route path="dashboard/invoices/add" element={<NewInvo />} />
+
+            <Route
+              path="dashboard/invoices/:invoiceId"
+              element={<InvoDetail />}
+            />
 
             <Route path="dashboard/customers" element={<Customers />} />
 

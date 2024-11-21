@@ -98,7 +98,7 @@ const Edit = ({
           <div className="flex flex-col items-start w-full">
             <p className="text-xs text-stone-700">Phone</p>
             <input
-              type="text"
+              type="tel"
               placeholder="(123)-456-7890"
               className="border text-xs border-gray-200 bg-gray-50 focus:border-gray-200 focus:outline-none text-stone-800 hover:bg-gray-200 hover:border-gray-200 focus:bg-gray-200 focus:ring-0 w-full rounded-md p-2"
               onChange={(e) => setPhone(e.target.value)}
