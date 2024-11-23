@@ -1,9 +1,12 @@
 import React from 'react';
 import { useDeleteCustomerMutation } from '../../../../api/customersApiSlice';
 import { useNavigate } from 'react-router-dom';
+import { showNotification } from '../../../../api/toastSlice';
+import { useDispatch } from 'react-redux';
 
 const Delete = ({ customerId, customerName, customerEmail, setDel }) => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   //delete customer API hook
   const [deleteCustomer, { isLoading }] = useDeleteCustomerMutation();
@@ -16,7 +19,7 @@ const Delete = ({ customerId, customerName, customerEmail, setDel }) => {
       }).unwrap();
 
       if (deleteCustomerReq === 'Customer deleted') {
-        //dispatch toast notification
+        dispatch(showNotification('Customer deleted'));
         navigate('/dashboard/customers');
       }
     } catch (err) {

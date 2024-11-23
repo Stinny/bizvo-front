@@ -8,7 +8,7 @@ import Footer from '../../../components/Footer/Footer';
 
 const Landing = () => {
   return (
-    <div className="flex flex-col gap-20 max-w-3xl mx-auto relative">
+    <div className="flex flex-col gap-16 max-w-3xl mx-auto relative">
       <Navbar />
       <div className="mx-auto flex items-center">
         <div className="w-6/12 mx-auto flex flex-col gap-4 items-start">

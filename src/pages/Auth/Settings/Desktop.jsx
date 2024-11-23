@@ -9,49 +9,48 @@ import Account from '../../../components/Settings/Account/Account';
 import Profile from '../../../components/Settings/Profile/Profile';
 import Notifications from '../../../components/Settings/Notifications/Notifications';
 import Payments from '../../../components/Settings/Payments/Payments';
+import Cookies from 'js-cookie';
 
-const Desktop = () => {
+const Desktop = ({ refetch }) => {
   const location = useLocation();
   const [activeTabIndex, setActiveTabIndex] = useState(
     location?.state?.index || 0
   );
+
+  const currentUser = Cookies.get('currentUser')
+    ? JSON.parse(Cookies.get('currentUser'))
+    : null;
+
   return (
-    <div className="mx-auto max-w-3xl flex flex-col items-start gap-2 h-screen relative">
-      <Navbar />
-      <div className="flex items-start gap-2 w-full">
-        <Sidenav />
-        <div className="w-10/12 bg-white border rounded-md border-gray-200 p-2">
-          <Tabs
-            selectedIndex={activeTabIndex}
-            onSelect={setActiveTabIndex}
-            className="w-full text-left"
-          >
-            <TabList>
-              <Tab>Account</Tab>
-              <Tab>Profile</Tab>
-              <Tab>Notifications</Tab>
-              <Tab>Payments</Tab>
-            </TabList>
+    <div className="w-10/12 bg-white border rounded-md border-gray-200 p-2">
+      <Tabs
+        selectedIndex={activeTabIndex}
+        onSelect={setActiveTabIndex}
+        className="w-full text-left"
+      >
+        <TabList>
+          <Tab>Profile</Tab>
+          <Tab>Account</Tab>
+          <Tab>Payments</Tab>
+          <Tab>Notifications</Tab>
+        </TabList>
 
-            <TabPanel>
-              <Account />
-            </TabPanel>
+        <TabPanel>
+          <Profile currentUser={currentUser} refetch={refetch} />
+        </TabPanel>
 
-            <TabPanel>
-              <Profile />
-            </TabPanel>
+        <TabPanel>
+          <Account currentUser={currentUser} refetch={refetch} />
+        </TabPanel>
 
-            <TabPanel>
-              <Notifications />
-            </TabPanel>
+        <TabPanel>
+          <Payments currentUser={currentUser} refetch={refetch} />
+        </TabPanel>
 
-            <TabPanel>
-              <Payments />
-            </TabPanel>
-          </Tabs>
-        </div>
-      </div>
-      <Footer />
+        <TabPanel>
+          <Notifications currentUser={currentUser} refetch={refetch} />
+        </TabPanel>
+      </Tabs>
     </div>
   );
 };

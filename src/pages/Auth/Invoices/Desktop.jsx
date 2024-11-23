@@ -58,9 +58,17 @@ const Desktop = ({ invoices }) => {
                   Paid
                 </Badge>
               ) : (
-                <Badge size="xs" color="pink">
-                  Unpaid
-                </Badge>
+                <>
+                  {invoice?.sent ? (
+                    <Badge size="xs" color="pink">
+                      Unpaid
+                    </Badge>
+                  ) : (
+                    <Badge size="xs" color="info">
+                      Draft
+                    </Badge>
+                  )}
+                </>
               )}
             </div>
           </Link>
@@ -85,16 +93,7 @@ const Desktop = ({ invoices }) => {
     </div>
   );
 
-  return (
-    <div className="mx-auto max-w-3xl flex flex-col gap-2 h-screen relative">
-      <Navbar />
-      <div className="flex items-start gap-2">
-        <Sidenav />
-        {content}
-      </div>
-      <Footer />
-    </div>
-  );
+  return content;
 };
 
 export default Desktop;

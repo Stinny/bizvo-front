@@ -1,14 +1,21 @@
 import React, { useState } from 'react';
 import { Layers, LogOut } from 'react-feather';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import Cookies from 'js-cookie';
 import useHandleLogoutUser from '../../../utils/logout';
 import Form from './Form';
+import { useSetupMutation } from '../../../api/accountApiSlice';
+import { useDispatch } from 'react-redux';
+import { showNotification } from '../../../api/toastSlice';
 
 const Desktop = () => {
+  const dispatch = useDispatch();
+
   const currentUser = Cookies.get('currentUser')
     ? JSON.parse(Cookies.get('currentUser'))
     : null;
+
+  const navigate = useNavigate();
 
   //form state
   const [name, setName] = useState('');
@@ -18,19 +25,55 @@ const Desktop = () => {
   const [address, setAddress] = useState('');
   const [zip, setZip] = useState('');
   const [desc, setDesc] = useState('');
-  const [error, setError] = useState('');
+  const [dob, setDob] = useState('');
   const [profilePic, setProfilePic] = useState([]);
   const [selectedImage, setSelectedImage] = useState(null);
+  const [error, setError] = useState('');
+  const [active, setActive] = useState(false);
 
-  const [setup, setSetup] = useState(false);
+  //hook for setup req
+  const [setup, result] = useSetupMutation();
+
+  //handles req for finishing setup
+  const handleFinishSetup = async (e) => {
+    e.preventDefault();
+
+    try {
+      const setupReq = await setup({
+        name: name,
+        desc: desc,
+        phone: phone,
+        dob: dob,
+        image: profilePic,
+        address: address,
+        zip: zip,
+        country: country,
+        busType: busType,
+      }).unwrap();
+
+      if (setupReq?.msg === 'Finished') {
+        dispatch(showNotification(`Hello ${currentUser?.name}`));
+        setActive(false);
+        const updatedUser = JSON.stringify(setupReq?.user);
+        Cookies.set('currentUser', updatedUser, { sameSite: 'Lax' });
+        navigate('/dashboard');
+      } else {
+        setError('There was an error');
+        return;
+      }
+    } catch (err) {
+      setError('Server error');
+      return;
+    }
+  };
 
   const logout = useHandleLogoutUser();
 
   let content;
-  if (setup) {
+  if (active) {
     content = (
       <Form
-        setSetup={setSetup}
+        setActive={setActive}
         setProfilePic={setProfilePic}
         setSelectedImage={setSelectedImage}
         selectedImage={selectedImage}
@@ -49,6 +92,9 @@ const Desktop = () => {
         error={error}
         busType={busType}
         setBusType={setBusType}
+        dob={dob}
+        setDob={setDob}
+        handleFinishSetup={handleFinishSetup}
       />
     );
   } else {
@@ -90,7 +136,7 @@ const Desktop = () => {
               </button>
               <button
                 type="button"
-                onClick={() => setSetup(true)}
+                onClick={() => setActive(true)}
                 className="p-1 border border-stone-800 rounded-md text-xs text-stone-800"
               >
                 Finish Setup

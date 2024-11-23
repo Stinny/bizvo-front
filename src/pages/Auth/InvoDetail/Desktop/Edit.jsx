@@ -17,6 +17,10 @@ const Edit = ({
   setTitle,
   desc,
   setDesc,
+  amount,
+  setAmount,
+  dueDate,
+  setDueDate,
   error,
 }) => {
   return (
@@ -36,13 +40,56 @@ const Edit = ({
           >
             <Trash size={16} />
           </button>
-          <button
+          <div className="w-full flex justify-end">
+            {step === 'cust' ? (
+              <div className="flex items-center gap-1">
+                <button
+                  type="button"
+                  disabled
+                  className="p-1 border border-gray-200 rounded-md text-gray-200"
+                >
+                  <ChevronLeft size={12} />
+                </button>
+
+                <button
+                  type="button"
+                  onClick={() => setStep('dets')}
+                  className="p-1 border border-stone-800 rounded-md text-stone-800"
+                >
+                  <ChevronRight size={12} />
+                </button>
+              </div>
+            ) : (
+              ''
+            )}
+            {step === 'dets' ? (
+              <div className="flex items-center gap-1">
+                <button
+                  type="button"
+                  onClick={() => setStep('cust')}
+                  className="p-1 border border-stone-800 rounded-md text-stone-800"
+                >
+                  <ChevronLeft size={12} />
+                </button>
+                <button
+                  type="button"
+                  className="p-1 border border-gray-200 rounded-md text-gray-200"
+                  disabled
+                >
+                  <ChevronRight size={12} />
+                </button>
+              </div>
+            ) : (
+              ''
+            )}
+          </div>
+          {/* <button
             type="button"
             onClick={handleSaveEdits}
             className="text-stone-800 font-bold"
           >
             <Save size={16} />
-          </button>
+          </button> */}
         </div>
       </div>
 
@@ -51,6 +98,8 @@ const Edit = ({
           custOpts={custOpts}
           customer={customer}
           setCustomer={setCustomer}
+          amount={amount}
+          setAmount={setAmount}
         />
       ) : (
         ''
@@ -64,54 +113,13 @@ const Edit = ({
           setTitle={setTitle}
           desc={desc}
           setDesc={setDesc}
+          dueDate={dueDate}
+          setDueDate={setDueDate}
+          handleSaveEdits={handleSaveEdits}
         />
       ) : (
         ''
       )}
-
-      <div className="w-full flex justify-end">
-        {step === 'cust' ? (
-          <div className="flex items-center gap-1">
-            <button
-              type="button"
-              disabled
-              className="p-1 border border-gray-200 rounded-md text-gray-200"
-            >
-              <ChevronLeft size={12} />
-            </button>
-
-            <button
-              type="button"
-              onClick={() => setStep('dets')}
-              className="p-1 border border-stone-800 rounded-md text-stone-800"
-            >
-              <ChevronRight size={12} />
-            </button>
-          </div>
-        ) : (
-          ''
-        )}
-        {step === 'dets' ? (
-          <div className="flex items-center gap-1">
-            <button
-              type="button"
-              onClick={() => setStep('cust')}
-              className="p-1 border border-stone-800 rounded-md text-stone-800"
-            >
-              <ChevronLeft size={12} />
-            </button>
-            <button
-              type="button"
-              className="p-1 border border-gray-200 rounded-md text-gray-200"
-              disabled
-            >
-              <ChevronRight size={12} />
-            </button>
-          </div>
-        ) : (
-          ''
-        )}
-      </div>
     </div>
   );
 };

@@ -1,11 +1,13 @@
 import { Avatar } from 'flowbite-react';
 import React, { useRef, useState } from 'react';
-import { ChevronLeft, ChevronRight, Upload } from 'react-feather';
+import { AlertOctagon, ChevronLeft, ChevronRight, Upload } from 'react-feather';
 import Select from 'react-select';
 import countryList from 'react-select-country-list';
+import DateInput from 'rsuite/DateInput';
 
 const Form = ({
-  setSetup,
+  handleFinishSetup,
+  setActive,
   setProfilePic,
   setSelectedImage,
   selectedImage,
@@ -23,6 +25,9 @@ const Form = ({
   setDesc,
   setBusType,
   busType,
+  dob,
+  setDob,
+  error,
 }) => {
   const fileInputRef = useRef(null);
   const [step, setStep] = useState('pro');
@@ -68,7 +73,7 @@ const Form = ({
             <>
               <p className="text-sm text-stone-800">Account Setup 1/2</p>
               <p className="text-xs text-stone-700">
-                Seen on invoices and your public page
+                Stuff we need for payements and records
               </p>
             </>
           ) : (
@@ -83,14 +88,21 @@ const Form = ({
 
         <button
           type="button"
-          onClick={() => setSetup(false)}
+          onClick={() => setActive(false)}
           className="p-1 border border-red-400 text-red-400 text-xs rounded-md"
         >
           Cancel
         </button>
       </div>
-
-      <div className="flex items-start w-full">
+      {error ? (
+        <div className="w-full flex items-center justify-start gap-2 border border-gray-200 rounded-md p-2">
+          <AlertOctagon size={16} className="text-red-500" />
+          <p className="text-stone-800 text-xs">{error}</p>
+        </div>
+      ) : (
+        ''
+      )}
+      <form className="flex items-start w-full">
         {step === 'pro' ? (
           <div className="flex flex-col items-start w-full">
             <div className="flex flex-col gap-2 items-start w-full">
@@ -113,15 +125,24 @@ const Form = ({
                   value={desc}
                 />
               </div>
-              <div className="flex flex-col items-start w-full">
-                <p className="text-xs text-stone-700">Phone</p>
-                <input
-                  type="text"
-                  placeholder="(123)-456-7890"
-                  className="border text-xs border-gray-200 bg-gray-50 focus:border-gray-200 focus:outline-none text-stone-800 hover:bg-gray-200 hover:border-gray-200 focus:bg-gray-200 focus:ring-0 w-full rounded-md p-2"
-                  onChange={(e) => setPhone(e.target.value)}
-                  value={phone}
-                />
+              <div className="w-full flex items-center gap-2">
+                <div className="flex flex-col items-start w-full">
+                  <p className="text-xs text-stone-700">Phone</p>
+                  <input
+                    type="text"
+                    placeholder="(123)-456-7890"
+                    className="border text-xs border-gray-200 bg-gray-50 focus:border-gray-200 focus:outline-none text-stone-800 hover:bg-gray-200 hover:border-gray-200 focus:bg-gray-200 focus:ring-0 w-full rounded-md p-2"
+                    onChange={(e) => setPhone(e.target.value)}
+                    value={phone}
+                  />
+                </div>
+                <div className="flex flex-col items-start w-full">
+                  <p className="text-xs text-stone-700">DOB</p>
+                  <DateInput
+                    onChange={(date, event) => setDob(date)}
+                    className="bg-gray-50 text-xs border border-gray-200 rounded-md focus:bg-gray-200 focus:ring-0 focus:border-gray-200 focus-within:outline-0"
+                  />
+                </div>
               </div>
               <div className="flex items-center gap-4 w-full">
                 <Avatar size="md" img={selectedImage ? selectedImage : ''} />
@@ -234,7 +255,7 @@ const Form = ({
                 <Select
                   options={busOpts}
                   onChange={(value) => setBusType(value)}
-                  //   value={busType}
+                  value={busType}
                   placeholder="Business Type"
                   menuPortalTarget={document.body}
                   menuPosition={'fixed'}
@@ -292,7 +313,7 @@ const Form = ({
         ) : (
           ''
         )}
-      </div>
+      </form>
       <div className="w-full flex justify-between items-center">
         {step === 'pro' ? (
           <div className="flex items-center gap-1">
@@ -355,7 +376,7 @@ const Form = ({
         ) : (
           <button
             type="button"
-            // onClick={() => setSetup(false)}
+            onClick={handleFinishSetup}
             className="p-1 border border-stone-800 text-stone-800 text-xs rounded-md"
           >
             Finish

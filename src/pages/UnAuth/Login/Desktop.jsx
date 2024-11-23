@@ -54,7 +54,7 @@ const Desktop = ({
               onChange={(e) => setPass(e.target.value)}
               value={pass}
             />
-            <button className="p-2 w-full border border-stone-800 font-bold text-stone-800 rounded-md text-xs">
+            <button className="p-2 w-full border border-stone-800 text-stone-800 rounded-md text-xs">
               Login
             </button>
           </form>

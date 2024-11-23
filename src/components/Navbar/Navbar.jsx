@@ -13,6 +13,7 @@ import useHandleLogoutUser from '../../utils/logout';
 import { isMobile } from 'react-device-detect';
 import { Avatar, Dropdown } from 'flowbite-react';
 import img from '../../assets/green.png';
+import Toast from '../Toast';
 
 const Navbar = () => {
   const currentUser = Cookies.get('currentUser')
@@ -49,7 +50,7 @@ const Navbar = () => {
       <div className="max-w-3xl bg-white flex justify-between items-center border border-gray-200 rounded-md p-2">
         {/* logo section */}
 
-        <Link to="/dashboard" className="h-full flex gap-1">
+        <Link to="/dashboard" className="flex gap-1">
           <Layers size={20} className="font-black" />
           <p
             className="font-bold text-stone-800 text-md"
@@ -58,6 +59,8 @@ const Navbar = () => {
             Bizvo
           </p>
         </Link>
+
+        <Toast />
 
         <Avatar
           size="xs"
@@ -95,7 +98,7 @@ const Navbar = () => {
                 onClick={() => logout('logout')}
                 className="w-full flex items-center gap-2 border  rounded-md border-stone-800 hover:outline-none p-1"
               >
-                <LogOut size={14} className="text-stone-800 font-bold" />
+                <LogOut size={14} className="text-stone-800" />
                 <p className="text-xs text-stone-800">Logout</p>
               </button>
             </div>
@@ -137,7 +140,7 @@ const Navbar = () => {
             </Link>
             <Link
               to="/login"
-              className="flex text-xs items-center justify-center border border-stone-800 font-bold text-stone-800 rounded-md p-1 pl-2 pr-2"
+              className="flex text-xs items-center justify-center border border-stone-800 text-stone-800 rounded-md p-1 pl-2 pr-2"
             >
               Login
             </Link>

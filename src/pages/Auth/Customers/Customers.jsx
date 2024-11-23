@@ -2,6 +2,9 @@ import React, { useEffect } from 'react';
 import Desktop from './Desktop';
 import { useGetCustomersQuery } from '../../../api/customersApiSlice';
 import Loading from '../../../components/Loading';
+import Navbar from '../../../components/Navbar/Navbar';
+import Sidenav from '../../../components/Sidenav/Sidenav';
+import Footer from '../../../components/Footer/Footer';
 
 const Customers = () => {
   //get customers API hook
@@ -25,7 +28,16 @@ const Customers = () => {
     content = <Desktop customers={customers} />;
   }
 
-  return content;
+  return (
+    <div className="mx-auto max-w-3xl flex flex-col items-start gap-2 h-screen relative">
+      <Navbar />
+      <div className="flex items-start gap-2 w-full">
+        <Sidenav />
+        {content}
+      </div>
+      <Footer />
+    </div>
+  );
 };
 
 export default Customers;

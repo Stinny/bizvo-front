@@ -1,11 +1,8 @@
 import React from 'react';
+import Desktop from './Desktop';
 
 const Payments = () => {
-  return (
-    <div className="w-full h-96 flex items-center justify-center">
-      <p className="text-xs text-stone-800">Payment Settings</p>
-    </div>
-  );
+  return <Desktop />;
 };
 
 export default Payments;

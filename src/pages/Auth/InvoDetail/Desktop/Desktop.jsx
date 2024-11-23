@@ -4,11 +4,21 @@ import Sidenav from '../../../../components/Sidenav/Sidenav';
 import Footer from '../../../../components/Footer/Footer';
 import Edit from './Edit';
 import { Badge, Spinner } from 'flowbite-react';
-import { Edit as EditIcon, Send } from 'react-feather';
+import {
+  ChevronDown,
+  ChevronRight,
+  Edit as EditIcon,
+  Send,
+} from 'react-feather';
 import { useGetCustomerOptsQuery } from '../../../../api/customersApiSlice';
 import { useEditInvoiceMutation } from '../../../../api/invoicesApiSlice';
+import { showNotification } from '../../../../api/toastSlice';
+import { useDispatch } from 'react-redux';
+import moment from 'moment';
 
 const Desktop = ({ invoice, refetch }) => {
+  const dispatch = useDispatch();
+
   //form state
   const [title, setTitle] = useState(invoice?.title);
   const [desc, setDesc] = useState(invoice?.description);
@@ -17,9 +27,12 @@ const Desktop = ({ invoice, refetch }) => {
     label: invoice?.customer?.name,
   });
   const [items, setItems] = useState(invoice?.items);
+  const [amount, setAmount] = useState(invoice?.amount);
+  const [dueDate, setDueDate] = useState(invoice?.dueDate);
   const [step, setStep] = useState('cust');
   const [error, setError] = useState('');
   const [edit, setEdit] = useState(false);
+  const [viewCust, setViewCust] = useState(false);
 
   //hook for getting cust select options
   const {
@@ -39,12 +52,15 @@ const Desktop = ({ invoice, refetch }) => {
         title: title,
         description: desc,
         customerId: customer?.value,
-        items: items,
+        amount: parseFloat(amount),
+        dueDate: dueDate,
         invoiceId: invoice?._id,
       }).unwrap();
 
       if (editReq === 'Invoice updated') {
+        dispatch(showNotification('Invoice updated'));
         refetch();
+        setStep('cust');
         setEdit(false);
       } else {
         setError('There was an error');
@@ -80,6 +96,10 @@ const Desktop = ({ invoice, refetch }) => {
         setTitle={setTitle}
         desc={desc}
         setDesc={setDesc}
+        dueDate={dueDate}
+        setDueDate={setDueDate}
+        amount={amount}
+        setAmount={setAmount}
         error={error}
       />
     ) : (
@@ -89,20 +109,42 @@ const Desktop = ({ invoice, refetch }) => {
             <p className="text-sm text-stone-800">Invoice: {invoice?._id}</p>
             <p className="text-xs text-stone-700">View and edit this invoice</p>
           </div>
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-3">
             {invoice?.paid ? (
               <Badge size="xs" color="success">
                 Paid
               </Badge>
             ) : (
-              <Badge size="xs" color="pink">
-                Unpaid
-              </Badge>
+              <>
+                {invoice?.sent ? (
+                  <Badge size="xs" color="pink">
+                    Unpaid
+                  </Badge>
+                ) : (
+                  <Badge size="xs" color="info">
+                    Draft
+                  </Badge>
+                )}
+              </>
             )}
             {invoice?.sent ? (
-              <Send size={16} className="text-stone-800" />
+              <button
+                type="button"
+                disabled
+                className="p-0.5 pl-1 pr-1  text-xs  text-stone-800 flex items-center justify-center gap-1"
+              >
+                <Send size={12} />
+                Sent
+              </button>
             ) : (
-              <Send size={16} className="text-gray-200" />
+              <button
+                type="button"
+                // onClick={() => setStep('cust')}
+                className="p-0.5 pl-1 pr-1 border text-xs border-stone-800 rounded-md text-stone-800 flex items-center justify-center gap-1"
+              >
+                <Send size={12} />
+                Send
+              </button>
             )}
           </div>
           <button
@@ -114,22 +156,37 @@ const Desktop = ({ invoice, refetch }) => {
           </button>
         </div>
 
-        <div className="flex items-start gap-2 w-full">
+        <div className="flex items-center justify-center w-72 mx-auto">
           <div className="flex flex-col gap-2 w-full items-start">
-            <div className="flex flex-col items-start w-full">
-              <p className="text-xs text-stone-700">Customer</p>
-              <div className="flex flex-col gap-1 items-start w-full bg-gray-50 p-2">
-                <p className="text-xs text-stone-800">
+            <button
+              type="button"
+              onClick={() => setViewCust(!viewCust)}
+              className="w-full flex flex-col bg-gray-50 items-start text-left border border-gray-50 rounded-md p-2"
+            >
+              <div className="w-full flex items-center justify-between">
+                <div className="flex items-center gap-2">
+                  <p className="text-xs text-stone-800">Customer</p>
+                </div>
+                {viewCust ? (
+                  <ChevronDown size={14} />
+                ) : (
+                  <ChevronRight size={14} />
+                )}
+              </div>
+
+              <div
+                className={`transition-[max-height] duration-300 ease-in-out overflow-hidden ${
+                  viewCust ? 'max-h-40' : 'max-h-0'
+                }`}
+              >
+                <p className="text-xs text-stone-800 mt-4">
                   {invoice?.customer?.name}
                 </p>
-                <p className="text-xs text-stone-800">
+                <p className="text-xs text-stone-800 mt-2">
                   {invoice?.customer?.email}
                 </p>
-                <p className="text-xs text-stone-800">
-                  {invoice?.customer?.address}
-                </p>
               </div>
-            </div>
+            </button>
             <div className="flex flex-col items-start w-full">
               <p className="text-xs text-stone-700">Title</p>
               <input
@@ -144,13 +201,38 @@ const Desktop = ({ invoice, refetch }) => {
               <p className="text-xs text-stone-700">Description</p>
               <textarea
                 placeholder="About this customer.."
-                className="text-xs bg-gray-50 border border-gray-50 focus:outline-none text-stone-800 ring-0 w-full rounded-md p-2 resize-none h-24"
+                className="text-xs bg-gray-50 border border-gray-50 focus:outline-none text-stone-800 ring-0 w-full rounded-md p-2 resize-none h-16"
                 disabled
                 value={desc}
               />
             </div>
+            <div className="w-full flex items-center justify-center gap-2">
+              <div className="flex flex-col items-start w-4/12">
+                <p className="text-xs text-stone-700">Amount</p>
+                <div className="w-full flex items-center gap-0.5">
+                  <p className="text-sm text-stone-800">$</p>
+                  <input
+                    type="text"
+                    placeholder="Amount"
+                    className="text-xs bg-gray-50 border border-gray-50 focus:outline-none text-stone-800 ring-0 w-full rounded-md p-2 pl-0"
+                    disabled
+                    value={amount}
+                  />
+                </div>
+              </div>
+              <div className="flex flex-col items-start w-8/12">
+                <p className="text-xs text-stone-700">Due By</p>
+                <input
+                  type="text"
+                  placeholder="Due Date"
+                  className="text-xs bg-gray-50 border border-gray-50 focus:outline-none text-stone-800 ring-0 w-full rounded-md p-2"
+                  disabled
+                  value={`${moment(dueDate).format('MMMM D, YYYY')}`}
+                />
+              </div>
+            </div>
           </div>
-          <div className="flex flex-col w-full">
+          {/* <div className="flex flex-col w-full">
             <div className="flex flex-col items-start w-full">
               <p className="text-xs text-stone-700">Items</p>
               <div className="flex flex-col w-full gap-1">
@@ -171,22 +253,13 @@ const Desktop = ({ invoice, refetch }) => {
                 ))}
               </div>
             </div>
-          </div>
+          </div> */}
         </div>
       </div>
     );
   }
 
-  return (
-    <div className="mx-auto max-w-3xl flex flex-col gap-2 relative h-screen">
-      <Navbar />
-      <div className="flex items-start gap-2">
-        <Sidenav />
-        {content}
-      </div>
-      <Footer />
-    </div>
-  );
+  return content;
 };
 
 export default Desktop;

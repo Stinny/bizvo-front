@@ -1,10 +1,21 @@
 import React from 'react';
 import Items from './Items';
+import DateInput from 'rsuite/DateInput';
 
-const Details = ({ items, setItems, title, setTitle, desc, setDesc }) => {
+const Details = ({
+  handleSaveInvoice,
+  items,
+  setItems,
+  title,
+  setTitle,
+  desc,
+  setDesc,
+  due,
+  setDue,
+}) => {
   return (
-    <div className="flex gap-2 items-start w-full">
-      <div className="flex flex-col gap-2 w-6/12">
+    <div className="flex justify-center items-center w-full h-72">
+      <div className="flex flex-col gap-2 w-72">
         <div className="flex flex-col items-start w-full">
           <p className="text-xs text-stone-700">Title</p>
           <input
@@ -24,13 +35,37 @@ const Details = ({ items, setItems, title, setTitle, desc, setDesc }) => {
             value={desc}
           />
         </div>
+        <div className="flex flex-col items-start w-full">
+          <p className="text-xs text-stone-700">Due Date</p>
+          <DateInput
+            onChange={(date, event) => setDue(date)}
+            value={due}
+            className="bg-gray-50 text-xs w-full border border-gray-200 rounded-md focus:bg-gray-200 focus:ring-0 focus:border-gray-200 focus-within:outline-0"
+          />
+        </div>
+        <div className="flex items-center justify-end gap-2">
+          <button
+            type="button"
+            onClick={handleSaveInvoice}
+            className="p-1 flex items-center border border-stone-800 text-stone-800 text-xs rounded-md"
+          >
+            Save
+          </button>
+          <button
+            type="button"
+            onClick={handleSaveInvoice}
+            className="p-1 flex items-center border border-stone-800 text-stone-800 text-xs rounded-md"
+          >
+            Save & Send
+          </button>
+        </div>
       </div>
-      <div className="flex flex-col gap-2 w-6/12">
+      {/* <div className="flex flex-col gap-2 w-6/12">
         <div className="flex flex-col items-start w-full">
           <p className="text-xs text-stone-700">Items</p>
           <Items items={items} setItems={setItems} />
         </div>
-      </div>
+      </div> */}
     </div>
   );
 };

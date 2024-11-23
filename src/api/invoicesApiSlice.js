@@ -3,15 +3,15 @@ import { apiSlice } from './apiSlice';
 export const invoicesApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     createInvoice: builder.mutation({
-      query: ({ title, description, items, customerId, dueDate }) => ({
+      query: ({ title, description, amount, customerId, due }) => ({
         url: '/invoices/create',
         method: 'POST',
         body: {
           title: title,
           description: description,
-          items: items,
+          amount: amount,
           customerId: customerId,
-          dueDate: dueDate,
+          dueDate: due,
         },
       }),
     }),
@@ -19,7 +19,7 @@ export const invoicesApiSlice = apiSlice.injectEndpoints({
       query: ({
         title,
         description,
-        items,
+        amount,
         customerId,
         dueDate,
         invoiceId,
@@ -29,7 +29,7 @@ export const invoicesApiSlice = apiSlice.injectEndpoints({
         body: {
           title: title,
           description: description,
-          items: items,
+          amount: amount,
           customerId: customerId,
           dueDate: dueDate,
           invoiceId: invoiceId,

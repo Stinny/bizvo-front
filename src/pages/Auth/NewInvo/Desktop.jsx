@@ -9,6 +9,7 @@ import {
   ChevronLeft,
   ChevronRight,
   ChevronsLeft,
+  X,
 } from 'react-feather';
 import Details from './Details';
 
@@ -21,27 +22,27 @@ const Desktop = ({
   desc,
   setDesc,
   setItems,
+  amount,
+  setAmount,
   custSelected,
   customer,
   setCustomer,
+  due,
+  setDue,
   step,
   setStep,
   error,
 }) => {
   return (
-    <div className="mx-auto max-w-3xl flex flex-col gap-2 h-screen relative">
-      <Navbar />
-      <div className="flex items-start gap-2">
-        <Sidenav />
-        <div className="w-10/12 flex flex-col gap-4 bg-white border rounded-md border-gray-200 p-2">
-          <div className="w-full flex items-center justify-between">
-            <div className="flex flex-col items-start text-left">
-              <p className="text-sm text-stone-800">New Invoice</p>
-              <p className="text-xs text-stone-700">
-                Create and send a new invoice
-              </p>
-            </div>
-            {/* <div className="flex items-center gap-2">
+    <div className="w-10/12 flex flex-col gap-4 bg-white border rounded-md border-gray-200 p-2">
+      <div className="w-full flex items-center justify-between">
+        <div className="flex flex-col items-start text-left">
+          <p className="text-sm text-stone-800">New Invoice</p>
+          <p className="text-xs text-stone-700">
+            Create and send a new invoice
+          </p>
+        </div>
+        {/* <div className="flex items-center gap-2">
               <Link
                 to="/dashboard/invoices"
                 className="p-1 border border-red-400 text-red-400 font-bold text-xs rounded-md"
@@ -57,63 +58,10 @@ const Desktop = ({
               </button>
             </div> */}
 
-            <div className="flex items-center gap-1">
-              <Link
-                to="/dashboard/invoices"
-                className="p-1 border border-red-400 text-red-400 text-xs rounded-md"
-              >
-                Cancel
-              </Link>
-              <button
-                type="button"
-                onClick={() => handleSaveInvoice()}
-                className="p-1 flex items-center border border-stone-800 text-stone-800 text-xs rounded-md"
-              >
-                Save
-              </button>
-              <button
-                type="button"
-                // onClick={() => setStep('dets')}
-                className="p-1 flex items-center border border-stone-800 text-stone-800 text-xs rounded-md"
-              >
-                Save & Send
-              </button>
-            </div>
-          </div>
-
-          {error ? (
-            <div className="w-full flex items-center justify-start gap-2 border border-gray-200 rounded-md p-2">
-              <AlertOctagon size={16} className="text-red-500" />
-              <p className="text-stone-800 text-xs">{error}</p>
-            </div>
-          ) : (
-            ''
-          )}
-
-          {step === 'cust' ? (
-            <CustSelect
-              custOpts={custOpts}
-              customer={customer}
-              setCustomer={setCustomer}
-              custSelected={custSelected}
-            />
-          ) : (
-            ''
-          )}
-
-          {step === 'dets' ? (
-            <Details
-              items={items}
-              setItems={setItems}
-              title={title}
-              setTitle={setTitle}
-              desc={desc}
-              setDesc={setDesc}
-            />
-          ) : (
-            ''
-          )}
-
+        <div className="flex items-center gap-2">
+          <Link to="/dashboard/invoices" className="text-red-400">
+            <X size={16} />
+          </Link>
           <div className="w-full flex justify-end">
             {step === 'cust' ? (
               <div className="flex items-center gap-1">
@@ -166,9 +114,60 @@ const Desktop = ({
               ''
             )}
           </div>
+          {/* <button
+                type="button"
+                onClick={() => handleSaveInvoice()}
+                className="p-1 flex items-center border border-stone-800 text-stone-800 text-xs rounded-md"
+              >
+                Save
+              </button>
+              <button
+                type="button"
+                // onClick={() => setStep('dets')}
+                className="p-1 flex items-center border border-stone-800 text-stone-800 text-xs rounded-md"
+              >
+                Save & Send
+              </button> */}
         </div>
       </div>
-      <Footer />
+
+      {error ? (
+        <div className="w-full flex items-center justify-start gap-2 border border-gray-200 rounded-md p-2">
+          <AlertOctagon size={16} className="text-red-500" />
+          <p className="text-stone-800 text-xs">{error}</p>
+        </div>
+      ) : (
+        ''
+      )}
+
+      {step === 'cust' ? (
+        <CustSelect
+          custOpts={custOpts}
+          customer={customer}
+          setCustomer={setCustomer}
+          custSelected={custSelected}
+          amount={amount}
+          setAmount={setAmount}
+        />
+      ) : (
+        ''
+      )}
+
+      {step === 'dets' ? (
+        <Details
+          items={items}
+          setItems={setItems}
+          title={title}
+          setTitle={setTitle}
+          desc={desc}
+          setDesc={setDesc}
+          handleSaveInvoice={handleSaveInvoice}
+          due={due}
+          setDue={setDue}
+        />
+      ) : (
+        ''
+      )}
     </div>
   );
 };

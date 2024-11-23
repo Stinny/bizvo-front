@@ -3,9 +3,12 @@ import Desktop from './Desktop';
 import { useCreateCustomerMutation } from '../../../api/customersApiSlice';
 import { useNavigate } from 'react-router-dom';
 import Loading from '../../../components/Loading';
+import { showNotification } from '../../../api/toastSlice';
+import { useDispatch } from 'react-redux';
 
 const NewCustomer = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   //create customer API hook
   const [createCustomer, { isLoading }] = useCreateCustomerMutation();
@@ -41,7 +44,7 @@ const NewCustomer = () => {
       }).unwrap();
 
       if (newCustomerReq === 'Customer created') {
-        //TO-DO dispatch toast notification
+        dispatch(showNotification('Customer created'));
         //refetch customers
         navigate('/dashboard/customers');
       } else {
