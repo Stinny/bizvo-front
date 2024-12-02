@@ -11,21 +11,23 @@ import Notifications from '../../../components/Settings/Notifications/Notificati
 import Payments from '../../../components/Settings/Payments/Payments';
 import Cookies from 'js-cookie';
 
-const Desktop = ({ refetch }) => {
+const Desktop = ({
+  refetch,
+  currentUser,
+  activeTabIndex,
+  setActiveTabIndex,
+}) => {
   const location = useLocation();
-  const [activeTabIndex, setActiveTabIndex] = useState(
-    location?.state?.index || 0
-  );
 
-  const currentUser = Cookies.get('currentUser')
-    ? JSON.parse(Cookies.get('currentUser'))
-    : null;
+  // const currentUser = Cookies.get('currentUser')
+  //   ? JSON.parse(Cookies.get('currentUser'))
+  //   : null;
 
   return (
     <div className="w-10/12 bg-white border rounded-md border-gray-200 p-2">
       <Tabs
         selectedIndex={activeTabIndex}
-        onSelect={setActiveTabIndex}
+        onSelect={(index) => setActiveTabIndex(index)}
         className="w-full text-left"
       >
         <TabList>
@@ -48,7 +50,11 @@ const Desktop = ({ refetch }) => {
         </TabPanel>
 
         <TabPanel>
-          <Notifications currentUser={currentUser} refetch={refetch} />
+          <Notifications
+            currentUser={currentUser}
+            refetch={refetch}
+            setActiveTabIndex={setActiveTabIndex}
+          />
         </TabPanel>
       </Tabs>
     </div>

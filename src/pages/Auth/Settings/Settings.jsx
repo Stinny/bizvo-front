@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import Desktop from './Desktop';
 import { useGetUserQuery } from '../../../api/accountApiSlice';
 import Loading from '../../../components/Loading';
@@ -8,7 +8,15 @@ import Sidenav from '../../../components/Sidenav/Sidenav';
 import Footer from '../../../components/Footer/Footer';
 
 const Settings = () => {
-  const { data: userInfo, isLoading, isSuccess, refetch } = useGetUserQuery();
+  const {
+    data: userInfo,
+    isLoading,
+    isSuccess,
+    isFetching,
+    refetch,
+  } = useGetUserQuery();
+
+  const [activeTabIndex, setActiveTabIndex] = useState(0);
 
   useEffect(() => {
     refetch();
@@ -16,12 +24,19 @@ const Settings = () => {
 
   let content;
 
-  if (isLoading) {
+  if (isLoading || isFetching) {
     content = <Loading />;
   } else if (isSuccess) {
     const updatedUser = JSON.stringify(userInfo);
     Cookies.set('currentUser', updatedUser, { sameSite: 'Lax' });
-    content = <Desktop refetch={refetch} />;
+    content = (
+      <Desktop
+        refetch={refetch}
+        currentUser={userInfo}
+        activeTabIndex={activeTabIndex}
+        setActiveTabIndex={setActiveTabIndex}
+      />
+    );
   }
 
   return (

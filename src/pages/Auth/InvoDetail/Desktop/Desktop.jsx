@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Navbar from '../../../../components/Navbar/Navbar';
 import Sidenav from '../../../../components/Sidenav/Sidenav';
 import Footer from '../../../../components/Footer/Footer';
@@ -43,10 +43,17 @@ const Desktop = ({ invoice, refetch }) => {
   } = useGetCustomerOptsQuery();
 
   //hook for saving edits
-  const [editInvoice, result] = useEditInvoiceMutation();
+  const [editInvoice, { isLoading: savingInvo }] = useEditInvoiceMutation();
 
   //hanlder function to save edits
   const handleSaveEdits = async () => {
+    setError('');
+
+    if (!title.trim()) {
+      setError('Invoice title missing');
+      return;
+    }
+
     try {
       const editReq = await editInvoice({
         title: title,
@@ -72,9 +79,13 @@ const Desktop = ({ invoice, refetch }) => {
     }
   };
 
+  useEffect(() => {
+    setError('');
+  }, [title]);
+
   let content;
 
-  if (gettingCustOpts) {
+  if (gettingCustOpts || savingInvo) {
     content = (
       <div className="w-full h-96 flex items-center justify-center">
         <Spinner />
@@ -101,9 +112,10 @@ const Desktop = ({ invoice, refetch }) => {
         amount={amount}
         setAmount={setAmount}
         error={error}
+        invoice={invoice}
       />
     ) : (
-      <div className="w-10/12 bg-white border rounded-md border-gray-200 p-2 flex flex-col gap-4 items-start">
+      <div className="w-10/12 bg-white border rounded-md border-gray-200 p-2 flex flex-col gap-6 items-start">
         <div className="w-full flex items-center justify-between">
           <div className="flex flex-col items-start">
             <p className="text-sm text-stone-800">Invoice: {invoice?._id}</p>
@@ -158,40 +170,45 @@ const Desktop = ({ invoice, refetch }) => {
 
         <div className="flex items-center justify-center w-72 mx-auto">
           <div className="flex flex-col gap-2 w-full items-start">
-            <button
-              type="button"
-              onClick={() => setViewCust(!viewCust)}
-              className="w-full flex flex-col bg-gray-50 items-start text-left border border-gray-50 rounded-md p-2"
-            >
-              <div className="w-full flex items-center justify-between">
-                <div className="flex items-center gap-2">
-                  <p className="text-xs text-stone-800">Customer</p>
-                </div>
-                {viewCust ? (
-                  <ChevronDown size={14} />
-                ) : (
-                  <ChevronRight size={14} />
-                )}
-              </div>
-
-              <div
-                className={`transition-[max-height] duration-300 ease-in-out overflow-hidden ${
-                  viewCust ? 'max-h-40' : 'max-h-0'
-                }`}
+            <div className="flex flex-col items-start w-full">
+              <p className="text-xs text-stone-700">Customer</p>
+              <button
+                type="button"
+                onClick={() => setViewCust(!viewCust)}
+                className="w-full flex flex-col bg-gray-50 items-start text-left border border-gray-50 rounded-md p-2"
               >
-                <p className="text-xs text-stone-800 mt-4">
-                  {invoice?.customer?.name}
-                </p>
-                <p className="text-xs text-stone-800 mt-2">
-                  {invoice?.customer?.email}
-                </p>
-              </div>
-            </button>
+                <div className="w-full flex items-center justify-between">
+                  <div className="flex items-center gap-2">
+                    <p className="text-xs text-stone-800">
+                      {invoice?.customer?.name}
+                    </p>
+                  </div>
+                  {viewCust ? (
+                    <ChevronDown size={14} />
+                  ) : (
+                    <ChevronRight size={14} />
+                  )}
+                </div>
+
+                <div
+                  className={`transition-[max-height] duration-300 ease-in-out overflow-hidden ${
+                    viewCust ? 'max-h-40' : 'max-h-0'
+                  }`}
+                >
+                  <p className="text-xs text-stone-800 mt-4">
+                    {invoice?.customer?.email}
+                  </p>
+                  <p className="text-xs text-stone-800 mt-2">
+                    {invoice?.customer?.country?.label}
+                  </p>
+                </div>
+              </button>
+            </div>
             <div className="flex flex-col items-start w-full">
               <p className="text-xs text-stone-700">Title</p>
               <input
                 type="text"
-                placeholder="(123)-456-7890"
+                placeholder="Title"
                 className="text-xs bg-gray-50 border border-gray-50 focus:outline-none text-stone-800 ring-0 w-full rounded-md p-2"
                 disabled
                 value={title}
@@ -200,7 +217,7 @@ const Desktop = ({ invoice, refetch }) => {
             <div className="flex flex-col items-start w-full">
               <p className="text-xs text-stone-700">Description</p>
               <textarea
-                placeholder="About this customer.."
+                placeholder="About this invoice.."
                 className="text-xs bg-gray-50 border border-gray-50 focus:outline-none text-stone-800 ring-0 w-full rounded-md p-2 resize-none h-16"
                 disabled
                 value={desc}

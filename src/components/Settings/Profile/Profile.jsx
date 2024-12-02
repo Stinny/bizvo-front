@@ -94,14 +94,19 @@ const Profile = ({ currentUser, refetch }) => {
       <div className="flex items-start w-full gap-2">
         <div className="flex flex-col w-full gap-2">
           <div className="flex flex-col items-start w-full">
-            <p className="text-xs text-stone-700">Name</p>
-            <input
-              type="text"
-              placeholder="Name"
-              className="text-xs bg-gray-50 border border-gray-50 focus:outline-none text-stone-800 ring-0 w-full rounded-md p-2"
-              disabled
-              value={currentUser?.name}
-            />
+            <p className="text-xs text-stone-700">Profile Slug</p>
+            <div className="flex w-full">
+              <div className="rounded-tl-md rounded-bl-md bg-gray-50 border border-r-0 border-gray-50 flex items-center p-2 pr-1">
+                <p className="text-xs text-stone-800">bizvo.com/</p>
+              </div>
+              <input
+                type="text"
+                placeholder="Slug"
+                className="border text-xs border-gray-50 bg-gray-50 border-l-0 rounded-tr-md text-stone-800 rounded-br-md p-2 pl-1 flex-1"
+                disabled
+                value={currentUser?.slug}
+              />
+            </div>
           </div>
           <div className="flex flex-col items-start w-full">
             <p className="text-xs text-stone-700">About</p>
@@ -117,21 +122,6 @@ const Profile = ({ currentUser, refetch }) => {
                 <p className="text-xs text-stone-700">No about</p>
               </div>
             )}
-          </div>
-          <div className="flex flex-col items-start w-full">
-            <p className="text-xs text-stone-700">URL Slug</p>
-            <div className="flex w-full">
-              <div className="rounded-tl-md rounded-bl-md bg-gray-50 border border-r-0 border-gray-50 flex items-center p-2 pr-1">
-                <p className="text-xs text-stone-800">bizvo.com/</p>
-              </div>
-              <input
-                type="text"
-                placeholder="Slug"
-                className="border text-xs border-gray-50 bg-gray-50 border-l-0 rounded-tr-md text-stone-800 rounded-br-md p-2 pl-1 flex-1"
-                disabled
-                value={currentUser?.slug}
-              />
-            </div>
           </div>
         </div>
         <div className="flex flex-col w-full">

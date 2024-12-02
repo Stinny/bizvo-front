@@ -42,6 +42,7 @@ export const accountApiSlice = apiSlice.injectEndpoints({
         busType,
         currency,
         taxId,
+        name,
       }) => ({
         url: '/accounts/edit/account',
         method: 'POST',
@@ -54,6 +55,7 @@ export const accountApiSlice = apiSlice.injectEndpoints({
           busType: busType,
           currency: currency,
           taxId: taxId,
+          name: name,
         },
       }),
     }),
@@ -86,6 +88,13 @@ export const accountApiSlice = apiSlice.injectEndpoints({
         },
       }),
     }),
+    deleteAccount: builder.mutation({
+      query: () => ({
+        url: '/accounts/delete',
+        method: 'POST',
+        body: {},
+      }),
+    }),
   }),
 });
 
@@ -95,4 +104,5 @@ export const {
   useEditAccountMutation,
   useEditProfileMutation,
   useEditNotisMutation,
+  useDeleteAccountMutation,
 } = accountApiSlice;

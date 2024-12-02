@@ -10,7 +10,7 @@ const Login = () => {
   const navigate = useNavigate();
 
   //login API hook
-  const [login, { result }] = useLoginMutation();
+  const [login, { isLoading }] = useLoginMutation();
 
   //form state
   const [email, setEmail] = useState('');
@@ -69,6 +69,7 @@ const Login = () => {
       handleLogin={handleLogin}
       error={error}
       setError={setError}
+      isLoading={isLoading}
     />
   );
 

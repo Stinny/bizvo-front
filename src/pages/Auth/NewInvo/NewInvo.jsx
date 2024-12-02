@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Desktop from './Desktop';
 import { useGetCustomerOptsQuery } from '../../../api/customersApiSlice';
 import Loading from '../../../components/Loading';
@@ -40,6 +40,11 @@ const NewInvo = () => {
 
   //invoice create req logic here
   const handleSaveInvoice = async () => {
+    if (!title.trim()) {
+      setError('Invoice title missing');
+      return;
+    }
+
     try {
       const newInvoiceReq = await createInvoice({
         title: title,
@@ -62,6 +67,14 @@ const NewInvo = () => {
       return;
     }
   };
+
+  useEffect(() => {
+    refetch();
+  }, []);
+
+  useEffect(() => {
+    setError('');
+  }, [title]);
 
   let content;
 

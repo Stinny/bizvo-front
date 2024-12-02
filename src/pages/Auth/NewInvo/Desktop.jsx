@@ -131,15 +131,6 @@ const Desktop = ({
         </div>
       </div>
 
-      {error ? (
-        <div className="w-full flex items-center justify-start gap-2 border border-gray-200 rounded-md p-2">
-          <AlertOctagon size={16} className="text-red-500" />
-          <p className="text-stone-800 text-xs">{error}</p>
-        </div>
-      ) : (
-        ''
-      )}
-
       {step === 'cust' ? (
         <CustSelect
           custOpts={custOpts}
@@ -164,6 +155,7 @@ const Desktop = ({
           handleSaveInvoice={handleSaveInvoice}
           due={due}
           setDue={setDue}
+          error={error}
         />
       ) : (
         ''

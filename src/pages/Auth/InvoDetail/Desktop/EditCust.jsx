@@ -68,11 +68,24 @@ const EditCust = ({ custOpts, setCustomer, customer, amount, setAmount }) => {
     //     </div>
     //   </div>
     // </div>
-    <div className="flex flex-col items-center justify-center gap-4 h-72 w-full">
+    <div className="flex flex-col items-center justify-center gap-4 h-64 w-full">
       <div className="flex flex-col items-start w-52">
-        <p className="text-xs text-stone-700">Who will this be sent to?</p>
+        <p className="text-xs text-stone-700">Amount to charge:</p>
+        <div className="w-full flex items-center gap-0.5">
+          <p className="text-sm text-stone-800">$</p>
+          <input
+            type="number"
+            placeholder="Amount"
+            className="text-xs bg-gray-50 border border-gray-200 focus:outline-none hover:bg-gray-200 focus:bg-gray-200 hover:border-gray-200 focus:border-gray-200 focus:ring-0 text-stone-800 ring-0 w-full rounded-md p-2 pl-0.5"
+            onChange={(e) => setAmount(e.target.value)}
+            value={amount}
+          />
+        </div>
+      </div>
+      <div className="flex flex-col items-start w-52">
+        <p className="text-xs text-stone-700">Sending to:</p>
         <div className="flex gap-2 items-center w-full">
-          <div className="flex flex-col items-start w-9/12">
+          <div className="flex flex-col items-start w-10/12">
             <Select
               options={custOpts}
               onChange={(value) => setCustomer(value)}
@@ -98,12 +111,12 @@ const EditCust = ({ custOpts, setCustomer, customer, amount, setAmount }) => {
                   boxShadow: 'none',
                   zIndex: 999,
                   position: 'relative',
-                  height: 34,
-                  minHeight: 34,
+                  height: 33,
+                  minHeight: 33,
                 }),
                 indicatorsContainer: (provided) => ({
                   ...provided,
-                  height: 34,
+                  height: 33,
                 }),
                 menuPortal: (provided) => ({
                   ...provided,
@@ -129,24 +142,13 @@ const EditCust = ({ custOpts, setCustomer, customer, amount, setAmount }) => {
               className="w-full text-left"
             />
           </div>
-
           <Link
             to="/dashboard/customers/add"
-            className="p-2 flex justify-center items-center w-3/12 text-xs text-stone-800 bg-white border border-stone-800 rounded-md"
+            className="p-2 flex justify-center items-center w-2/12 text-xs text-stone-800 bg-white border border-stone-800 rounded-md"
           >
             <Plus size={12} />
           </Link>
         </div>
-      </div>
-      <div className="flex flex-col items-start w-52">
-        <p className="text-xs text-stone-700">Amount to charge:</p>
-        <input
-          type="number"
-          placeholder="Amount"
-          className="border text-xs border-gray-200 bg-gray-50 focus:border-gray-200 focus:outline-none text-stone-800 hover:bg-gray-200 hover:border-gray-200 focus:bg-gray-200 focus:ring-0 w-full rounded-md p-2"
-          onChange={(e) => setAmount(e.target.value)}
-          value={amount}
-        />
       </div>
     </div>
   );

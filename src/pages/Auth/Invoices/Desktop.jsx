@@ -40,19 +40,21 @@ const Desktop = ({ invoices }) => {
               )}
             </div>
             <div className="w-full flex flex-col items-start gap-1 p-2">
-              <div className="flex flex-col items-start">
+              <div className="flex flex-col items-start text-left">
                 <p className="text-xs text-stone-700">Title</p>
-                <p className="text-xs text-stone-800">{invoice?.title}</p>
+                <p className="text-xs text-stone-900">{invoice?.title}</p>
               </div>
               <div className="flex flex-col items-start">
                 <p className="text-xs text-stone-700">Customer</p>
-                <p className="text-xs text-stone-800">
+                <p className="text-xs text-stone-900">
                   {invoice?.customer?.name}
                 </p>
               </div>
             </div>
             <div className="w-full flex justify-between border-t border-gray-200 p-2">
-              <p className="text-xs text-stone-800">$125.00</p>
+              <p className="text-xs text-stone-800">
+                ${invoice?.amount?.toFixed(2)}
+              </p>
               {invoice?.paid ? (
                 <Badge size="xs" color="success">
                   Paid

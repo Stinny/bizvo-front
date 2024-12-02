@@ -5,12 +5,13 @@ import { useGoogleLogin } from '@react-oauth/google';
 import Cookies from 'js-cookie';
 import { useNavigate } from 'react-router-dom';
 
-const LoginGBtn = ({ setError }) => {
+const LoginGBtn = ({ setError, setGoogling }) => {
   const navigate = useNavigate();
 
   const [googleLogin, result] = useGoogleLoginMutation();
 
   const handleGoogLogin = async (res) => {
+    setGoogling(true);
     try {
       if (res['code']) {
         const googleRes = await googleLogin({ code: res.code }).unwrap();
@@ -20,16 +21,20 @@ const LoginGBtn = ({ setError }) => {
           Cookies.set('currentUser', currentUser, { sameSite: 'Lax' });
           Cookies.set('aToken', googleRes?.accessToken, { sameSite: 'Lax' });
           Cookies.set('rToken', googleRes?.refreshToken, { sameSite: 'Lax' });
+          setGoogling(false);
           navigate('/dashboard');
         } else if (googleRes?.error) {
           if (!googleRes?.error?.status) {
             setError('Server not responding');
+            setGoogling(false);
             return;
           } else if (googleRes?.error?.status === 400) {
             setError(googleRes?.error?.data?.msg);
+            setGoogling(false);
             return;
           } else {
             setError('Login failed');
+            setGoogling(false);
             return;
           }
         }
@@ -37,12 +42,15 @@ const LoginGBtn = ({ setError }) => {
     } catch (err) {
       if (!err?.status) {
         setError('Server not responding');
+        setGoogling(false);
         return;
       } else if (err.status === 400) {
         setError(err?.data?.msg);
+        setGoogling(false);
         return;
       } else {
         setError('Login failed');
+        setGoogling(false);
         return;
       }
     }

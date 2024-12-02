@@ -1,6 +1,7 @@
 import Cookies from 'js-cookie';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+import { showNotification } from '../api/toastSlice';
 
 const useHandleLogoutUser = () => {
   const navigate = useNavigate();
@@ -15,10 +16,10 @@ const useHandleLogoutUser = () => {
 
     // Show appropriate notification and navigate
     if (type === 'logout') {
-      //   dispatch(showNotification('You have been logged out'));
+      dispatch(showNotification('Logout Successful'));
       navigate('/login');
     } else if (type === 'delete') {
-      //   dispatch(showNotification('Account deleted'));
+      dispatch(showNotification('Account Deleted'));
       navigate('/signup');
     }
   };

@@ -49,12 +49,7 @@ const Form = ({
     }
   };
 
-  const isEmpty =
-    !name.trim() ||
-    !desc.trim() ||
-    !phone.trim() ||
-    !address.trim() ||
-    !zip.trim();
+  const isEmpty = !name.trim() || !desc.trim();
 
   //country select options
   const options = countryList().getData();
@@ -71,9 +66,9 @@ const Form = ({
         <div className="flex flex-col items-start text-left">
           {step === 'pro' ? (
             <>
-              <p className="text-sm text-stone-800">Account Setup 1/2</p>
+              <p className="text-sm text-stone-800">Account Setup</p>
               <p className="text-xs text-stone-700">
-                Stuff we need for payements and records
+                Stuff we need before going to your dashboard
               </p>
             </>
           ) : (
@@ -107,7 +102,65 @@ const Form = ({
           <div className="flex flex-col items-start w-full">
             <div className="flex flex-col gap-2 items-start w-full">
               <div className="flex flex-col items-start w-full">
-                <p className="text-xs text-stone-700">Name</p>
+                <p className="text-xs text-stone-700">Country</p>
+                <Select
+                  options={options}
+                  onChange={(value) => setCountry(value)}
+                  value={country}
+                  placeholder="Country"
+                  menuPortalTarget={document.body}
+                  menuPosition={'fixed'}
+                  isSearchable
+                  styles={{
+                    control: (baseStyles, state) => ({
+                      ...baseStyles,
+                      borderColor: 'rgb(229 231 235)',
+                      backgroundColor: 'rgb(249 250 251)',
+                      borderWidth: 1,
+                      '&:hover': {
+                        backgroundColor: 'rgb(229 231 235)', // Keep the same border color on hover
+                      },
+                      '&:focus': {
+                        backgroundColor: 'rgb(229 231 235)', // Keep the same border color on hover
+                      },
+                      fontSize: '12px',
+                      borderRadius: '.375rem',
+                      boxShadow: 'none',
+                      zIndex: 999,
+                      position: 'relative',
+                      height: 34,
+                      minHeight: 34,
+                    }),
+                    indicatorsContainer: (provided) => ({
+                      ...provided,
+                      height: 34,
+                    }),
+                    menuPortal: (provided) => ({
+                      ...provided,
+                      zIndex: 999,
+                      fontSize: '12px',
+                    }),
+                    input: (base) => ({
+                      ...base,
+                      'input:focus': {
+                        boxShadow: 'none',
+                      },
+                    }),
+                    option: (provided, state) => ({
+                      ...provided,
+                      backgroundColor: state.isSelected
+                        ? 'rgb(229 231 235)'
+                        : state.isFocused
+                        ? 'rgb(249 250 251)'
+                        : '',
+                      color: 'black',
+                    }),
+                  }}
+                  className="w-full text-left"
+                />
+              </div>
+              <div className="flex flex-col items-start w-full">
+                <p className="text-xs text-stone-700">Business Name</p>
                 <input
                   type="text"
                   placeholder="Business or personal name"
@@ -125,25 +178,7 @@ const Form = ({
                   value={desc}
                 />
               </div>
-              <div className="w-full flex items-center gap-2">
-                <div className="flex flex-col items-start w-full">
-                  <p className="text-xs text-stone-700">Phone</p>
-                  <input
-                    type="text"
-                    placeholder="(123)-456-7890"
-                    className="border text-xs border-gray-200 bg-gray-50 focus:border-gray-200 focus:outline-none text-stone-800 hover:bg-gray-200 hover:border-gray-200 focus:bg-gray-200 focus:ring-0 w-full rounded-md p-2"
-                    onChange={(e) => setPhone(e.target.value)}
-                    value={phone}
-                  />
-                </div>
-                <div className="flex flex-col items-start w-full">
-                  <p className="text-xs text-stone-700">DOB</p>
-                  <DateInput
-                    onChange={(date, event) => setDob(date)}
-                    className="bg-gray-50 text-xs border border-gray-200 rounded-md focus:bg-gray-200 focus:ring-0 focus:border-gray-200 focus-within:outline-0"
-                  />
-                </div>
-              </div>
+
               <div className="flex items-center gap-4 w-full">
                 <Avatar size="md" img={selectedImage ? selectedImage : ''} />
 
@@ -314,8 +349,8 @@ const Form = ({
           ''
         )}
       </form>
-      <div className="w-full flex justify-between items-center">
-        {step === 'pro' ? (
+      <div className="w-full flex justify-end items-center">
+        {/* {step === 'pro' ? (
           <div className="flex items-center gap-1">
             <button
               type="button"
@@ -364,22 +399,22 @@ const Form = ({
           </div>
         ) : (
           ''
-        )}
+        )} */}
         {isEmpty ? (
           <button
             type="button"
             disabled
-            className="p-1 border border-gray-100 text-gray-100 text-xs rounded-md"
+            className="p-1 border border-gray-100 text-gray-100 text-xs rounded-md flex items-center justify-center gap-1"
           >
-            Finish
+            Dashboard <ChevronRight size={14} />
           </button>
         ) : (
           <button
             type="button"
             onClick={handleFinishSetup}
-            className="p-1 border border-stone-800 text-stone-800 text-xs rounded-md"
+            className="p-1 border border-stone-800 text-stone-800 text-xs rounded-md flex items-center justify-center gap-1"
           >
-            Finish
+            Dashboard <ChevronRight size={14} />
           </button>
         )}
       </div>

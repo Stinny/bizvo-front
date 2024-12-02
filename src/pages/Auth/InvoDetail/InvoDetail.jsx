@@ -14,6 +14,7 @@ const InvoDetail = () => {
     data: invoice,
     isLoading,
     isSuccess,
+    isFetching,
     refetch,
   } = useGetInvoiceQuery({ invoiceId });
 
@@ -23,7 +24,7 @@ const InvoDetail = () => {
 
   let content;
 
-  if (isLoading) {
+  if (isLoading || isFetching) {
     content = <Loading />;
   } else if (isSuccess) {
     content = <Desktop invoice={invoice} refetch={refetch} />;

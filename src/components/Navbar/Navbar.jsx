@@ -123,6 +123,8 @@ const Navbar = () => {
           </p>
         </Link>
 
+        <Toast />
+
         {/* links section */}
         <div className="h-full flex items-center justify-between">
           <div className="flex gap-3 items-center">

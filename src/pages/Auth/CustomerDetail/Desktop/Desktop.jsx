@@ -3,7 +3,6 @@ import Navbar from '../../../../components/Navbar/Navbar';
 import Sidenav from '../../../../components/Sidenav/Sidenav';
 import Footer from '../../../../components/Footer/Footer';
 import Edit from './Edit';
-import { Spinner } from 'flowbite-react';
 import { AlertOctagon, Edit as EditIcon } from 'react-feather';
 import { useEditCustomerMutation } from '../../../../api/customersApiSlice';
 import { showNotification } from '../../../../api/toastSlice';
@@ -41,8 +40,8 @@ const Desktop = ({ customer, refetch }) => {
 
       if (editCustomerReq === 'Customer edited') {
         dispatch(showNotification('Customer updated'));
-        refetch();
         setEdit(false);
+        refetch();
       }
     } catch (err) {
       setError('Server error');
@@ -128,12 +127,12 @@ const Desktop = ({ customer, refetch }) => {
             {desc ? (
               <textarea
                 placeholder="About this customer.."
-                className="text-xs bg-gray-50 border border-gray-50 focus:outline-none text-stone-800 ring-0 w-full rounded-md p-2 resize-none h-24"
+                className="text-xs bg-gray-50 border border-gray-50 focus:outline-none text-stone-800 ring-0 w-full rounded-md p-2 resize-none h-16"
                 disabled
                 value={desc}
               />
             ) : (
-              <div className="bg-gray-50 w-full h-20 flex items-center justify-center border border-gray-50 rounded-md">
+              <div className="bg-gray-50 w-full h-16 flex items-center justify-center border border-gray-50 rounded-md">
                 <p className="text-xs text-stone-700">No description</p>
               </div>
             )}

@@ -3,7 +3,8 @@
   margin: 0 auto;
   text-align: center;
   padding: 10px;
-  font-family: 'Twemoji Country Flags', 'Space Mono', monospace;
+  font-family: 'Twemoji Country Flags', 'Roboto Mono', monospace;
+  /* font-family: 'Twemoji Country Flags', 'Space Mono', monospace; */
   /* font-family: 'Twemoji Country Flags', 'Rubik', serif; */
 }
 

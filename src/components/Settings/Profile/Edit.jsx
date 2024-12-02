@@ -52,26 +52,7 @@ const Edit = ({
       <form className="flex items-start w-full gap-2">
         <div className="flex flex-col w-full gap-2">
           <div className="flex flex-col items-start w-full">
-            <p className="text-xs text-stone-700">Name</p>
-            <input
-              type="text"
-              placeholder="Name"
-              className="text-xs bg-gray-50 border border-gray-200 focus:border-gray-200 focus:bg-gray-200 focus:outline-none text-stone-800 focus:ring-0 w-full rounded-md p-2"
-              onChange={(e) => setName(e.target.value)}
-              value={name}
-            />
-          </div>
-          <div className="flex flex-col items-start w-full">
-            <p className="text-xs text-stone-700">About</p>
-            <textarea
-              placeholder="What do you sell.."
-              className="text-xs bg-gray-50 border border-gray-200 focus:ring-0 focus:border-gray-200 focus:outline-none focus:bg-gray-200 text-stone-800 ring-0 w-full rounded-md p-2 resize-none h-16"
-              onChange={(e) => setAbout(e.target.value)}
-              value={about}
-            />
-          </div>
-          <div className="flex flex-col items-start w-full">
-            <p className="text-xs text-stone-700">URL Slug</p>
+            <p className="text-xs text-stone-700">Profile Slug</p>
             <div className="flex w-full">
               <div className="rounded-tl-md rounded-bl-md bg-gray-50 border border-r-0 border-gray-200 flex items-center p-2 pr-1">
                 <p className="text-xs">bizvo.com/</p>
@@ -84,6 +65,15 @@ const Edit = ({
                 value={slug}
               />
             </div>
+          </div>
+          <div className="flex flex-col items-start w-full">
+            <p className="text-xs text-stone-700">About</p>
+            <textarea
+              placeholder="What do you sell.."
+              className="text-xs bg-gray-50 border border-gray-200 focus:ring-0 focus:border-gray-200 focus:outline-none focus:bg-gray-200 text-stone-800 ring-0 w-full rounded-md p-2 resize-none h-16"
+              onChange={(e) => setAbout(e.target.value)}
+              value={about}
+            />
           </div>
         </div>
         <div className="flex flex-col w-full">

@@ -30,8 +30,11 @@ const baseQueryWithReauth = async (args, api, extraOptions) => {
 
       result = await baseQuery(args, api, extraOptions);
     } else {
-      //do something like logout function
-      console.log('Failed getting new access tkn..');
+      //logout logic from logout hook in utils
+      Cookies.remove('currentUser');
+      Cookies.remove('aToken');
+      Cookies.remove('rToken');
+      Cookies.remove('isAuth');
     }
   }
 

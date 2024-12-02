@@ -4,7 +4,7 @@ import { useEditNotisMutation } from '../../../api/accountApiSlice';
 import { showNotification } from '../../../api/toastSlice';
 import { useDispatch } from 'react-redux';
 
-const Notifications = ({ currentUser, refetch }) => {
+const Notifications = ({ currentUser, refetch, setActiveTabIndex }) => {
   const dispatch = useDispatch();
 
   const [news, setNews] = useState(currentUser?.news);
@@ -30,6 +30,7 @@ const Notifications = ({ currentUser, refetch }) => {
       if (editReq === 'Updated') {
         dispatch(showNotification('Notifications updated'));
         refetch();
+        setActiveTabIndex(3);
         setEdit(false);
       }
     } catch (err) {

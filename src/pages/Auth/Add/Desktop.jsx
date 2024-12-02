@@ -15,7 +15,7 @@ const Desktop = () => {
           <div className="flex flex-col gap-2 w-72">
             <Link
               to="/dashboard/customers/add"
-              className="p-2 flex justify-between items-center bg-white border border-stone-800 rounded-md"
+              className="p-2 flex justify-between items-center bg-white border border-gray-200 hover:border-stone-800 rounded-md"
             >
               <div className="flex flex-col gap-1 items-start">
                 <Users size={20} className="text-stone-800" />
@@ -30,7 +30,7 @@ const Desktop = () => {
             </Link>
             <Link
               to="/dashboard/invoices/add"
-              className="p-2 flex justify-between items-center bg-white border border-stone-800 rounded-md"
+              className="p-2 flex justify-between items-center bg-white border border-gray-200 hover:border-stone-800 rounded-md"
             >
               <div className="flex flex-col gap-1 items-start">
                 <FileText size={20} className="text-stone-800" />

@@ -14,6 +14,7 @@ const CustomerDetail = () => {
     data: customer,
     isLoading,
     isSuccess,
+    isFetching,
     refetch,
   } = useGetCustomerQuery({ customerId });
 
@@ -23,7 +24,7 @@ const CustomerDetail = () => {
 
   let content;
 
-  if (isLoading) {
+  if (isLoading || isFetching) {
     content = <Loading />;
   } else if (isSuccess) {
     content = <Desktop customer={customer} refetch={refetch} />;

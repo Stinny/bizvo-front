@@ -60,7 +60,7 @@ const Subscribe = () => {
         />
         <button
           type="submit"
-          className="p-2 border-stone-800 border rounded-md font-bold text-stone-800 text-xs w-3/12"
+          className="p-2 border-stone-800 border rounded-md text-stone-800 text-xs w-3/12"
           disabled={email.trim() ? false : true}
         >
           Subscribe

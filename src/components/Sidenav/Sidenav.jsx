@@ -1,16 +1,23 @@
 import React from 'react';
 import {
+  AlertOctagon,
   DollarSign,
   FileText,
   Home,
+  Info,
   MessageCircle,
   Plus,
   Settings,
   Users,
 } from 'react-feather';
 import { Link } from 'react-router-dom';
+import Cookies from 'js-cookie';
 
 const Sidenav = () => {
+  const currentUser = Cookies.get('currentUser')
+    ? JSON.parse(Cookies.get('currentUser'))
+    : null;
+
   const path = window.location.pathname;
   const activeLink =
     'w-full flex items-center gap-2 border border-stone-800 rounded-md p-1';
@@ -75,6 +82,22 @@ const Sidenav = () => {
           <p className="text-xs text-stone-800">New</p>
           <Plus size={12} className="text-stone-800 font-bold" />
         </Link>
+        {!currentUser?.bankAdded && !currentUser?.stripeOnboard ? (
+          <div className="w-full text-left flex flex-col items-start gap-1 p-1 border border-gray-200 rounded-md">
+            <AlertOctagon size={16} className="text-red-400" />
+            <p className="text-stone-800" style={{ fontSize: '10px' }}>
+              Select how you want to be paid in{' '}
+              <span>
+                <Link to="/settings" className="font-bold text-stone-800">
+                  settings
+                </Link>
+              </span>{' '}
+              before sending invoices
+            </p>
+          </div>
+        ) : (
+          ''
+        )}
       </div>
     </div>
   );

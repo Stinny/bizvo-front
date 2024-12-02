@@ -14,7 +14,7 @@ const Signup = () => {
     : null;
 
   //signup API hook
-  const [signup, { result }] = useSignupMutation();
+  const [signup, { isLoading }] = useSignupMutation();
 
   //form state
   const [email, setEmail] = useState('');
@@ -88,6 +88,7 @@ const Signup = () => {
       handleSignup={handleSignup}
       error={error}
       setError={setError}
+      isLoading={isLoading}
     />
   );
 

@@ -74,7 +74,13 @@ const Desktop = ({
                   className="border text-xs border-gray-200 bg-gray-50 focus:border-gray-200 focus:outline-none text-stone-800 hover:bg-gray-200 hover:border-gray-200 focus:bg-gray-200 focus:ring-0 w-full rounded-md p-2"
                   onChange={(e) => setName(e.target.value)}
                   value={name}
+                  maxLength={25}
                 />
+                <div className="w-full flex justify-end">
+                  <p className="text-stone-700" style={{ fontSize: '10px' }}>
+                    {name?.length}/25
+                  </p>
+                </div>
               </div>
               <div className="flex flex-col items-start w-full">
                 <p className="text-xs text-stone-700">Email</p>
@@ -100,7 +106,7 @@ const Desktop = ({
                 <p className="text-xs text-stone-700">Description</p>
                 <textarea
                   placeholder="About this customer.."
-                  className="border border-gray-200 hover:border-gray-200 hover:bg-gray-200 focus:bg-gray-200 focus:border-gray-200 focus:ring-0 w-full h-24 rounded-md p-2 bg-gray-50 resize-none text-xs"
+                  className="border border-gray-200 hover:border-gray-200 hover:bg-gray-200 focus:bg-gray-200 focus:border-gray-200 focus:ring-0 w-full h-16 rounded-md p-2 bg-gray-50 resize-none text-xs"
                   onChange={(e) => setDesc(e.target.value)}
                   value={desc}
                 />
