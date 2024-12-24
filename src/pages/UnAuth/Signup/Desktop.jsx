@@ -6,6 +6,8 @@ import SignupGBtn from '../../../components/Auth/SignupGBtn';
 import Footer from '../../../components/Footer/Footer';
 import Loading from '../../../components/Loading';
 import { Spinner } from 'flowbite-react';
+import img from '../../../assets/cardPay.svg';
+import img2 from '../../../assets/onlineBank.svg';
 
 const Desktop = ({
   email,
@@ -27,17 +29,15 @@ const Desktop = ({
           <Spinner />
         </div>
       ) : (
-        <div className="w-80 flex flex-col items-start mx-auto gap-2 mt-32">
+        <div className="w-80 flex flex-col items-start justify-end mx-auto gap-2 mt-32">
           <div className="flex flex-col items-start w-full text-left">
             <p className="text-lg text-stone-800">Signup</p>
-            <p className="text-stone-700 text-sm">
-              Start sending invoices today
-            </p>
+            <p className="text-stone-700 text-sm">Begin collecting today</p>
           </div>
-          <div className="mx-auto flex flex-col w-80 gap-2 p-2 border border-gray-200 bg-white rounded-md">
+          <div className="mx-auto flex flex-col w-full gap-2 p-2 border border-gray-200 bg-white rounded-md">
             {error ? (
               <div className="w-full flex items-center justify-start gap-2 border border-gray-200 rounded-md p-2">
-                <AlertOctagon size={16} className="text-red-500" />
+                <AlertOctagon size={16} className="text-red-400" />
                 <p className="text-stone-800 text-xs">{error}</p>
               </div>
             ) : (
@@ -80,7 +80,7 @@ const Desktop = ({
               to="/login"
               className="hover:text-stone-800 text-xs text-stone-700"
             >
-              Already have an account?
+              Have an account?
             </Link>
           </div>
         </div>

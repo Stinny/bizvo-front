@@ -65,7 +65,7 @@ const Edit = ({
       </div>
       <div className="flex items-start w-full gap-2">
         <div className="flex flex-col gap-2 w-full">
-          <div className="flex flex-col items-start w-full">
+          <div className="flex flex-col items-start w-full gap-1">
             <p className="text-xs text-stone-700">Email</p>
             <input
               type="text"
@@ -75,7 +75,7 @@ const Edit = ({
               value={email}
             />
           </div>
-          <div className="flex flex-col items-start w-full">
+          <div className="flex flex-col items-start w-full gap-1">
             <p className="text-xs text-stone-700">Country</p>
             <Select
               options={options}
@@ -135,7 +135,7 @@ const Edit = ({
           </div>
         </div>
         <div className="flex flex-col gap-2 w-full">
-          <div className="flex flex-col items-start w-full">
+          <div className="flex flex-col items-start w-full gap-1">
             <p className="text-xs text-stone-700">Business Name</p>
             <input
               type="text"

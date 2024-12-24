@@ -1,16 +1,25 @@
 import React, { useState } from 'react';
-import { Edit as EditIcon, Globe, Instagram, Linkedin } from 'react-feather';
+import {
+  Edit as EditIcon,
+  Globe,
+  Instagram,
+  Linkedin,
+  Plus,
+} from 'react-feather';
 import { FaMedium } from 'react-icons/fa';
 import { FaXTwitter } from 'react-icons/fa6';
 import Edit from './Edit';
 import { useEditProfileMutation } from '../../../api/accountApiSlice';
 import { useDispatch } from 'react-redux';
 import { showNotification } from '../../../api/toastSlice';
+import { Avatar } from 'flowbite-react';
+import LogoModal from './LogoModal';
 
 const Profile = ({ currentUser, refetch }) => {
   const dispatch = useDispatch();
 
   const [edit, setEdit] = useState(false);
+  const [open, setOpen] = useState(false);
 
   //form state
   const [name, setName] = useState(currentUser?.name);
@@ -74,27 +83,26 @@ const Profile = ({ currentUser, refetch }) => {
     />
   ) : (
     <div className="w-full flex flex-col gap-4 items-start">
-      <div className="w-full flex items-center justify-between">
+      <div className="w-full flex items-start justify-between">
         <div className="flex flex-col items-start">
           <p className="text-sm text-stone-800">Profile Settings</p>
-          <p className="text-xs text-stone-700">
+          <p className="text-xs text-stone-600">
             View and edit your profile details
           </p>
         </div>
-        <div className="flex items-center gap-2">
-          <button
-            type="button"
-            onClick={() => setEdit(!edit)}
-            className="text-stone-800"
-          >
-            <EditIcon size={16} />
-          </button>
-        </div>
+
+        <button
+          type="button"
+          onClick={() => setEdit(!edit)}
+          className="text-stone-800"
+        >
+          <EditIcon size={16} />
+        </button>
       </div>
       <div className="flex items-start w-full gap-2">
         <div className="flex flex-col w-full gap-2">
-          <div className="flex flex-col items-start w-full">
-            <p className="text-xs text-stone-700">Profile Slug</p>
+          <div className="flex flex-col items-start w-full gap-1">
+            <p className="text-xs text-stone-600">Profile Slug</p>
             <div className="flex w-full">
               <div className="rounded-tl-md rounded-bl-md bg-gray-50 border border-r-0 border-gray-50 flex items-center p-2 pr-1">
                 <p className="text-xs text-stone-800">bizvo.com/</p>
@@ -108,8 +116,8 @@ const Profile = ({ currentUser, refetch }) => {
               />
             </div>
           </div>
-          <div className="flex flex-col items-start w-full">
-            <p className="text-xs text-stone-700">About</p>
+          <div className="flex flex-col items-start w-full gap-1">
+            <p className="text-xs text-stone-600">About</p>
             {currentUser?.about ? (
               <textarea
                 placeholder="About this customer.."
@@ -119,14 +127,33 @@ const Profile = ({ currentUser, refetch }) => {
               />
             ) : (
               <div className="bg-gray-50 w-full h-16 flex items-center justify-center border border-gray-50 rounded-md">
-                <p className="text-xs text-stone-700">No about</p>
+                <p className="text-xs text-stone-600">No about</p>
               </div>
             )}
           </div>
+          <div className="flex flex-col items-start w-full gap-1">
+            <p className="text-xs text-stone-600">Logo</p>
+            <div className="flex items-center w-full gap-2">
+              <Avatar size="md" img={currentUser?.logo?.url} />
+              <button
+                type="button"
+                className=" text-stone-800 rounded-md border border-stone-800 p-0.5 pl-2 pr-2 text-xs flex items-center justify-center gap-1"
+                onClick={() => setOpen(!open)}
+              >
+                New Logo <Plus size={12} />
+              </button>
+            </div>
+            <LogoModal
+              open={open}
+              setOpen={setOpen}
+              currentUser={currentUser}
+              refetch={refetch}
+            />
+          </div>
         </div>
         <div className="flex flex-col w-full">
-          <div className="flex flex-col items-start w-full">
-            <p className="text-xs text-stone-700">Links</p>
+          <div className="flex flex-col gap-1 items-start w-full">
+            <p className="text-xs text-stone-600">Links</p>
             <div className="flex flex-col items-start gap-2 w-full">
               <div className="flex w-full">
                 <div className="rounded-tl-md rounded-bl-md bg-gray-50 border border-r-0 border-gray-50 flex items-center p-2 pr-1">

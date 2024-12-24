@@ -1,10 +1,13 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Desktop from './Desktop';
 import { useCreateCustomerMutation } from '../../../api/customersApiSlice';
 import { useNavigate } from 'react-router-dom';
 import Loading from '../../../components/Loading';
 import { showNotification } from '../../../api/toastSlice';
 import { useDispatch } from 'react-redux';
+import Navbar from '../../../components/Navbar/Navbar';
+import Sidenav from '../../../components/Sidenav/Sidenav';
+import Footer from '../../../components/Footer/Footer';
 
 const NewCustomer = () => {
   const navigate = useNavigate();
@@ -27,6 +30,9 @@ const NewCustomer = () => {
   const handleCreateCustomer = async (e) => {
     e.preventDefault();
 
+    //clear any errors
+    setError('');
+
     if (!name.trim() || !email.trim() || !address.trim() || !zip.trim()) {
       setError('Please fill in all fields');
       return;
@@ -45,8 +51,10 @@ const NewCustomer = () => {
 
       if (newCustomerReq === 'Customer created') {
         dispatch(showNotification('Customer created'));
-        //refetch customers
         navigate('/dashboard/customers');
+      } else if (newCustomerReq === 'Invalid address') {
+        setError('Invalid address details');
+        return;
       } else {
         setError('There was an error');
         return;
@@ -56,6 +64,10 @@ const NewCustomer = () => {
       return;
     }
   };
+
+  useEffect(() => {
+    setError('');
+  }, [name, email, address, zip, country, phone]);
 
   let content;
 
@@ -85,7 +97,16 @@ const NewCustomer = () => {
     );
   }
 
-  return content;
+  return (
+    <div className="mx-auto max-w-3xl flex flex-col gap-2 h-screen relative">
+      <Navbar />
+      <div className="flex items-start gap-2">
+        <Sidenav />
+        {content}
+      </div>
+      <Footer />
+    </div>
+  );
 };
 
 export default NewCustomer;

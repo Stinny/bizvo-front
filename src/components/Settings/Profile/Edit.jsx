@@ -51,7 +51,7 @@ const Edit = ({
       </div>
       <form className="flex items-start w-full gap-2">
         <div className="flex flex-col w-full gap-2">
-          <div className="flex flex-col items-start w-full">
+          <div className="flex flex-col items-start w-full gap-1">
             <p className="text-xs text-stone-700">Profile Slug</p>
             <div className="flex w-full">
               <div className="rounded-tl-md rounded-bl-md bg-gray-50 border border-r-0 border-gray-200 flex items-center p-2 pr-1">
@@ -66,7 +66,7 @@ const Edit = ({
               />
             </div>
           </div>
-          <div className="flex flex-col items-start w-full">
+          <div className="flex flex-col items-start w-full gap-1">
             <p className="text-xs text-stone-700">About</p>
             <textarea
               placeholder="What do you sell.."
@@ -77,7 +77,7 @@ const Edit = ({
           </div>
         </div>
         <div className="flex flex-col w-full">
-          <div className="flex flex-col items-start w-full">
+          <div className="flex flex-col items-start w-full gap-1">
             <p className="text-xs text-stone-700">Links</p>
             <div className="w-full flex flex-col items-start gap-2">
               <div className="flex w-full">

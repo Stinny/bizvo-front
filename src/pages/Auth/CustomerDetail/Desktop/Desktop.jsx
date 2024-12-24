@@ -1,12 +1,14 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Navbar from '../../../../components/Navbar/Navbar';
 import Sidenav from '../../../../components/Sidenav/Sidenav';
 import Footer from '../../../../components/Footer/Footer';
 import Edit from './Edit';
-import { AlertOctagon, Edit as EditIcon } from 'react-feather';
+import { AlertOctagon, Edit as EditIcon, Send } from 'react-feather';
 import { useEditCustomerMutation } from '../../../../api/customersApiSlice';
 import { showNotification } from '../../../../api/toastSlice';
 import { useDispatch } from 'react-redux';
+import ReactCountryFlag from 'react-country-flag';
+import { Tooltip } from 'flowbite-react';
 
 const Desktop = ({ customer, refetch }) => {
   const dispatch = useDispatch();
@@ -25,7 +27,12 @@ const Desktop = ({ customer, refetch }) => {
   const [editCustomer, { isLoading: editing }] = useEditCustomerMutation();
 
   //hanlder function to save edits
-  const handleSaveEdits = async () => {
+  const handleSaveEdits = async (e) => {
+    e.preventDefault();
+
+    //clear any errors
+    setError('');
+
     try {
       const editCustomerReq = await editCustomer({
         email: email,
@@ -42,12 +49,22 @@ const Desktop = ({ customer, refetch }) => {
         dispatch(showNotification('Customer updated'));
         setEdit(false);
         refetch();
+      } else if (editCustomerReq === 'Invalid address') {
+        setError('Invalid address details');
+        return;
+      } else {
+        setError('There was an error');
+        return;
       }
     } catch (err) {
       setError('Server error');
       return;
     }
   };
+
+  useEffect(() => {
+    setError('');
+  }, [name, email, address, zip, country, phone]);
 
   let content;
 
@@ -74,13 +91,35 @@ const Desktop = ({ customer, refetch }) => {
       handleSaveEdits={handleSaveEdits}
     />
   ) : (
-    <div className="w-10/12 bg-white border rounded-md border-gray-200 p-2 flex flex-col gap-4 items-start">
-      <div className="w-full flex items-center justify-between">
+    <div className="w-10/12 bg-white border rounded-md border-gray-200 p-2 pb-6 flex flex-col gap-4 items-center justify-center">
+      <div className="w-full flex items-center justify-between relative">
         <div className="flex flex-col items-start">
-          <p className="text-sm text-stone-800">Customer: {customer?._id}</p>
-          <p className="text-xs text-stone-700">View and edit this customer</p>
+          <p className="text-sm text-stone-800">Viewing Customer</p>
+          <p className="text-xs text-stone-700">#{customer?._id}</p>
         </div>
-        <div className="flex items-center gap-2">
+        <Tooltip
+          content={
+            <p className="text-xs text-stone-800 text-left">
+              {customer?.totalSent === 1
+                ? '1 invoice has been sent to this customer'
+                : `${customer?.totalSent} invoices have been sent to this customer`}
+            </p>
+          }
+          style="light"
+          className="w-52"
+          arrow={false}
+        >
+          <button
+            type="button"
+            disabled
+            className="text-xs text-stone-800 flex items-center justify-center gap-1"
+          >
+            {customer?.totalSent}
+            <Send size={12} />
+          </button>
+        </Tooltip>
+        <div className="w-24"></div>
+        <div className="absolute top-0 right-0 mr-1 mt-1">
           <button
             type="button"
             onClick={() => setEdit(!edit)}
@@ -90,8 +129,8 @@ const Desktop = ({ customer, refetch }) => {
           </button>
         </div>
       </div>
-      <form className="flex items-start gap-2 w-full">
-        <div className="flex flex-col gap-2 items-start w-full">
+      <form className="w-72">
+        <div className="flex flex-col gap-4 items-start w-full">
           <div className="flex flex-col items-start w-full">
             <p className="text-xs text-stone-700">Name</p>
             <input
@@ -103,7 +142,9 @@ const Desktop = ({ customer, refetch }) => {
             />
           </div>
           <div className="flex flex-col items-start w-full">
-            <p className="text-xs text-stone-700">Email</p>
+            <p className="text-xs text-stone-700">
+              {phone?.length ? 'Email & Phone' : 'Email'}
+            </p>
             <input
               type="email"
               placeholder="Email"
@@ -111,43 +152,19 @@ const Desktop = ({ customer, refetch }) => {
               disabled
               value={email}
             />
-          </div>
-          <div className="flex flex-col items-start w-full">
-            <p className="text-xs text-stone-700">Phone</p>
-            <input
-              type="tel"
-              placeholder="(123)-456-7890"
-              className="text-xs bg-gray-50 border border-gray-50 focus:outline-none text-stone-800 ring-0 w-full rounded-md p-2"
-              disabled
-              value={phone}
-            />
-          </div>
-          <div className="flex flex-col items-start w-full">
-            <p className="text-xs text-stone-700">Description</p>
-            {desc ? (
-              <textarea
-                placeholder="About this customer.."
-                className="text-xs bg-gray-50 border border-gray-50 focus:outline-none text-stone-800 ring-0 w-full rounded-md p-2 resize-none h-16"
-                disabled
-                value={desc}
-              />
-            ) : (
-              <div className="bg-gray-50 w-full h-16 flex items-center justify-center border border-gray-50 rounded-md">
-                <p className="text-xs text-stone-700">No description</p>
+            {phone ? (
+              <div className="flex flex-col items-start w-full mt-1">
+                <input
+                  type="tel"
+                  placeholder="(123)-456-7890"
+                  className="text-xs bg-gray-50 border border-gray-50 focus:outline-none text-stone-800 ring-0 w-full rounded-md p-2"
+                  disabled
+                  value={phone}
+                />
               </div>
+            ) : (
+              ''
             )}
-          </div>
-        </div>
-        <div className="flex flex-col gap-2 items-start w-full">
-          <div className="flex flex-col items-start w-full">
-            <p className="text-xs text-stone-700">Country</p>
-            <input
-              type="text"
-              placeholder="(123)-456-7890"
-              className="text-xs bg-gray-50 border border-gray-50 focus:outline-none text-stone-800 ring-0 w-full rounded-md p-2"
-              disabled
-              value={country?.label}
-            />
           </div>
           <div className="flex flex-col items-start w-full">
             <p className="text-xs text-stone-700">Address</p>
@@ -159,17 +176,56 @@ const Desktop = ({ customer, refetch }) => {
               value={address}
             />
           </div>
-          <div className="flex flex-col items-start w-full">
-            <p className="text-xs text-stone-700">Postal Code</p>
-            <input
-              type="text"
-              placeholder="Postal code"
-              className="text-xs bg-gray-50 border border-gray-50 focus:outline-none text-stone-800 ring-0 w-full rounded-md p-2"
-              disabled
-              value={zip}
-            />
+          <div className="flex items-center gap-2 w-full">
+            <div className="flex flex-col items-start w-8/12">
+              <p className="text-xs text-stone-700">Country</p>
+
+              <div className="flex w-full">
+                <input
+                  type="text"
+                  className="border w-full text-xs bg-gray-50 border-gray-50 rounded-tl-md rounded-bl-md p-2 flex-1 overflow-hidden"
+                  value={country?.label}
+                  disabled
+                />
+                <div className="rounded-tr-md rounded-br-md bg-gray-50 border border-l-0 border-gray-50 flex items-center justify-center p-1 pr-2">
+                  <Tooltip
+                    arrow={false}
+                    style="light"
+                    content={
+                      <p className="text-xs text-stone-800">{country?.label}</p>
+                    }
+                  >
+                    <ReactCountryFlag countryCode={country?.value} />
+                  </Tooltip>
+                </div>
+              </div>
+            </div>
+            <div className="flex flex-col items-start w-4/12">
+              <p className="text-xs text-stone-700">Postal</p>
+              <input
+                type="text"
+                placeholder="Postal code"
+                className="text-xs bg-gray-50 border border-gray-50 focus:outline-none text-stone-800 ring-0 w-full rounded-md p-2"
+                disabled
+                value={zip}
+              />
+            </div>
           </div>
+          {desc?.length ? (
+            <div className="flex flex-col items-start w-full">
+              <p className="text-xs text-stone-700">Description</p>
+              <textarea
+                placeholder="About this customer.."
+                className="text-xs bg-gray-50 border border-gray-50 focus:outline-none text-stone-800 ring-0 w-full rounded-md p-2 resize-none h-16"
+                disabled
+                value={desc}
+              />
+            </div>
+          ) : (
+            ''
+          )}
         </div>
+        <div className="flex flex-col gap-2 items-start w-full"></div>
       </form>
     </div>
   );

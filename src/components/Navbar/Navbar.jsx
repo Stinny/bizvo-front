@@ -64,7 +64,7 @@ const Navbar = () => {
 
         <Avatar
           size="xs"
-          img={img}
+          img={currentUser?.logo?.url}
           onClick={toggleDropdown}
           className="hover:cursor-pointer"
         />

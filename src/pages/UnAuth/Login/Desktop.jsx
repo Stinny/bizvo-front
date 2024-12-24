@@ -34,7 +34,7 @@ const Desktop = ({
           <div className="mx-auto flex flex-col w-80 gap-2 p-2 border border-gray-200 bg-white rounded-md">
             {error ? (
               <div className="w-full flex items-center justify-start gap-2 border border-gray-200 rounded-md p-2">
-                <AlertOctagon size={16} className="text-red-500" />
+                <AlertOctagon size={16} className="text-red-400" />
                 <p className="text-stone-800 text-xs">{error}</p>
               </div>
             ) : (

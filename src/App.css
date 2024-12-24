@@ -1,8 +1,9 @@
 #root {
   max-width: 1280px;
   margin: 0 auto;
+  margin-bottom: 50px;
   text-align: center;
-  padding: 10px;
+  padding: 50px;
   font-family: 'Twemoji Country Flags', 'Roboto Mono', monospace;
   /* font-family: 'Twemoji Country Flags', 'Space Mono', monospace; */
   /* font-family: 'Twemoji Country Flags', 'Rubik', serif; */
@@ -18,4 +19,84 @@
 
 .react-tabs__tab--selected {
   border-color: rgb(229 231 235) !important;
+}
+
+/* Your CSS file or inline styles */
+.pagination-container {
+  display: flex;
+  justify-content: center;
+}
+
+/* Style the "Previous" and "Next" buttons */
+.previous,
+.next {
+  padding: 3px;
+  margin: 0;
+  background-color: transparent;
+  color: rgb(41 37 36);
+  border-radius: 6px;
+  border: #000 solid 1px;
+  cursor: pointer;
+  font-size: 12px;
+}
+
+/* Style the page number buttons */
+.notActivePage {
+  padding: 6px;
+  margin: 5px;
+  background-color: transparent;
+  color: rgb(41 37 36);
+  border: 2px solid #000;
+  border-radius: 5px;
+  font-size: 12px;
+}
+
+.disabled {
+  padding: 3px;
+  margin: 0;
+  background-color: transparent;
+  color: rgb(209 213 219);
+  border-radius: 6px;
+  font-size: 12px;
+  opacity: 0.4;
+  border: rgb(209 213 219) solid 1px;
+  cursor: default;
+}
+
+/* Style the active page button */
+.activePage {
+  /* padding: 6px;
+  margin: 5px;
+  background-color: rgb(41 37 36);
+  color: #fff;
+  border: 2px solid rgb(41 37 36);
+  border-radius: 5px;
+  cursor: pointer; */
+  display: none;
+}
+
+.hidden {
+  display: none; /* Hide page numbers and breaks */
+}
+
+.breakLink {
+  padding: 6px;
+  margin: 5px;
+  background-color: transparent;
+  color: rgb(41 37 36);
+  border: 2px solid rgb(41 37 36);
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+@media (max-width: 767px) {
+  .previous,
+  .next {
+    padding: 6px;
+  }
+  .notActivePage,
+  .activePage,
+  .breakLink {
+    padding: 3px; /* Smaller padding for mobile devices */
+  }
 }

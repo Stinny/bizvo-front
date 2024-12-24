@@ -22,7 +22,8 @@ const customStyles = {
     bottom: 'auto',
     marginRight: '-50%',
     transform: 'translate(-50%, -50%)',
-    fontFamily: 'Space Mono',
+    fontFamily: 'Roboto Mono',
+    padding: '8px',
   },
 };
 Modal.setAppElement('#root');
@@ -135,7 +136,7 @@ const Account = ({ currentUser, refetch }) => {
     />
   ) : (
     <div className="w-full flex flex-col gap-4 items-start">
-      <div className="w-full flex items-center justify-between">
+      <div className="w-full flex items-start justify-between">
         <div className="flex flex-col items-start">
           <p className="text-sm text-stone-800">Account Settings</p>
           <p className="text-xs text-stone-700">
@@ -238,7 +239,7 @@ const Account = ({ currentUser, refetch }) => {
             <div className="w-72 flex flex-col gap-2 items-start">
               <div className="flex flex-col items-start">
                 <p className="text-sm text-stone-800">Account Email</p>
-                <p className="text-xs text-stone-700">
+                <p className="text-xs text-stone-600">
                   Changing account email will require confirmation
                 </p>
               </div>
@@ -269,8 +270,8 @@ const Account = ({ currentUser, refetch }) => {
               </div>
             </div>
           </Modal>
-          <div className="flex flex-col items-start w-full">
-            <p className="text-xs text-stone-700">Email</p>
+          <div className="flex flex-col items-start w-full gap-1">
+            <p className="text-xs text-stone-600">Email</p>
             <div className="flex w-full">
               <input
                 type="text"
@@ -281,15 +282,15 @@ const Account = ({ currentUser, refetch }) => {
               />
               <div className="rounded-tr-md rounded-br-md bg-gray-50 border border-r-0 border-gray-50 flex items-center p-2 pr-1">
                 <EditIcon
-                  size={12}
+                  size={14}
                   onClick={() => setOpen(!open)}
                   className="text-stone-800 hover:cursor-pointer"
                 />
               </div>
             </div>
           </div>
-          <div className="flex flex-col items-start w-full">
-            <p className="text-xs text-stone-700">Country</p>
+          <div className="flex flex-col items-start w-full gap-1">
+            <p className="text-xs text-stone-600">Country</p>
             <div className="flex w-full">
               <input
                 type="text"
@@ -304,8 +305,8 @@ const Account = ({ currentUser, refetch }) => {
           </div>
         </div>
         <div className="flex flex-col gap-2 w-full">
-          <div className="flex flex-col items-start w-full">
-            <p className="text-xs text-stone-700">Business Name</p>
+          <div className="flex flex-col items-start w-full gap-1">
+            <p className="text-xs text-stone-600">Business Name</p>
             <input
               type="text"
               placeholder="Address"

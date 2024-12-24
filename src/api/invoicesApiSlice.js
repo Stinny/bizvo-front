@@ -3,7 +3,7 @@ import { apiSlice } from './apiSlice';
 export const invoicesApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     createInvoice: builder.mutation({
-      query: ({ title, description, amount, customerId, due }) => ({
+      query: ({ title, description, amount, customerId, due, send }) => ({
         url: '/invoices/create',
         method: 'POST',
         body: {
@@ -12,6 +12,7 @@ export const invoicesApiSlice = apiSlice.injectEndpoints({
           amount: amount,
           customerId: customerId,
           dueDate: due,
+          send: send,
         },
       }),
     }),
@@ -23,6 +24,7 @@ export const invoicesApiSlice = apiSlice.injectEndpoints({
         customerId,
         dueDate,
         invoiceId,
+        send,
       }) => ({
         url: `/invoices/edit`,
         method: 'POST',
@@ -33,6 +35,27 @@ export const invoicesApiSlice = apiSlice.injectEndpoints({
           customerId: customerId,
           dueDate: dueDate,
           invoiceId: invoiceId,
+          send: send,
+        },
+      }),
+    }),
+    updateInvoForPay: builder.mutation({
+      query: ({ invoiceId }) => ({
+        url: `/invoices/update/pay`,
+        method: 'POST',
+        body: {
+          invoiceId: invoiceId,
+        },
+      }),
+    }),
+    confirmPayInvo: builder.mutation({
+      query: ({ invoiceId, tkn, payOrigin }) => ({
+        url: `/invoices/confirm/pay`,
+        method: 'POST',
+        body: {
+          invoiceId: invoiceId,
+          confirmTkn: tkn,
+          payOrigin: payOrigin,
         },
       }),
     }),
@@ -45,11 +68,24 @@ export const invoicesApiSlice = apiSlice.injectEndpoints({
         },
       }),
     }),
+    sendInvoice: builder.mutation({
+      query: ({ invoiceId }) => ({
+        url: `/invoices/send`,
+        method: 'POST',
+        body: {
+          invoId: invoiceId,
+        },
+      }),
+    }),
     getInvoices: builder.query({
       query: () => `/invoices/get`,
     }),
     getInvoice: builder.query({
       query: ({ invoiceId }) => `/invoices/get/${invoiceId}`,
+    }),
+    getInvoiceToPay: builder.query({
+      query: ({ invoId, invoTkn }) =>
+        `/invoices/get/pay/${invoId}?iat=${invoTkn}`,
     }),
   }),
 });
@@ -60,4 +96,8 @@ export const {
   useDeleteInvoiceMutation,
   useGetInvoiceQuery,
   useEditInvoiceMutation,
+  useGetInvoiceToPayQuery,
+  useSendInvoiceMutation,
+  useUpdateInvoForPayMutation,
+  useConfirmPayInvoMutation,
 } = invoicesApiSlice;

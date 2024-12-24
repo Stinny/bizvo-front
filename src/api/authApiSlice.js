@@ -34,6 +34,13 @@ export const authApiSlice = apiSlice.injectEndpoints({
         },
       }),
     }),
+    subscribe: builder.mutation({
+      query: ({ email }) => ({
+        url: '/auth/sub',
+        method: 'POST',
+        body: { email: email },
+      }),
+    }),
   }),
 });
 
@@ -42,4 +49,5 @@ export const {
   useSignupMutation,
   useGoogleLoginMutation,
   useGoogleSignupMutation,
+  useSubscribeMutation,
 } = authApiSlice;

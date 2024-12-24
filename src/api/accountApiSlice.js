@@ -5,31 +5,20 @@ export const accountApiSlice = apiSlice.injectEndpoints({
     getUser: builder.query({
       query: () => `/accounts/get`,
     }),
+    getStatsTemp: builder.query({
+      query: () => `/accounts/get/stats`,
+    }),
+    checkSlug: builder.query({
+      query: (slug) => ({
+        url: '/accounts/checkSlug?slug=' + slug, // Call the backend to check the slug
+        method: 'GET',
+      }),
+    }),
     setup: builder.mutation({
-      query: ({
-        name,
-        desc,
-        phone,
-        dob,
-        image,
-        address,
-        zip,
-        country,
-        busType,
-      }) => ({
+      query: (formData) => ({
         url: '/accounts/setup',
         method: 'POST',
-        body: {
-          name: name,
-          description: desc,
-          phone: phone,
-          dob: dob,
-          image: image,
-          address: address,
-          zip: zip,
-          country: country,
-          busType: busType,
-        },
+        body: formData,
       }),
     }),
     editAccount: builder.mutation({
@@ -95,6 +84,18 @@ export const accountApiSlice = apiSlice.injectEndpoints({
         body: {},
       }),
     }),
+    uploadLogo: builder.mutation({
+      query: (logo) => {
+        const formData = new FormData();
+        formData.append('logoImg', logo);
+
+        return {
+          url: '/accounts/edit/logo',
+          method: 'POST',
+          body: formData,
+        };
+      },
+    }),
   }),
 });
 
@@ -105,4 +106,7 @@ export const {
   useEditProfileMutation,
   useEditNotisMutation,
   useDeleteAccountMutation,
+  useUploadLogoMutation,
+  useCheckSlugQuery,
+  useGetStatsTempQuery,
 } = accountApiSlice;

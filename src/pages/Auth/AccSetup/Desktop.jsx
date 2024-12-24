@@ -1,10 +1,13 @@
 import React, { useState } from 'react';
-import { Layers, LogOut } from 'react-feather';
+import { ChevronRight, Layers, LogOut } from 'react-feather';
 import { Link, useNavigate } from 'react-router-dom';
 import Cookies from 'js-cookie';
 import useHandleLogoutUser from '../../../utils/logout';
 import Form from './Form';
-import { useSetupMutation } from '../../../api/accountApiSlice';
+import {
+  useCheckSlugQuery,
+  useSetupMutation,
+} from '../../../api/accountApiSlice';
 import { useDispatch } from 'react-redux';
 import { showNotification } from '../../../api/toastSlice';
 
@@ -19,44 +22,49 @@ const Desktop = () => {
 
   //form state
   const [name, setName] = useState('');
-  const [phone, setPhone] = useState('');
   const [country, setCountry] = useState(undefined);
-  const [busType, setBusType] = useState(undefined);
-  const [address, setAddress] = useState('');
-  const [zip, setZip] = useState('');
+  const [slug, setSlug] = useState('');
   const [desc, setDesc] = useState('');
-  const [dob, setDob] = useState('');
-  const [profilePic, setProfilePic] = useState([]);
+  const [logo, setLogo] = useState(null);
   const [selectedImage, setSelectedImage] = useState(null);
   const [error, setError] = useState('');
   const [active, setActive] = useState(false);
 
   //hook for setup req
-  const [setup, result] = useSetupMutation();
+  const [setup, { isLoading: settingUp }] = useSetupMutation();
+
+  const {
+    data,
+    error: slugCheckErr,
+    isLoading: checkingSlug,
+    isSuccess: checkedSlug,
+  } = useCheckSlugQuery(slug, {
+    skip: slug.length === 0, // Skip the query if the slug input is empty
+  });
 
   //handles req for finishing setup
   const handleFinishSetup = async (e) => {
     e.preventDefault();
 
+    // Create FormData and append the file and other data
+    const formData = new FormData();
+    formData.append('name', name);
+    formData.append('description', desc);
+    formData.append('slug', slug);
+    formData.append('country', JSON.stringify(country));
+    formData.append('logoImg', logo);
+
     try {
-      const setupReq = await setup({
-        name: name,
-        desc: desc,
-        phone: phone,
-        dob: dob,
-        image: profilePic,
-        address: address,
-        zip: zip,
-        country: country,
-        busType: busType,
-      }).unwrap();
+      const setupReq = await setup(formData).unwrap();
 
       if (setupReq?.msg === 'Finished') {
-        dispatch(showNotification(`Hello ${currentUser?.name}`));
+        dispatch(showNotification(`Hello ${setupReq?.user?.name}`));
         setActive(false);
         const updatedUser = JSON.stringify(setupReq?.user);
         Cookies.set('currentUser', updatedUser, { sameSite: 'Lax' });
         navigate('/dashboard');
+      } else if (setupReq?.msg === 'Slug taken') {
+        setError('Profile slug is taken');
       } else {
         setError('There was an error');
         return;
@@ -74,27 +82,23 @@ const Desktop = () => {
     content = (
       <Form
         setActive={setActive}
-        setProfilePic={setProfilePic}
+        setLogo={setLogo}
         setSelectedImage={setSelectedImage}
         selectedImage={selectedImage}
         name={name}
         setName={setName}
-        phone={phone}
-        setPhone={setPhone}
         country={country}
         setCountry={setCountry}
-        address={address}
-        setAddress={setAddress}
-        zip={zip}
-        setZip={setZip}
+        slug={slug}
+        setSlug={setSlug}
         desc={desc}
         setDesc={setDesc}
         error={error}
-        busType={busType}
-        setBusType={setBusType}
-        dob={dob}
-        setDob={setDob}
         handleFinishSetup={handleFinishSetup}
+        data={data}
+        checkingSlug={checkingSlug}
+        checkedSlug={checkedSlug}
+        settingUp={settingUp}
       />
     );
   } else {
@@ -112,9 +116,9 @@ const Desktop = () => {
           </Link>
           <div className="flex flex-col gap-6 items-center text-center w-80">
             <p className="text-stone-700 text-xs">
-              Welcome to Bizvo! A simple way to collect money from your
-              customers. Before you begin collecting, we just need some
-              information from you to complete your account setup.
+              Welcome to Bizvo! An easy way to collect money from your
+              customers. Before we send you to your dashboard, finish the quick
+              account setup on the next page.
             </p>
             <div className="flex flex-col w-full items-start">
               <p className="text-stone-700 text-xs">Logged in as:</p>
@@ -125,7 +129,7 @@ const Desktop = () => {
                 value={currentUser?.email}
               />
             </div>
-            <div className="flex gap-1 items-center">
+            <div className="flex gap-1 items-center w-full justify-between">
               <button
                 type="button"
                 onClick={() => logout('logout')}
@@ -137,9 +141,9 @@ const Desktop = () => {
               <button
                 type="button"
                 onClick={() => setActive(true)}
-                className="p-1 border border-stone-800 rounded-md text-xs text-stone-800"
+                className="p-1 border border-stone-800 rounded-md text-xs text-stone-800 flex items-center justify-center gap-1"
               >
-                Finish Setup
+                Finish Setup <ChevronRight size={14} />
               </button>
             </div>
           </div>

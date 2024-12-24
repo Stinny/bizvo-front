@@ -18,6 +18,7 @@ import NewCustomer from './pages/Auth/NewCustomer/NewCustomer';
 import CustomerDetail from './pages/Auth/CustomerDetail/CustomerDetail';
 import Add from './pages/Auth/Add/Add';
 import InvoDetail from './pages/Auth/InvoDetail/InvoDetail';
+import Pay from './pages/UnAuth/Pay/Pay';
 
 const App = () => {
   return (
@@ -31,6 +32,8 @@ const App = () => {
           <Route path="signup" element={<Signup />} />
 
           <Route path="contact" element={<Message />} />
+
+          <Route path="pay/:invoId" element={<Pay />} />
 
           {/* routes require user to be logged in */}
           <Route element={<AuthRequired />}>

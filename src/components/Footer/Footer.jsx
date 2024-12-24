@@ -49,8 +49,8 @@ const Footer = () => {
       </div>
     </footer>
   ) : (
-    <footer className="w-full bg-transparent absolute top-full mb-4">
-      <div className="max-w-3xl bg-white flex justify-between items-center border border-gray-200 rounded-md p-2 mb-4">
+    <footer className="w-full bg-transparent absolute top-full">
+      <div className="max-w-3xl bg-white flex justify-between items-center border border-gray-200 rounded-md p-2 mt-4">
         {/* logo section */}
 
         <Link to="/" className="h-full flex gap-1">
