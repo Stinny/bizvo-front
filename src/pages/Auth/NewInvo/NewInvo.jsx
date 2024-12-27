@@ -108,7 +108,8 @@ const NewInvo = () => {
       }).unwrap();
 
       if (newInvoiceReq === 'Invoice created') {
-        dispatch(showNotification('Invoice created'));
+        const toastMsg = send ? 'Invoice created & sent' : 'Invoice created';
+        dispatch(showNotification(toastMsg));
         navigate('/dashboard/invoices');
       } else {
         setError('There was an error');
@@ -131,7 +132,7 @@ const NewInvo = () => {
 
   let content;
 
-  if (isLoading) {
+  if (isLoading || creating) {
     content = <Loading />;
   } else if (isSuccess) {
     content = (

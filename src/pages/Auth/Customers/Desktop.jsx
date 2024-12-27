@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { ChevronLeft, ChevronRight, Plus, Send } from 'react-feather';
+import { ChevronLeft, ChevronRight, Plus, Send, Users } from 'react-feather';
 import ReactPaginate from 'react-paginate';
 import ReactCountryFlag from 'react-country-flag';
 
@@ -75,8 +75,11 @@ const Desktop = ({ customers }) => {
   ) : (
     <div className="w-10/12 bg-white border rounded-md border-gray-200 p-2 h-96 flex items-center justify-center">
       <div className="flex flex-col items-center text-center">
-        <p className="text-sm text-stone-800">No customers</p>
-        <p className="text-xs text-stone-700">Create your first customer</p>
+        <Users size={18} className="text-stone-800 mb-2" />
+        <p className="text-sm text-stone-800">No Customers</p>
+        <p className="text-xs text-stone-600 w-72">
+          Create customers to send invoices to
+        </p>
         <Link
           to="/dashboard/customers/add"
           className="flex items-center justify-center gap-1 border border-stone-800 rounded-md p-1 mt-2"

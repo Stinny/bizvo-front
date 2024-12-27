@@ -63,7 +63,9 @@ const Sidenav = () => {
       <div className="border-t border-gray-200 flex flex-col gap-1 items-start w-full pt-1">
         <Link
           to="/dashboard/payouts"
-          className={path === '/dashboard/payouts' ? activeLink : notActiveLink}
+          className={
+            path.startsWith('/dashboard/payouts') ? activeLink : notActiveLink
+          }
         >
           <DollarSign size={14} className="text-stone-800" />
           <p className="text-xs text-stone-800">Payouts</p>

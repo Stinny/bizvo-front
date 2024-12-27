@@ -19,6 +19,7 @@ import CustomerDetail from './pages/Auth/CustomerDetail/CustomerDetail';
 import Add from './pages/Auth/Add/Add';
 import InvoDetail from './pages/Auth/InvoDetail/InvoDetail';
 import Pay from './pages/UnAuth/Pay/Pay';
+import PayoutDetail from './pages/Auth/PayoutDetail/PayoutDetail';
 
 const App = () => {
   return (
@@ -64,6 +65,11 @@ const App = () => {
             <Route path="dashboard/reviews" element={<Reviews />} />
 
             <Route path="dashboard/payouts" element={<Payouts />} />
+
+            <Route
+              path="dashboard/payouts/:payoutId"
+              element={<PayoutDetail />}
+            />
           </Route>
         </Route>
       </Routes>

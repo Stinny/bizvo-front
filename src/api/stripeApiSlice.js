@@ -37,6 +37,13 @@ export const stripeApiSlice = apiSlice.injectEndpoints({
         body: {},
       }),
     }),
+    changeSched: builder.mutation({
+      query: ({ sched }) => ({
+        url: '/stripe/update/schedule',
+        method: 'POST',
+        body: { schedule: sched },
+      }),
+    }),
   }),
 });
 
@@ -46,4 +53,5 @@ export const {
   useGetUpdateUrlMutation,
   useRemoveBankMutation,
   useRemoveStripeMutation,
+  useChangeSchedMutation,
 } = stripeApiSlice;

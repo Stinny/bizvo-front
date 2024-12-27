@@ -120,7 +120,8 @@ const Desktop = ({ invoice, refetch }) => {
       }).unwrap();
 
       if (editReq === 'Invoice updated') {
-        dispatch(showNotification('Invoice updated'));
+        const toastMsg = send ? 'Invoice updated & sent' : 'Invoice updated';
+        dispatch(showNotification(toastMsg));
         refetch();
         setEdit(false);
       } else {

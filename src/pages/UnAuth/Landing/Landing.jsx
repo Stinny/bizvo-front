@@ -17,8 +17,8 @@ const Landing = () => {
             Online Invoicing Made Easier.
           </p>
           <p className="text-md text-stone-700 text-left">
-            Collect payments, avoid the paperwork. Easy for you and the
-            customer.
+            Collect payments, remian compliant, and avoid paperwork. Easy for
+            you and the customer.
           </p>
 
           <Link

@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import { Calendar, Edit, Save, Trash, X } from 'react-feather';
 import { BiSolidBank } from 'react-icons/bi';
 import {
+  useChangeSchedMutation,
   useGetUpdateUrlMutation,
   useRemoveBankMutation,
 } from '../../../api/stripeApiSlice';
@@ -18,6 +19,7 @@ const Bank = ({ currentUser, refetch }) => {
 
   const [getUpdateUrl, { isLoading }] = useGetUpdateUrlMutation();
   const [removeBank, { isLoading: removing }] = useRemoveBankMutation();
+  const [changeSched, { isLoading: changingSched }] = useChangeSchedMutation();
 
   const handleGetUpdateUrl = async () => {
     try {
@@ -41,12 +43,29 @@ const Bank = ({ currentUser, refetch }) => {
     }
   };
 
-  const handleSaveSched = async () => {};
+  const handleSaveSched = async () => {
+    try {
+      const req = await changeSched({ sched: schedule }).unwrap();
+
+      if (req === 'Sched updated') {
+        dispatch(showNotification('Payout schedule updated'));
+        setSched(false);
+        refetch();
+      }
+    } catch (err) {
+      return;
+    }
+  };
+
+  const handleSchedCancel = () => {
+    setSchedule(currentUser?.schedule);
+    setSched(false);
+  };
 
   return (
     <div className="w-full flex flex-col items-center justify-center mt-2">
-      {removing ? (
-        <div className="flex items-center justify-center w-96 h-80">
+      {removing || changingSched ? (
+        <div className="flex items-center justify-center w-96 h-52">
           <Spinner />
         </div>
       ) : (
@@ -92,7 +111,7 @@ const Bank = ({ currentUser, refetch }) => {
                   className="text-stone-800 text-xs p-0.5 pr-2 pl-2 border border-stone-800 rounded-md flex items-center justify-center gap-1"
                 >
                   <Calendar size={12} />
-                  {schedule === 'monthly' ? 'Monthly' : 'Weekly'}
+                  {schedule === 'Monthly' ? 'Monthly' : 'Weekly'}
                 </button>
                 <div className="flex items-center gap-2">
                   <button
@@ -133,7 +152,7 @@ const Bank = ({ currentUser, refetch }) => {
               ''
             )}
             {sched ? (
-              <>
+              <div className="w-full flex items-center gap-1">
                 <div className="flex items-center gap-1">
                   <button
                     type="button"
@@ -158,11 +177,11 @@ const Bank = ({ currentUser, refetch }) => {
                     Monthly
                   </button>
                 </div>
-                <div className="flex items-center justify-end w-full gap-2">
+                <div className="flex items-center gap-2">
                   <button
                     type="button"
                     className=" text-red-400"
-                    onClick={() => setSched(false)}
+                    onClick={handleSchedCancel}
                   >
                     <X size={16} />
                   </button>
@@ -174,7 +193,7 @@ const Bank = ({ currentUser, refetch }) => {
                     <Save size={16} />
                   </button>
                 </div>
-              </>
+              </div>
             ) : (
               ''
             )}
