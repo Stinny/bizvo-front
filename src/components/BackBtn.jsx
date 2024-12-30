@@ -13,10 +13,9 @@ const BackBtn = ({ direction }) => {
     <button
       type="button"
       onClick={handleGoBack}
-      className="flex items-center text-xs text-stone-800"
+      className="flex items-center text-xs text-stone-800 border border-stone-800 rounded-md p-1 pl-0.5 pr-0.5"
     >
-      <ChevronLeft size={16} />
-      Back
+      <ChevronLeft size={14} />
     </button>
   ) : (
     <button
@@ -24,7 +23,6 @@ const BackBtn = ({ direction }) => {
       onClick={handleGoBack}
       className="flex items-center text-xs text-stone-800"
     >
-      Back
       <ChevronRight size={16} />
     </button>
   );

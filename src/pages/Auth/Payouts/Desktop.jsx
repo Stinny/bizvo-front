@@ -45,7 +45,7 @@ const Desktop = ({ payouts, balance, currentUser }) => {
           <div className="flex flex-col items-start">
             <div className="flex items-center gap-3">
               <div className="flex flex-col items-start">
-                <p className="text-sm text-stone-800">
+                <p className="text-xs text-stone-800">
                   <StripeAmount
                     amount={balance?.available}
                     currency={currentUser?.bankCurrency}
@@ -54,7 +54,7 @@ const Desktop = ({ payouts, balance, currentUser }) => {
                 <p className="text-xs text-stone-600">Available</p>
               </div>
               <div className="flex flex-col items-start">
-                <p className="text-sm text-stone-800">
+                <p className="text-xs text-stone-800">
                   <StripeAmount
                     amount={balance?.pending}
                     currency={currentUser?.bankCurrency}

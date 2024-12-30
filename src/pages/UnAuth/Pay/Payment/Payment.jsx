@@ -50,13 +50,14 @@ const stripeOptions = {
   },
 };
 
-const Payment = ({ setReadyForPayment, invoice, refetch }) => {
+const Payment = ({ setReadyForPayment, invoice, refetch, setSucc }) => {
   return (
     <Elements stripe={stripeLoader} options={stripeOptions}>
       <Form
         setReadyForPayment={setReadyForPayment}
         invoice={invoice}
         refetch={refetch}
+        setSucc={setSucc}
       />
     </Elements>
   );

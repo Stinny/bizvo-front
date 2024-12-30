@@ -10,7 +10,9 @@ import {
   Clipboard,
   Edit as EditIcon,
   ExternalLink,
+  MoreVertical,
   Send,
+  X,
 } from 'react-feather';
 import { useGetCustomerOptsQuery } from '../../../../api/customersApiSlice';
 import {
@@ -22,6 +24,7 @@ import { useDispatch } from 'react-redux';
 import moment from 'moment';
 import Cookies from 'js-cookie';
 import { Link } from 'react-router-dom';
+import BackBtn from '../../../../components/BackBtn';
 
 const customStyles = {
   content: {
@@ -62,6 +65,13 @@ const Desktop = ({ invoice, refetch }) => {
   const [sendMod, setSendMod] = useState(false);
   const [sendConfirm, setSendConfirm] = useState(false);
   const [confirmMod, setConfirmMod] = useState(false);
+  const [more, setMore] = useState(false);
+
+  //for display
+  const taxAmount = invoice?.tax?.amount / 100;
+  const bizFee = invoice?.fees?.bizvo / 100;
+  const strFee = invoice?.fees?.stripe / 100;
+  const trsFee = invoice?.fees?.transfer / 100;
 
   //hook for getting cust select options
   const {
@@ -252,17 +262,20 @@ const Desktop = ({ invoice, refetch }) => {
           )}
         </Modal>
         <div className="w-full flex items-center justify-between relative">
-          <div className="flex flex-col items-start">
+          <div className="flex flex-col items-start gap-1">
             <div className="flex items-center gap-1">
+              <BackBtn direction={'left'} />
               <p className="text-sm text-stone-800">Viewing Invoice</p>
-              <Link
-                to={`http://localhost:5173/pay/${invoice?._id}?iat=${invoice?.token}`}
-                target="_blank"
-              >
-                <ExternalLink size={14} className="text-stone-800" />
-              </Link>
             </div>
-            <p className="text-xs text-stone-700">#{invoice?._id}</p>
+            <Link
+              to={`http://localhost:5173/pay/${invoice?._id}?iat=${invoice?.token}`}
+              target="_blank"
+            >
+              <p className="text-xs text-stone-700 flex items-center gap-1">
+                #{invoice?._id}
+                <ExternalLink size={14} />
+              </p>
+            </Link>
           </div>
           <div className="flex items-center justify-center gap-3 w-44">
             {invoice?.sent ? (
@@ -337,18 +350,22 @@ const Desktop = ({ invoice, refetch }) => {
               </>
             )}
           </div>
-          <div className="w-24 flex justify-end"></div>
-          <div className="absolute top-0 right-0 mt-1 mr-1">
-            <button type="button" onClick={() => setEdit(!edit)}>
-              <EditIcon size={16} className="text-stone-800" />
-            </button>
-          </div>
+          <div className="w-24"></div>
+          {invoice?.paid ? (
+            ''
+          ) : (
+            <div className="absolute top-0 right-0 mt-1 mr-1">
+              <button type="button" onClick={() => setEdit(!edit)}>
+                <EditIcon size={16} className="text-stone-800" />
+              </button>
+            </div>
+          )}
         </div>
 
         <div className="flex items-center justify-center w-72 mx-auto">
           <div className="flex flex-col gap-4 w-full items-start">
-            <div className="flex flex-col items-start w-full">
-              <p className="text-xs text-stone-700">Customer</p>
+            <div className="flex flex-col gap-1 items-start w-full">
+              <p className="text-xs text-stone-600">Customer</p>
               <button
                 type="button"
                 onClick={() => setViewCust(!viewCust)}
@@ -372,7 +389,7 @@ const Desktop = ({ invoice, refetch }) => {
                     viewCust ? 'max-h-40' : 'max-h-0'
                   }`}
                 >
-                  <p className="text-xs text-stone-800 mt-4">
+                  <p className="text-xs text-stone-800 mt-2">
                     {invoice?.customer?.email}
                   </p>
                   <p className="text-xs text-stone-800 mt-2">
@@ -381,8 +398,8 @@ const Desktop = ({ invoice, refetch }) => {
                 </div>
               </button>
             </div>
-            <div className="flex flex-col items-start w-full">
-              <p className="text-xs text-stone-700">Title</p>
+            <div className="flex flex-col items-start w-full gap-1">
+              <p className="text-xs text-stone-600">Title</p>
               <input
                 type="text"
                 placeholder="Title"
@@ -391,8 +408,8 @@ const Desktop = ({ invoice, refetch }) => {
                 value={title}
               />
             </div>
-            <div className="flex flex-col items-start w-full">
-              <p className="text-xs text-stone-700">Description</p>
+            <div className="flex flex-col items-start w-full gap-1">
+              <p className="text-xs text-stone-600">Description</p>
               <textarea
                 placeholder="About this invoice.."
                 className="text-xs bg-gray-50 border border-gray-50 focus:outline-none text-stone-800 ring-0 w-full rounded-md p-2 resize-none h-16"
@@ -401,8 +418,8 @@ const Desktop = ({ invoice, refetch }) => {
               />
             </div>
             <div className="w-full flex items-center justify-center gap-2">
-              <div className="flex flex-col items-start w-4/12">
-                <p className="text-xs text-stone-700">Amount</p>
+              <div className="flex flex-col items-start w-4/12 gap-1">
+                <p className="text-xs text-stone-600">Amount</p>
                 <div className="w-full flex items-center gap-0.5">
                   <p className="text-sm text-stone-800">$</p>
                   <input
@@ -410,12 +427,15 @@ const Desktop = ({ invoice, refetch }) => {
                     placeholder="Amount"
                     className="text-xs bg-gray-50 border border-gray-50 focus:outline-none text-stone-800 ring-0 w-full rounded-md p-2 pl-0"
                     disabled
-                    value={amount}
+                    value={parseFloat(amount)?.toLocaleString(undefined, {
+                      minimumFractionDigits: 2,
+                      maximumFractionDigits: 2,
+                    })}
                   />
                 </div>
               </div>
-              <div className="flex flex-col items-start w-8/12">
-                <p className="text-xs text-stone-700">Due By</p>
+              <div className="flex flex-col items-start w-8/12 gap-1">
+                <p className="text-xs text-stone-600">Due By</p>
                 <input
                   type="text"
                   placeholder="Due Date"
@@ -425,6 +445,76 @@ const Desktop = ({ invoice, refetch }) => {
                 />
               </div>
             </div>
+            {invoice?.paid ? (
+              <div className="flex flex-col w-full items-start gap-1">
+                <p className="text-xs text-stone-600">Total</p>
+                <button
+                  type="button"
+                  onClick={() => setMore(!more)}
+                  className="w-full flex flex-col bg-gray-50 items-start text-left border border-gray-50 rounded-md p-2"
+                >
+                  <div className="w-full flex items-center justify-between">
+                    <div className="flex items-center gap-2">
+                      <p className="text-stone-800 text-xs">
+                        $
+                        {parseFloat(
+                          invoice?.amount + taxAmount
+                        )?.toLocaleString(undefined, {
+                          minimumFractionDigits: 2,
+                          maximumFractionDigits: 2,
+                        })}
+                      </p>
+                    </div>
+                    {more ? (
+                      <ChevronDown size={14} />
+                    ) : (
+                      <ChevronRight size={14} />
+                    )}
+                  </div>
+
+                  <div
+                    className={`transition-[max-height] duration-300 ease-in-out w-full flex flex-col gap-2 overflow-hidden ${
+                      more ? 'max-h-40' : 'max-h-0'
+                    }`}
+                  >
+                    <div className="w-full flex justify-between items-center mt-2">
+                      <p className="text-stone-700 text-xs">
+                        Tax({invoice?.tax?.rate}%):
+                      </p>
+                      <p className="text-stone-700 text-xs">
+                        -${taxAmount?.toFixed(2)}
+                      </p>
+                    </div>
+                    <div className="w-full flex justify-between items-center">
+                      <p className="text-stone-700 text-xs">Bizvo:</p>
+                      <p className="text-stone-700 text-xs">
+                        -${bizFee?.toFixed(2)}
+                      </p>
+                    </div>
+                    <div className="w-full flex justify-between items-center">
+                      <p className="text-stone-700 text-xs">Stripe:</p>
+                      <p className="text-stone-700 text-xs">
+                        -${strFee?.toFixed(2)}
+                      </p>
+                    </div>
+                    <div className="w-full flex justify-between items-center">
+                      <p className="text-stone-700 text-xs font-bold">
+                        Earnings:
+                      </p>
+                      <p className="text-stone-700 text-xs font-bold">
+                        $
+                        {parseFloat(trsFee)?.toLocaleString(undefined, {
+                          minimumFractionDigits: 2,
+                          maximumFractionDigits: 2,
+                        })}
+                      </p>
+                    </div>
+                  </div>
+                </button>
+              </div>
+            ) : (
+              ''
+            )}
           </div>
         </div>
       </div>

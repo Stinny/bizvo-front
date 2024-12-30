@@ -74,8 +74,12 @@ const Desktop = ({ invoices }) => {
               </div>
             </div>
             <div className="w-full flex justify-between border-t border-gray-200 p-2">
-              <p className="text-xs text-stone-800 font-bold">
-                ${invoice?.amount?.toFixed(2)}
+              <p className="text-stone-800 text-xs font-bold">
+                $
+                {parseFloat(invoice?.amount)?.toLocaleString(undefined, {
+                  minimumFractionDigits: 2,
+                  maximumFractionDigits: 2,
+                })}
               </p>
               {invoice?.paid ? (
                 <Badge size="xs" color="success">

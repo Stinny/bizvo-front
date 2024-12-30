@@ -123,8 +123,8 @@ const EditDraft = ({
         </div>
       </Modal>
       <div className="flex flex-col gap-4 w-full items-start">
-        <div className="flex flex-col items-start w-full">
-          <p className="text-xs text-stone-700">Customer</p>
+        <div className="flex flex-col items-start w-full gap-1">
+          <p className="text-xs text-stone-600">Customer</p>
           <Select
             options={custOpts}
             onChange={(value) => setCustomer(value)}
@@ -181,8 +181,8 @@ const EditDraft = ({
             className="w-full text-left"
           />
         </div>
-        <div className="flex flex-col items-start w-full">
-          <p className="text-xs text-stone-700">Title</p>
+        <div className="flex flex-col items-start w-full gap-1">
+          <p className="text-xs text-stone-600">Title</p>
           <div className="relative w-full">
             <input
               type="text"
@@ -199,8 +199,8 @@ const EditDraft = ({
             </div>
           </div>
         </div>
-        <div className="flex flex-col items-start w-full">
-          <p className="text-xs text-stone-700">Description</p>
+        <div className="flex flex-col items-start w-full gap-1">
+          <p className="text-xs text-stone-600">Description</p>
           <textarea
             placeholder="What is this invoice for.."
             className="border border-gray-200 hover:border-gray-200 hover:bg-gray-200 focus:bg-gray-200 focus:border-gray-200 focus:ring-0 w-full h-16 rounded-md p-2 bg-gray-50 resize-none text-xs"
@@ -209,8 +209,8 @@ const EditDraft = ({
           />
         </div>
         <div className="flex items-center gap-2">
-          <div className="flex flex-col items-start w-4/12">
-            <p className="text-xs text-stone-700">Amount</p>
+          <div className="flex flex-col items-start w-4/12 gap-1">
+            <p className="text-xs text-stone-600">Amount</p>
             <div className="flex items-center w-full gap-0.5">
               <p className="text-sm text-stone-800">$</p>
               <input
@@ -222,8 +222,8 @@ const EditDraft = ({
               />
             </div>
           </div>
-          <div className="flex flex-col items-start w-8/12">
-            <p className="text-xs text-stone-700">Due By</p>
+          <div className="flex flex-col items-start w-8/12 gap-1">
+            <p className="text-xs text-stone-600">Due By</p>
             <div className="relative w-full">
               <button
                 type="button"

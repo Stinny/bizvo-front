@@ -34,6 +34,13 @@ export const authApiSlice = apiSlice.injectEndpoints({
         },
       }),
     }),
+    changePswd: builder.mutation({
+      query: ({ oldPswd, newPswd }) => ({
+        url: '/auth/password/change',
+        method: 'POST',
+        body: { oldPassword: oldPswd, newPassword: newPswd },
+      }),
+    }),
     subscribe: builder.mutation({
       query: ({ email }) => ({
         url: '/auth/sub',
@@ -50,4 +57,5 @@ export const {
   useGoogleLoginMutation,
   useGoogleSignupMutation,
   useSubscribeMutation,
+  useChangePswdMutation,
 } = authApiSlice;

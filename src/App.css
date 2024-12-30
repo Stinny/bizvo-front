@@ -5,8 +5,13 @@
   text-align: center;
   padding: 50px;
   font-family: 'Twemoji Country Flags', 'Roboto Mono', monospace;
-  /* font-family: 'Twemoji Country Flags', 'Space Mono', monospace; */
-  /* font-family: 'Twemoji Country Flags', 'Rubik', serif; */
+}
+
+/* Media query for mobile devices */
+@media (max-width: 650px) {
+  #root {
+    padding: 0; /*remove padding on mobile devices*/
+  }
 }
 
 .react-tabs__tab {
@@ -99,4 +104,47 @@
   .breakLink {
     padding: 3px; /* Smaller padding for mobile devices */
   }
+}
+
+/* antd checkbox css */
+.ant-checkbox-checked .ant-checkbox-inner {
+  background-color: rgb(41 37 36) !important;
+  border-color: rgb(41 37 36) !important;
+}
+.ant-checkbox-wrapper:hover .ant-checkbox-checked .ant-checkbox-inner {
+  background-color: rgb(41 37 36) !important;
+  border-color: rgb(41 37 36) !important;
+}
+.ant-checkbox-checked:hover .ant-checkbox-checked .ant-checkbox-inner {
+  background-color: rgb(41 37 36) !important;
+  border-color: rgb(41 37 36) !important;
+}
+.ant-checkbox-checked:after {
+  border-color: rgb(41 37 36) !important;
+}
+.ant-checkbox:hover::after {
+  border-color: rgb(41 37 36) !important;
+}
+.ant-checkbox:hover .ant-checkbox-inner {
+  border-color: rgb(41 37 36) !important;
+}
+.ant-checkbox-wrapper:hover .ant-checkbox-inner {
+  border-color: rgb(41 37 36) !important;
+}
+
+/* Style the wrapper when the checkbox is disabled */
+.ant-checkbox-wrapper.ant-checkbox-wrapper-disabled {
+  color: #ffffff; /* Change label text color */
+  cursor: default; /* Indicate it's disabled */
+}
+
+/* Style the checkbox itself when disabled */
+.ant-checkbox.ant-checkbox-disabled .ant-checkbox-inner {
+  background-color: #f5f5f5; /* Disabled background color */
+  border-color: #d9d9d9; /* Disabled border color */
+}
+
+/* Style the checkmark when disabled */
+.ant-checkbox.ant-checkbox-disabled .ant-checkbox-inner::after {
+  border-color: #ffffff; /* Change checkmark color when disabled */
 }

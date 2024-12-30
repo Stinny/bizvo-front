@@ -43,7 +43,7 @@ const Login = () => {
       } else if (err.status === 400) {
         setError(err?.data?.msg);
         setEmail(err?.data?.email);
-        setPassword(err?.data?.pass);
+        setPass(err?.data?.pass);
         return;
       } else {
         setError('Login failed');

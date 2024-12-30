@@ -4,8 +4,6 @@ import React from 'react';
 const Status = ({ status }) => {
   let content;
 
-  console.log(status);
-
   switch (status) {
     case 'paid':
       content = (

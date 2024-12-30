@@ -1,6 +1,14 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { Edit as EditIcon } from 'react-feather';
+import {
+  AlertOctagon,
+  Check,
+  Clipboard,
+  Edit as EditIcon,
+  Lock,
+  Trash,
+  X,
+} from 'react-feather';
 import Edit from './Edit';
 import {
   useDeleteAccountMutation,
@@ -12,7 +20,9 @@ import moment from 'moment';
 import Modal from 'react-modal';
 import useHandleLogoutUser from '../../../utils/logout';
 import Randomstring from 'randomstring';
-import { Spinner } from 'flowbite-react';
+import { Spinner, Tooltip } from 'flowbite-react';
+import { useChangePswdMutation } from '../../../api/authApiSlice';
+import { FcGoogle } from 'react-icons/fc';
 
 const customStyles = {
   content: {
@@ -37,6 +47,7 @@ const Account = ({ currentUser, refetch }) => {
   const [edit, setEdit] = useState(false);
   const [open, setOpen] = useState(false);
   const [del, setDel] = useState(false);
+  const [pswd, setPswd] = useState(false);
 
   //form state
   const [email, setEmail] = useState(currentUser?.email);
@@ -51,6 +62,11 @@ const Account = ({ currentUser, refetch }) => {
   const [taxId, setTaxId] = useState(currentUser?.taxId);
   const [error, setError] = useState('');
 
+  //changing pswd
+  const [oldPswd, setOldPswd] = useState('');
+  const [newPswd, setNewPswd] = useState('');
+  const [errorPswd, setErrorPswd] = useState('');
+
   //delete form state
   const [key, setKey] = useState('');
   const [deleteKey, setDeleteKey] = useState(Randomstring.generate(6));
@@ -58,6 +74,21 @@ const Account = ({ currentUser, refetch }) => {
   //hooks for making API calls
   const [editAccount, result] = useEditAccountMutation();
   const [deleteAccount, { isLoading }] = useDeleteAccountMutation();
+  const [changePswd, { isLoading: changingPswd }] = useChangePswdMutation();
+
+  const [copied, setCopied] = useState(false);
+
+  const copyToClipboard = () => {
+    navigator.clipboard
+      .writeText(currentUser?._id?.toString())
+      .then(() => {
+        setCopied(true);
+        setTimeout(() => setCopied(false), 2000); // Reset the copied state after 2 seconds
+      })
+      .catch((err) => {
+        console.error('Failed to copy!', err);
+      });
+  };
 
   //handler function for sending edit req
   const handleSaveEdits = async () => {
@@ -104,10 +135,47 @@ const Account = ({ currentUser, refetch }) => {
     }
   };
 
+  const handleChangePswd = async () => {
+    setErrorPswd('');
+
+    if (!oldPswd.trim() || !newPswd.trim()) {
+      setErrorPswd('Please fill out both fields');
+      return;
+    }
+
+    try {
+      const changeReq = await changePswd({
+        oldPswd,
+        newPswd,
+      }).unwrap();
+
+      if (changeReq === 'Password changed') {
+        logout('change');
+      } else if (changeReq === 'Invalid password') {
+        setErrorPswd('Old password invalid, try again');
+        return;
+      } else if (changeReq === 'Same password') {
+        setErrorPswd('Enter a different password');
+        return;
+      } else {
+        console.log(changeReq);
+        setErrorPswd('There was an error');
+        return;
+      }
+    } catch (err) {
+      setErrorPswd('Server error');
+      return;
+    }
+  };
+
   const handleCancelAccDel = () => {
     setKey('');
     setDel(false);
   };
+
+  useEffect(() => {
+    setErrorPswd('');
+  }, [newPswd, oldPswd]);
 
   return edit ? (
     <Edit
@@ -138,7 +206,28 @@ const Account = ({ currentUser, refetch }) => {
     <div className="w-full flex flex-col gap-4 items-start">
       <div className="w-full flex items-start justify-between">
         <div className="flex flex-col items-start">
-          <p className="text-sm text-stone-800">Account Settings</p>
+          <div className="flex items-center gap-1">
+            <p className="text-sm text-stone-800">Account Settings</p>
+            <Tooltip
+              content={
+                copied ? (
+                  <p className="text-xs text-stone-800 flex items-center gap-1">
+                    <Check size={14} className="text-green-400" /> Copied
+                  </p>
+                ) : (
+                  <p className="text-xs text-stone-800">Copy account ID</p>
+                )
+              }
+              style="light"
+              arrow={false}
+            >
+              <Clipboard
+                size={14}
+                className="text-stone-800 hover:cursor-pointer"
+                onClick={copyToClipboard}
+              />
+            </Tooltip>
+          </div>
           <p className="text-xs text-stone-700">
             View and edit your account settings
           </p>
@@ -168,21 +257,28 @@ const Account = ({ currentUser, refetch }) => {
               </div>
             ) : (
               <div className="w-80 flex flex-col gap-4 items-start">
-                <div className="flex flex-col items-start">
-                  <p className="text-sm text-stone-800">Delete Account</p>
-                  <p className="text-xs text-stone-700">
-                    Are you sure you want to delete your account?
-                  </p>
+                <div className="w-full flex items-start justify-between">
+                  <div className="flex flex-col items-start">
+                    <p className="text-sm text-stone-800">Delete Account</p>
+                    <p className="text-xs text-stone-600">
+                      Are you sure you want to delete your account?
+                    </p>
+                  </div>
+                  <X
+                    size={16}
+                    className="text-red-400 hover:cursor-pointer"
+                    onClick={handleCancelAccDel}
+                  />
                 </div>
                 <div className="flex flex-col items-start gap-2 w-full">
-                  <p className="text-xs text-stone-800">What will happen:</p>
-                  <p className="text-xs text-stone-700">
-                    - Any created customers will be deleted
+                  <p className="text-xs text-stone-600">What will happen:</p>
+                  <p className="text-xs text-stone-800">
+                    - All customers will be deleted
                   </p>
-                  <p className="text-xs text-stone-700">
-                    - Any draft or sent invoices will be deleted or invalid
+                  <p className="text-xs text-stone-800">
+                    - All invoices will be deleted or invalid
                   </p>
-                  <p className="text-xs text-stone-700">
+                  <p className="text-xs text-stone-800">
                     - All other account data will be unavailable
                   </p>
                 </div>
@@ -200,14 +296,7 @@ const Account = ({ currentUser, refetch }) => {
                   </p>
                 </div>
                 <div className="w-full flex items-center justify-end">
-                  <div className="flex items-center gap-2">
-                    <button
-                      type="button"
-                      className=" text-stone-800 rounded-md border border-stone-800 p-1 text-xs"
-                      onClick={handleCancelAccDel}
-                    >
-                      Cancel
-                    </button>
+                  <div className="flex items-center">
                     {deleteKey === key.trim() ? (
                       <button
                         type="button"
@@ -231,62 +320,101 @@ const Account = ({ currentUser, refetch }) => {
             )}
           </Modal>
           <Modal
-            isOpen={open}
-            onRequestClose={() => setOpen(false)}
+            isOpen={pswd}
+            onRequestClose={() => setPswd(false)}
             style={customStyles}
-            contentLabel="Email modal"
+            contentLabel="Pswd modal"
           >
-            <div className="w-72 flex flex-col gap-2 items-start">
-              <div className="flex flex-col items-start">
-                <p className="text-sm text-stone-800">Account Email</p>
-                <p className="text-xs text-stone-600">
-                  Changing account email will require confirmation
-                </p>
+            {changingPswd ? (
+              <div className="w-80 h-52 flex items-center justify-center">
+                <Spinner />
               </div>
-              <input
-                type="text"
-                placeholder="Email"
-                className="text-xs bg-gray-50 border border-gray-200 focus:border-gray-200 focus:bg-gray-200 focus:outline-none text-stone-800 focus:ring-0 w-full rounded-md p-2"
-                onChange={(e) => setEmail(e.target.value)}
-                value={email}
-              />
-              <div className="w-full flex items-center justify-end">
-                <div className="flex items-center gap-2">
-                  <button
-                    type="button"
-                    className="border border-red-400 text-red-400 rounded-md p-1 text-xs"
-                    onClick={() => setOpen(false)}
-                  >
-                    Cancel
-                  </button>
-                  <button
-                    type="button"
-                    className=" text-stone-800 rounded-md border border-stone-800 p-1 text-xs"
-                    // onClick={handleRefund}
-                  >
-                    Change
-                  </button>
+            ) : (
+              <div className="w-72 flex flex-col gap-2 items-start">
+                <div className="w-full flex items-start justify-between">
+                  <div className="flex flex-col items-start">
+                    <p className="text-sm text-stone-800">Change Password</p>
+                    <p className="text-xs text-stone-600">
+                      Change your account password
+                    </p>
+                  </div>
+                  <X
+                    size={16}
+                    className="text-red-400 hover:cursor-pointer"
+                    onClick={() => setPswd(false)}
+                  />
                 </div>
+                {errorPswd ? (
+                  <div className="w-full flex items-center justify-start gap-2 border border-gray-200 rounded-md p-2">
+                    <AlertOctagon size={16} className="text-red-400" />
+                    <p className="text-stone-800 text-xs">{errorPswd}</p>
+                  </div>
+                ) : (
+                  ''
+                )}
+                {currentUser?.googleAuth ? (
+                  <div className="w-full flex flex-col gap-1 items-center justify-center border border-gray-200 rounded-md p-4">
+                    <div className="flex items-center justify-center gap-2">
+                      <p className="text-sm text-stone-800">
+                        Authenticated using
+                      </p>{' '}
+                      <FcGoogle className="text-lg" />
+                    </div>
+                    <p className="text-xs text-stone-600 text-center">
+                      Changing password is unavailable when authenticated using
+                      a Google account
+                    </p>
+                  </div>
+                ) : (
+                  <>
+                    <div className="flex flex-col items-start w-full gap-2">
+                      <div className="flex flex-col items-start w-full gap-1">
+                        <p className="text-xs text-stone-600">Old password</p>
+                        <input
+                          type="password"
+                          placeholder="Old"
+                          className="text-xs bg-gray-50 border border-gray-200 focus:border-gray-200 focus:bg-gray-200 focus:outline-none text-stone-800 focus:ring-0 w-full rounded-md p-2"
+                          onChange={(e) => setOldPswd(e.target.value)}
+                          value={oldPswd}
+                        />
+                      </div>
+                      <div className="flex flex-col items-start w-full gap-1">
+                        <p className="text-xs text-stone-600">New password</p>
+                        <input
+                          type="password"
+                          placeholder="New"
+                          className="text-xs bg-gray-50 border border-gray-200 focus:border-gray-200 focus:bg-gray-200 focus:outline-none text-stone-800 focus:ring-0 w-full rounded-md p-2"
+                          onChange={(e) => setNewPswd(e.target.value)}
+                          value={newPswd}
+                        />
+                      </div>
+                    </div>
+                    <div className="w-full flex items-center justify-end">
+                      <div className="flex items-center gap-2">
+                        <button
+                          type="button"
+                          className=" text-stone-800 rounded-md border border-stone-800 p-1 text-xs"
+                          onClick={handleChangePswd}
+                        >
+                          Change
+                        </button>
+                      </div>
+                    </div>
+                  </>
+                )}
               </div>
-            </div>
+            )}
           </Modal>
           <div className="flex flex-col items-start w-full gap-1">
             <p className="text-xs text-stone-600">Email</p>
             <div className="flex w-full">
               <input
                 type="text"
-                placeholder="Email"
-                className="border text-xs border-gray-50 bg-gray-50 focus:ring-0 focus:border-gray-200 border-r-0 rounded-tl-md rounded-bl-md p-2 pr-1 flex-1"
+                placeholder="Address"
+                className="text-xs bg-gray-50 border border-gray-50 focus:outline-none text-stone-800 ring-0 w-full rounded-md p-2"
                 disabled
-                value={email}
+                value={currentUser?.email}
               />
-              <div className="rounded-tr-md rounded-br-md bg-gray-50 border border-r-0 border-gray-50 flex items-center p-2 pr-1">
-                <EditIcon
-                  size={14}
-                  onClick={() => setOpen(!open)}
-                  className="text-stone-800 hover:cursor-pointer"
-                />
-              </div>
             </div>
           </div>
           <div className="flex flex-col items-start w-full gap-1">
@@ -317,20 +445,20 @@ const Account = ({ currentUser, refetch }) => {
           </div>
         </div>
       </div>
-      <div className="w-full flex items-center justify-end gap-1">
+      <div className="w-full flex items-center justify-end gap-3">
         <button
           type="button"
           onClick={() => setDel(!del)}
-          className="text-xs border border-red-400 text-red-400 rounded-md p-1 pl-2 pr-2"
+          className="text-red-400"
         >
-          Delete
+          <Trash size={16} />
         </button>
         <button
           type="button"
-          // onClick={() => setDel(!del)}
-          className="text-xs border border-stone-800 text-stone-800 rounded-md p-1 pl-2 pr-2"
+          onClick={() => setPswd(!pswd)}
+          className="text-stone-800"
         >
-          Change Password
+          <Lock size={16} />
         </button>
       </div>
     </div>

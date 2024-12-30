@@ -4,7 +4,7 @@ import { AlertOctagon, ChevronLeft } from 'react-feather';
 import { useConfirmPayInvoMutation } from '../../../../api/invoicesApiSlice';
 import { Spinner } from 'flowbite-react';
 
-const Form = ({ setReadyForPayment, invoice, refetch }) => {
+const Form = ({ setReadyForPayment, invoice, refetch, setSucc }) => {
   const [error, setError] = useState('');
   const [isPayBtnDisabled, setIsPayBtnDisabled] = useState(true);
 
@@ -64,6 +64,7 @@ const Form = ({ setReadyForPayment, invoice, refetch }) => {
         invoiceId: invoice?._id,
       }).unwrap();
       if (paymentReq?.success) {
+        setSucc(true);
         refetch();
       } else if (paymentReq?.failed) {
         setError(paymentReq?.msg);
@@ -115,7 +116,11 @@ const Form = ({ setReadyForPayment, invoice, refetch }) => {
         <div className="w-full flex justify-between items-center">
           <p className="text-stone-700 text-xs">Amount:</p>
           <p className="text-stone-700 text-xs">
-            ${invoice?.amount?.toFixed(2)}
+            $
+            {parseFloat(invoice?.amount)?.toLocaleString(undefined, {
+              minimumFractionDigits: 2,
+              maximumFractionDigits: 2,
+            })}
           </p>
         </div>
         <div className="w-full flex justify-between items-center">
@@ -125,7 +130,14 @@ const Form = ({ setReadyForPayment, invoice, refetch }) => {
         <div className="w-full flex justify-between items-center">
           <p className="text-stone-800 text-xs font-bold">Total:</p>
           <p className="text-stone-800 text-xs font-bold">
-            ${(invoice?.amount + taxAmount).toFixed(2)}
+            $
+            {parseFloat(invoice?.amount + taxAmount)?.toLocaleString(
+              undefined,
+              {
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2,
+              }
+            )}
           </p>
         </div>
       </div>

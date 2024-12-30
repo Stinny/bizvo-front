@@ -87,14 +87,20 @@ const Sidenav = () => {
         {!currentUser?.bankAdded && !currentUser?.stripeOnboard ? (
           <div className="w-full text-left flex flex-col items-start gap-1 p-1 border border-gray-200 rounded-md">
             <AlertOctagon size={16} className="text-red-400" />
-            <p className="text-stone-800" style={{ fontSize: '10px' }}>
-              Select how you want to be paid in{' '}
+            <p
+              className="text-stone-800 text-left"
+              style={{ fontSize: '11px' }}
+            >
+              Connect a payout option in{' '}
               <span>
-                <Link to="/settings" className="font-bold text-stone-800">
+                <Link
+                  to="/settings"
+                  state={{ index: 2 }}
+                  className="font-bold text-stone-800"
+                >
                   settings
                 </Link>
-              </span>{' '}
-              before sending invoices
+              </span>
             </p>
           </div>
         ) : (

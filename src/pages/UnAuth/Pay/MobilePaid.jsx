@@ -15,7 +15,7 @@ import {
 } from 'react-feather';
 import { Link } from 'react-router-dom';
 
-const Paid = ({ invoice, currentUser, succ, setSucc }) => {
+const MobilePaid = ({ invoice, currentUser, succ, setSucc }) => {
   const [alert, setAlert] = useState(false);
   const [view, setView] = useState('');
 
@@ -44,10 +44,7 @@ const Paid = ({ invoice, currentUser, succ, setSucc }) => {
   }, []);
 
   return (
-    <div
-      style={{ width: '370px' }}
-      className="mx-auto flex flex-col gap-2 items-start mt-16"
-    >
+    <div className="flex flex-col gap-2 items-start mt-16 w-full p-4">
       <div className="w-full flex justify-center items-center text-center">
         <p className="text-stone-800" style={{ fontSize: '12px' }}>
           Paid on {moment(invoice?.paidOn).format('MMMM Do, YYYY')}
@@ -248,4 +245,4 @@ const Paid = ({ invoice, currentUser, succ, setSucc }) => {
   );
 };
 
-export default Paid;
+export default MobilePaid;

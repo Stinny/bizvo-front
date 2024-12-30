@@ -6,6 +6,7 @@ import Cookies from 'js-cookie';
 import Navbar from '../../../components/Navbar/Navbar';
 import Sidenav from '../../../components/Sidenav/Sidenav';
 import Footer from '../../../components/Footer/Footer';
+import { useLocation } from 'react-router-dom';
 
 const Settings = () => {
   const {
@@ -16,7 +17,10 @@ const Settings = () => {
     refetch,
   } = useGetUserQuery();
 
-  const [activeTabIndex, setActiveTabIndex] = useState(0);
+  const location = useLocation();
+  const [activeTabIndex, setActiveTabIndex] = useState(
+    location?.state?.index || 0
+  );
 
   useEffect(() => {
     refetch();

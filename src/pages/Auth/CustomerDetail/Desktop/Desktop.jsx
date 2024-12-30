@@ -9,6 +9,7 @@ import { showNotification } from '../../../../api/toastSlice';
 import { useDispatch } from 'react-redux';
 import ReactCountryFlag from 'react-country-flag';
 import { Tooltip } from 'flowbite-react';
+import BackBtn from '../../../../components/BackBtn';
 
 const Desktop = ({ customer, refetch }) => {
   const dispatch = useDispatch();
@@ -93,8 +94,11 @@ const Desktop = ({ customer, refetch }) => {
   ) : (
     <div className="w-10/12 bg-white border rounded-md border-gray-200 p-2 pb-6 flex flex-col gap-4 items-center justify-center">
       <div className="w-full flex items-center justify-between relative">
-        <div className="flex flex-col items-start">
-          <p className="text-sm text-stone-800">Viewing Customer</p>
+        <div className="flex flex-col items-start gap-1">
+          <div className="flex items-center gap-1">
+            <BackBtn direction={'left'} />
+            <p className="text-sm text-stone-800">Viewing Customer</p>
+          </div>
           <p className="text-xs text-stone-700">#{customer?._id}</p>
         </div>
         <Tooltip

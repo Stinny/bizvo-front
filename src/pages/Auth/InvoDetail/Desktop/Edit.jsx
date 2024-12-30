@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import {
   AlertOctagon,
   ChevronDown,
@@ -13,10 +13,11 @@ import { useDeleteInvoiceMutation } from '../../../../api/invoicesApiSlice';
 import { showNotification } from '../../../../api/toastSlice';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { Badge, Spinner, Tooltip } from 'flowbite-react';
+import { Badge, Datepicker, Spinner, Tooltip } from 'flowbite-react';
 import { Checkbox } from 'antd';
 import Cookies from 'js-cookie';
 import EditDraft from './EditDraft';
+import { dateTheme } from '../../../../utils/dateTheme';
 
 const customStyles = {
   content: {
@@ -85,6 +86,42 @@ const Edit = ({
     }
   };
 
+  //for date picker
+  const [selDate, setSelDate] = useState(false);
+  const datepickerRef = useRef(null);
+
+  //date picker min date
+  const today = new Date();
+  const tomorrow = new Date(today);
+  tomorrow.setDate(today.getDate() + 1);
+
+  const handleSetDate = (date) => {
+    setDueDate(date);
+    setSelDate(false);
+  };
+
+  // Handle clicks outside of the Datepicker
+  const handleClickOutside = (event) => {
+    if (
+      datepickerRef.current &&
+      !datepickerRef.current.contains(event.target)
+    ) {
+      setSelDate(false); // Hide Datepicker when clicking outside
+    }
+  };
+
+  useEffect(() => {
+    // Add event listener when the Datepicker is visible
+    if (selDate) {
+      document.addEventListener('mousedown', handleClickOutside);
+    }
+
+    // Cleanup event listener
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [selDate]);
+
   return (
     <div className="w-10/12 bg-white border rounded-md border-gray-200 p-2 pb-6 flex flex-col gap-6 items-start">
       <Modal
@@ -141,8 +178,8 @@ const Edit = ({
                 </button>
               </div>
               <div className="w-full flex items-center justify-center gap-2">
-                <div className="flex flex-col items-start w-4/12">
-                  <p className="text-xs text-stone-700">Amount</p>
+                <div className="flex flex-col items-start w-4/12 gap-1">
+                  <p className="text-xs text-stone-600">Amount</p>
                   <div className="w-full flex items-center gap-0.5">
                     <p className="text-sm text-stone-800">$</p>
                     <input
@@ -154,8 +191,8 @@ const Edit = ({
                     />
                   </div>
                 </div>
-                <div className="flex flex-col items-start w-8/12">
-                  <p className="text-xs text-stone-700">Due By</p>
+                <div className="flex flex-col items-start w-8/12 gap-1">
+                  <p className="text-xs text-stone-600">Due By</p>
                   <input
                     type="text"
                     placeholder="Due Date"
@@ -250,8 +287,8 @@ const Edit = ({
       {invoice?.sent ? (
         <div className="flex items-center justify-center w-72 mx-auto">
           <div className="flex flex-col gap-4 w-full items-start">
-            <div className="flex flex-col items-start w-full">
-              <p className="text-xs text-stone-700">Customer</p>
+            <div className="flex flex-col items-start w-full gap-1">
+              <p className="text-xs text-stone-600">Customer</p>
               <button
                 type="button"
                 onClick={() => setViewCust(!viewCust)}
@@ -284,8 +321,8 @@ const Edit = ({
                 </div>
               </button>
             </div>
-            <div className="flex flex-col items-start w-full">
-              <p className="text-xs text-stone-700">Title</p>
+            <div className="flex flex-col items-start w-full gap-1">
+              <p className="text-xs text-stone-600">Title</p>
               <div className="relative w-full">
                 <input
                   type="text"
@@ -302,8 +339,8 @@ const Edit = ({
                 </div>
               </div>
             </div>
-            <div className="flex flex-col items-start w-full">
-              <p className="text-xs text-stone-700">Description</p>
+            <div className="flex flex-col items-start w-full gap-1">
+              <p className="text-xs text-stone-600">Description</p>
               <textarea
                 placeholder="What is this invoice for.."
                 className="border border-gray-200 hover:border-gray-200 hover:bg-gray-200 focus:bg-gray-200 focus:border-gray-200 focus:ring-0 w-full h-16 rounded-md p-2 bg-gray-50 resize-none text-xs"
@@ -312,8 +349,8 @@ const Edit = ({
               />
             </div>
             <div className="w-full flex items-center justify-center gap-2">
-              <div className="flex flex-col items-start w-4/12">
-                <p className="text-xs text-stone-700">Amount</p>
+              <div className="flex flex-col items-start w-4/12 gap-1">
+                <p className="text-xs text-stone-600">Amount</p>
                 <div className="w-full flex items-center gap-0.5">
                   <p className="text-sm text-stone-800">$</p>
                   <input
@@ -321,19 +358,40 @@ const Edit = ({
                     placeholder="Amount"
                     className="text-xs bg-gray-50 border border-gray-50 focus:outline-none text-stone-800 ring-0 w-full rounded-md p-2 pl-0"
                     disabled
-                    value={amount}
+                    value={parseFloat(amount)?.toLocaleString(undefined, {
+                      minimumFractionDigits: 2,
+                      maximumFractionDigits: 2,
+                    })}
                   />
                 </div>
               </div>
-              <div className="flex flex-col items-start w-8/12">
-                <p className="text-xs text-stone-700">Due By</p>
-                <input
-                  type="text"
-                  placeholder="Due Date"
-                  className="text-xs bg-gray-50 border border-gray-50 focus:outline-none text-stone-800 ring-0 w-full rounded-md p-2"
-                  disabled
-                  value={`${moment(dueDate).format('MMMM D, YYYY')}`}
-                />
+              <div className="flex flex-col items-start w-8/12 gap-1">
+                <p className="text-xs text-stone-600">Due By</p>
+                <div className="relative w-full">
+                  <button
+                    type="button"
+                    onClick={() => setSelDate(!selDate)}
+                    className="text-xs w-full flex items-center justify-start bg-gray-50 border border-gray-200 focus:outline-none hover:bg-gray-200 focus:bg-gray-200 hover:border-gray-200 focus:border-gray-200 focus:ring-0 text-stone-800 ring-0 rounded-md p-2"
+                  >
+                    {dueDate
+                      ? moment(dueDate).format('MMMM D, YYYY')
+                      : 'Due date'}
+                  </button>
+                  {selDate ? (
+                    <div ref={datepickerRef} className="absolute">
+                      <Datepicker
+                        theme={dateTheme}
+                        minDate={tomorrow}
+                        onChange={(date) => handleSetDate(date)}
+                        value={dueDate}
+                        onMouseOut={() => setSelDate(false)}
+                        inline
+                      />
+                    </div>
+                  ) : (
+                    ''
+                  )}
+                </div>
               </div>
             </div>
             {invoice?.sent ? (

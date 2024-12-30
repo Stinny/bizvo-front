@@ -79,8 +79,8 @@ const Desktop = ({
       )}
       <form className="flex items-start gap-4 w-72">
         <div className="flex flex-col gap-4 items-start w-full">
-          <div className="flex flex-col items-start w-full">
-            <p className="text-xs text-stone-700">Name</p>
+          <div className="flex flex-col items-start w-full gap-1">
+            <p className="text-xs text-stone-600">Name</p>
             <div className="relative w-full">
               <input
                 type="text"
@@ -99,7 +99,7 @@ const Desktop = ({
           </div>
           <div className="flex flex-col gap-1 items-start w-full">
             <div className="w-full flex items-center justify-between">
-              <p className="text-xs text-stone-700">
+              <p className="text-xs text-stone-600">
                 {addTel ? 'Email & Phone' : 'Email'}
               </p>
               <div className="flex items-center gap-1">
@@ -136,8 +136,8 @@ const Desktop = ({
               ''
             )}
           </div>
-          <div className="flex flex-col items-start w-full">
-            <p className="text-xs text-stone-700">Address</p>
+          <div className="flex flex-col items-start w-full gap-1">
+            <p className="text-xs text-stone-600">Address</p>
             <input
               type="text"
               placeholder="Address"
@@ -147,8 +147,8 @@ const Desktop = ({
             />
           </div>
           <div className="w-full flex items-center gap-2">
-            <div className="flex flex-col items-start w-8/12">
-              <p className="text-xs text-stone-700">Country</p>
+            <div className="flex flex-col items-start w-8/12 gap-1">
+              <p className="text-xs text-stone-600">Country</p>
               <Select
                 options={options}
                 onChange={(value) => setCountry(value)}
@@ -199,8 +199,8 @@ const Desktop = ({
                 className="w-full text-left outline-none ring-0"
               />
             </div>
-            <div className="flex flex-col items-start w-4/12">
-              <p className="text-xs text-stone-700">Postal</p>
+            <div className="flex flex-col items-start w-4/12 gap-1">
+              <p className="text-xs text-stone-600">Postal</p>
               <input
                 type="text"
                 placeholder="01234"

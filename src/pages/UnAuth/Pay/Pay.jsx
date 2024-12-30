@@ -1,9 +1,11 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import Desktop from './Desktop';
 import { useParams, useSearchParams } from 'react-router-dom';
 import { useGetInvoiceToPayQuery } from '../../../api/invoicesApiSlice';
 import { Spinner } from 'flowbite-react';
 import Cookies from 'js-cookie';
+import { isMobile } from 'react-device-detect';
+import Mobile from './Mobile';
 
 const Pay = () => {
   const currentUser = Cookies.get('currentUser')
@@ -15,6 +17,9 @@ const Pay = () => {
   const [searchParams] = useSearchParams();
   const token = searchParams.get('iat');
   const { invoId } = useParams();
+
+  //track paid status for success alert display
+  const [succ, setSucc] = useState(false);
 
   //hook to getting invo from API
   const { data, isLoading, isSuccess, isFetching, refetch } =
@@ -35,12 +40,23 @@ const Pay = () => {
       </div>
     );
   } else if (isSuccess) {
-    content = (
+    content = isMobile ? (
+      <Mobile
+        data={data}
+        invoId={invoId}
+        refetch={refetch}
+        currentUser={currentUser}
+        succ={succ}
+        setSucc={setSucc}
+      />
+    ) : (
       <Desktop
         data={data}
         invoId={invoId}
         refetch={refetch}
         currentUser={currentUser}
+        succ={succ}
+        setSucc={setSucc}
       />
     );
   }

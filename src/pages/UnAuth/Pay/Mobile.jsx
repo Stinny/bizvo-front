@@ -10,13 +10,13 @@ import {
   User,
 } from 'react-feather';
 import { Link } from 'react-router-dom';
-import Payment from './Payment/Payment';
-import Paid from './Paid';
 import ReactCountryFlag from 'react-country-flag';
 import moment from 'moment';
 import { useUpdateInvoForPayMutation } from '../../../api/invoicesApiSlice';
+import MobilePaid from './MobilePaid';
+import Payment from './Payment/Payment';
 
-const Desktop = ({ data, invoId, refetch, currentUser, succ, setSucc }) => {
+const Mobile = ({ data, invoId, refetch, currentUser, succ, setSucc }) => {
   const [view, setView] = useState('');
   const [readyForPayment, setReadyForPayment] = useState(false);
   const [updatingInvo, setUpdatingInvo] = useState(false);
@@ -60,10 +60,7 @@ const Desktop = ({ data, invoId, refetch, currentUser, succ, setSucc }) => {
 
   if (data?.msg === 'Not found' || data?.msg === 'Invalid token') {
     content = (
-      <div
-        className="mx-auto flex flex-col gap-2 items-start mt-16"
-        style={{ width: '370px' }}
-      >
+      <div className="mx-auto flex flex-col gap-2 items-start mt-16 w-full">
         <div className="w-full bg-white border border-gray-200 rounded-md flex flex-col gap-2 items-center justify-center h-72">
           <AlertOctagon size={16} className="text-red-400" />
           <div className="flex flex-col items-center text-center gap-2">
@@ -91,7 +88,7 @@ const Desktop = ({ data, invoId, refetch, currentUser, succ, setSucc }) => {
     );
   } else if (data?.msg === 'Found') {
     content = data?.invoice?.paid ? (
-      <Paid
+      <MobilePaid
         invoice={data?.invoice}
         currentUser={currentUser}
         succ={succ}
@@ -100,32 +97,16 @@ const Desktop = ({ data, invoId, refetch, currentUser, succ, setSucc }) => {
     ) : (
       <>
         {updatingInvo || updating ? (
-          <div
-            className="mx-auto flex flex-col items-center justify-center h-72 mt-16"
-            style={{ width: '370px' }}
-          >
+          <div className="mx-auto flex flex-col items-center justify-center h-72 mt-16">
             <Spinner />
           </div>
         ) : (
-          <div
-            className="mx-auto flex flex-col gap-2 items-start mt-16"
-            style={{ width: '370px' }}
-          >
+          <div className="flex flex-col gap-2 items-start mt-12 w-full p-4">
             <div className="w-full flex justify-center items-center text-center">
-              <p className="text-stone-900" style={{ fontSize: '12px' }}>
+              <p className="text-stone-900" style={{ fontSize: '11px' }}>
                 Due by {moment(data?.invoice?.dueDate).format('MMMM Do, YYYY')}
               </p>
             </div>
-            {isOwner ? (
-              <div className="w-full flex items-center justify-start gap-2 border border-gray-200 bg-white rounded-md p-2">
-                <Info size={14} className="text-blue-400" />
-                <p className="text-xs text-stone-800">
-                  Created by you, payment unavailable!
-                </p>
-              </div>
-            ) : (
-              ''
-            )}
             <div className="w-full bg-white border border-gray-200 rounded-md flex flex-col gap-4 items-start p-2">
               <div className="w-full flex justify-between items-start">
                 <div className="flex flex-col items-start">
@@ -308,4 +289,4 @@ const Desktop = ({ data, invoId, refetch, currentUser, succ, setSucc }) => {
   return content;
 };
 
-export default Desktop;
+export default Mobile;
