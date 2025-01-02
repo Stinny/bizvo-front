@@ -7,6 +7,7 @@ import {
   ChevronRight,
   Layers,
   Upload,
+  X,
 } from 'react-feather';
 import { Link } from 'react-router-dom';
 import Select from 'react-select';
@@ -71,26 +72,26 @@ const Form = ({
       <Spinner />
     </div>
   ) : (
-    <div className="mx-auto p-2 bg-white border border-gray-200 rounded-md flex flex-col gap-4 items-start w-96">
-      <div className="w-full flex justify-center mb-2">
-        <Link to="/dashboard" className="h-full flex gap-1">
+    <div className="mx-auto p-2 bg-white border border-gray-200 rounded-md flex flex-col gap-4 items-start w-96 relative">
+      <div className="flex items-start justify-between w-full">
+        <Link to="/" className="h-full flex gap-1 items-center">
           <Layers size={20} className="font-black" />
           <p
-            className="font-bold text-stone-800 text-md"
+            className="font-bold text-stone-800 text-lg"
             style={{ fontFamily: 'Space Mono, monospace' }}
           >
             Bizvo
           </p>
         </Link>
+        <button
+          type="button"
+          onClick={() => setActive(false)}
+          className="text-red-400"
+        >
+          <X size={16} />
+        </button>
       </div>
-      <div className="w-full flex items-center justify-start">
-        <div className="flex flex-col items-start text-left">
-          <p className="text-sm text-stone-800">Account Setup</p>
-          <p className="text-xs text-stone-700">
-            Stuff we need before going to your dashboard
-          </p>
-        </div>
-      </div>
+
       {error ? (
         <div className="w-full flex items-center justify-start gap-2 border border-gray-200 rounded-md p-2">
           <AlertOctagon size={16} className="text-red-400" />
@@ -103,7 +104,7 @@ const Form = ({
         <div className="flex flex-col items-start w-full">
           <div className="flex flex-col gap-2 items-start w-full">
             <div className="flex flex-col items-start w-full gap-1">
-              <p className="text-xs text-stone-700">Country</p>
+              <p className="text-xs text-stone-600">Country</p>
               <Select
                 options={options}
                 onChange={(value) => setCountry(value)}
@@ -161,7 +162,7 @@ const Form = ({
               />
             </div>
             <div className="flex flex-col items-start w-full gap-1">
-              <p className="text-xs text-stone-700">Business Name</p>
+              <p className="text-xs text-stone-600">Business Name</p>
               <input
                 type="text"
                 placeholder="Business or personal name"
@@ -171,7 +172,7 @@ const Form = ({
               />
             </div>
             <div className="flex flex-col items-start w-full gap-1">
-              <p className="text-xs text-stone-700">About</p>
+              <p className="text-xs text-stone-600">About</p>
               <textarea
                 placeholder="What do you sell.."
                 className="border border-gray-200 hover:border-gray-200 hover:bg-gray-200 focus:bg-gray-200 focus:border-gray-200 focus:ring-0 w-full h-16 rounded-md p-2 bg-gray-50 resize-none text-xs"
@@ -181,7 +182,7 @@ const Form = ({
             </div>
 
             <div className="flex flex-col items-start w-full gap-1">
-              <p className="text-xs text-stone-700">Profile Slug</p>
+              <p className="text-xs text-stone-600">Profile Slug</p>
               <div className="flex w-full">
                 <div className="rounded-tl-md rounded-bl-md bg-gray-50 border border-r-0 border-gray-200 flex items-center p-2 pr-1">
                   <p className="text-xs">bizvo.com/</p>
@@ -189,7 +190,7 @@ const Form = ({
                 <input
                   type="text"
                   placeholder="Slug"
-                  className="border text-xs border-gray-200 bg-gray-50 focus:ring-0 focus:border-gray-200 focus:outline-none focus:bg-gray-200 border-l-0 rounded-tr-md rounded-br-md p-2 pl-1 flex-1"
+                  className="border text-xs border-gray-200 bg-gray-50 focus:ring-0 focus:border-gray-200 hover:bg-gray-200 focus:outline-none focus:bg-gray-200 border-l-0 rounded-tr-md rounded-br-md p-2 pl-1 flex-1"
                   onChange={(e) => setSlug(e.target.value)}
                   value={slug}
                 />
@@ -230,21 +231,14 @@ const Form = ({
                   onClick={handleButtonClick}
                   className="text-xs rounded-md border border-stone-800 text-stone-800 p-1 flex items-center gap-1"
                 >
-                  Upload Logo <Upload size={14} />
+                  Logo <Upload size={14} />
                 </button>
               </div>
             </div>
           </div>
         </div>
       </form>
-      <div className="w-full flex justify-between items-center">
-        <button
-          type="button"
-          onClick={() => setActive(false)}
-          className="p-1 border border-red-400 text-red-400 text-xs rounded-md"
-        >
-          Cancel
-        </button>
+      <div className="absolute bottom-0 right-0 mr-2 mb-2">
         {isEmpty || !isCountry || !data?.available ? (
           <button
             type="button"

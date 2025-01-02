@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Navbar from '../../../components/Navbar/Navbar';
 import Sidenav from '../../../components/Sidenav/Sidenav';
 import Footer from '../../../components/Footer/Footer';
@@ -12,11 +12,16 @@ const Home = () => {
     ? JSON.parse(Cookies.get('currentUser'))
     : null;
 
-  const { data, isLoading, isSuccess, refetch } = useGetStatsTempQuery();
+  const { data, isLoading, isSuccess, isFetching, refetch } =
+    useGetStatsTempQuery();
+
+  useEffect(() => {
+    refetch();
+  }, []);
 
   let content;
 
-  if (isLoading) {
+  if (isLoading || isFetching) {
     content = <Loading />;
   } else if (isSuccess) {
     content = <Desktop data={data} currentUser={currentUser} />;

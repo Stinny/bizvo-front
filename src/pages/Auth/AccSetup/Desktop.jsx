@@ -103,25 +103,30 @@ const Desktop = () => {
     );
   } else {
     content = (
-      <div className="mx-auto p-2 bg-white border border-gray-200 rounded-md flex items-center justify-center">
-        <div className="flex flex-col gap-6 items-center">
-          <Link to="/dashboard" className="h-full flex gap-1">
-            <Layers size={20} className="font-black" />
-            <p
-              className="font-bold text-stone-800 text-md"
-              style={{ fontFamily: 'Space Mono, monospace' }}
-            >
-              Bizvo
-            </p>
-          </Link>
-          <div className="flex flex-col gap-6 items-center text-center w-80">
+      <div className="p-2 bg-white border border-gray-200 rounded-md w-96 mx-auto">
+        <div className="flex flex-col gap-6 items-center w-full">
+          <div className="flex items-start justify-between w-full">
+            <Link to="/" className="h-full flex gap-1 items-center">
+              <Layers size={20} className="font-black" />
+              <p
+                className="font-bold text-stone-800 text-lg"
+                style={{ fontFamily: 'Space Mono, monospace' }}
+              >
+                Bizvo
+              </p>
+            </Link>
+            <button type="button" onClick={() => logout('logout')} className="">
+              <LogOut size={16} className="text-stone-800" />
+            </button>
+          </div>
+          <div className="flex flex-col gap-6 items-center text-center w-full">
             <p className="text-stone-700 text-xs">
               Welcome to Bizvo! An easy way to collect money from your
-              customers. Before we send you to your dashboard, finish the quick
-              account setup on the next page.
+              customers. Before you go to your dashboard, we need some more
+              information.
             </p>
-            <div className="flex flex-col w-full items-start">
-              <p className="text-stone-700 text-xs">Logged in as:</p>
+            <div className="flex flex-col w-full items-start gap-1">
+              <p className="text-stone-600 text-xs">Logged in as:</p>
               <input
                 type="text"
                 className="text-xs bg-gray-50 border border-gray-50 focus:outline-none text-stone-800 ring-0 w-full rounded-md p-2"
@@ -129,21 +134,13 @@ const Desktop = () => {
                 value={currentUser?.email}
               />
             </div>
-            <div className="flex gap-1 items-center w-full justify-between">
-              <button
-                type="button"
-                onClick={() => logout('logout')}
-                className="flex items-center gap-2 border rounded-md border-stone-800 hover:outline-none p-1"
-              >
-                <LogOut size={14} className="text-stone-800 font-bold" />
-                <p className="text-xs text-stone-800">Logout</p>
-              </button>
+            <div className="flex items-center w-full justify-end">
               <button
                 type="button"
                 onClick={() => setActive(true)}
                 className="p-1 border border-stone-800 rounded-md text-xs text-stone-800 flex items-center justify-center gap-1"
               >
-                Finish Setup <ChevronRight size={14} />
+                Finish <ChevronRight size={14} />
               </button>
             </div>
           </div>
@@ -152,11 +149,7 @@ const Desktop = () => {
     );
   }
 
-  return (
-    <div className="h-screen flex items-center justify-center mx-auto">
-      {content}
-    </div>
-  );
+  return <div className="h-screen">{content}</div>;
 };
 
 export default Desktop;

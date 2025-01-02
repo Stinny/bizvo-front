@@ -20,6 +20,9 @@ import Add from './pages/Auth/Add/Add';
 import InvoDetail from './pages/Auth/InvoDetail/InvoDetail';
 import Pay from './pages/UnAuth/Pay/Pay';
 import PayoutDetail from './pages/Auth/PayoutDetail/PayoutDetail';
+import Confirm from './pages/UnAuth/Confirm/Confirm';
+import PswdReset from './pages/UnAuth/PswdReset/PswdReset';
+import ReqLink from './pages/UnAuth/PswdReset/ReqLink';
 
 const App = () => {
   return (
@@ -35,6 +38,12 @@ const App = () => {
           <Route path="contact" element={<Message />} />
 
           <Route path="pay/:invoId" element={<Pay />} />
+
+          <Route path="confirm/:userId" element={<Confirm />} />
+
+          <Route path="password/request" element={<ReqLink />} />
+
+          <Route path="password/reset/:userId" element={<PswdReset />} />
 
           {/* routes require user to be logged in */}
           <Route element={<AuthRequired />}>

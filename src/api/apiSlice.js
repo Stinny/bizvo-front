@@ -16,25 +16,38 @@ const baseQuery = fetchBaseQuery({
 const baseQueryWithReauth = async (args, api, extraOptions) => {
   let result = await baseQuery(args, api, extraOptions);
 
-  if (result?.error?.originalStatus === 403) {
-    const rToken = Cookies.get('rToken');
+  if (result?.error?.status === 403 || result?.error?.status === 401) {
+    const rToken = Cookies.get('rToken') ? Cookies.get('rToken') : null;
 
-    const refreshResult = await baseQuery(
-      `/auth/tkn/${rToken}`,
-      api,
-      extraOptions
-    );
+    if (rToken) {
+      const refreshResult = await baseQuery(
+        `/auth/tkn/${rToken}`,
+        api,
+        extraOptions
+      );
 
-    if (refreshResult?.data) {
-      Cookies.set('aToken', refreshResult?.data, { sameSite: 'Lax' });
+      if (refreshResult?.data?.tkn) {
+        Cookies.set('aToken', refreshResult?.data?.tkn, { sameSite: 'Lax' });
 
-      result = await baseQuery(args, api, extraOptions);
+        result = await baseQuery(args, api, extraOptions);
+      } else if (refreshResult?.error) {
+        //logout logic from logout hook in utils
+        Cookies.remove('currentUser');
+        Cookies.remove('aToken');
+        Cookies.remove('rToken');
+        window.location.href = '/login';
+      } else {
+        //logout logic from logout hook in utils
+        Cookies.remove('currentUser');
+        Cookies.remove('aToken');
+        Cookies.remove('rToken');
+        window.location.href = '/login';
+      }
     } else {
-      //logout logic from logout hook in utils
       Cookies.remove('currentUser');
       Cookies.remove('aToken');
       Cookies.remove('rToken');
-      Cookies.remove('isAuth');
+      window.location.href = '/login';
     }
   }
 

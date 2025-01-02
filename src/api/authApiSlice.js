@@ -48,6 +48,34 @@ export const authApiSlice = apiSlice.injectEndpoints({
         body: { email: email },
       }),
     }),
+    confirmEmail: builder.mutation({
+      query: ({ userId, ect }) => ({
+        url: '/auth/confirm/email',
+        method: 'POST',
+        body: { userId: userId, ect: ect },
+      }),
+    }),
+    sendConfirmLink: builder.mutation({
+      query: ({ userId }) => ({
+        url: '/auth/confirm/link',
+        method: 'POST',
+        body: { userId: userId },
+      }),
+    }),
+    reqPswdLink: builder.mutation({
+      query: ({ email }) => ({
+        url: '/auth/password/link',
+        method: 'POST',
+        body: { email: email },
+      }),
+    }),
+    resetPswd: builder.mutation({
+      query: ({ pass, ect, userId }) => ({
+        url: '/auth/password/reset',
+        method: 'POST',
+        body: { pass: pass, ect: ect, userId: userId },
+      }),
+    }),
   }),
 });
 
@@ -58,4 +86,8 @@ export const {
   useGoogleSignupMutation,
   useSubscribeMutation,
   useChangePswdMutation,
+  useConfirmEmailMutation,
+  useSendConfirmLinkMutation,
+  useReqPswdLinkMutation,
+  useResetPswdMutation,
 } = authApiSlice;
