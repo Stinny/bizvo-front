@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import ReactPaginate from 'react-paginate';
 import { Link } from 'react-router-dom';
 import { ChevronLeft, ChevronRight, DollarSign } from 'react-feather';
-import StripeAmount from '../../../utils/stripeAmount';
+import StripeAmount from '../../../utils/StripeAmount';
 import { PayoutDate } from '../../../utils/PayoutDate';
 import Status from './Status';
 
