@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import Status from '../Payouts/Status';
-import StripeAmount from '../../../utils/stripeAmount';
+import StripeAmount from '../../../utils/StripeAmount';
 import { Check, Clipboard } from 'react-feather';
 import { Tooltip } from 'flowbite-react';
 import { PayoutDate } from '../../../utils/PayoutDate';

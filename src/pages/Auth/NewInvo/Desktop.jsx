@@ -2,7 +2,6 @@ import React, { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { AlertOctagon, Save, X } from 'react-feather';
 import { Checkbox } from 'antd';
-import { DateInput } from 'rsuite';
 import Select from 'react-select';
 import { Datepicker, Tooltip } from 'flowbite-react';
 import { dateTheme } from '../../../utils/dateTheme';
