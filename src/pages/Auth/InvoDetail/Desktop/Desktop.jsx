@@ -72,6 +72,18 @@ const Desktop = ({ invoice, refetch }) => {
   const bizFee = invoice?.fees?.bizvo / 100;
   const strFee = invoice?.fees?.stripe / 100;
   const trsFee = invoice?.fees?.transfer / 100;
+  let taxType;
+  switch (invoice?.tax?.type) {
+    case 'vat':
+      taxType = 'VAT';
+      break;
+    case 'gst':
+      taxType = 'GST';
+      break;
+    default:
+      taxType = 'Sales Tax';
+      break;
+  }
 
   //hook for getting cust select options
   const {
@@ -262,20 +274,25 @@ const Desktop = ({ invoice, refetch }) => {
           )}
         </Modal>
         <div className="w-full flex items-center justify-between relative">
-          <div className="flex flex-col items-start gap-1">
-            <div className="flex items-center gap-1">
-              <BackBtn direction={'left'} />
+          <div className="flex gap-1">
+            <BackBtn direction={'left'} />
+            <div className="flex flex-col items-start">
               <p className="text-sm text-stone-800">Viewing Invoice</p>
+
+              {invoice?.sent ? (
+                <Link
+                  to={`http://localhost:5173/pay/${invoice?._id}?iat=${invoice?.token}`}
+                  target="_blank"
+                >
+                  <p className="text-xs text-stone-700 flex items-center gap-1">
+                    #{invoice?._id}
+                    <ExternalLink size={14} />
+                  </p>
+                </Link>
+              ) : (
+                <p className="text-xs text-stone-700">#{invoice?._id}</p>
+              )}
             </div>
-            <Link
-              to={`http://localhost:5173/pay/${invoice?._id}?iat=${invoice?.token}`}
-              target="_blank"
-            >
-              <p className="text-xs text-stone-700 flex items-center gap-1">
-                #{invoice?._id}
-                <ExternalLink size={14} />
-              </p>
-            </Link>
           </div>
           <div className="flex items-center justify-center gap-3 w-44">
             {invoice?.sent ? (
@@ -412,7 +429,7 @@ const Desktop = ({ invoice, refetch }) => {
               <p className="text-xs text-stone-600">Description</p>
               <textarea
                 placeholder="About this invoice.."
-                className="text-xs bg-gray-50 border border-gray-50 focus:outline-none text-stone-800 ring-0 w-full rounded-md p-2 resize-none h-16"
+                className="text-xs bg-gray-50 border border-gray-50 focus:outline-none text-stone-800 ring-0 w-full rounded-md p-2 resize-none h-20"
                 disabled
                 value={desc}
               />
@@ -420,18 +437,14 @@ const Desktop = ({ invoice, refetch }) => {
             <div className="w-full flex items-center justify-center gap-2">
               <div className="flex flex-col items-start w-4/12 gap-1">
                 <p className="text-xs text-stone-600">Amount</p>
-                <div className="w-full flex items-center gap-0.5">
-                  <p className="text-sm text-stone-800">$</p>
-                  <input
-                    type="text"
-                    placeholder="Amount"
-                    className="text-xs bg-gray-50 border border-gray-50 focus:outline-none text-stone-800 ring-0 w-full rounded-md p-2 pl-0"
-                    disabled
-                    value={parseFloat(amount)?.toLocaleString(undefined, {
+                <div className="w-full p-2 bg-gray-50 text-left rounded-md">
+                  <p className="text-xs text-stone-800">
+                    $
+                    {parseFloat(amount)?.toLocaleString(undefined, {
                       minimumFractionDigits: 2,
                       maximumFractionDigits: 2,
                     })}
-                  />
+                  </p>
                 </div>
               </div>
               <div className="flex flex-col items-start w-8/12 gap-1">
@@ -479,7 +492,7 @@ const Desktop = ({ invoice, refetch }) => {
                   >
                     <div className="w-full flex justify-between items-center mt-2">
                       <p className="text-stone-700 text-xs">
-                        Tax({invoice?.tax?.rate}%):
+                        {taxType}({invoice?.tax?.rate}%):
                       </p>
                       <p className="text-stone-700 text-xs">
                         -${taxAmount?.toFixed(2)}

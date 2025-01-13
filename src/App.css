@@ -1,10 +1,11 @@
 #root {
   max-width: 1280px;
   margin: 0 auto;
-  margin-bottom: 50px;
+
   text-align: center;
-  padding: 50px;
-  font-family: 'Twemoji Country Flags', 'Roboto Mono', monospace;
+  padding: 30px;
+  /* font-family: 'Twemoji Country Flags', 'Roboto Mono', monospace; */
+  font-family: 'Twemoji Country Flags', 'Geist', serif;
 }
 
 /* Media query for mobile devices */
@@ -131,6 +132,11 @@
 .ant-checkbox-wrapper:hover .ant-checkbox-inner {
   border-color: rgb(41 37 36) !important;
 }
+/* changes size of everything */
+.ant-checkbox-inner,
+.ant-checkbox-input {
+  transform: scale(0.8);
+}
 
 /* Style the wrapper when the checkbox is disabled */
 .ant-checkbox-wrapper.ant-checkbox-wrapper-disabled {
@@ -147,4 +153,9 @@
 /* Style the checkmark when disabled */
 .ant-checkbox.ant-checkbox-disabled .ant-checkbox-inner::after {
   border-color: #ffffff; /* Change checkmark color when disabled */
+}
+
+/* padding for antd timeline component */
+.ant-timeline-item {
+  padding-bottom: 10px !important;
 }

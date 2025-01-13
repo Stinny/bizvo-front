@@ -10,6 +10,18 @@ const Form = ({ setReadyForPayment, invoice, refetch, setSucc }) => {
 
   //for display
   const taxAmount = invoice?.tax?.amount / 100;
+  let taxType;
+  switch (invoice?.tax?.type) {
+    case 'vat':
+      taxType = 'VAT';
+      break;
+    case 'gst':
+      taxType = 'GST';
+      break;
+    default:
+      taxType = 'Sales Tax';
+      break;
+  }
 
   const stripe = useStripe();
   const elements = useElements();
@@ -124,12 +136,14 @@ const Form = ({ setReadyForPayment, invoice, refetch, setSucc }) => {
           </p>
         </div>
         <div className="w-full flex justify-between items-center">
-          <p className="text-stone-700 text-xs">Tax({invoice?.tax?.rate}%):</p>
+          <p className="text-stone-700 text-xs">
+            {taxType}({invoice?.tax?.rate}%):
+          </p>
           <p className="text-stone-700 text-xs">${taxAmount?.toFixed(2)}</p>
         </div>
         <div className="w-full flex justify-between items-center">
-          <p className="text-stone-800 text-xs font-bold">Total:</p>
-          <p className="text-stone-800 text-xs font-bold">
+          <p className="text-stone-800 text-xs font-semibold">Total:</p>
+          <p className="text-stone-800 text-xs font-semibold">
             $
             {parseFloat(invoice?.amount + taxAmount)?.toLocaleString(
               undefined,

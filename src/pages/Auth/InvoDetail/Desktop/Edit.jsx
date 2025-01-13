@@ -3,6 +3,7 @@ import {
   AlertOctagon,
   ChevronDown,
   ChevronRight,
+  ExternalLink,
   Save,
   Send,
   Trash,
@@ -12,12 +13,13 @@ import moment from 'moment';
 import { useDeleteInvoiceMutation } from '../../../../api/invoicesApiSlice';
 import { showNotification } from '../../../../api/toastSlice';
 import { useDispatch } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { Badge, Datepicker, Spinner, Tooltip } from 'flowbite-react';
 import { Checkbox } from 'antd';
 import Cookies from 'js-cookie';
 import EditDraft from './EditDraft';
 import { dateTheme } from '../../../../utils/dateTheme';
+import BackBtn from '../../../../components/BackBtn';
 
 const customStyles = {
   content: {
@@ -226,9 +228,25 @@ const Edit = ({
       </Modal>
 
       <div className="w-full flex items-center justify-between relative">
-        <div className="flex flex-col items-start">
-          <p className="text-sm text-stone-800">Editing Invoice</p>
-          <p className="text-xs text-stone-700">#{invoiceId}</p>
+        <div className="flex items-center gap-1">
+          <BackBtn direction={'left'} />
+          <div className="flex flex-col items-start">
+            <p className="text-sm text-stone-800">Editing Invoice</p>
+
+            {invoice?.sent ? (
+              <Link
+                to={`http://localhost:5173/pay/${invoice?._id}?iat=${invoice?.token}`}
+                target="_blank"
+              >
+                <p className="text-xs text-stone-700 flex items-center gap-1">
+                  #{invoice?._id}
+                  <ExternalLink size={14} />
+                </p>
+              </Link>
+            ) : (
+              <p className="text-xs text-stone-700">#{invoice?._id}</p>
+            )}
+          </div>
         </div>
 
         <div className="flex items-center justify-center gap-3 w-44">
@@ -341,28 +359,33 @@ const Edit = ({
             </div>
             <div className="flex flex-col items-start w-full gap-1">
               <p className="text-xs text-stone-600">Description</p>
-              <textarea
-                placeholder="What is this invoice for.."
-                className="border border-gray-200 hover:border-gray-200 hover:bg-gray-200 focus:bg-gray-200 focus:border-gray-200 focus:ring-0 w-full h-16 rounded-md p-2 bg-gray-50 resize-none text-xs"
-                onChange={(e) => setDesc(e.target.value)}
-                value={desc}
-              />
+
+              <div className="relative w-full">
+                <textarea
+                  placeholder="What is this invoice for.."
+                  className="border border-gray-200 hover:border-gray-200 hover:bg-gray-200 focus:bg-gray-200 focus:border-gray-200 focus:ring-0 w-full h-20 rounded-md p-2 bg-gray-50 resize-none text-xs"
+                  onChange={(e) => setDesc(e.target.value)}
+                  value={desc}
+                  maxLength={100}
+                />
+                <div className="absolute right-2 bottom-2 transform -translate-y-1/2">
+                  <p className="text-stone-700" style={{ fontSize: '10px' }}>
+                    {desc?.length}/100
+                  </p>
+                </div>
+              </div>
             </div>
             <div className="w-full flex items-center justify-center gap-2">
               <div className="flex flex-col items-start w-4/12 gap-1">
                 <p className="text-xs text-stone-600">Amount</p>
-                <div className="w-full flex items-center gap-0.5">
-                  <p className="text-sm text-stone-800">$</p>
-                  <input
-                    type="text"
-                    placeholder="Amount"
-                    className="text-xs bg-gray-50 border border-gray-50 focus:outline-none text-stone-800 ring-0 w-full rounded-md p-2 pl-0"
-                    disabled
-                    value={parseFloat(amount)?.toLocaleString(undefined, {
+                <div className="w-full p-2 bg-gray-50 text-left rounded-md">
+                  <p className="text-xs text-stone-800">
+                    $
+                    {parseFloat(amount)?.toLocaleString(undefined, {
                       minimumFractionDigits: 2,
                       maximumFractionDigits: 2,
                     })}
-                  />
+                  </p>
                 </div>
               </div>
               <div className="flex flex-col items-start w-8/12 gap-1">

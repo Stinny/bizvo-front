@@ -2,6 +2,8 @@ import React from 'react';
 import { useLocation, Navigate, Outlet } from 'react-router-dom';
 import Cookies from 'js-cookie';
 import AccSetup from '../pages/Auth/AccSetup/AccSetup';
+import { isMobile } from 'react-device-detect';
+import MobilePlaceholder from '../pages/Auth/MobilePlaceholder';
 
 const AuthRequired = () => {
   const location = useLocation();
@@ -13,7 +15,11 @@ const AuthRequired = () => {
   let content;
 
   if (currentUser) {
-    content = currentUser?.setup ? <Outlet /> : <AccSetup />;
+    content = isMobile ? (
+      <MobilePlaceholder currentUser={currentUser} />
+    ) : (
+      <>{currentUser?.setup ? <Outlet /> : <AccSetup />}</>
+    );
   } else {
     content = <Navigate to="/" state={{ from: location }} replace />;
   }

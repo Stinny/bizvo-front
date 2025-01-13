@@ -74,7 +74,7 @@ const Desktop = ({ invoices }) => {
               </div>
             </div>
             <div className="w-full flex justify-between border-t border-gray-200 p-2">
-              <p className="text-stone-800 text-xs font-bold">
+              <p className="text-stone-800 text-xs font-semibold">
                 $
                 {parseFloat(invoice?.amount)?.toLocaleString(undefined, {
                   minimumFractionDigits: 2,

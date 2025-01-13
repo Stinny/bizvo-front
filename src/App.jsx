@@ -23,6 +23,8 @@ import PayoutDetail from './pages/Auth/PayoutDetail/PayoutDetail';
 import Confirm from './pages/UnAuth/Confirm/Confirm';
 import PswdReset from './pages/UnAuth/PswdReset/PswdReset';
 import ReqLink from './pages/UnAuth/PswdReset/ReqLink';
+import Pricing from './pages/UnAuth/Pricing/Pricing';
+import Docs from './pages/UnAuth/Docs/Docs';
 
 const App = () => {
   return (
@@ -36,6 +38,10 @@ const App = () => {
           <Route path="signup" element={<Signup />} />
 
           <Route path="contact" element={<Message />} />
+
+          <Route path="pricing" element={<Pricing />} />
+
+          <Route path="docs" element={<Docs />} />
 
           <Route path="pay/:invoId" element={<Pay />} />
 

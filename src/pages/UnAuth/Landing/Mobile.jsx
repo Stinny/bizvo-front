@@ -5,18 +5,13 @@ import img from '../../../assets/tech.svg';
 import Features from '../../../components/Landing/Features';
 import Subscribe from '../../../components/Landing/Subscribe';
 import Footer from '../../../components/Footer/Footer';
-import { Code } from 'react-feather';
-import { isMobile } from 'react-device-detect';
-import Mobile from './Mobile';
 
-const Landing = () => {
-  return isMobile ? (
-    <Mobile />
-  ) : (
-    <div className="flex flex-col gap-2 max-w-3xl mx-auto relative">
+const Mobile = () => {
+  return (
+    <div className="flex flex-col gap-4 w-full p-2 mx-auto relative">
       <Navbar />
-      <div className="mx-auto flex items-center">
-        <div className="w-6/12 mx-auto flex flex-col gap-4 items-start">
+      <div className="mx-auto flex flex-col">
+        <div className="w-full mx-auto flex flex-col gap-4 items-start">
           <p className="text-4xl text-left text-stone-800 font-bold">
             Online Invoicing Made Easier.
           </p>
@@ -32,7 +27,7 @@ const Landing = () => {
             Start Collecting
           </Link>
         </div>
-        <div className="w-6/12 flex justify-end p-10 pr-0">
+        <div className="w-full">
           <img src={img} className="w-full" />
         </div>
       </div>
@@ -43,4 +38,4 @@ const Landing = () => {
   );
 };
 
-export default Landing;
+export default Mobile;

@@ -59,7 +59,7 @@ const Form = ({
     !name.trim() || !desc.trim() || !slug.trim() || !selectedImage;
 
   //country select options
-  const options = countryList().getData();
+  const options = [{ value: 'US', label: 'United States' }];
 
   //business type select options
   const busOpts = [
@@ -68,11 +68,11 @@ const Form = ({
   ];
 
   return settingUp ? (
-    <div className="w-96 mx-auto h-56 flex items-center justify-center bg-white border border-gray-200 rounded-md">
+    <div className="w-96 mx-auto h-56 flex items-center justify-center bg-white border border-gray-200 rounded-md mt-32">
       <Spinner />
     </div>
   ) : (
-    <div className="mx-auto p-2 bg-white border border-gray-200 rounded-md flex flex-col gap-4 items-start w-96 relative">
+    <div className="mx-auto p-2 bg-white border border-gray-200 rounded-md flex flex-col gap-4 items-start w-96 relative mt-32">
       <div className="flex items-start justify-between w-full">
         <Link to="/" className="h-full flex gap-1 items-center">
           <Layers size={20} className="font-black" />

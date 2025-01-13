@@ -109,7 +109,7 @@ const Navbar = () => {
       )}
     </nav>
   ) : (
-    <nav className="w-full bg-gray-50">
+    <nav className="w-full bg-white">
       <div className="max-w-3xl bg-white flex justify-between items-center border border-gray-200 rounded-md p-2">
         {/* logo section */}
 

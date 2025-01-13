@@ -94,12 +94,13 @@ const Desktop = ({ customer, refetch }) => {
   ) : (
     <div className="w-10/12 bg-white border rounded-md border-gray-200 p-2 pb-6 flex flex-col gap-4 items-center justify-center">
       <div className="w-full flex items-center justify-between relative">
-        <div className="flex flex-col items-start gap-1">
-          <div className="flex items-center gap-1">
-            <BackBtn direction={'left'} />
+        <div className="flex gap-1">
+          <BackBtn direction={'left'} />
+          <div className="flex flex-col items-start">
             <p className="text-sm text-stone-800">Viewing Customer</p>
+
+            <p className="text-xs text-stone-700">#{customer?._id}</p>
           </div>
-          <p className="text-xs text-stone-700">#{customer?._id}</p>
         </div>
         <Tooltip
           content={

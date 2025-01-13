@@ -78,7 +78,16 @@ const Signup = () => {
   let content;
 
   content = isMobile ? (
-    <Mobile />
+    <Mobile
+      email={email}
+      pass={pass}
+      setEmail={setEmail}
+      setPass={setPass}
+      handleSignup={handleSignup}
+      error={error}
+      setError={setError}
+      isLoading={isLoading}
+    />
   ) : (
     <Desktop
       email={email}

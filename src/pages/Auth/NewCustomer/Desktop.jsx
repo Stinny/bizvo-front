@@ -223,13 +223,19 @@ const Desktop = ({
             <p className="text-xs text-stone-800">Add description</p>
           </div>
           {addDes ? (
-            <div className="flex flex-col items-start w-full">
+            <div className="relative w-full">
               <textarea
                 placeholder="About this customer.."
                 className="border border-gray-200 hover:border-gray-200 hover:bg-gray-200 focus:bg-gray-200 focus:border-gray-200 focus:ring-0 w-full h-16 rounded-md p-2 bg-gray-50 resize-none text-xs"
                 onChange={(e) => setDesc(e.target.value)}
                 value={desc}
+                maxLength={75}
               />
+              <div className="absolute right-2 bottom-2 transform -translate-y-1/2">
+                <p className="text-stone-700" style={{ fontSize: '10px' }}>
+                  {desc?.length}/75
+                </p>
+              </div>
             </div>
           ) : (
             ''

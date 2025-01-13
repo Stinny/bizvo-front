@@ -230,12 +230,21 @@ const Desktop = ({
           </div>
           <div className="flex flex-col items-start w-full gap-1">
             <p className="text-xs text-stone-600">Description</p>
-            <textarea
-              placeholder="What is this invoice for.."
-              className="border border-gray-200 hover:border-gray-200 hover:bg-gray-200 focus:bg-gray-200 focus:border-gray-200 focus:ring-0 w-full h-16 rounded-md p-2 bg-gray-50 resize-none text-xs text-stone-800"
-              onChange={(e) => setDesc(e.target.value)}
-              value={desc}
-            />
+
+            <div className="relative w-full">
+              <textarea
+                placeholder="What is this invoice for.."
+                className="border border-gray-200 hover:border-gray-200 hover:bg-gray-200 focus:bg-gray-200 focus:border-gray-200 focus:ring-0 w-full h-20 rounded-md p-2 bg-gray-50 resize-none text-xs text-stone-800"
+                onChange={(e) => setDesc(e.target.value)}
+                value={desc}
+                maxLength={100}
+              />
+              <div className="absolute right-2 bottom-2 transform -translate-y-1/2">
+                <p className="text-stone-700" style={{ fontSize: '10px' }}>
+                  {desc?.length}/100
+                </p>
+              </div>
+            </div>
           </div>
           <div className="flex items-center gap-2">
             <div className="flex flex-col items-start w-4/12 gap-1">
@@ -247,7 +256,7 @@ const Desktop = ({
                   placeholder="Amount"
                   className="text-xs w-full bg-gray-50 border border-gray-200 focus:outline-none hover:bg-gray-200 focus:bg-gray-200 hover:border-gray-200 focus:border-gray-200 focus:ring-0 text-stone-800 ring-0 rounded-md p-2 pl-0.5"
                   onChange={(e) => setAmount(e.target.value)}
-                  value={amount}
+                  value={amount > 0 ? amount : null}
                 />
               </div>
             </div>

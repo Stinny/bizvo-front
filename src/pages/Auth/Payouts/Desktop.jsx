@@ -110,7 +110,7 @@ const Desktop = ({ payouts, balance, currentUser }) => {
                   <div className="flex justify-end">
                     <button
                       disabled
-                      className="text-stone-800 text-xs font-bold"
+                      className="text-stone-800 text-xs font-semibold"
                     >
                       <StripeAmount
                         amount={payout?.amount}

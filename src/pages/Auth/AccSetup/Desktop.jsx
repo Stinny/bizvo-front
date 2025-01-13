@@ -103,7 +103,7 @@ const Desktop = () => {
     );
   } else {
     content = (
-      <div className="p-2 bg-white border border-gray-200 rounded-md w-96 mx-auto">
+      <div className="p-2 bg-white border border-gray-200 rounded-md w-96 mx-auto mt-32">
         <div className="flex flex-col gap-6 items-center w-full">
           <div className="flex items-start justify-between w-full">
             <Link to="/" className="h-full flex gap-1 items-center">
@@ -119,11 +119,11 @@ const Desktop = () => {
               <LogOut size={16} className="text-stone-800" />
             </button>
           </div>
-          <div className="flex flex-col gap-6 items-center text-center w-full">
-            <p className="text-stone-700 text-xs">
-              Welcome to Bizvo! An easy way to collect money from your
-              customers. Before you go to your dashboard, we need some more
-              information.
+          <div className="flex flex-col gap-4 items-start text-left w-full">
+            <p className="text-stone-800 text-sm font-medium">Welcome!</p>
+            <p className="text-stone-800 text-xs">
+              Are you ready to collect payments? Before you go to your
+              dashboard, we need some more information on the next page.
             </p>
             <div className="flex flex-col w-full items-start gap-1">
               <p className="text-stone-600 text-xs">Logged in as:</p>
@@ -138,9 +138,9 @@ const Desktop = () => {
               <button
                 type="button"
                 onClick={() => setActive(true)}
-                className="p-1 border border-stone-800 rounded-md text-xs text-stone-800 flex items-center justify-center gap-1"
+                className="p-0.5 border border-stone-800 rounded-md text-stone-800 flex items-center justify-center"
               >
-                Finish <ChevronRight size={14} />
+                <ChevronRight size={14} />
               </button>
             </div>
           </div>

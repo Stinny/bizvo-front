@@ -258,7 +258,7 @@ const Desktop = ({ data, invoId, refetch, currentUser, succ, setSucc }) => {
                       {/* <p className="text-stone-800 text-sm font-bold">
                         ${data?.invoice?.amount?.toFixed(2)}
                       </p> */}
-                      <p className="text-stone-800 text-sm font-bold">
+                      <p className="text-stone-800 text-sm font-semibold">
                         $
                         {parseFloat(data?.invoice?.amount)?.toLocaleString(
                           undefined,

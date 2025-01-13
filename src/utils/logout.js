@@ -16,13 +16,10 @@ const useHandleLogoutUser = () => {
 
     // Show appropriate notification and navigate
     if (type === 'logout') {
-      dispatch(showNotification('Logout Successful'));
       navigate('/login');
     } else if (type === 'delete') {
-      dispatch(showNotification('Account Deleted'));
       navigate('/signup');
     } else if (type === 'change') {
-      dispatch(showNotification('Account Password Changed'));
       navigate('/login');
     } else {
       navigate('/');

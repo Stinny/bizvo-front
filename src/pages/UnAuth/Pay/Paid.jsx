@@ -23,6 +23,18 @@ const Paid = ({ invoice, currentUser, succ, setSucc }) => {
 
   //for display
   const taxAmount = invoice?.tax?.amount / 100;
+  let taxType;
+  switch (invoice?.tax?.type) {
+    case 'vat':
+      taxType = 'VAT';
+      break;
+    case 'gst':
+      taxType = 'GST';
+      break;
+    default:
+      taxType = 'Sales Tax';
+      break;
+  }
 
   const handleView = (newView) => {
     if (newView === view) {
@@ -97,13 +109,13 @@ const Paid = ({ invoice, currentUser, succ, setSucc }) => {
           </div>
           <div className="w-full flex justify-between items-center">
             <p className="text-stone-700 text-xs">
-              Tax({invoice?.tax?.rate}%):
+              {taxType}({invoice?.tax?.rate}%):
             </p>
             <p className="text-stone-700 text-xs">${taxAmount?.toFixed(2)}</p>
           </div>
           <div className="w-full flex justify-between items-center">
-            <p className="text-stone-800 text-xs font-bold">Total:</p>
-            <p className="text-stone-800 text-xs font-bold">
+            <p className="text-stone-800 text-xs font-semibold">Total:</p>
+            <p className="text-stone-800 text-xs font-semibold">
               $
               {parseFloat(invoice?.amount + taxAmount)?.toLocaleString(
                 undefined,
@@ -210,7 +222,7 @@ const Paid = ({ invoice, currentUser, succ, setSucc }) => {
         <div className="w-full flex justify-between items-end">
           <div className="flex flex-col items-start">
             <p className="text-stone-600 text-xs">Total:</p>
-            <p className="text-stone-800 text-sm font-bold">
+            <p className="text-stone-800 text-sm font-semibold">
               $
               {parseFloat(invoice?.amount + taxAmount)?.toLocaleString(
                 undefined,

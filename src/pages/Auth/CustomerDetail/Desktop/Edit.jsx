@@ -5,6 +5,7 @@ import Select from 'react-select';
 import countryList from 'react-select-country-list';
 import Delete from './Delete';
 import { Switch } from 'antd';
+import BackBtn from '../../../../components/BackBtn';
 
 const Edit = ({
   name,
@@ -66,9 +67,13 @@ const Edit = ({
   ) : (
     <div className="w-10/12 bg-white border rounded-md border-gray-200 p-2 pb-6 flex flex-col gap-4 items-center justify-center">
       <div className="w-full flex items-center justify-between relative">
-        <div className="flex flex-col items-start">
-          <p className="text-sm text-stone-800">Editing Customer</p>
-          <p className="text-xs text-stone-700">#{customerId}</p>
+        <div className="flex items-center gap-1">
+          <BackBtn direction={'left'} />
+          <div className="flex flex-col items-start">
+            <p className="text-sm text-stone-800">Editing Customer</p>
+
+            <p className="text-xs text-stone-700">#{customerId}</p>
+          </div>
         </div>
         <div className="flex items-center gap-3 absolute right-0 top-0 mr-1 mt-1">
           <button
@@ -244,13 +249,19 @@ const Edit = ({
             <p className="text-xs text-stone-800">Add description</p>
           </div>
           {addDes || desc?.length ? (
-            <div className="flex flex-col items-start w-full">
+            <div className="relative w-full">
               <textarea
                 placeholder="About this customer.."
                 className="border border-gray-200 hover:border-gray-200 hover:bg-gray-200 focus:bg-gray-200 focus:border-gray-200 focus:ring-0 w-full h-16 rounded-md p-2 bg-gray-50 resize-none text-xs"
                 onChange={(e) => setDesc(e.target.value)}
                 value={desc}
+                maxLength={75}
               />
+              <div className="absolute right-2 bottom-2 transform -translate-y-1/2">
+                <p className="text-stone-700" style={{ fontSize: '10px' }}>
+                  {desc?.length}/75
+                </p>
+              </div>
             </div>
           ) : (
             ''

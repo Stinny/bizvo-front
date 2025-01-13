@@ -29,7 +29,7 @@ const Edit = ({
   setTaxId,
 }) => {
   //country select options
-  const options = countryList().getData();
+  const options = [{ value: 'US', label: 'United States' }];
 
   //business type select options
   const busOpts = [
