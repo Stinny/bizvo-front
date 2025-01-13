@@ -16,8 +16,8 @@ const Mobile = () => {
             Online Invoicing Made Easier.
           </p>
           <p className="text-md text-stone-800 text-left">
-            Collect payments, remain compliant, and avoid paperwork. Easy for
-            the business and the customer.
+            Stop trying to be an accountant. Collect payments the easy way and
+            have taxes done for you.
           </p>
 
           <Link
