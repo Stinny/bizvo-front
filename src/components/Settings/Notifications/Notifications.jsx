@@ -11,6 +11,7 @@ const Notifications = ({ currentUser, refetch, setActiveTabIndex }) => {
   const [paid, setPaid] = useState(currentUser?.invoPaid);
   const [late, setLate] = useState(currentUser?.invoLate);
   const [revCol, setRevCol] = useState(currentUser?.revCol);
+  const [error, setError] = useState('');
 
   //form view
   const [edit, setEdit] = useState(false);
@@ -19,6 +20,7 @@ const Notifications = ({ currentUser, refetch, setActiveTabIndex }) => {
   const [editNotis, result] = useEditNotisMutation();
 
   const handleSaveNotis = async () => {
+    setError('');
     try {
       const editReq = await editNotis({
         news: news,
@@ -30,18 +32,27 @@ const Notifications = ({ currentUser, refetch, setActiveTabIndex }) => {
       if (editReq === 'Updated') {
         dispatch(showNotification('Notifications updated'));
         refetch();
-        setActiveTabIndex(3);
+        setActiveTabIndex(2);
         setEdit(false);
       }
     } catch (err) {
-      setError('Server error');
+      setError('There was an error');
       return;
     }
+  };
+
+  const handleCancel = () => {
+    setError('');
+    setNews(currentUser?.news);
+    setPaid(currentUser?.invoPaid);
+    setLate(currentUser?.invoLate);
+    setEdit(false);
   };
 
   return (
     <Desktop
       handleSaveNotis={handleSaveNotis}
+      handleCancel={handleCancel}
       news={news}
       setNews={setNews}
       paid={paid}
@@ -53,6 +64,7 @@ const Notifications = ({ currentUser, refetch, setActiveTabIndex }) => {
       setRevCol={setRevCol}
       edit={edit}
       setEdit={setEdit}
+      error={error}
     />
   );
 };

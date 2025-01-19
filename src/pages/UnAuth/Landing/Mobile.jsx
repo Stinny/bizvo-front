@@ -8,7 +8,7 @@ import Footer from '../../../components/Footer/Footer';
 
 const Mobile = () => {
   return (
-    <div className="flex flex-col gap-4 w-full p-2 mx-auto relative">
+    <div className="flex flex-col gap-4 w-full p-4 mx-auto relative">
       <Navbar />
       <div className="mx-auto flex flex-col">
         <div className="w-full mx-auto flex flex-col gap-4 items-start">

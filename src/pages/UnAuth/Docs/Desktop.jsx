@@ -15,6 +15,8 @@ const Desktop = ({ view, setView }) => {
   const notActiveLink =
     'w-full text-xs p-1 border border-white rounded-md hover:border-stone-800';
 
+  const lastUpdated = 'January 18th, 2025';
+
   return (
     <div className="flex flex-col max-w-3xl mx-auto gap-2">
       <Navbar />
@@ -66,12 +68,36 @@ const Desktop = ({ view, setView }) => {
           </div>
         </div>
 
-        {view === 'home' ? <Home setView={setView} /> : ''}
-        {view === 'account' ? <Account setView={setView} /> : ''}
-        {view === 'features' ? <Features setView={setView} /> : ''}
-        {view === 'payments' ? <Payments setView={setView} /> : ''}
-        {view === 'invos' ? <Invoices setView={setView} /> : ''}
-        {view === 'custs' ? <Customers setView={setView} /> : ''}
+        {view === 'home' ? (
+          <Home setView={setView} lastUpdated={lastUpdated} />
+        ) : (
+          ''
+        )}
+        {view === 'account' ? (
+          <Account setView={setView} lastUpdated={lastUpdated} />
+        ) : (
+          ''
+        )}
+        {view === 'features' ? (
+          <Features setView={setView} lastUpdated={lastUpdated} />
+        ) : (
+          ''
+        )}
+        {view === 'payments' ? (
+          <Payments setView={setView} lastUpdated={lastUpdated} />
+        ) : (
+          ''
+        )}
+        {view === 'invos' ? (
+          <Invoices setView={setView} lastUpdated={lastUpdated} />
+        ) : (
+          ''
+        )}
+        {view === 'custs' ? (
+          <Customers setView={setView} lastUpdated={lastUpdated} />
+        ) : (
+          ''
+        )}
       </div>
     </div>
   );

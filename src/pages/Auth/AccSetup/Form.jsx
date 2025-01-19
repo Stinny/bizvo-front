@@ -5,6 +5,7 @@ import {
   CheckCircle,
   ChevronLeft,
   ChevronRight,
+  Info,
   Layers,
   Upload,
   X,
@@ -22,8 +23,6 @@ const Form = ({
   selectedImage,
   name,
   setName,
-  slug,
-  setSlug,
   country,
   setCountry,
   desc,
@@ -55,8 +54,7 @@ const Form = ({
   };
 
   const isCountry = country ? Object.keys(country).length : country;
-  const isEmpty =
-    !name.trim() || !desc.trim() || !slug.trim() || !selectedImage;
+  const isEmpty = !name.trim() || !desc.trim() || !selectedImage;
 
   //country select options
   const options = [{ value: 'US', label: 'United States' }];
@@ -91,6 +89,12 @@ const Form = ({
           <X size={16} />
         </button>
       </div>
+      <div className="w-full flex items-center justify-start gap-2 border border-blue-400 bg-blue-50 rounded-md p-2">
+        <Info size={16} className="text-blue-400" />
+        <p className="text-stone-800 text-xs font-medium">
+          Currently supporting U.S. businesses only
+        </p>
+      </div>
 
       {error ? (
         <div className="w-full flex items-center justify-start gap-2 border border-gray-200 rounded-md p-2">
@@ -100,11 +104,23 @@ const Form = ({
       ) : (
         ''
       )}
+
       <form className="flex items-start w-full">
         <div className="flex flex-col items-start w-full">
           <div className="flex flex-col gap-2 items-start w-full">
             <div className="flex flex-col items-start w-full gap-1">
-              <p className="text-xs text-stone-600">Country</p>
+              <p className="text-xs text-stone-800">Business Name</p>
+              <input
+                type="text"
+                placeholder="My Bizz"
+                className="border text-xs border-gray-200 bg-gray-50 focus:border-gray-200 focus:outline-none text-stone-800 hover:bg-gray-200 hover:border-gray-200 focus:bg-gray-200 focus:ring-0 w-full rounded-md p-2"
+                onChange={(e) => setName(e.target.value)}
+                value={name}
+              />
+            </div>
+
+            <div className="flex flex-col items-start w-full gap-1">
+              <p className="text-xs text-stone-800">Business Country</p>
               <Select
                 options={options}
                 onChange={(value) => setCountry(value)}
@@ -161,27 +177,18 @@ const Form = ({
                 className="w-full text-left"
               />
             </div>
+
             <div className="flex flex-col items-start w-full gap-1">
-              <p className="text-xs text-stone-600">Business Name</p>
-              <input
-                type="text"
-                placeholder="Business or personal name"
-                className="border text-xs border-gray-200 bg-gray-50 focus:border-gray-200 focus:outline-none text-stone-800 hover:bg-gray-200 hover:border-gray-200 focus:bg-gray-200 focus:ring-0 w-full rounded-md p-2"
-                onChange={(e) => setName(e.target.value)}
-                value={name}
-              />
-            </div>
-            <div className="flex flex-col items-start w-full gap-1">
-              <p className="text-xs text-stone-600">About</p>
+              <p className="text-xs text-stone-800">What you sell</p>
               <textarea
-                placeholder="What do you sell.."
+                placeholder="Describe your services.."
                 className="border border-gray-200 hover:border-gray-200 hover:bg-gray-200 focus:bg-gray-200 focus:border-gray-200 focus:ring-0 w-full h-16 rounded-md p-2 bg-gray-50 resize-none text-xs"
                 onChange={(e) => setDesc(e.target.value)}
                 value={desc}
               />
             </div>
 
-            <div className="flex flex-col items-start w-full gap-1">
+            {/* <div className="flex flex-col items-start w-full gap-1">
               <p className="text-xs text-stone-600">Profile Slug</p>
               <div className="flex w-full">
                 <div className="rounded-tl-md rounded-bl-md bg-gray-50 border border-r-0 border-gray-200 flex items-center p-2 pr-1">
@@ -215,7 +222,7 @@ const Form = ({
                   )}
                 </>
               )}
-            </div>
+            </div> */}
 
             <div className="flex items-center gap-4 w-full">
               <Avatar size="md" img={selectedImage ? selectedImage : ''} />

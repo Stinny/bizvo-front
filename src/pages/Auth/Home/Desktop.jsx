@@ -39,7 +39,7 @@ const Desktop = ({ data, currentUser }) => {
                 <Info size={12} className="text-stone-800" />
               </Tooltip>
             </div>
-            <p className="text-xs text-stone-600">Revenue</p>
+            <p className="text-xs text-stone-800">Revenue</p>
             <p className="text-stone-900 text-sm">
               $
               {parseFloat(data?.revenue)?.toLocaleString(undefined, {
@@ -54,11 +54,11 @@ const Desktop = ({ data, currentUser }) => {
                 <Info size={12} className="text-stone-800" />
               </Tooltip>
             </div>
-            <p className="text-xs text-stone-600">Invoices</p>
+            <p className="text-xs text-stone-800">Invoices</p>
             <div className="flex flex-col items-start gap-2">
               <div className="flex items-center gap-1">
                 <FileText size={14} className="text-stone-800" />
-                <p className="text-stone-900 text-sm">
+                <p className="text-stone-800 text-sm">
                   {parseFloat(data?.numOfInvos)?.toLocaleString(undefined, {
                     minimumFractionDigits: 0,
                     maximumFractionDigits: 0,
@@ -67,7 +67,7 @@ const Desktop = ({ data, currentUser }) => {
               </div>
               <div className="flex items-center gap-1">
                 <Send size={14} className="text-stone-800" />
-                <p className="text-stone-900 text-sm">
+                <p className="text-stone-800 text-sm">
                   {parseFloat(data?.invoSent)?.toLocaleString(undefined, {
                     minimumFractionDigits: 0,
                     maximumFractionDigits: 0,
@@ -76,7 +76,7 @@ const Desktop = ({ data, currentUser }) => {
               </div>
               <div className="flex items-center gap-1">
                 <CreditCard size={14} className="text-stone-800" />
-                <p className="text-stone-900 text-sm">
+                <p className="text-stone-800 text-sm">
                   {parseFloat(data?.invoPaid)?.toLocaleString(undefined, {
                     minimumFractionDigits: 0,
                     maximumFractionDigits: 0,
@@ -99,8 +99,8 @@ const Desktop = ({ data, currentUser }) => {
                 <Info size={12} className="text-stone-800" />
               </Tooltip>
             </div>
-            <p className="text-xs text-stone-600">Customers</p>
-            <p className="text-stone-900 text-sm">
+            <p className="text-xs text-stone-800">Customers</p>
+            <p className="text-stone-800 text-sm">
               {parseFloat(data?.numOfCusts)?.toLocaleString(undefined, {
                 minimumFractionDigits: 0,
                 maximumFractionDigits: 0,
@@ -121,8 +121,8 @@ const Desktop = ({ data, currentUser }) => {
                 <Info size={12} className="text-stone-800" />
               </Tooltip>
             </div>
-            <p className="text-xs text-stone-600">Payouts</p>
-            <p className="text-stone-900 text-sm">
+            <p className="text-xs text-stone-800">Payouts</p>
+            <p className="text-stone-800 text-sm">
               {parseFloat(data?.numOfPayouts)?.toLocaleString(undefined, {
                 minimumFractionDigits: 0,
                 maximumFractionDigits: 0,
@@ -137,7 +137,7 @@ const Desktop = ({ data, currentUser }) => {
         </div>
       </div>
       <div className="border rounded-md border-gray-200 bg-white flex flex-col gap-1 items-start p-2 w-full">
-        <p className="text-xs text-stone-600">Checklist</p>
+        <p className="text-xs text-stone-800">Checklist</p>
         <div className="flex items-center w-full h-full justify-between">
           <div className="w-full flex items-center gap-2">
             <Checkbox disabled checked={currentUser?.emailConfirmed} />

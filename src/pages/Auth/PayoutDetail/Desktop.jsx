@@ -29,7 +29,7 @@ const Desktop = ({ payout }) => {
           <div className="flex flex-col items-start">
             <p className="text-sm text-stone-800">Viewing Payout</p>
 
-            <p className="text-xs text-stone-700">#{payout?._id}</p>
+            <p className="text-xs text-stone-800">#{payout?._id}</p>
           </div>
         </div>
         <Status status={payout?.status} />
@@ -37,7 +37,7 @@ const Desktop = ({ payout }) => {
       <form className="w-72 mx-auto">
         <div className="flex flex-col gap-4 items-start w-full">
           <div className="flex flex-col items-start w-full gap-1">
-            <p className="text-xs text-stone-600">Bank Name</p>
+            <p className="text-xs text-stone-800">Bank Name</p>
             <input
               type="text"
               placeholder="Name"
@@ -48,7 +48,7 @@ const Desktop = ({ payout }) => {
           </div>
           {payout?.refNumber ? (
             <div className="flex flex-col items-start w-full gap-1">
-              <p className="text-xs text-stone-600">Reference Number</p>
+              <p className="text-xs text-stone-800">Reference Number</p>
               <div className="flex items-center w-full gap-1">
                 <input
                   type="text"
@@ -86,7 +86,7 @@ const Desktop = ({ payout }) => {
           )}
           <div className="flex items-center gap-2 w-full">
             <div className="flex flex-col items-start w-8/12 gap-1">
-              <p className="text-xs text-stone-600">Amount</p>
+              <p className="text-xs text-stone-800">Amount</p>
 
               <div className="text-xs bg-gray-50 border border-gray-50 flex items-center justify-start focus:outline-none text-stone-800 ring-0 w-full rounded-md p-2">
                 <StripeAmount
@@ -96,7 +96,7 @@ const Desktop = ({ payout }) => {
               </div>
             </div>
             <div className="flex flex-col items-start gap-1 w-4/12">
-              <p className="text-xs text-stone-600">Currency</p>
+              <p className="text-xs text-stone-800">Currency</p>
               <input
                 type="text"
                 placeholder="Postal code"
@@ -107,7 +107,7 @@ const Desktop = ({ payout }) => {
             </div>
           </div>
           <div className="flex flex-col items-start w-full gap-1">
-            <p className="text-xs text-stone-600">Arriving On</p>
+            <p className="text-xs text-stone-800">Arriving On</p>
             <div className="text-xs bg-gray-50 border border-gray-50 w-full rounded-md p-2 flex items-center justify-start text-left">
               <p className="text-xs text-stone-800">
                 <PayoutDate payoutDate={payout?.arrivalDate} detail={true} />

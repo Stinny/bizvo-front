@@ -10,6 +10,7 @@ import {
 } from '../../../api/accountApiSlice';
 import { useDispatch } from 'react-redux';
 import { showNotification } from '../../../api/toastSlice';
+import { Tooltip } from 'flowbite-react';
 
 const Desktop = () => {
   const dispatch = useDispatch();
@@ -25,6 +26,7 @@ const Desktop = () => {
   const [country, setCountry] = useState(undefined);
   const [slug, setSlug] = useState('');
   const [desc, setDesc] = useState('');
+  const [address, setAddress] = useState('');
   const [logo, setLogo] = useState(null);
   const [selectedImage, setSelectedImage] = useState(null);
   const [error, setError] = useState('');
@@ -50,7 +52,6 @@ const Desktop = () => {
     const formData = new FormData();
     formData.append('name', name);
     formData.append('description', desc);
-    formData.append('slug', slug);
     formData.append('country', JSON.stringify(country));
     formData.append('logoImg', logo);
 
@@ -115,18 +116,29 @@ const Desktop = () => {
                 Bizvo
               </p>
             </Link>
-            <button type="button" onClick={() => logout('logout')} className="">
-              <LogOut size={16} className="text-stone-800" />
-            </button>
+            <Tooltip
+              arrow={false}
+              style="light"
+              content={<p className="text-stone-800 text-xs">Logout</p>}
+            >
+              <button
+                type="button"
+                onClick={() => logout('logout')}
+                className=""
+              >
+                <LogOut size={16} className="text-stone-800" />
+              </button>
+            </Tooltip>
           </div>
           <div className="flex flex-col gap-4 items-start text-left w-full">
             <p className="text-stone-800 text-sm font-medium">Welcome!</p>
             <p className="text-stone-800 text-xs">
-              Are you ready to collect payments? Before you go to your
-              dashboard, we need some more information on the next page.
+              Are you ready to start collecting payments? Before you can see
+              your dashboard, we need some more information from you on the next
+              page.
             </p>
             <div className="flex flex-col w-full items-start gap-1">
-              <p className="text-stone-600 text-xs">Logged in as:</p>
+              <p className="text-stone-800 text-xs">Account:</p>
               <input
                 type="text"
                 className="text-xs bg-gray-50 border border-gray-50 focus:outline-none text-stone-800 ring-0 w-full rounded-md p-2"
@@ -149,7 +161,7 @@ const Desktop = () => {
     );
   }
 
-  return <div className="h-screen">{content}</div>;
+  return <div className="h-fit">{content}</div>;
 };
 
 export default Desktop;

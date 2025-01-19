@@ -24,7 +24,7 @@ const Mobile = ({
           <Spinner />
         </div>
       ) : (
-        <div className="w-full flex flex-col items-start justify-end mx-auto gap-4 mt-32">
+        <div className="w-full flex flex-col items-start justify-end mx-auto gap-4 mt-10">
           <div className="w-full flex items-center justify-center">
             <Link to="/" className="h-full flex gap-1 items-center">
               <Layers size={20} className="font-black" />

@@ -77,7 +77,7 @@ const Paid = ({ invoice, currentUser, succ, setSucc }) => {
         <div className="w-full flex justify-between items-start relative">
           <div className="flex flex-col items-start">
             <p className="text-stone-800 text-sm">Invoice</p>
-            <p className="text-stone-600 text-xs">#{invoice?._id}</p>
+            <p className="text-stone-800 text-xs">#{invoice?._id}</p>
           </div>
 
           <Badge size="xs" color="success">
@@ -90,7 +90,7 @@ const Paid = ({ invoice, currentUser, succ, setSucc }) => {
           </div>
           <div className="flex flex-col items-start col-span-6">
             <p className="text-stone-800 text-sm text-left">{invoice?.title}</p>
-            <p className="text-stone-600 text-xs text-left">
+            <p className="text-stone-800 text-xs text-left">
               {invoice?.description}
             </p>
           </div>
@@ -98,8 +98,8 @@ const Paid = ({ invoice, currentUser, succ, setSucc }) => {
 
         <div className="w-full flex flex-col items-start gap-2 p-2 pl-4 pr-4 rounded-md bg-gray-50">
           <div className="w-full flex justify-between items-center">
-            <p className="text-stone-700 text-xs">Amount:</p>
-            <p className="text-stone-700 text-xs">
+            <p className="text-stone-800 text-xs">Amount:</p>
+            <p className="text-stone-800 text-xs">
               $
               {parseFloat(invoice?.amount)?.toLocaleString(undefined, {
                 minimumFractionDigits: 2,
@@ -108,10 +108,10 @@ const Paid = ({ invoice, currentUser, succ, setSucc }) => {
             </p>
           </div>
           <div className="w-full flex justify-between items-center">
-            <p className="text-stone-700 text-xs">
+            <p className="text-stone-800 text-xs">
               {taxType}({invoice?.tax?.rate}%):
             </p>
-            <p className="text-stone-700 text-xs">${taxAmount?.toFixed(2)}</p>
+            <p className="text-stone-800 text-xs">${taxAmount?.toFixed(2)}</p>
           </div>
           <div className="w-full flex justify-between items-center">
             <p className="text-stone-800 text-xs font-semibold">Total:</p>
@@ -221,7 +221,7 @@ const Paid = ({ invoice, currentUser, succ, setSucc }) => {
         </div>
         <div className="w-full flex justify-between items-end">
           <div className="flex flex-col items-start">
-            <p className="text-stone-600 text-xs">Total:</p>
+            <p className="text-stone-800 text-xs">Total:</p>
             <p className="text-stone-800 text-sm font-semibold">
               $
               {parseFloat(invoice?.amount + taxAmount)?.toLocaleString(

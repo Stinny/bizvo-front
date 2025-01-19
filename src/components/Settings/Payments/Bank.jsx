@@ -75,12 +75,12 @@ const Bank = ({ currentUser, refetch }) => {
               <BiSolidBank className="text-stone-800" />
               <p className="text-sm text-stone-800">Bank Account</p>
             </div>
-            <p className="text-xs text-stone-600">Payouts via bank account</p>
+            <p className="text-xs text-stone-800">Payouts via bank account</p>
           </div>
 
           <div className="flex flex-col gap-2 items-start w-full">
             <div className="flex flex-col gap-1 w-full items-start">
-              <p className="text-xs text-stone-600">Bank ID</p>
+              <p className="text-xs text-stone-800">Bank ID</p>
               <input
                 type="text"
                 placeholder="Pending"
@@ -90,7 +90,7 @@ const Bank = ({ currentUser, refetch }) => {
               />
             </div>
             <div className="flex flex-col w-full items-start gap-1">
-              <p className="text-xs text-stone-600">Bank Name</p>
+              <p className="text-xs text-stone-800">Bank Name</p>
               <input
                 type="text"
                 placeholder="Pending"
@@ -108,7 +108,8 @@ const Bank = ({ currentUser, refetch }) => {
                 <button
                   type="button"
                   onClick={() => setSched(!sched)}
-                  className="text-stone-800 text-xs p-0.5 pr-2 pl-2 border border-stone-800 rounded-md flex items-center justify-center gap-1"
+                  style={{ fontSize: '10px' }}
+                  className="text-stone-800 p-0.5 pr-2 pl-2 border border-stone-800 rounded-md flex items-center justify-center gap-1"
                 >
                   <Calendar size={12} />
                   {schedule === 'Monthly' ? 'Monthly' : 'Weekly'}
@@ -135,14 +136,16 @@ const Bank = ({ currentUser, refetch }) => {
               <div className="flex items-center gap-1">
                 <button
                   type="button"
-                  className="border border-red-400 text-red-400 rounded-md p-0.5 pl-2 pr-2 text-xs"
+                  className="border border-red-400 text-red-400 rounded-md p-0.5 pl-2 pr-2"
+                  style={{ fontSize: '10px' }}
                   onClick={handleRemoveBank}
                 >
-                  Remove Bank
+                  Disconnect
                 </button>
                 <button
                   type="button"
-                  className=" text-stone-800 rounded-md border border-stone-800 p-0.5 pl-2 pr-2 text-xs"
+                  className=" text-stone-800 rounded-md border border-stone-800 p-0.5 pl-2 pr-2"
+                  style={{ fontSize: '10px' }}
                   onClick={() => setDel(false)}
                 >
                   Cancel

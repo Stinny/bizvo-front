@@ -8,6 +8,7 @@ import {
   Info,
   Layers,
   User,
+  XSquare,
 } from 'react-feather';
 import { Link } from 'react-router-dom';
 import ReactCountryFlag from 'react-country-flag';
@@ -15,6 +16,7 @@ import moment from 'moment';
 import { useUpdateInvoForPayMutation } from '../../../api/invoicesApiSlice';
 import MobilePaid from './MobilePaid';
 import Payment from './Payment/Payment';
+import InvoStatus from '../../../components/InvoStatus';
 
 const Mobile = ({ data, invoId, refetch, currentUser, succ, setSucc }) => {
   const [view, setView] = useState('');
@@ -60,12 +62,12 @@ const Mobile = ({ data, invoId, refetch, currentUser, succ, setSucc }) => {
 
   if (data?.msg === 'Not found' || data?.msg === 'Invalid token') {
     content = (
-      <div className="mx-auto flex flex-col gap-2 items-start mt-16 w-full">
+      <div className="mx-auto flex flex-col gap-2 items-start mt-16 w-full p-4">
         <div className="w-full bg-white border border-gray-200 rounded-md flex flex-col gap-2 items-center justify-center h-72">
           <AlertOctagon size={16} className="text-red-400" />
           <div className="flex flex-col items-center text-center gap-2">
             <p className="text-stone-800 text-xs">#{invoId}</p>
-            <p className="text-stone-800 text-xs font-bold">
+            <p className="text-stone-800 text-xs font-semibold">
               Invoice does not exist
             </p>
           </div>
@@ -101,11 +103,19 @@ const Mobile = ({ data, invoId, refetch, currentUser, succ, setSucc }) => {
             <Spinner />
           </div>
         ) : (
-          <div className="flex flex-col gap-2 items-start mt-12 w-full p-4">
+          <div className="flex flex-col gap-2 items-start w-full p-4">
             <div className="w-full flex justify-center items-center text-center">
-              <p className="text-stone-900" style={{ fontSize: '11px' }}>
-                Due by {moment(data?.invoice?.dueDate).format('MMMM Do, YYYY')}
-              </p>
+              {data?.invoice?.status === 'void' ? (
+                <p className="text-stone-900" style={{ fontSize: '11px' }}>
+                  Canceled on{' '}
+                  {moment(data?.invoice?.canceledOn).format('MMMM Do, YYYY')}
+                </p>
+              ) : (
+                <p className="text-stone-900" style={{ fontSize: '11px' }}>
+                  Due by{' '}
+                  {moment(data?.invoice?.dueDate).format('MMMM Do, YYYY')}
+                </p>
+              )}
             </div>
             <div className="w-full bg-white border border-gray-200 rounded-md flex flex-col gap-4 items-start p-2">
               <div className="w-full flex justify-between items-start">
@@ -113,9 +123,7 @@ const Mobile = ({ data, invoId, refetch, currentUser, succ, setSucc }) => {
                   <p className="text-stone-800 text-sm">Invoice</p>
                   <p className="text-stone-600 text-xs">#{invoId}</p>
                 </div>
-                <Badge size="xs" color="pink">
-                  Unpaid
-                </Badge>
+                <InvoStatus status={data?.invoice?.status} />
               </div>
               <div className="w-full grid grid-cols-7">
                 <div className="flex items-center justify-start">
@@ -233,34 +241,43 @@ const Mobile = ({ data, invoId, refetch, currentUser, succ, setSucc }) => {
                       </div>
                     </button>
                   </div>
-                  <div className="w-full flex justify-between items-end">
-                    <div className="flex flex-col items-start">
-                      <p className="text-stone-600 text-xs">Amount:</p>
 
-                      <p className="text-stone-800 text-sm font-semibold">
-                        $
-                        {parseFloat(data?.invoice?.amount)?.toLocaleString(
-                          undefined,
-                          {
-                            minimumFractionDigits: 2,
-                            maximumFractionDigits: 2,
-                          }
-                        )}
+                  {data?.invoice?.status === 'void' ? (
+                    <div className="w-full flex flex-col items-center justify-center h-16 border border-gray-200 rounded-md bg-gray-50">
+                      <XSquare size={14} className="text-red-400" />
+                      <p className="text-stone-800 text-xs">
+                        Invoice was canceled
                       </p>
                     </div>
-                    {readyForPayment ? (
-                      ''
-                    ) : (
-                      <button
-                        type="button"
-                        onClick={handleMoveToPayment}
-                        className="p-2 border border-stone-800 text-stone-800 rounded-md text-xs"
-                        disabled={isOwner || updating}
-                      >
-                        Pay Now
-                      </button>
-                    )}
-                  </div>
+                  ) : (
+                    <div className="w-full flex justify-between items-end">
+                      <div className="flex flex-col items-start">
+                        <p className="text-stone-800 text-xs">Amount:</p>
+                        <p className="text-stone-800 text-sm font-semibold">
+                          $
+                          {parseFloat(data?.invoice?.amount)?.toLocaleString(
+                            undefined,
+                            {
+                              minimumFractionDigits: 2,
+                              maximumFractionDigits: 2,
+                            }
+                          )}
+                        </p>
+                      </div>
+                      {readyForPayment ? (
+                        ''
+                      ) : (
+                        <button
+                          type="button"
+                          onClick={handleMoveToPayment}
+                          className="p-2 border border-stone-800 text-stone-800 rounded-md text-xs"
+                          disabled={isOwner || updating}
+                        >
+                          Pay Now
+                        </button>
+                      )}
+                    </div>
+                  )}
                 </>
               )}
             </div>

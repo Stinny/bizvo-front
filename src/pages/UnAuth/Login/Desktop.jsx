@@ -22,11 +22,11 @@ const Desktop = ({
   return (
     <div className="flex flex-col max-w-3xl mx-auto">
       {isLoading || googling ? (
-        <div className="w-full h-52 flex items-center justify-center mt-32">
+        <div className="w-full h-52 flex items-center justify-center">
           <Spinner />
         </div>
       ) : (
-        <div className="w-80 flex flex-col items-start mx-auto gap-4 mt-32">
+        <div className="w-80 flex flex-col items-start mx-auto gap-4">
           <div className="w-full flex items-center justify-center">
             <Link to="/" className="h-full flex gap-1 items-center">
               <Layers size={20} className="font-black" />

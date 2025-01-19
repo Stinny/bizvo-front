@@ -137,7 +137,7 @@ const Desktop = ({ customer, refetch }) => {
       <form className="w-72">
         <div className="flex flex-col gap-4 items-start w-full">
           <div className="flex flex-col items-start w-full gap-1">
-            <p className="text-xs text-stone-700">Name</p>
+            <p className="text-xs text-stone-800">Name</p>
             <input
               type="text"
               placeholder="Name"
@@ -147,7 +147,7 @@ const Desktop = ({ customer, refetch }) => {
             />
           </div>
           <div className="flex flex-col items-start w-full gap-1">
-            <p className="text-xs text-stone-700">
+            <p className="text-xs text-stone-800">
               {phone?.length ? 'Email & Phone' : 'Email'}
             </p>
             <input
@@ -172,7 +172,7 @@ const Desktop = ({ customer, refetch }) => {
             )}
           </div>
           <div className="flex flex-col items-start w-full gap-1">
-            <p className="text-xs text-stone-700">Address</p>
+            <p className="text-xs text-stone-800">Address</p>
             <input
               type="text"
               placeholder="Address"
@@ -183,7 +183,7 @@ const Desktop = ({ customer, refetch }) => {
           </div>
           <div className="flex items-center gap-2 w-full">
             <div className="flex flex-col items-start w-8/12 gap-1">
-              <p className="text-xs text-stone-700">Country</p>
+              <p className="text-xs text-stone-800">Country</p>
 
               <div className="flex w-full">
                 <input
@@ -206,7 +206,7 @@ const Desktop = ({ customer, refetch }) => {
               </div>
             </div>
             <div className="flex flex-col items-start w-4/12 gap-1">
-              <p className="text-xs text-stone-700">Postal</p>
+              <p className="text-xs text-stone-800">Postal</p>
               <input
                 type="text"
                 placeholder="Postal code"
@@ -218,7 +218,7 @@ const Desktop = ({ customer, refetch }) => {
           </div>
           {desc?.length ? (
             <div className="flex flex-col items-start w-full gap-1">
-              <p className="text-xs text-stone-700">Description</p>
+              <p className="text-xs text-stone-800">Description</p>
               <textarea
                 placeholder="About this customer.."
                 className="text-xs bg-gray-50 border border-gray-50 focus:outline-none text-stone-800 ring-0 w-full rounded-md p-2 resize-none h-16"
@@ -230,7 +230,6 @@ const Desktop = ({ customer, refetch }) => {
             ''
           )}
         </div>
-        <div className="flex flex-col gap-2 items-start w-full"></div>
       </form>
     </div>
   );

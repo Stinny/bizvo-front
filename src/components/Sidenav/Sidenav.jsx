@@ -52,13 +52,6 @@ const Sidenav = () => {
           <Users size={14} className="text-stone-800" />
           <p className="text-xs text-stone-800">Customers</p>
         </Link>
-        <Link
-          to="/dashboard/reviews"
-          className={path === '/dashboard/reviews' ? activeLink : notActiveLink}
-        >
-          <MessageCircle size={14} className="text-stone-800" />
-          <p className="text-xs text-stone-800">Reviews</p>
-        </Link>
       </div>
       <div className="border-t border-gray-200 flex flex-col gap-1 items-start w-full pt-1">
         <Link

@@ -14,6 +14,8 @@ import { isMobile } from 'react-device-detect';
 import { Avatar, Dropdown } from 'flowbite-react';
 import img from '../../assets/green.png';
 import Toast from '../Toast';
+import DarkMode from './DarkMode';
+import Mobile from './Mobile';
 
 const Navbar = () => {
   const currentUser = Cookies.get('currentUser')
@@ -47,13 +49,13 @@ const Navbar = () => {
 
   content = currentUser ? (
     <nav className="w-full bg-transparent flex flex-col relative overflow-visible">
-      <div className="max-w-3xl bg-white flex justify-between items-center border border-gray-200 rounded-md p-2">
+      <div className="max-w-3xl bg-white dark:bg-stone-700 flex justify-between items-center border border-gray-200 rounded-md p-2">
         {/* logo section */}
 
         <Link to="/dashboard" className="flex gap-1">
-          <Layers size={20} className="font-black" />
+          <Layers size={20} className="font-black dark:text-white" />
           <p
-            className="font-bold text-stone-800 text-md"
+            className="font-bold text-stone-800 dark:text-white text-md"
             style={{ fontFamily: 'Space Mono, monospace' }}
           >
             Bizvo
@@ -62,12 +64,16 @@ const Navbar = () => {
 
         <Toast />
 
-        <Avatar
-          size="xs"
-          img={currentUser?.logo?.url}
-          onClick={toggleDropdown}
-          className="hover:cursor-pointer"
-        />
+        <div className="flex items-center gap-2">
+          <DarkMode />
+
+          <Avatar
+            size="xs"
+            img={currentUser?.logo?.url}
+            onClick={toggleDropdown}
+            className="hover:cursor-pointer"
+          />
+        </div>
       </div>
 
       {open ? (
@@ -79,24 +85,24 @@ const Navbar = () => {
             <div className="flex flex-col gap-2 items-start w-full pb-2">
               <Link
                 to="/settings"
-                className="w-full p-1 text-xs text-stone-800 flex items-center gap-2 border border-white rounded-md hover:border-stone-800 hover:outline-non"
+                className="w-full p-1 pl-2 pr-2 text-xs text-stone-800 flex items-center gap-2 border border-white rounded-md hover:border-stone-800 hover:outline-non"
               >
                 <Settings size={14} className="text-stone-800" />
                 <p className="text-xs text-stone-800">Settings</p>
               </Link>
               <Link
                 to="/contact"
-                className="w-full p-1 text-xs text-stone-800 flex items-center gap-2 border border-white rounded-md hover:border-stone-800 hover:outline-non"
+                className="w-full p-1 pl-2 pr-2 text-xs text-stone-800 flex items-center gap-2 border border-white rounded-md hover:border-stone-800 hover:outline-non"
               >
                 <MessageSquare size={14} className="text-stone-800" />
-                <p className="text-xs text-stone-800">Message Us</p>
+                <p className="text-xs text-stone-800">Message</p>
               </Link>
             </div>
             <div className="border-t border-gray-200 flex flex-col gap-1 items-start w-full pt-2">
               <button
                 type="button"
                 onClick={() => logout('logout')}
-                className="w-full flex items-center gap-2 border  rounded-md border-stone-800 hover:outline-none p-1"
+                className="w-full flex items-center gap-2 border rounded-md border-stone-800 hover:outline-none p-1 pl-2 pr-2"
               >
                 <LogOut size={14} className="text-stone-800" />
                 <p className="text-xs text-stone-800">Logout</p>
@@ -110,45 +116,50 @@ const Navbar = () => {
     </nav>
   ) : (
     <nav className="w-full bg-white">
-      <div className="max-w-3xl bg-white flex justify-between items-center border border-gray-200 rounded-md p-2">
-        {/* logo section */}
+      {isMobile ? (
+        <Mobile />
+      ) : (
+        <div className="max-w-3xl bg-white flex justify-between items-center border border-gray-200 rounded-md p-2">
+          {/* logo section */}
 
-        <Link to="/" className="h-full flex gap-1 items-center">
-          <Layers size={20} className="font-black" />
-          <p
-            className="font-bold text-stone-800 text-lg"
-            style={{ fontFamily: 'Space Mono, monospace' }}
-          >
-            Bizvo
-          </p>
-        </Link>
+          <Link to="/" className="h-full flex gap-1 items-center">
+            <Layers size={20} className="font-black" />
+            <p
+              className="font-bold text-stone-800 text-lg"
+              style={{ fontFamily: 'Space Mono, monospace' }}
+            >
+              Bizvo
+            </p>
+          </Link>
 
-        <Toast />
+          <Toast />
 
-        {/* links section */}
-        <div className="h-full flex items-center justify-between">
-          <div className="flex gap-3 items-center">
-            <Link
-              to="/docs"
-              className="flex text-xs p-1 pl-2 pr-2 justify-center items-center text-stone-800 rounded-md"
-            >
-              <p className="font-medium">Docs</p>
-            </Link>
-            <Link
-              to="/pricing"
-              className="flex text-xs p-1 pl-2 pr-2 justify-center items-center text-stone-800 rounded-md"
-            >
-              <p className="font-medium">Pricing</p>
-            </Link>
-            <Link
-              to="/login"
-              className="flex text-xs items-center justify-center border border-stone-800 text-stone-800 rounded-md p-1 pl-2 pr-2"
-            >
-              Login
-            </Link>
+          {/* links section */}
+          <div className="h-full flex items-center justify-between">
+            <div className="flex gap-3 items-center">
+              <Link
+                to="/docs"
+                state={{ view: 'home' }}
+                className="flex text-xs p-1 pl-2 pr-2 justify-center items-center text-stone-800 rounded-md"
+              >
+                <p className="font-medium">Docs</p>
+              </Link>
+              <Link
+                to="/pricing"
+                className="flex text-xs p-1 pl-2 pr-2 justify-center items-center text-stone-800 rounded-md"
+              >
+                <p className="font-medium">Pricing</p>
+              </Link>
+              <Link
+                to="/login"
+                className="flex text-xs items-center justify-center border border-stone-800 text-stone-800 rounded-md p-1 pl-2 pr-2"
+              >
+                Login
+              </Link>
+            </div>
           </div>
         </div>
-      </div>
+      )}
     </nav>
   );
 

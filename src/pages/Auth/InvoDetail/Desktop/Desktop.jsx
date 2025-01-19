@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import Modal from 'react-modal';
 import Edit from './Edit';
-import { Badge, Spinner, Tooltip } from 'flowbite-react';
+import { Badge, Dropdown, Spinner, Tooltip } from 'flowbite-react';
 import {
   AlertOctagon,
   CheckCircle,
@@ -13,6 +13,7 @@ import {
   MoreVertical,
   Send,
   X,
+  XSquare,
 } from 'react-feather';
 import { useGetCustomerOptsQuery } from '../../../../api/customersApiSlice';
 import {
@@ -25,6 +26,9 @@ import moment from 'moment';
 import Cookies from 'js-cookie';
 import { Link } from 'react-router-dom';
 import BackBtn from '../../../../components/BackBtn';
+import InvoStatus from '../../../../components/InvoStatus';
+import CancelModal from '../../../../components/Invoices/CancelModal';
+import SendModal from '../../../../components/Invoices/SendModal';
 
 const customStyles = {
   content: {
@@ -34,7 +38,7 @@ const customStyles = {
     bottom: 'auto',
     marginRight: '-50%',
     transform: 'translate(-50%, -50%)',
-    fontFamily: 'Roboto Mono',
+    fontFamily: 'Geist',
     padding: '8px',
   },
 };
@@ -61,10 +65,12 @@ const Desktop = ({ invoice, refetch }) => {
   const [error, setError] = useState('');
   const [edit, setEdit] = useState(false);
   const [viewCust, setViewCust] = useState(false);
+  const [viewCan, setViewCan] = useState(false);
   const [send, setSend] = useState(false);
   const [sendMod, setSendMod] = useState(false);
   const [sendConfirm, setSendConfirm] = useState(false);
   const [confirmMod, setConfirmMod] = useState(false);
+  const [cancelMod, setCancelMod] = useState(false);
   const [more, setMore] = useState(false);
 
   //for display
@@ -95,8 +101,6 @@ const Desktop = ({ invoice, refetch }) => {
 
   //hook for saving edits
   const [editInvoice, { isLoading: savingInvo }] = useEditInvoiceMutation();
-  //hook for sending invoice
-  const [sendInvoice, { isLoading: isSending }] = useSendInvoiceMutation();
 
   // Function to wait for user confirmation
   const waitForConfirmation = () => {
@@ -156,35 +160,13 @@ const Desktop = ({ invoice, refetch }) => {
     }
   };
 
-  //hanlder function to send invoice
-  const handleSendInvo = async () => {
-    try {
-      const sendReq = await sendInvoice({
-        invoiceId: invoice?._id,
-      }).unwrap();
-
-      if (sendReq === 'Invoice sent') {
-        dispatch(showNotification('Invoice sent'));
-        setSendMod(false);
-        refetch();
-        return;
-      } else {
-        setError('There was an error');
-        return;
-      }
-    } catch (err) {
-      setError('Server error');
-      return;
-    }
-  };
-
   useEffect(() => {
     setError('');
   }, [title]);
 
   let content;
 
-  if (gettingCustOpts || savingInvo || isSending) {
+  if (gettingCustOpts || savingInvo) {
     content = (
       <div className="w-full h-96 flex items-center justify-center">
         <Spinner />
@@ -220,169 +202,157 @@ const Desktop = ({ invoice, refetch }) => {
       />
     ) : (
       <div className="w-10/12 bg-white border rounded-md border-gray-200 p-2 pb-6 flex flex-col gap-6 items-start">
-        <Modal
-          isOpen={sendMod}
-          onRequestClose={() => setSendMod(false)}
-          style={customStyles}
-          contentLabel="Send invo modal"
-        >
-          {false ? (
-            <div className="w-80 h-52 flex items-center justify-center">
-              <Spinner />
-            </div>
-          ) : (
-            <div className="w-80 flex flex-col gap-4 items-start">
-              <div className="flex flex-col items-start">
-                <p className="text-sm text-stone-800">Sending Invoice</p>
-
-                <p className="text-xs text-stone-700">#{invoice?._id}</p>
-              </div>
-              <div className="flex flex-col items-start gap-2 w-full">
-                <div className="flex flex-col items-start w-full">
-                  <p className="text-xs text-stone-600">Sending to:</p>
-                  <p className="text-xs text-stone-800">
-                    {invoice?.customer?.email}
-                  </p>
-                </div>
-                <div className="w-full text-left flex flex-col items-start gap-1 p-2 border border-gray-200 rounded-md">
-                  <AlertOctagon size={16} className="text-red-400" />
-                  <p className="text-xs text-stone-800">
-                    After sending only title, description, and due date can be
-                    changed
-                  </p>
-                </div>
-              </div>
-              <div className="w-full flex items-center justify-end">
-                <div className="flex items-center gap-2">
-                  <button
-                    type="button"
-                    className="border border-red-400 text-red-400 rounded-md p-1 text-xs"
-                    onClick={() => setSendMod(false)}
-                  >
-                    Cancel
-                  </button>
-                  <button
-                    type="button"
-                    className=" text-stone-800 rounded-md border border-stone-800 p-1 text-xs"
-                    onClick={handleSendInvo}
-                  >
-                    Send Invoice
-                  </button>
-                </div>
-              </div>
-            </div>
-          )}
-        </Modal>
+        <SendModal
+          open={sendMod}
+          setOpen={setSendMod}
+          invoId={invoice?._id}
+          invoEmail={invoice?.customer?.email}
+          refetch={refetch}
+          currentUser={currentUser}
+        />
+        <CancelModal
+          open={cancelMod}
+          setOpen={setCancelMod}
+          invoId={invoice?._id}
+          refetch={refetch}
+        />
         <div className="w-full flex items-center justify-between relative">
           <div className="flex gap-1">
             <BackBtn direction={'left'} />
             <div className="flex flex-col items-start">
               <p className="text-sm text-stone-800">Viewing Invoice</p>
 
-              {invoice?.sent ? (
-                <Link
-                  to={`http://localhost:5173/pay/${invoice?._id}?iat=${invoice?.token}`}
-                  target="_blank"
-                >
-                  <p className="text-xs text-stone-700 flex items-center gap-1">
-                    #{invoice?._id}
-                    <ExternalLink size={14} />
-                  </p>
-                </Link>
-              ) : (
-                <p className="text-xs text-stone-700">#{invoice?._id}</p>
-              )}
+              <p className="text-xs text-stone-800">#{invoice?._id}</p>
             </div>
           </div>
           <div className="flex items-center justify-center gap-3 w-44">
-            {invoice?.sent ? (
-              <Tooltip
-                content={
-                  <p className="text-xs text-stone-800 text-left">
-                    This invoice was sent to the customer
-                  </p>
-                }
-                style="light"
-                className="w-52"
-                arrow={false}
+            <InvoStatus status={invoice?.status} />
+          </div>
+          <div className="w-24"></div>
+          <Dropdown
+            dismissOnClick={true}
+            renderTrigger={() => (
+              <MoreVertical size={16} className="hover:cursor-pointer" />
+            )}
+            className="w-24"
+          >
+            {invoice?.status === 'paid' || invoice?.status === 'void' ? (
+              ''
+            ) : (
+              <Dropdown.Item
+                as="div"
+                className="text-xs text-stone-800 flex items-center justify-between w-full"
               >
                 <button
                   type="button"
-                  disabled
-                  className="p-0.5 pl-1 pr-1  text-xs  text-stone-800 flex items-center justify-center gap-1"
+                  onClick={() => setEdit(!edit)}
+                  className="text-xs text-stone-800 flex items-center w-full gap-1"
+                >
+                  <EditIcon size={14} className="text-stone-800" />
+                  Edit
+                </button>
+              </Dropdown.Item>
+            )}
+            {invoice?.sent ? (
+              ''
+            ) : (
+              <Dropdown.Item
+                as="div"
+                className="text-xs text-stone-800 flex items-center justify-between w-full"
+              >
+                <button
+                  type="button"
+                  onClick={() => setSendMod(true)}
+                  className="text-xs text-stone-800 flex items-center w-full gap-1"
                 >
                   <Send size={12} />
-                  Sent
+                  Send
                 </button>
-              </Tooltip>
-            ) : (
-              <>
-                {!currentUser?.bankAdded && !currentUser?.stripeOnboard ? (
-                  <Tooltip
-                    content={
-                      <p className="text-xs text-stone-800 text-left">
-                        Connect a payout option before sending invoices
-                      </p>
-                    }
-                    style="light"
-                    className="w-52"
-                    arrow={false}
-                  >
-                    <button
-                      type="button"
-                      disabled
-                      className="p-0.5 pl-1 pr-1 border text-xs border-gray-100 rounded-md text-gray-100 flex items-center justify-center gap-1"
-                    >
-                      <Send size={12} />
-                      Send
-                    </button>
-                  </Tooltip>
-                ) : (
-                  <button
-                    type="button"
-                    onClick={() => setSendMod(true)}
-                    className="p-0.5 pl-1 pr-1 border text-xs border-stone-800 rounded-md text-stone-800 flex items-center justify-center gap-1"
-                  >
-                    <Send size={12} />
-                    Send
-                  </button>
-                )}
-              </>
+              </Dropdown.Item>
             )}
-            {invoice?.paid ? (
-              <Badge size="xs" color="success">
-                Paid
-              </Badge>
+
+            {invoice?.sent ? (
+              <Link
+                to={`http://localhost:5173/pay/${invoice?._id}?iat=${invoice?.token}`}
+                target="_blank"
+              >
+                <Dropdown.Item
+                  as="div"
+                  className="text-xs text-stone-800 flex items-center gap-1"
+                >
+                  <ExternalLink size={14} />
+                  Open
+                </Dropdown.Item>
+              </Link>
             ) : (
-              <>
-                {invoice?.sent ? (
-                  <Badge size="xs" color="pink">
-                    Unpaid
-                  </Badge>
-                ) : (
-                  <Badge size="xs" color="info">
-                    Draft
-                  </Badge>
-                )}
-              </>
+              ''
             )}
-          </div>
-          <div className="w-24"></div>
-          {invoice?.paid ? (
-            ''
-          ) : (
-            <div className="absolute top-0 right-0 mt-1 mr-1">
-              <button type="button" onClick={() => setEdit(!edit)}>
-                <EditIcon size={16} className="text-stone-800" />
-              </button>
-            </div>
-          )}
+            {invoice?.status === 'pending' ? (
+              <Dropdown.Item
+                as="div"
+                className="text-xs text-stone-800 flex items-center justify-between w-full"
+              >
+                <button
+                  type="button"
+                  onClick={() => setCancelMod(!cancelMod)}
+                  className="text-xs text-stone-800 flex items-center w-full gap-1"
+                >
+                  <XSquare size={14} className="text-red-400" />
+                  Cancel
+                </button>
+              </Dropdown.Item>
+            ) : (
+              ''
+            )}
+          </Dropdown>
         </div>
 
         <div className="flex items-center justify-center w-72 mx-auto">
           <div className="flex flex-col gap-4 w-full items-start">
+            {invoice?.status === 'void' ? (
+              <div className="flex flex-col gap-1 items-start w-full">
+                <button
+                  type="button"
+                  onClick={() => setViewCan(!viewCan)}
+                  className="w-full flex flex-col bg-white items-start text-left border border-gray-200 rounded-md p-2"
+                >
+                  <div className="w-full flex items-center justify-between">
+                    <div className="flex items-center gap-2">
+                      <p className="flex items-center gap-1 text-xs text-stone-800">
+                        <XSquare size={14} className="text-red-400" />
+                        Canceled on{' '}
+                        {moment(invoice?.canceledOn).format('MMMM D, YYYY')}
+                      </p>
+                    </div>
+                    {viewCan ? (
+                      <ChevronDown size={14} />
+                    ) : (
+                      <ChevronRight size={14} />
+                    )}
+                  </div>
+
+                  <div
+                    className={`transition-[max-height] duration-300 ease-in-out overflow-hidden w-full ${
+                      viewCan ? 'max-h-40' : 'max-h-0'
+                    }`}
+                  >
+                    <p className="text-xs text-stone-800 mt-2">Reason</p>
+                    <input
+                      type="text"
+                      placeholder="Reason"
+                      className="text-xs bg-gray-50 border border-gray-50 focus:outline-none text-stone-800 ring-0 rounded-md p-2 w-full"
+                      disabled
+                      value={invoice?.cancelMsg}
+                    />
+                  </div>
+                </button>
+              </div>
+            ) : (
+              ''
+            )}
+
             <div className="flex flex-col gap-1 items-start w-full">
-              <p className="text-xs text-stone-600">Customer</p>
+              <p className="text-xs text-stone-800">Customer</p>
               <button
                 type="button"
                 onClick={() => setViewCust(!viewCust)}
@@ -416,7 +386,7 @@ const Desktop = ({ invoice, refetch }) => {
               </button>
             </div>
             <div className="flex flex-col items-start w-full gap-1">
-              <p className="text-xs text-stone-600">Title</p>
+              <p className="text-xs text-stone-800">Title</p>
               <input
                 type="text"
                 placeholder="Title"
@@ -426,7 +396,7 @@ const Desktop = ({ invoice, refetch }) => {
               />
             </div>
             <div className="flex flex-col items-start w-full gap-1">
-              <p className="text-xs text-stone-600">Description</p>
+              <p className="text-xs text-stone-800">Description</p>
               <textarea
                 placeholder="About this invoice.."
                 className="text-xs bg-gray-50 border border-gray-50 focus:outline-none text-stone-800 ring-0 w-full rounded-md p-2 resize-none h-20"
@@ -436,7 +406,7 @@ const Desktop = ({ invoice, refetch }) => {
             </div>
             <div className="w-full flex items-center justify-center gap-2">
               <div className="flex flex-col items-start w-4/12 gap-1">
-                <p className="text-xs text-stone-600">Amount</p>
+                <p className="text-xs text-stone-800">Amount</p>
                 <div className="w-full p-2 bg-gray-50 text-left rounded-md">
                   <p className="text-xs text-stone-800">
                     $
@@ -447,20 +417,33 @@ const Desktop = ({ invoice, refetch }) => {
                   </p>
                 </div>
               </div>
-              <div className="flex flex-col items-start w-8/12 gap-1">
-                <p className="text-xs text-stone-600">Due By</p>
-                <input
-                  type="text"
-                  placeholder="Due Date"
-                  className="text-xs bg-gray-50 border border-gray-50 focus:outline-none text-stone-800 ring-0 w-full rounded-md p-2"
-                  disabled
-                  value={`${moment(dueDate).format('MMMM D, YYYY')}`}
-                />
-              </div>
+              {invoice?.paid ? (
+                <div className="flex flex-col items-start w-8/12 gap-1">
+                  <p className="text-xs text-stone-800">Paid On</p>
+                  <input
+                    type="text"
+                    placeholder="Due Date"
+                    className="text-xs bg-gray-50 border border-gray-50 focus:outline-none text-stone-800 ring-0 w-full rounded-md p-2"
+                    disabled
+                    value={`${moment(invoice?.paidOn).format('MMMM D, YYYY')}`}
+                  />
+                </div>
+              ) : (
+                <div className="flex flex-col items-start w-8/12 gap-1">
+                  <p className="text-xs text-stone-800">Due By</p>
+                  <input
+                    type="text"
+                    placeholder="Due Date"
+                    className="text-xs bg-gray-50 border border-gray-50 focus:outline-none text-stone-800 ring-0 w-full rounded-md p-2"
+                    disabled
+                    value={`${moment(dueDate).format('MMMM D, YYYY')}`}
+                  />
+                </div>
+              )}
             </div>
             {invoice?.paid ? (
               <div className="flex flex-col w-full items-start gap-1">
-                <p className="text-xs text-stone-600">Total</p>
+                <p className="text-xs text-stone-800">Total</p>
                 <button
                   type="button"
                   onClick={() => setMore(!more)}

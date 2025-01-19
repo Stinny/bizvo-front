@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 
 const Account = ({ lastUpdated }) => {
   return (
-    <div className="w-10/12 flex flex-col gap-4 items-start border border-gray-200 rounded-md p-2">
+    <div className="w-full flex flex-col gap-4 items-start border border-gray-200 rounded-md p-2">
       <div className="w-full flex items-start justify-between">
         <div className="flex flex-col items-start">
           <p className="text-md text-stone-800 font-semibold">Bizvo Docs</p>

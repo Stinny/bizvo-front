@@ -67,13 +67,10 @@ const Edit = ({
   ) : (
     <div className="w-10/12 bg-white border rounded-md border-gray-200 p-2 pb-6 flex flex-col gap-4 items-center justify-center">
       <div className="w-full flex items-center justify-between relative">
-        <div className="flex items-center gap-1">
-          <BackBtn direction={'left'} />
-          <div className="flex flex-col items-start">
-            <p className="text-sm text-stone-800">Editing Customer</p>
+        <div className="flex flex-col items-start">
+          <p className="text-sm text-stone-800">Editing Customer</p>
 
-            <p className="text-xs text-stone-700">#{customerId}</p>
-          </div>
+          <p className="text-xs text-stone-800">#{customerId}</p>
         </div>
         <div className="flex items-center gap-3 absolute right-0 top-0 mr-1 mt-1">
           <button
@@ -102,8 +99,8 @@ const Edit = ({
       )}
       <form className="flex flex-col items-start gap-4 w-72">
         <div className="flex flex-col gap-4 items-start w-full">
-          <div className="flex flex-col items-start w-full">
-            <p className="text-xs text-stone-700">Name</p>
+          <div className="flex flex-col items-start w-full gap-1">
+            <p className="text-xs text-stone-800">Name</p>
             <div className="relative w-full">
               <input
                 type="text"
@@ -120,9 +117,9 @@ const Edit = ({
               </div>
             </div>
           </div>
-          <div className="flex flex-col gap-1 items-start w-full">
+          <div className="flex flex-col items-start w-full gap-1">
             <div className="w-full flex items-center justify-between">
-              <p className="text-xs text-stone-700">
+              <p className="text-xs text-stone-800">
                 {phone?.length || addTel ? 'Email & Phone' : 'Email'}
               </p>
               <div className="flex items-center gap-1">
@@ -160,8 +157,8 @@ const Edit = ({
               ''
             )}
           </div>
-          <div className="flex flex-col items-start w-full">
-            <p className="text-xs text-stone-700">Address</p>
+          <div className="flex flex-col items-start w-full gap-1">
+            <p className="text-xs text-stone-800">Address</p>
             <input
               type="text"
               placeholder="Address"
@@ -171,8 +168,8 @@ const Edit = ({
             />
           </div>
           <div className="w-full flex items-center gap-2">
-            <div className="flex flex-col items-start w-8/12">
-              <p className="text-xs text-stone-700">Country</p>
+            <div className="flex flex-col items-start w-8/12 gap-1">
+              <p className="text-xs text-stone-800">Country</p>
               <Select
                 options={options}
                 onChange={(value) => setCountry(value)}
@@ -223,8 +220,8 @@ const Edit = ({
                 className="w-full text-left outline-none ring-0"
               />
             </div>
-            <div className="flex flex-col items-start w-4/12">
-              <p className="text-xs text-stone-700">Postal</p>
+            <div className="flex flex-col items-start w-4/12 gap-1">
+              <p className="text-xs text-stone-800">Postal</p>
               <input
                 type="text"
                 placeholder="Postal code"

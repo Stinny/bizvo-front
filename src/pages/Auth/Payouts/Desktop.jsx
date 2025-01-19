@@ -30,7 +30,7 @@ const Desktop = ({ payouts, balance, currentUser }) => {
         <div className="flex flex-col items-center text-center">
           <DollarSign size={18} className="text-stone-800 mb-2" />
           <p className="text-sm text-stone-800">No Payouts</p>
-          <p className="text-xs text-stone-600 w-72">
+          <p className="text-xs text-stone-800 w-72">
             Only seen when you are paid via bank account
           </p>
         </div>
@@ -40,7 +40,7 @@ const Desktop = ({ payouts, balance, currentUser }) => {
         <div className="w-full flex items-center justify-between bg-white border border-gray-200 rounded-md p-2">
           <div className="flex flex-col items-start">
             <p className="text-sm text-stone-800">Payouts</p>
-            <p className="text-xs text-stone-600">View balance and payouts</p>
+            <p className="text-xs text-stone-800">View balance and payouts</p>
           </div>
           <div className="flex flex-col items-start">
             <div className="flex items-center gap-3">
@@ -51,7 +51,7 @@ const Desktop = ({ payouts, balance, currentUser }) => {
                     currency={currentUser?.bankCurrency}
                   />
                 </p>
-                <p className="text-xs text-stone-600">Available</p>
+                <p className="text-xs text-stone-800">Available</p>
               </div>
               <div className="flex flex-col items-start">
                 <p className="text-xs text-stone-800">
@@ -60,7 +60,7 @@ const Desktop = ({ payouts, balance, currentUser }) => {
                     currency={currentUser?.bankCurrency}
                   />
                 </p>
-                <p className="text-xs text-stone-600">Pending</p>
+                <p className="text-xs text-stone-800">Pending</p>
               </div>
             </div>
           </div>
@@ -96,11 +96,8 @@ const Desktop = ({ payouts, balance, currentUser }) => {
                 <div
                   className={`grid grid-cols-3 border border-gray-200 bg-white rounded-md p-2 hover:border-stone-800 w-full`}
                 >
-                  <div className="flex flex-col items-start">
-                    <p className="text-stone-600 text-xs">#{payout?._id}</p>
-                    <p className="text-stone-800 text-xs">
-                      <PayoutDate payoutDate={payout?.arrivalDate} />
-                    </p>
+                  <div className="flex items-center">
+                    <p className="text-stone-800 text-xs">#{payout?._id}</p>
                   </div>
 
                   <div className="flex items-center justify-center">

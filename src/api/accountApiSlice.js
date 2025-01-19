@@ -22,47 +22,10 @@ export const accountApiSlice = apiSlice.injectEndpoints({
       }),
     }),
     editAccount: builder.mutation({
-      query: ({
-        phone,
-        dob,
-        address,
-        zip,
-        country,
-        busType,
-        currency,
-        taxId,
-        name,
-      }) => ({
+      query: (formData) => ({
         url: '/accounts/edit/account',
         method: 'POST',
-        body: {
-          phone: phone,
-          dob: dob,
-          address: address,
-          zip: zip,
-          country: country,
-          busType: busType,
-          currency: currency,
-          taxId: taxId,
-          name: name,
-        },
-      }),
-    }),
-    editProfile: builder.mutation({
-      query: ({ name, desc, image, slug, link, x, medium, insta, linked }) => ({
-        url: '/accounts/edit/profile',
-        method: 'POST',
-        body: {
-          name: name,
-          description: desc,
-          image: image,
-          medium: medium,
-          x: x,
-          insta: insta,
-          link: link,
-          slug: slug,
-          linked: linked,
-        },
+        body: formData,
       }),
     }),
     editNotis: builder.mutation({
@@ -103,7 +66,6 @@ export const {
   useSetupMutation,
   useGetUserQuery,
   useEditAccountMutation,
-  useEditProfileMutation,
   useEditNotisMutation,
   useDeleteAccountMutation,
   useUploadLogoMutation,

@@ -38,7 +38,7 @@ const Desktop = ({ currentUser, refetch }) => {
       <div className="w-full flex items-start justify-between">
         <div className="flex flex-col items-start">
           <p className="text-sm text-stone-800">Payment Settings</p>
-          <p className="text-xs text-stone-700">
+          <p className="text-xs text-stone-800">
             Connect and manage how you get paid
           </p>
         </div>
@@ -56,7 +56,7 @@ const Desktop = ({ currentUser, refetch }) => {
         !currentUser?.stripePending &&
         !currentUser?.bankAdded &&
         !currentUser?.stripeOnboard ? (
-          <Badge color="pink">Disabled</Badge>
+          <Badge color="pink">Disconnected</Badge>
         ) : (
           ''
         )}
@@ -79,7 +79,7 @@ const Desktop = ({ currentUser, refetch }) => {
                   <BiSolidBank className="text-stone-800" />
                   <p className="text-sm text-stone-800">Bank Account</p>
                 </div>
-                <p className="text-xs text-stone-600">
+                <p className="text-xs text-stone-800">
                   Payouts via bank account
                 </p>
 
@@ -105,7 +105,7 @@ const Desktop = ({ currentUser, refetch }) => {
                   <p className="text-sm text-stone-800">Stripe Account</p>
                 </div>
 
-                <p className="text-xs text-stone-600">
+                <p className="text-xs text-stone-800">
                   Payouts via Stripe account
                 </p>
 
@@ -136,10 +136,10 @@ const Desktop = ({ currentUser, refetch }) => {
       )}
       <div className="w-full flex items-center justify-center text-center mt-4">
         <p
-          className="text-stone-600 text-center w-64"
+          className="text-stone-800 text-center w-64"
           style={{ fontSize: '11px' }}
         >
-          All payments will incur a 2.9% + 30¢ Stripe fee and a 2% Bizvo fee
+          All payments incur a 2% Bizvo fee and 2.9% + 30¢ processing fee
         </p>
       </div>
     </div>

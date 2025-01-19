@@ -13,7 +13,6 @@ import Payouts from './pages/Auth/Payouts/Payouts';
 import Settings from './pages/Auth/Settings/Settings';
 import NewInvo from './pages/Auth/NewInvo/NewInvo';
 import Message from './pages/UnAuth/Message/Message';
-import Reviews from './pages/Auth/Reviews/Reviews';
 import NewCustomer from './pages/Auth/NewCustomer/NewCustomer';
 import CustomerDetail from './pages/Auth/CustomerDetail/CustomerDetail';
 import Add from './pages/Auth/Add/Add';
@@ -76,8 +75,6 @@ const App = () => {
               path="dashboard/customers/:customerId"
               element={<CustomerDetail />}
             />
-
-            <Route path="dashboard/reviews" element={<Reviews />} />
 
             <Route path="dashboard/payouts" element={<Payouts />} />
 

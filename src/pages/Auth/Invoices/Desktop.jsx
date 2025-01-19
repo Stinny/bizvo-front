@@ -10,6 +10,7 @@ import {
   Send,
 } from 'react-feather';
 import { Badge } from 'flowbite-react';
+import InvoStatus from '../../../components/InvoStatus';
 
 const Desktop = ({ invoices }) => {
   //stuff for pagination//
@@ -34,7 +35,7 @@ const Desktop = ({ invoices }) => {
       <div className="w-full flex items-center justify-between bg-white border border-gray-200 rounded-md p-2">
         <div className="flex flex-col items-start">
           <p className="text-sm text-stone-800">Invoices</p>
-          <p className="text-xs text-stone-600">View all invoices</p>
+          <p className="text-xs text-stone-800">Viewing all invoices</p>
         </div>
 
         <div className="w-24 flex items-center justify-end">
@@ -66,11 +67,11 @@ const Desktop = ({ invoices }) => {
             key={index}
           >
             <div className="w-full flex flex-col items-start gap-1 p-2">
-              <div className="flex flex-col items-start text-left">
-                <p className="text-stone-600" style={{ fontSize: '10px' }}>
+              <div className="flex flex-col items-start text-left gap-1">
+                <p className="text-stone-800" style={{ fontSize: '10px' }}>
                   #{invoice?._id}
                 </p>
-                <p className="text-xs text-stone-900">{invoice?.title}</p>
+                <p className="text-xs text-stone-800">{invoice?.title}</p>
               </div>
             </div>
             <div className="w-full flex justify-between border-t border-gray-200 p-2">
@@ -81,23 +82,7 @@ const Desktop = ({ invoices }) => {
                   maximumFractionDigits: 2,
                 })}
               </p>
-              {invoice?.paid ? (
-                <Badge size="xs" color="success">
-                  Paid
-                </Badge>
-              ) : (
-                <>
-                  {invoice?.sent ? (
-                    <Badge size="xs" color="pink">
-                      Unpaid
-                    </Badge>
-                  ) : (
-                    <Badge size="xs" color="info">
-                      Draft
-                    </Badge>
-                  )}
-                </>
-              )}
+              <InvoStatus status={invoice?.status} />
             </div>
           </Link>
         ))}
@@ -108,7 +93,7 @@ const Desktop = ({ invoices }) => {
       <div className="flex flex-col items-center text-center">
         <FileText size={18} className="text-stone-800 mb-2" />
         <p className="text-sm text-stone-800">No Invoices</p>
-        <p className="text-xs text-stone-600 w-72">
+        <p className="text-xs text-stone-800 w-72">
           Create an invoice to collect payment
         </p>
         <Link

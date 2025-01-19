@@ -4,6 +4,7 @@ import { Edit as EditIcon, Save, X } from 'react-feather';
 
 const Desktop = ({
   handleSaveNotis,
+  handleCancel,
   news,
   setNews,
   paid,
@@ -15,29 +16,27 @@ const Desktop = ({
   setRevCol,
   edit,
   setEdit,
+  error,
 }) => {
-  const handleCancelEdit = () => {
-    setNews(currentUser?.news);
-    setPaid(currentUser?.invoPaid);
-    setLate(currentUser?.invoLate);
-    setEdit(false);
-  };
-
   return edit ? (
     <div className="w-full flex flex-col items-start gap-4">
-      <div className="w-full flex items-center justify-between">
+      <div className="w-full flex items-start justify-between">
         <div className="flex flex-col items-start">
           <p className="text-sm text-stone-800">Notification Settings</p>
-          <p className="text-xs text-stone-700">
-            Ajust what email notifications you receive
+          <p className="text-xs text-stone-800">
+            Editing what email notifications you receive
           </p>
         </div>
+        {error ? (
+          <div className="flex items-center justify-start gap-2 border border-gray-200 rounded-md p-2">
+            <AlertOctagon size={14} className="text-red-400" />
+            <p className="text-stone-800 text-xs">{error}</p>
+          </div>
+        ) : (
+          ''
+        )}
         <div className="flex items-center gap-3">
-          <button
-            type="button"
-            onClick={handleCancelEdit}
-            className="text-red-400"
-          >
+          <button type="button" onClick={handleCancel} className="text-red-400">
             <X size={16} />
           </button>
           <button
@@ -50,7 +49,7 @@ const Desktop = ({
         </div>
       </div>
       <div className="flex flex-col items-start w-full gap-4">
-        <div className="flex items-start gap-3">
+        <div className="flex items-center gap-3">
           <Switch
             size="small"
             checked={news}
@@ -62,12 +61,12 @@ const Desktop = ({
           />
           <div className="flex flex-col items-start">
             <p className="text-xs text-stone-800">Newsletter</p>
-            <p className="text-xs text-stone-600">
+            <p className="text-xs text-stone-800">
               Receive the monthly Bizvo newsletter
             </p>
           </div>
         </div>
-        <div className="flex items-start gap-3">
+        <div className="flex items-center gap-3">
           <Switch
             size="small"
             checked={paid}
@@ -79,12 +78,12 @@ const Desktop = ({
           />
           <div className="flex flex-col items-start">
             <p className="text-xs text-stone-800">Paid Invoices</p>
-            <p className="text-xs text-stone-600">
+            <p className="text-xs text-stone-800">
               Receive an email whenever an invoice is paid
             </p>
           </div>
         </div>
-        <div className="flex items-start gap-3">
+        <div className="flex items-center gap-3">
           <Switch
             size="small"
             checked={late}
@@ -96,12 +95,12 @@ const Desktop = ({
           />
           <div className="flex flex-col items-start">
             <p className="text-xs text-stone-800">Overdue Invoices</p>
-            <p className="text-xs text-stone-600">
+            <p className="text-xs text-stone-800">
               Receive an email whenever an invoice is overdue
             </p>
           </div>
         </div>
-        <div className="flex items-start gap-3">
+        {/* <div className="flex items-center gap-3">
           <Switch
             size="small"
             checked={revCol}
@@ -117,16 +116,16 @@ const Desktop = ({
               Receive an email whenever a customer leaves a review
             </p>
           </div>
-        </div>
+        </div> */}
       </div>
     </div>
   ) : (
     <div className="w-full flex flex-col items-start gap-4">
-      <div className="w-full flex items-center justify-between">
+      <div className="w-full flex items-start justify-between">
         <div className="flex flex-col items-start">
           <p className="text-sm text-stone-800">Notification Settings</p>
-          <p className="text-xs text-stone-700">
-            Ajust what email notifications you receive
+          <p className="text-xs text-stone-800">
+            Viewing what email notifications you receive
           </p>
         </div>
         <div className="flex items-center gap-2">
@@ -182,7 +181,7 @@ const Desktop = ({
           />
           <p className="text-xs text-stone-800">Overdue Invoices</p>
         </div>
-        <div className="flex items-center gap-3">
+        {/* <div className="flex items-center gap-3">
           <Switch
             size="small"
             disabled
@@ -195,7 +194,7 @@ const Desktop = ({
             }}
           />
           <p className="text-xs text-stone-800">Review Collected</p>
-        </div>
+        </div> */}
       </div>
     </div>
   );

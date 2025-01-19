@@ -6,7 +6,7 @@ import Select from 'react-select';
 import { DateInput } from 'rsuite';
 import { dateTheme } from '../../../../utils/dateTheme';
 import Modal from 'react-modal';
-import { AlertOctagon } from 'react-feather';
+import { AlertOctagon, X } from 'react-feather';
 
 const customStyles = {
   content: {
@@ -16,7 +16,7 @@ const customStyles = {
     bottom: 'auto',
     marginRight: '-50%',
     transform: 'translate(-50%, -50%)',
-    fontFamily: 'Space Mono',
+    fontFamily: 'Geist',
     zIndex: 1000,
   },
   overlay: { zIndex: 1000 },
@@ -87,11 +87,19 @@ const EditDraft = ({
         contentLabel="Send invo confirm modal"
       >
         <div className="w-80 flex flex-col gap-4 items-start">
-          <div className="flex flex-col items-start">
-            <p className="text-sm text-stone-800">Sending Invoice</p>
-            <p className="text-xs text-stone-700">
-              Confirm sending this invoice
-            </p>
+          <div className="w-full flex items-start justify-between">
+            <div className="flex flex-col items-start">
+              <p className="text-sm text-stone-800">Sending Invoice</p>
+
+              <p className="text-xs text-stone-800">
+                Are you sure you want to send?
+              </p>
+            </div>
+            <X
+              size={16}
+              className="text-red-400 hover:cursor-pointer"
+              onClick={() => setConfirmMod(false)}
+            />
           </div>
           <div className="flex flex-col items-start gap-2 w-full">
             <div className="w-full text-left flex flex-col items-start gap-1 p-2 border border-gray-200 rounded-md">
@@ -106,13 +114,6 @@ const EditDraft = ({
             <div className="flex items-center gap-2">
               <button
                 type="button"
-                className="border border-red-400 text-red-400 rounded-md p-1 text-xs"
-                onClick={() => setConfirmMod(false)}
-              >
-                Cancel
-              </button>
-              <button
-                type="button"
                 className=" text-stone-800 rounded-md border border-stone-800 p-1 text-xs"
                 onClick={modalConfirmHandler}
               >
@@ -124,7 +125,7 @@ const EditDraft = ({
       </Modal>
       <div className="flex flex-col gap-4 w-full items-start">
         <div className="flex flex-col items-start w-full gap-1">
-          <p className="text-xs text-stone-600">Customer</p>
+          <p className="text-xs text-stone-800">Customer</p>
           <Select
             options={custOpts}
             onChange={(value) => setCustomer(value)}
@@ -182,7 +183,7 @@ const EditDraft = ({
           />
         </div>
         <div className="flex flex-col items-start w-full gap-1">
-          <p className="text-xs text-stone-600">Title</p>
+          <p className="text-xs text-stone-800">Title</p>
           <div className="relative w-full">
             <input
               type="text"
@@ -200,7 +201,7 @@ const EditDraft = ({
           </div>
         </div>
         <div className="flex flex-col items-start w-full gap-1">
-          <p className="text-xs text-stone-600">Description</p>
+          <p className="text-xs text-stone-800">Description</p>
           <div className="relative w-full">
             <textarea
               placeholder="What is this invoice for.."
@@ -218,7 +219,7 @@ const EditDraft = ({
         </div>
         <div className="flex items-center gap-2">
           <div className="flex flex-col items-start w-4/12 gap-1">
-            <p className="text-xs text-stone-600">Amount</p>
+            <p className="text-xs text-stone-800">Amount</p>
             <div className="flex items-center w-full gap-0.5">
               <p className="text-sm text-stone-800">$</p>
               <input
@@ -231,7 +232,7 @@ const EditDraft = ({
             </div>
           </div>
           <div className="flex flex-col items-start w-8/12 gap-1">
-            <p className="text-xs text-stone-600">Due By</p>
+            <p className="text-xs text-stone-800">Due By</p>
             <div className="relative w-full">
               <button
                 type="button"

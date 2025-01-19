@@ -34,7 +34,7 @@ export const invoicesApiSlice = apiSlice.injectEndpoints({
           amount: amount,
           customerId: customerId,
           dueDate: dueDate,
-          invoiceId: invoiceId,
+          invoId: invoiceId,
           send: send,
         },
       }),
@@ -64,7 +64,17 @@ export const invoicesApiSlice = apiSlice.injectEndpoints({
         url: `/invoices/delete`,
         method: 'POST',
         body: {
-          invoiceId: invoiceId,
+          invoId: invoiceId,
+        },
+      }),
+    }),
+    cancelInvoice: builder.mutation({
+      query: ({ invoId, msg }) => ({
+        url: `/invoices/cancel`,
+        method: 'POST',
+        body: {
+          invoId: invoId,
+          msg: msg,
         },
       }),
     }),
@@ -100,4 +110,5 @@ export const {
   useSendInvoiceMutation,
   useUpdateInvoForPayMutation,
   useConfirmPayInvoMutation,
+  useCancelInvoiceMutation,
 } = invoicesApiSlice;

@@ -20,21 +20,8 @@ import Cookies from 'js-cookie';
 import EditDraft from './EditDraft';
 import { dateTheme } from '../../../../utils/dateTheme';
 import BackBtn from '../../../../components/BackBtn';
-
-const customStyles = {
-  content: {
-    top: '50%',
-    left: '50%',
-    right: 'auto',
-    bottom: 'auto',
-    marginRight: '-50%',
-    transform: 'translate(-50%, -50%)',
-    fontFamily: 'Space Mono',
-    zIndex: 1000,
-  },
-  overlay: { zIndex: 1000 },
-};
-Modal.setAppElement('#root');
+import InvoStatus from '../../../../components/InvoStatus';
+import DeleteModal from '../../../../components/Invoices/DeleteModal';
 
 const Edit = ({
   handleSaveEdits,
@@ -66,27 +53,7 @@ const Edit = ({
   const navigate = useNavigate();
 
   const [del, setDel] = useState(false);
-  const [delErr, setDelErr] = useState('');
   const [viewCust, setViewCust] = useState(false);
-
-  //hook for invoice delete API call
-  const [deleteInvoice, { isLoading }] = useDeleteInvoiceMutation();
-
-  const handleDeleteInvo = async () => {
-    try {
-      const deleteInvoReq = await deleteInvoice({
-        invoiceId: invoiceId,
-      }).unwrap();
-
-      if (deleteInvoReq === 'Invoice deleted') {
-        dispatch(showNotification('Invoice deleted'));
-        navigate('/dashboard/invoices');
-      }
-    } catch (err) {
-      setDelErr('Server error');
-      return;
-    }
-  };
 
   //for date picker
   const [selDate, setSelDate] = useState(false);
@@ -126,160 +93,17 @@ const Edit = ({
 
   return (
     <div className="w-10/12 bg-white border rounded-md border-gray-200 p-2 pb-6 flex flex-col gap-6 items-start">
-      <Modal
-        isOpen={del}
-        onRequestClose={() => setDel(false)}
-        style={customStyles}
-        contentLabel="Delete modal"
-      >
-        {isLoading ? (
-          <div className="w-72 h-52 flex items-center justify-center">
-            <Spinner />
-          </div>
-        ) : (
-          <div className="w-72 flex flex-col gap-4 items-start">
-            <div className="flex flex-col items-start">
-              <p className="text-sm text-stone-800">Invoice: {invoiceId}</p>
-              <p className="text-xs text-stone-700">
-                Are you sure you want to delete this invoice?
-              </p>
-            </div>
-            <div className="flex flex-col gap-2 items-start w-full">
-              <div className="flex flex-col items-start w-full">
-                <p className="text-xs text-stone-700">Customer</p>
-                <button
-                  type="button"
-                  onClick={() => setViewCust(!viewCust)}
-                  className="w-full flex flex-col bg-gray-50 items-start text-left border border-gray-50 rounded-md p-2"
-                >
-                  <div className="w-full flex items-center justify-between">
-                    <div className="flex items-center gap-2">
-                      <p className="text-xs text-stone-800">
-                        {invoice?.customer?.name}
-                      </p>
-                    </div>
-                    {viewCust ? (
-                      <ChevronDown size={14} />
-                    ) : (
-                      <ChevronRight size={14} />
-                    )}
-                  </div>
-
-                  <div
-                    className={`transition-[max-height] duration-300 ease-in-out overflow-hidden ${
-                      viewCust ? 'max-h-40' : 'max-h-0'
-                    }`}
-                  >
-                    <p className="text-xs text-stone-800 mt-4">
-                      {invoice?.customer?.email}
-                    </p>
-                    <p className="text-xs text-stone-800 mt-2">
-                      {invoice?.customer?.country?.label}
-                    </p>
-                  </div>
-                </button>
-              </div>
-              <div className="w-full flex items-center justify-center gap-2">
-                <div className="flex flex-col items-start w-4/12 gap-1">
-                  <p className="text-xs text-stone-600">Amount</p>
-                  <div className="w-full flex items-center gap-0.5">
-                    <p className="text-sm text-stone-800">$</p>
-                    <input
-                      type="text"
-                      placeholder="Amount"
-                      className="text-xs bg-gray-50 border border-gray-50 focus:outline-none text-stone-800 ring-0 w-full rounded-md p-2 pl-0"
-                      disabled
-                      value={amount}
-                    />
-                  </div>
-                </div>
-                <div className="flex flex-col items-start w-8/12 gap-1">
-                  <p className="text-xs text-stone-600">Due By</p>
-                  <input
-                    type="text"
-                    placeholder="Due Date"
-                    className="text-xs bg-gray-50 border border-gray-50 focus:outline-none text-stone-800 ring-0 w-full rounded-md p-2"
-                    disabled
-                    value={`${moment(dueDate).format('MMMM D, YYYY')}`}
-                  />
-                </div>
-              </div>
-            </div>
-            <div className="w-full flex items-center justify-end">
-              <div className="flex items-center gap-2">
-                <button
-                  type="button"
-                  className=" text-stone-800 rounded-md border border-stone-800 p-1 text-xs"
-                  onClick={() => setDel(false)}
-                >
-                  Cancel
-                </button>
-                <button
-                  type="button"
-                  className="border border-red-400 text-red-400 rounded-md p-1 text-xs"
-                  onClick={handleDeleteInvo}
-                >
-                  Delete
-                </button>
-              </div>
-            </div>
-          </div>
-        )}
-      </Modal>
+      <DeleteModal invoId={invoice?._id} open={del} setOpen={setDel} />
 
       <div className="w-full flex items-center justify-between relative">
-        <div className="flex items-center gap-1">
-          <BackBtn direction={'left'} />
-          <div className="flex flex-col items-start">
-            <p className="text-sm text-stone-800">Editing Invoice</p>
+        <div className="flex flex-col items-start">
+          <p className="text-sm text-stone-800">Editing Invoice</p>
 
-            {invoice?.sent ? (
-              <Link
-                to={`http://localhost:5173/pay/${invoice?._id}?iat=${invoice?.token}`}
-                target="_blank"
-              >
-                <p className="text-xs text-stone-700 flex items-center gap-1">
-                  #{invoice?._id}
-                  <ExternalLink size={14} />
-                </p>
-              </Link>
-            ) : (
-              <p className="text-xs text-stone-700">#{invoice?._id}</p>
-            )}
-          </div>
+          <p className="text-xs text-stone-800">#{invoice?._id}</p>
         </div>
 
         <div className="flex items-center justify-center gap-3 w-44">
-          {invoice?.paid ? (
-            <Badge size="xs" color="success">
-              Paid
-            </Badge>
-          ) : (
-            <>
-              {invoice?.sent ? (
-                <Badge size="xs" color="pink">
-                  Unpaid
-                </Badge>
-              ) : (
-                <Badge size="xs" color="info">
-                  Draft
-                </Badge>
-              )}
-            </>
-          )}
-
-          {invoice?.sent ? (
-            <button
-              type="button"
-              disabled
-              className="p-0.5 pl-1 pr-1  text-xs  text-stone-800 flex items-center justify-center gap-1"
-            >
-              <Send size={12} />
-              Sent
-            </button>
-          ) : (
-            ''
-          )}
+          <InvoStatus status={invoice?.status} />
         </div>
 
         <div className="flex items-center justify-end w-24 gap-3"></div>
@@ -306,7 +130,7 @@ const Edit = ({
         <div className="flex items-center justify-center w-72 mx-auto">
           <div className="flex flex-col gap-4 w-full items-start">
             <div className="flex flex-col items-start w-full gap-1">
-              <p className="text-xs text-stone-600">Customer</p>
+              <p className="text-xs text-stone-800">Customer</p>
               <button
                 type="button"
                 onClick={() => setViewCust(!viewCust)}
@@ -340,7 +164,7 @@ const Edit = ({
               </button>
             </div>
             <div className="flex flex-col items-start w-full gap-1">
-              <p className="text-xs text-stone-600">Title</p>
+              <p className="text-xs text-stone-800">Title</p>
               <div className="relative w-full">
                 <input
                   type="text"
@@ -351,14 +175,14 @@ const Edit = ({
                   maxLength={25}
                 />
                 <div className="absolute right-2 top-1/2 transform -translate-y-1/2">
-                  <p className="text-stone-700" style={{ fontSize: '10px' }}>
+                  <p className="text-stone-800" style={{ fontSize: '10px' }}>
                     {title?.length}/25
                   </p>
                 </div>
               </div>
             </div>
             <div className="flex flex-col items-start w-full gap-1">
-              <p className="text-xs text-stone-600">Description</p>
+              <p className="text-xs text-stone-800">Description</p>
 
               <div className="relative w-full">
                 <textarea
@@ -369,7 +193,7 @@ const Edit = ({
                   maxLength={100}
                 />
                 <div className="absolute right-2 bottom-2 transform -translate-y-1/2">
-                  <p className="text-stone-700" style={{ fontSize: '10px' }}>
+                  <p className="text-stone-800" style={{ fontSize: '10px' }}>
                     {desc?.length}/100
                   </p>
                 </div>
@@ -377,7 +201,7 @@ const Edit = ({
             </div>
             <div className="w-full flex items-center justify-center gap-2">
               <div className="flex flex-col items-start w-4/12 gap-1">
-                <p className="text-xs text-stone-600">Amount</p>
+                <p className="text-xs text-stone-800">Amount</p>
                 <div className="w-full p-2 bg-gray-50 text-left rounded-md">
                   <p className="text-xs text-stone-800">
                     $
@@ -389,7 +213,7 @@ const Edit = ({
                 </div>
               </div>
               <div className="flex flex-col items-start w-8/12 gap-1">
-                <p className="text-xs text-stone-600">Due By</p>
+                <p className="text-xs text-stone-800">Due By</p>
                 <div className="relative w-full">
                   <button
                     type="button"

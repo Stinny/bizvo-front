@@ -27,7 +27,7 @@ const Desktop = ({ customers }) => {
       <div className="w-full flex items-center justify-between bg-white border border-gray-200 rounded-md p-2">
         <div className="flex flex-col items-start">
           <p className="text-sm text-stone-800">Customers</p>
-          <p className="text-xs text-stone-700">View all customers</p>
+          <p className="text-xs text-stone-800">Viewing all customers</p>
         </div>
         <div className="w-24 flex items-center justify-end">
           {customers?.length > 15 ? (
@@ -57,16 +57,19 @@ const Desktop = ({ customers }) => {
             className="w-full bg-white hover:border-stone-800 border border-gray-200 rounded-md flex items-center justify-start relative p-2"
             key={index}
           >
-            <div className="flex flex-col items-start text-left overflow-hidden">
-              <p
-                className="text-stone-600 overflow-hidden"
-                style={{ fontSize: '10px' }}
-              >
-                {customer?.email}
-              </p>
-              <p className="text-xs text-stone-800 text-left">
-                {customer?.name}
-              </p>
+            <div className="flex items-center justify-between w-full">
+              <div className="flex flex-col items-start text-left overflow-hidden gap-1">
+                <p
+                  className="text-stone-800 overflow-hidden"
+                  style={{ fontSize: '10px' }}
+                >
+                  {customer?.email}
+                </p>
+                <p className="text-xs text-stone-800 text-left">
+                  {customer?.name}
+                </p>
+              </div>
+              <ReactCountryFlag countryCode={customer?.country?.value} />
             </div>
           </Link>
         ))}
@@ -77,7 +80,7 @@ const Desktop = ({ customers }) => {
       <div className="flex flex-col items-center text-center">
         <Users size={18} className="text-stone-800 mb-2" />
         <p className="text-sm text-stone-800">No Customers</p>
-        <p className="text-xs text-stone-600 w-72">
+        <p className="text-xs text-stone-800 w-72">
           Create customers to send invoices to
         </p>
         <Link

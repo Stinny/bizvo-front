@@ -55,12 +55,12 @@ const Stripe = ({ currentUser, refetch }) => {
               <BsStripe className="text-stone-800" />
               <p className="text-sm text-stone-800">Stripe Account</p>
             </div>
-            <p className="text-xs text-stone-600">Payouts via Stripe account</p>
+            <p className="text-xs text-stone-800">Payouts via Stripe account</p>
           </div>
 
           <div className="flex flex-col items-start w-full">
             <div className="flex flex-col w-full items-start gap-1">
-              <p className="text-xs text-stone-600">Stripe ID</p>
+              <p className="text-xs text-stone-800">Stripe ID</p>
               <input
                 type="text"
                 placeholder="Pending"
@@ -103,7 +103,7 @@ const Stripe = ({ currentUser, refetch }) => {
                   onClick={handleRemoveStripe}
                   disabled={removing || isLoading}
                 >
-                  Remove Stripe
+                  Disconnect
                 </button>
                 <button
                   type="button"

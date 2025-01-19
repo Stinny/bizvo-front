@@ -90,7 +90,7 @@ const Desktop = ({
         <div className="w-80 flex flex-col gap-4 items-start">
           <div className="flex flex-col items-start">
             <p className="text-sm text-stone-800">Sending Invoice</p>
-            <p className="text-xs text-stone-700">
+            <p className="text-xs text-stone-800">
               Confirm sending this invoice
             </p>
           </div>
@@ -126,7 +126,7 @@ const Desktop = ({
       <div className="w-full flex items-center justify-between relative">
         <div className="flex flex-col items-start text-left">
           <p className="text-sm text-stone-800">New Invoice</p>
-          <p className="text-xs text-stone-700">Save as draft or send now</p>
+          <p className="text-xs text-stone-800">Save as draft or send now</p>
         </div>
 
         <div className="w-24"></div>
@@ -153,7 +153,7 @@ const Desktop = ({
         )}
         <div className="flex flex-col gap-4 w-full items-start">
           <div className="flex flex-col items-start w-full gap-1">
-            <p className="text-xs text-stone-600">Customer</p>
+            <p className="text-xs text-stone-800">Customer</p>
             <Select
               options={custOpts}
               onChange={(value) => setCustomer(value)}
@@ -211,7 +211,7 @@ const Desktop = ({
             />
           </div>
           <div className="flex flex-col items-start w-full gap-1">
-            <p className="text-xs text-stone-600">Title</p>
+            <p className="text-xs text-stone-800">Title</p>
             <div className="relative w-full">
               <input
                 type="text"
@@ -229,7 +229,7 @@ const Desktop = ({
             </div>
           </div>
           <div className="flex flex-col items-start w-full gap-1">
-            <p className="text-xs text-stone-600">Description</p>
+            <p className="text-xs text-stone-800">Description</p>
 
             <div className="relative w-full">
               <textarea
@@ -248,7 +248,7 @@ const Desktop = ({
           </div>
           <div className="flex items-center gap-2">
             <div className="flex flex-col items-start w-4/12 gap-1">
-              <p className="text-xs text-stone-600">Amount</p>
+              <p className="text-xs text-stone-800">Amount</p>
               <div className="flex items-center w-full gap-0.5">
                 <p className="text-sm text-stone-800">$</p>
                 <input
@@ -261,7 +261,7 @@ const Desktop = ({
               </div>
             </div>
             <div className="flex flex-col items-start w-8/12 gap-1">
-              <p className="text-xs text-stone-600">Due By</p>
+              <p className="text-xs text-stone-800">Due By</p>
               <div className="relative w-full">
                 <button
                   type="button"

@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { isMobile } from 'react-device-detect';
 import Desktop from './Desktop';
 import { useLocation } from 'react-router-dom';
+import Mobile from './Mobile';
 
 const Docs = () => {
   const location = useLocation();
@@ -9,7 +10,11 @@ const Docs = () => {
 
   let content;
 
-  content = isMobile ? '' : <Desktop view={view} setView={setView} />;
+  content = isMobile ? (
+    <Mobile view={view} setView={setView} />
+  ) : (
+    <Desktop view={view} setView={setView} />
+  );
 
   return content;
 };
