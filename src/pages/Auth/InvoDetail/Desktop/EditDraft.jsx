@@ -6,7 +6,7 @@ import Select from 'react-select';
 import { DateInput } from 'rsuite';
 import { dateTheme } from '../../../../utils/dateTheme';
 import Modal from 'react-modal';
-import { AlertOctagon, X } from 'react-feather';
+import { AlertOctagon, CreditCard, Repeat, X } from 'react-feather';
 
 const customStyles = {
   content: {
@@ -37,6 +37,10 @@ const EditDraft = ({
   setDueDate,
   send,
   setSend,
+  type,
+  setType,
+  int,
+  setInt,
   invoice,
   currentUser,
   confirmMod,
@@ -124,6 +128,28 @@ const EditDraft = ({
         </div>
       </Modal>
       <div className="flex flex-col gap-4 w-full items-start">
+        <div className="flex items-center w-full gap-2">
+          <button
+            type="button"
+            onClick={() => setType('single')}
+            className={`flex items-center gap-1 w-3/6 p-2 border ${
+              type === 'single' ? 'border-stone-800' : 'border-white'
+            } rounded-md hover:border-stone-800`}
+          >
+            <CreditCard size={14} className="text-stone-800" />
+            <p className="text-xs text-stone-800">Single</p>
+          </button>
+          <button
+            type="button"
+            onClick={() => setType('recurring')}
+            className={`flex items-center gap-1 w-3/6 p-2 border ${
+              type === 'recurring' ? 'border-stone-800' : 'border-white'
+            } rounded-md hover:border-stone-800`}
+          >
+            <Repeat size={14} className="text-stone-800" />
+            <p className="text-xs text-stone-800">Recurring</p>
+          </button>
+        </div>
         <div className="flex flex-col items-start w-full gap-1">
           <p className="text-xs text-stone-800">Customer</p>
           <Select
@@ -217,6 +243,33 @@ const EditDraft = ({
             </div>
           </div>
         </div>
+        {type === 'recurring' ? (
+          <div className="flex flex-col items-start w-full gap-1">
+            <p className="text-xs text-stone-800">Interval</p>
+            <div className="flex items-center w-full gap-2">
+              <button
+                type="button"
+                onClick={() => setInt('monthly')}
+                className={`text-xs text-stone-800 p-1 w-3/6 border ${
+                  int === 'monthly' ? 'border-stone-800' : 'border-white'
+                } rounded-md hover:border-stone-800`}
+              >
+                Every 30 days
+              </button>
+              <button
+                type="button"
+                onClick={() => setInt('weekly')}
+                className={`text-xs text-stone-800 p-1 w-3/6 border ${
+                  int === 'weekly' ? 'border-stone-800' : 'border-white'
+                } rounded-md hover:border-stone-800`}
+              >
+                Every 7 days
+              </button>
+            </div>
+          </div>
+        ) : (
+          ''
+        )}
         <div className="flex items-center gap-2">
           <div className="flex flex-col items-start w-4/12 gap-1">
             <p className="text-xs text-stone-800">Amount</p>
@@ -258,37 +311,6 @@ const EditDraft = ({
             </div>
           </div>
         </div>
-        {invoice?.sent ? (
-          ''
-        ) : (
-          <div className="flex items-center justify-start w-full">
-            {!currentUser?.bankAdded && !currentUser?.stripeOnboard ? (
-              <Tooltip
-                content={
-                  <p className="text-xs text-stone-800 text-left">
-                    Connect a payout option before sending invoices
-                  </p>
-                }
-                style="light"
-                className="w-52"
-                arrow={false}
-              >
-                <div className="flex items-center gap-2">
-                  <Checkbox disabled />
-                  <p className="text-xs text-stone-800">Send to customer</p>
-                </div>
-              </Tooltip>
-            ) : (
-              <div className="flex items-center gap-2">
-                <Checkbox
-                  checked={send}
-                  onChange={(e) => setSend(e.target.checked)}
-                />
-                <p className="text-xs text-stone-800">Send to customer</p>
-              </div>
-            )}
-          </div>
-        )}
       </div>
     </div>
   );

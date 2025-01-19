@@ -12,21 +12,19 @@ const Footer = () => {
 
   return currentUser ? (
     <footer className="w-full bg-transparent absolute bottom-0">
-      <div className="w-full bg-white flex justify-between items-center border border-gray-200 rounded-md p-2">
+      <div className="w-full bg-white flex justify-end items-center">
         {/* logo section */}
-
         <Link to="/dashboard" className="h-full flex gap-1">
           <Layers size={20} className="font-black" />
-          <p
+          {/* <p
             className="font-bold text-stone-800 text-md"
             style={{ fontFamily: 'Space Mono, monospace' }}
           >
             Bizvo
-          </p>
+          </p> */}
         </Link>
 
-        {/* links section */}
-        <div className="h-full flex items-center justify-between">
+        {/* <div className="h-full flex items-center justify-between">
           <div className="flex gap-2 items-center">
             <Link
               to="/tos"
@@ -42,31 +40,27 @@ const Footer = () => {
             </Link>
           </div>
         </div>
-
         <div className="flex items-center gap-2">
           <FaProductHunt className="text-sm text-stone-800" />
           <FaXTwitter className="text-sm text-stone-800" />
-        </div>
+        </div> */}
       </div>
     </footer>
   ) : (
     <>
       {isMobile ? (
         <footer className="w-full bg-transparent flex justify-center">
-          <div className="w-full bg-white flex justify-between items-center border border-gray-200 rounded-md p-2">
+          <div className="w-full bg-white flex justify-end items-center">
             {/* logo section */}
-            <Link to="/" className="h-full flex gap-1">
+            <button
+              type="button"
+              onClick={() => window.scroll(0, 0)}
+              className="h-full flex gap-1"
+            >
               <Layers size={20} className="font-black" />
-              <p
-                className="font-bold text-stone-800 text-md"
-                style={{ fontFamily: 'Space Mono, monospace' }}
-              >
-                Bizvo
-              </p>
-            </Link>
+            </button>
 
-            {/* links section */}
-            <div className="flex gap-2 items-center">
+            {/* <div className="flex gap-2 items-center">
               <Link
                 to="/tos"
                 className="flex text-xs p-1 justify-center items-center text-stone-800 rounded-md"
@@ -84,26 +78,17 @@ const Footer = () => {
             <div className="flex items-center gap-2">
               <FaProductHunt className="text-sm text-stone-800" />
               <FaXTwitter className="text-sm text-stone-800" />
-            </div>
+            </div> */}
           </div>
         </footer>
       ) : (
         <footer className="w-full bg-transparent absolute top-full">
-          <div className="max-w-3xl bg-white flex justify-between items-center border border-gray-200 rounded-md p-2 mt-4 mb-6">
-            {/* logo section */}
-
+          <div className="max-w-3xl bg-white flex justify-end items-center mt-4 mb-6">
             <Link to="/" className="h-full flex gap-1">
               <Layers size={20} className="font-black" />
-              <p
-                className="font-bold text-stone-800 text-md"
-                style={{ fontFamily: 'Space Mono, monospace' }}
-              >
-                Bizvo
-              </p>
             </Link>
 
-            {/* links section */}
-            <div className="h-full flex items-center justify-between">
+            {/* <div className="h-full flex items-center justify-between">
               <div className="flex gap-2 items-center">
                 <Link
                   to="/tos"
@@ -123,7 +108,7 @@ const Footer = () => {
             <div className="flex items-center gap-2">
               <FaProductHunt className="text-sm text-stone-800" />
               <FaXTwitter className="text-sm text-stone-800" />
-            </div>
+            </div> */}
           </div>
         </footer>
       )}

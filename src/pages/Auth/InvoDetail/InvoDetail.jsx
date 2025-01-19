@@ -31,9 +31,9 @@ const InvoDetail = () => {
   }
 
   return (
-    <div className="mx-auto max-w-3xl flex flex-col items-start gap-2 h-screen relative">
+    <div className="mx-auto max-w-3xl flex flex-col items-start gap-2 h-fit relative">
       <Navbar />
-      <div className="flex items-start gap-2 w-full">
+      <div className="flex items-start gap-2 w-full mb-20">
         <Sidenav />
         {content}
       </div>

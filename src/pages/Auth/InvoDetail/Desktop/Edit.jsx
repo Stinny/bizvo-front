@@ -7,6 +7,7 @@ import {
   Save,
   Send,
   Trash,
+  X,
 } from 'react-feather';
 import Modal from 'react-modal';
 import moment from 'moment';
@@ -25,6 +26,8 @@ import DeleteModal from '../../../../components/Invoices/DeleteModal';
 
 const Edit = ({
   handleSaveEdits,
+  handleCancelEdits,
+  setEdit,
   custOpts,
   invoiceId,
   customer,
@@ -37,6 +40,10 @@ const Edit = ({
   setAmount,
   dueDate,
   setDueDate,
+  type,
+  setType,
+  int,
+  setInt,
   error,
   invoice,
   send,
@@ -102,18 +109,48 @@ const Edit = ({
           <p className="text-xs text-stone-800">#{invoice?._id}</p>
         </div>
 
-        <div className="flex items-center justify-center gap-3 w-44">
+        <div className="flex items-center justify-center gap-3">
           <InvoStatus status={invoice?.status} />
+          {invoice?.sent ? (
+            ''
+          ) : (
+            <div className="flex items-center justify-start w-full">
+              {!currentUser?.bankAdded && !currentUser?.stripeOnboard ? (
+                <Tooltip
+                  content={
+                    <p className="text-xs text-stone-800 text-left">
+                      Connect a payout option before sending invoices
+                    </p>
+                  }
+                  style="light"
+                  className="w-52"
+                  arrow={false}
+                >
+                  <div className="flex items-center gap-2">
+                    <Checkbox disabled />
+                    <p className="text-xs text-stone-800">Send to customer</p>
+                  </div>
+                </Tooltip>
+              ) : (
+                <div className="flex items-center gap-1">
+                  <Checkbox
+                    checked={send}
+                    onChange={(e) => setSend(e.target.checked)}
+                  />
+                  <p className="text-xs text-stone-800">Send to customer</p>
+                </div>
+              )}
+            </div>
+          )}
         </div>
-
-        <div className="flex items-center justify-end w-24 gap-3"></div>
+        <div className="w-24"></div>
         <div className="flex items-center justify-end w-24 gap-3 absolute top-0 right-0 mr-1 mt-1">
           <button
             type="button"
-            onClick={() => setDel(!del)}
+            onClick={handleCancelEdits}
             className="text-red-400 font-bold"
           >
-            <Trash size={16} />
+            <X size={16} />
           </button>
 
           <button
@@ -287,6 +324,10 @@ const Edit = ({
           setDesc={setDesc}
           dueDate={dueDate}
           setDueDate={setDueDate}
+          type={type}
+          setType={setType}
+          int={int}
+          setInt={setInt}
           handleSaveEdits={handleSaveEdits}
           error={error}
           send={send}

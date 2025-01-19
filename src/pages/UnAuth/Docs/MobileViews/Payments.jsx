@@ -50,11 +50,11 @@ const Payments = ({ lastUpdated }) => {
           originate from outside the U.S. incur an additional 1.5% fee.
         </p>
         <p className="text-xs text-stone-800">Payout options:</p>
-        <div className="flex items-start gap-2 w-full">
+        <div className="flex flex-col items-start gap-2 w-full">
           <button
             type="button"
             onClick={() => setSeeBank(!seeBank)}
-            className="border border-gray-200 rounded-md flex flex-col p-2 w-6/12"
+            className="border border-gray-200 rounded-md flex flex-col p-2 w-full"
           >
             <div className="w-full flex items-center justify-between">
               <div className="flex items-center">
@@ -81,15 +81,14 @@ const Payments = ({ lastUpdated }) => {
                 they move to your available balance and will be paid out.
               </p>
               <p className="text-stone-800 text-xs text-left font-semibold">
-                Account deletion or removing your bank is not allowed if you
-                have an available or pending balance.
+                You can disconnect a bank account at any time.
               </p>
             </div>
           </button>
           <button
             type="button"
             onClick={() => setSeeStr(!seeStr)}
-            className="border border-gray-200 rounded-md flex flex-col p-2 w-6/12"
+            className="border border-gray-200 rounded-md flex flex-col p-2 w-full"
           >
             <div className="w-full flex items-center justify-between">
               <div className="flex items-center">
@@ -149,11 +148,11 @@ const Payments = ({ lastUpdated }) => {
           income made will be responsible to the businesses owner.
         </p>
         <div className="w-full flex flex-col items-start">
-          <div className="flex items-start gap-2 w-full">
+          <div className="flex flex-col gap-2 w-full">
             <button
               type="button"
               onClick={() => setSeeTx1(!seeTx1)}
-              className="border border-gray-200 rounded-md flex flex-col p-2 w-6/12"
+              className="border border-gray-200 rounded-md flex flex-col p-2 w-full"
             >
               <div className="w-full flex items-center justify-between">
                 <div className="flex items-center">
@@ -238,12 +237,12 @@ const Payments = ({ lastUpdated }) => {
             <button
               type="button"
               onClick={() => setSeeTx2(!seeTx2)}
-              className="border border-gray-200 rounded-md flex flex-col p-2 w-6/12"
+              className="border border-gray-200 rounded-md flex flex-col p-2 w-full"
             >
               <div className="w-full flex items-center justify-between">
                 <div className="flex items-center">
                   <div className="flex flex-col items-start">
-                    <p className="text-xs text-stone-800">Ex. Transaction #1</p>
+                    <p className="text-xs text-stone-800">Ex. Transaction #2</p>
                   </div>
                 </div>
                 {seeTx2 ? <ChevronUp size={14} /> : <ChevronRight size={14} />}
@@ -323,12 +322,12 @@ const Payments = ({ lastUpdated }) => {
             <button
               type="button"
               onClick={() => setSeeTx3(!seeTx3)}
-              className="border border-gray-200 rounded-md flex flex-col p-2 w-6/12"
+              className="border border-gray-200 rounded-md flex flex-col p-2 w-full"
             >
               <div className="w-full flex items-center justify-between">
                 <div className="flex items-center">
                   <div className="flex flex-col items-start">
-                    <p className="text-xs text-stone-800">Ex. Transaction #1</p>
+                    <p className="text-xs text-stone-800">Ex. Transaction #3</p>
                   </div>
                 </div>
                 {seeTx3 ? <ChevronUp size={14} /> : <ChevronRight size={14} />}

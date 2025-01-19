@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { AlertOctagon, Save, X } from 'react-feather';
+import { AlertOctagon, CreditCard, Repeat, Save, X } from 'react-feather';
 import { Checkbox } from 'antd';
 import Select from 'react-select';
 import { Datepicker, Tooltip } from 'flowbite-react';
@@ -38,6 +38,10 @@ const Desktop = ({
   setDue,
   send,
   setSend,
+  type,
+  setType,
+  int,
+  setInt,
   error,
   currentUser,
   confirmMod,
@@ -152,6 +156,29 @@ const Desktop = ({
           </div>
         )}
         <div className="flex flex-col gap-4 w-full items-start">
+          <div className="flex items-center w-full gap-2">
+            <button
+              type="button"
+              onClick={() => setType('single')}
+              className={`flex items-center gap-1 w-3/6 p-2 border ${
+                type === 'single' ? 'border-stone-800' : 'border-white'
+              } rounded-md hover:border-stone-800`}
+            >
+              <CreditCard size={14} className="text-stone-800" />
+              <p className="text-xs text-stone-800">Single</p>
+            </button>
+            <button
+              type="button"
+              onClick={() => setType('recurring')}
+              className={`flex items-center gap-1 w-3/6 p-2 border ${
+                type === 'recurring' ? 'border-stone-800' : 'border-white'
+              } rounded-md hover:border-stone-800`}
+            >
+              <Repeat size={14} className="text-stone-800" />
+              <p className="text-xs text-stone-800">Recurring</p>
+            </button>
+          </div>
+
           <div className="flex flex-col items-start w-full gap-1">
             <p className="text-xs text-stone-800">Customer</p>
             <Select
@@ -234,7 +261,7 @@ const Desktop = ({
             <div className="relative w-full">
               <textarea
                 placeholder="What is this invoice for.."
-                className="border border-gray-200 hover:border-gray-200 hover:bg-gray-200 focus:bg-gray-200 focus:border-gray-200 focus:ring-0 w-full h-20 rounded-md p-2 bg-gray-50 resize-none text-xs text-stone-800"
+                className="border border-gray-200 m-0 hover:border-gray-200 hover:bg-gray-200 focus:bg-gray-200 focus:border-gray-200 focus:ring-0 w-full h-20 rounded-md p-2 bg-gray-50 resize-none text-xs text-stone-800"
                 onChange={(e) => setDesc(e.target.value)}
                 value={desc}
                 maxLength={100}
@@ -246,6 +273,33 @@ const Desktop = ({
               </div>
             </div>
           </div>
+          {type === 'recurring' ? (
+            <div className="flex flex-col items-start w-full gap-1">
+              <p className="text-xs text-stone-800">Interval</p>
+              <div className="flex items-center w-full gap-2">
+                <button
+                  type="button"
+                  onClick={() => setInt('monthly')}
+                  className={`text-xs text-stone-800 p-1 w-3/6 border ${
+                    int === 'monthly' ? 'border-stone-800' : 'border-white'
+                  } rounded-md hover:border-stone-800`}
+                >
+                  Every 30 days
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setInt('weekly')}
+                  className={`text-xs text-stone-800 p-1 w-3/6 border ${
+                    int === 'weekly' ? 'border-stone-800' : 'border-white'
+                  } rounded-md hover:border-stone-800`}
+                >
+                  Every 7 days
+                </button>
+              </div>
+            </div>
+          ) : (
+            ''
+          )}
           <div className="flex items-center gap-2">
             <div className="flex flex-col items-start w-4/12 gap-1">
               <p className="text-xs text-stone-800">Amount</p>

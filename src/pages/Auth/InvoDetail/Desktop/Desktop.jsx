@@ -8,9 +8,11 @@ import {
   ChevronDown,
   ChevronRight,
   Clipboard,
+  CreditCard,
   Edit as EditIcon,
   ExternalLink,
   MoreVertical,
+  Repeat,
   Send,
   X,
   XSquare,
@@ -60,6 +62,8 @@ const Desktop = ({ invoice, refetch }) => {
   });
   const [items, setItems] = useState(invoice?.items);
   const [amount, setAmount] = useState(invoice?.amount);
+  const [type, setType] = useState(invoice?.type);
+  const [int, setInt] = useState(invoice?.interval);
   const [dueDate, setDueDate] = useState(new Date(invoice?.dueDate));
   const [step, setStep] = useState('cust');
   const [error, setError] = useState('');
@@ -143,6 +147,8 @@ const Desktop = ({ invoice, refetch }) => {
         dueDate: dueDate,
         invoiceId: invoice?._id,
         send: send,
+        type: type,
+        interval: int,
       }).unwrap();
 
       if (editReq === 'Invoice updated') {
@@ -158,6 +164,16 @@ const Desktop = ({ invoice, refetch }) => {
       setError('Server error');
       return;
     }
+  };
+
+  const handleCancelEdits = () => {
+    setTitle(invoice?.title);
+    setAmount(invoice?.amount);
+    setDesc(invoice?.description);
+    setType(invoice?.type);
+    setInt(invoice?.interval);
+    setDueDate(invoice?.dueDate);
+    setEdit(false);
   };
 
   useEffect(() => {
@@ -176,6 +192,8 @@ const Desktop = ({ invoice, refetch }) => {
     content = edit ? (
       <Edit
         handleSaveEdits={handleSaveEdits}
+        handleCancelEdits={handleCancelEdits}
+        setEdit={setEdit}
         custOpts={custOpts}
         invoiceId={invoice?._id}
         items={items}
@@ -191,6 +209,10 @@ const Desktop = ({ invoice, refetch }) => {
         dueDate={dueDate}
         setDueDate={setDueDate}
         amount={amount}
+        type={type}
+        setType={setType}
+        int={int}
+        setInt={setInt}
         setAmount={setAmount}
         error={error}
         invoice={invoice}
@@ -350,7 +372,28 @@ const Desktop = ({ invoice, refetch }) => {
             ) : (
               ''
             )}
-
+            <div className="flex items-center w-full gap-2">
+              <button
+                type="button"
+                disabled
+                className={`flex items-center gap-1 w-3/6 p-2 border ${
+                  type === 'single' ? 'border-stone-800' : 'border-white'
+                } rounded-md`}
+              >
+                <CreditCard size={14} className="text-stone-800" />
+                <p className="text-xs text-stone-800">Single</p>
+              </button>
+              <button
+                type="button"
+                disabled
+                className={`flex items-center gap-1 w-3/6 p-2 border ${
+                  type === 'recurring' ? 'border-stone-800' : 'border-white'
+                } rounded-md`}
+              >
+                <Repeat size={14} className="text-stone-800" />
+                <p className="text-xs text-stone-800">Recurring</p>
+              </button>
+            </div>
             <div className="flex flex-col gap-1 items-start w-full">
               <p className="text-xs text-stone-800">Customer</p>
               <button
@@ -404,6 +447,33 @@ const Desktop = ({ invoice, refetch }) => {
                 value={desc}
               />
             </div>
+            {type === 'recurring' ? (
+              <div className="flex flex-col items-start w-full gap-1">
+                <p className="text-xs text-stone-800">Interval</p>
+                <div className="flex items-center w-full gap-2">
+                  <button
+                    type="button"
+                    disabled
+                    className={`text-xs text-stone-800 p-1 w-3/6 border ${
+                      int === 'monthly' ? 'border-stone-800' : 'border-white'
+                    } rounded-md`}
+                  >
+                    Every 30 days
+                  </button>
+                  <button
+                    type="button"
+                    disabled
+                    className={`text-xs text-stone-800 p-1 w-3/6 border ${
+                      int === 'weekly' ? 'border-stone-800' : 'border-white'
+                    } rounded-md`}
+                  >
+                    Every 7 days
+                  </button>
+                </div>
+              </div>
+            ) : (
+              ''
+            )}
             <div className="w-full flex items-center justify-center gap-2">
               <div className="flex flex-col items-start w-4/12 gap-1">
                 <p className="text-xs text-stone-800">Amount</p>

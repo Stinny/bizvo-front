@@ -33,7 +33,8 @@ const NewInvo = () => {
   const [due, setDue] = useState(tomorrow);
   const [amount, setAmount] = useState(0);
   const [error, setError] = useState('');
-  const [step, setStep] = useState('cust');
+  const [type, setType] = useState('single');
+  const [int, setInt] = useState('monthly');
   const [send, setSend] = useState(false);
   const [sendConfirm, setSendConfirm] = useState(false);
   const [confirmMod, setConfirmMod] = useState(false);
@@ -102,6 +103,8 @@ const NewInvo = () => {
         title: title,
         description: desc,
         customerId: customer?.value,
+        type: type,
+        interval: int,
         amount: parseFloat(amount),
         due: due,
         send: send,
@@ -145,8 +148,10 @@ const NewInvo = () => {
         setCustomer={setCustomer}
         custSelected={custSelected}
         error={error}
-        step={step}
-        setStep={setStep}
+        type={type}
+        setType={setType}
+        int={int}
+        setInt={setInt}
         title={title}
         setTitle={setTitle}
         desc={desc}
@@ -165,9 +170,9 @@ const NewInvo = () => {
     );
   }
   return (
-    <div className="mx-auto max-w-3xl flex flex-col gap-2 h-screen relative">
+    <div className="mx-auto max-w-3xl flex flex-col gap-2 h-fit relative">
       <Navbar />
-      <div className="flex items-start gap-2">
+      <div className="flex items-start gap-2 mb-20">
         <Sidenav />
         {content}
       </div>
