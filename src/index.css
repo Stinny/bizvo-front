@@ -8,6 +8,13 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+.dark {
+  /* Dark mode styles */
+  background-color: rgb(
+    38 38 38 / var(--tw-bg-opacity, 1)
+  ); /* Dark mode background */
+}
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;

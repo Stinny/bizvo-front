@@ -57,7 +57,7 @@ const Footer = () => {
               onClick={() => window.scroll(0, 0)}
               className="h-full flex gap-1"
             >
-              <Layers size={20} className="font-black" />
+              <Layers size={16} className="font-black" />
             </button>
 
             {/* <div className="flex gap-2 items-center">
@@ -85,7 +85,7 @@ const Footer = () => {
         <footer className="w-full bg-transparent absolute top-full">
           <div className="max-w-3xl bg-white flex justify-end items-center mt-4 mb-6">
             <Link to="/" className="h-full flex gap-1">
-              <Layers size={20} className="font-black" />
+              <Layers size={16} className="font-black" />
             </Link>
 
             {/* <div className="h-full flex items-center justify-between">

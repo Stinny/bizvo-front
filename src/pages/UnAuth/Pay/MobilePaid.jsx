@@ -228,12 +228,12 @@ const MobilePaid = ({ invoice, currentUser, succ, setSucc }) => {
         </div>
       </div>
       <div className="w-full bg-white border border-gray-200 rounded-md p-2 flex flex-col items-center text-center">
-        <Link to="/" className="h-full flex gap-1">
-          <Layers size={18} className="font-black" />
+        <Link to="/">
           <p
-            className="font-bold text-stone-800 text-sm"
-            style={{ fontFamily: 'Space Mono, monospace' }}
+            className="font-bold text-stone-800 dark:text-white text-sm flex items-center gap-1"
+            style={{ fontFamily: 'Geist Mono' }}
           >
+            <Layers size={16} className="font-black dark:text-white" />
             Bizvo
           </p>
         </Link>

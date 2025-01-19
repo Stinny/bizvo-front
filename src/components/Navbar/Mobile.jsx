@@ -28,12 +28,12 @@ const Mobile = () => {
     <div className="w-full bg-white flex justify-between items-center border border-gray-200 rounded-md p-2 relative">
       {/* logo section */}
 
-      <Link to="/" className="h-full flex gap-1 items-center">
-        <Layers size={20} className="font-black" />
+      <Link to="/">
         <p
-          className="font-bold text-stone-800 text-lg"
-          style={{ fontFamily: 'Space Mono, monospace' }}
+          className="font-bold text-stone-800 dark:text-white text-md flex items-center gap-1"
+          style={{ fontFamily: 'Geist Mono' }}
         >
+          <Layers size={18} className="font-black" />
           Bizvo
         </p>
       </Link>
