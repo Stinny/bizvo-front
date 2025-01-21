@@ -31,7 +31,7 @@ const NewInvo = () => {
   const [customer, setCustomer] = useState({});
   const [items, setItems] = useState([]);
   const [due, setDue] = useState(tomorrow);
-  const [amount, setAmount] = useState(0);
+  const [amount, setAmount] = useState(undefined);
   const [error, setError] = useState('');
   const [type, setType] = useState('single');
   const [int, setInt] = useState('monthly');
@@ -170,13 +170,12 @@ const NewInvo = () => {
     );
   }
   return (
-    <div className="mx-auto max-w-3xl flex flex-col gap-2 h-fit relative">
+    <div className="mx-auto max-w-3xl flex flex-col gap-2 h-fit">
       <Navbar />
       <div className="flex items-start gap-2 mb-20">
         <Sidenav />
         {content}
       </div>
-      <Footer />
     </div>
   );
 };

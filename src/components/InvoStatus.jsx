@@ -19,6 +19,13 @@ const InvoStatus = ({ status }) => {
         </Badge>
       );
       break;
+    case 'live':
+      content = (
+        <Badge size="xs" color="success">
+          Live
+        </Badge>
+      );
+      break;
     case 'pending':
       content = (
         <Badge size="xs" color="warning">

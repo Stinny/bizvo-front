@@ -4,14 +4,15 @@ import { AlertOctagon, ChevronLeft } from 'react-feather';
 import { useConfirmPayInvoMutation } from '../../../../api/invoicesApiSlice';
 import { Spinner } from 'flowbite-react';
 
-const Form = ({ setReadyForPayment, invoice, refetch, setSucc }) => {
+const Form = ({ setReadyForPayment, invoice, refetch, setSucc, trx }) => {
   const [error, setError] = useState('');
   const [isPayBtnDisabled, setIsPayBtnDisabled] = useState(true);
 
   //for display
-  const taxAmount = invoice?.tax?.amount / 100;
+  const total = trx?.total / 100;
+  const taxAmount = trx?.tax?.amount / 100;
   let taxType;
-  switch (invoice?.tax?.type) {
+  switch (trx?.tax?.type) {
     case 'vat':
       taxType = 'VAT';
       break;
@@ -137,7 +138,7 @@ const Form = ({ setReadyForPayment, invoice, refetch, setSucc }) => {
         </div>
         <div className="w-full flex justify-between items-center">
           <p className="text-stone-700 text-xs">
-            {taxType}({invoice?.tax?.rate}%):
+            {taxType}({trx?.tax?.rate}%):
           </p>
           <p className="text-stone-700 text-xs">${taxAmount?.toFixed(2)}</p>
         </div>
@@ -145,13 +146,10 @@ const Form = ({ setReadyForPayment, invoice, refetch, setSucc }) => {
           <p className="text-stone-800 text-xs font-semibold">Total:</p>
           <p className="text-stone-800 text-xs font-semibold">
             $
-            {parseFloat(invoice?.amount + taxAmount)?.toLocaleString(
-              undefined,
-              {
-                minimumFractionDigits: 2,
-                maximumFractionDigits: 2,
-              }
-            )}
+            {parseFloat(total)?.toLocaleString(undefined, {
+              minimumFractionDigits: 2,
+              maximumFractionDigits: 2,
+            })}
           </p>
         </div>
       </div>

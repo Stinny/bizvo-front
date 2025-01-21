@@ -98,13 +98,12 @@ const NewCustomer = () => {
   }
 
   return (
-    <div className="mx-auto max-w-3xl flex flex-col gap-2 h-screen relative">
+    <div className="mx-auto max-w-3xl flex flex-col gap-2 h-fit">
       <Navbar />
       <div className="flex items-start gap-2">
         <Sidenav />
         {content}
       </div>
-      <Footer />
     </div>
   );
 };

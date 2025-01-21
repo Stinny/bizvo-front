@@ -1,9 +1,11 @@
 import React, { useEffect, useRef, useState } from 'react';
 import Cookies from 'js-cookie';
 import {
+  BarChart2,
   Book,
   CreditCard,
   FileText,
+  Home,
   Layers,
   LogOut,
   MessageSquare,
@@ -65,35 +67,36 @@ const Navbar = () => {
 
         <Toast />
 
-        <div className="flex items-center gap-2">
-          <DarkMode />
-
-          <Avatar
-            size="xs"
-            img={currentUser?.logo?.url}
-            onClick={toggleDropdown}
-            className="hover:cursor-pointer"
-          />
-        </div>
+        <Avatar
+          size="xs"
+          img={currentUser?.logo?.url}
+          onClick={toggleDropdown}
+          className="hover:cursor-pointer"
+        />
       </div>
 
       {open ? (
         <div
           ref={dropdownRef}
-          className="w-full flex justify-end absolute top-full z-50"
+          className="w-full flex justify-end absolute top-full z-10"
         >
           <div className="bg-white dark:bg-neutral-800 border border-gray-200 dark:boder-white rounded-md flex flex-col items-start p-2">
             <div className="flex flex-col gap-2 items-start w-full pb-2">
               <Link
-                to="/docs"
-                className="w-full p-1 pl-2 pr-2 text-xs text-stone-800 flex items-center gap-2 border border-white dark:border-neutral-800 dark:hover:border-white rounded-md hover:border-stone-800 hover:outline-non"
+                to="/dashboard"
+                className="w-full p-1 pl-2 pr-2 text-xs text-stone-800 flex items-center gap-1 border border-white dark:border-neutral-800 dark:hover:border-white rounded-md hover:border-stone-800 hover:outline-non"
               >
-                <Book size={14} className="text-stone-800 dark:text-white" />
-                <p className="text-xs text-stone-800 dark:text-white">Docs</p>
+                <BarChart2
+                  size={14}
+                  className="text-stone-800 dark:text-white"
+                />
+                <p className="text-xs text-stone-800 dark:text-white">
+                  Dashboard
+                </p>
               </Link>
               <Link
                 to="/contact"
-                className="w-full p-1 pl-2 pr-2 text-xs text-stone-800 flex items-center gap-2 border border-white dark:border-neutral-800 dark:hover:border-white rounded-md hover:border-stone-800 hover:outline-non"
+                className="w-full p-1 pl-2 pr-2 text-xs text-stone-800 flex items-center gap-1 border border-white dark:border-neutral-800 dark:hover:border-white rounded-md hover:border-stone-800 hover:outline-non"
               >
                 <MessageSquare
                   size={14}
@@ -103,15 +106,22 @@ const Navbar = () => {
                   Message
                 </p>
               </Link>
+              <Link
+                to="/docs"
+                className="w-full p-1 pl-2 pr-2 text-xs text-stone-800 flex items-center gap-1 border border-white dark:border-neutral-800 dark:hover:border-white rounded-md hover:border-stone-800 hover:outline-non"
+              >
+                <Book size={14} className="text-stone-800 dark:text-white" />
+                <p className="text-xs text-stone-800 dark:text-white">Docs</p>
+              </Link>
             </div>
-            <div className="border-t border-gray-200 flex flex-col gap-1 items-start w-full pt-2">
+            <div className="border-t border-gray-200 flex items-center justify-between w-full pt-2">
+              <DarkMode />
               <button
                 type="button"
                 onClick={() => logout('logout')}
-                className="w-full flex items-center gap-2 border rounded-md border-stone-800 dark:border-white hover:outline-none p-1 pl-2 pr-2"
+                className="flex items-center justify-center"
               >
                 <LogOut size={14} className="text-stone-800 dark:text-white" />
-                <p className="text-xs text-stone-800 dark:text-white">Logout</p>
               </button>
             </div>
           </div>
@@ -158,7 +168,7 @@ const Navbar = () => {
               </Link>
               <Link
                 to="/login"
-                className="flex text-xs items-center justify-center border border-stone-800 text-stone-800 rounded-md p-1 pl-2 pr-2"
+                className="flex text-xs font-medium items-center justify-center border border-stone-800 text-stone-800 rounded-md p-1 pl-2 pr-2"
               >
                 Login
               </Link>

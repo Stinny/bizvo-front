@@ -42,7 +42,7 @@ const Desktop = ({
             <div className="flex gap-1 w-full">
               <BackBtn direction={'left'} home={true} />
               <div className="flex flex-col items-start w-full">
-                <p className="text-md text-stone-800 font-semibold">Login</p>
+                <p className="text-md text-stone-800 font-medium">Login</p>
                 <p className="text-stone-700 text-xs">
                   Create an account{' '}
                   <span>
@@ -95,7 +95,7 @@ const Desktop = ({
                   </Link>
                 </div>
               </div>
-              <button className="p-2 w-full border border-stone-800 text-stone-800 rounded-md text-sm">
+              <button className="p-2 w-full border border-stone-800 text-stone-800 rounded-md text-xs font-medium">
                 Login
               </button>
             </form>

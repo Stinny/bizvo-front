@@ -28,13 +28,12 @@ const Home = () => {
   }
 
   return (
-    <div className="mx-auto max-w-3xl flex flex-col items-start gap-2 h-screen relative">
+    <div className="mx-auto max-w-3xl flex flex-col items-start gap-2">
       <Navbar />
       <div className="flex items-start gap-2 w-full">
         <Sidenav />
         {content}
       </div>
-      <Footer />
     </div>
   );
 };

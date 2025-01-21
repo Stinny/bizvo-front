@@ -7,6 +7,7 @@ import { DateInput } from 'rsuite';
 import { dateTheme } from '../../../../utils/dateTheme';
 import Modal from 'react-modal';
 import { AlertOctagon, CreditCard, Repeat, X } from 'react-feather';
+import { NumericFormat } from 'react-number-format';
 
 const customStyles = {
   content: {
@@ -128,28 +129,6 @@ const EditDraft = ({
         </div>
       </Modal>
       <div className="flex flex-col gap-4 w-full items-start">
-        <div className="flex items-center w-full gap-2">
-          <button
-            type="button"
-            onClick={() => setType('single')}
-            className={`flex items-center gap-1 w-3/6 p-2 border ${
-              type === 'single' ? 'border-stone-800' : 'border-white'
-            } rounded-md hover:border-stone-800`}
-          >
-            <CreditCard size={14} className="text-stone-800" />
-            <p className="text-xs text-stone-800">Single</p>
-          </button>
-          <button
-            type="button"
-            onClick={() => setType('recurring')}
-            className={`flex items-center gap-1 w-3/6 p-2 border ${
-              type === 'recurring' ? 'border-stone-800' : 'border-white'
-            } rounded-md hover:border-stone-800`}
-          >
-            <Repeat size={14} className="text-stone-800" />
-            <p className="text-xs text-stone-800">Recurring</p>
-          </button>
-        </div>
         <div className="flex flex-col items-start w-full gap-1">
           <p className="text-xs text-stone-800">Customer</p>
           <Select
@@ -210,48 +189,55 @@ const EditDraft = ({
         </div>
         <div className="flex flex-col items-start w-full gap-1">
           <p className="text-xs text-stone-800">Title</p>
-          <div className="relative w-full">
-            <input
-              type="text"
-              placeholder="Title"
-              className="border text-xs border-gray-200 bg-gray-50 focus:border-gray-200 focus:outline-none text-stone-800 hover:bg-gray-200 hover:border-gray-200 focus:bg-gray-200 focus:ring-0 w-full rounded-md p-2 pr-10"
-              onChange={(e) => setTitle(e.target.value)}
-              value={title}
-              maxLength={25}
-            />
-            <div className="absolute right-2 top-1/2 transform -translate-y-1/2">
-              <p className="text-stone-700" style={{ fontSize: '10px' }}>
-                {title?.length}/25
-              </p>
-            </div>
-          </div>
+          <input
+            type="text"
+            placeholder="Title"
+            className="border text-xs border-gray-200 bg-gray-50 focus:border-gray-200 focus:outline-none text-stone-800 hover:bg-gray-200 hover:border-gray-200 focus:bg-gray-200 focus:ring-0 w-full rounded-md p-2 pr-10"
+            onChange={(e) => setTitle(e.target.value)}
+            value={title}
+            maxLength={25}
+          />
         </div>
         <div className="flex flex-col items-start w-full gap-1">
           <p className="text-xs text-stone-800">Description</p>
-          <div className="relative w-full">
-            <textarea
-              placeholder="What is this invoice for.."
-              className="border border-gray-200 hover:border-gray-200 hover:bg-gray-200 focus:bg-gray-200 focus:border-gray-200 focus:ring-0 w-full h-20 rounded-md p-2 bg-gray-50 resize-none text-xs"
-              onChange={(e) => setDesc(e.target.value)}
-              value={desc}
-              maxLength={100}
-            />
-            <div className="absolute right-2 bottom-2 transform -translate-y-1/2">
-              <p className="text-stone-700" style={{ fontSize: '10px' }}>
-                {desc?.length}/100
-              </p>
-            </div>
-          </div>
+          <textarea
+            placeholder="What is this invoice for.."
+            className="border border-gray-200 hover:border-gray-200 hover:bg-gray-200 focus:bg-gray-200 focus:border-gray-200 focus:ring-0 w-full h-20 rounded-md p-2 bg-gray-50 resize-none text-xs"
+            onChange={(e) => setDesc(e.target.value)}
+            value={desc}
+            maxLength={100}
+          />
+        </div>
+        <div className="flex items-center w-full gap-2">
+          <button
+            type="button"
+            onClick={() => setType('single')}
+            className={`flex items-center justify-center gap-1 w-3/6 p-2 border ${
+              type === 'single' ? 'border-stone-800' : 'border-gray-200'
+            } rounded-md hover:border-stone-800`}
+          >
+            <CreditCard size={14} className="text-stone-800" />
+            <p className="text-xs text-stone-800">Single</p>
+          </button>
+          <button
+            type="button"
+            onClick={() => setType('recurring')}
+            className={`flex items-center justify-center gap-1 w-3/6 p-2 border ${
+              type === 'recurring' ? 'border-stone-800' : 'border-gray-200'
+            } rounded-md hover:border-stone-800`}
+          >
+            <Repeat size={14} className="text-stone-800" />
+            <p className="text-xs text-stone-800">Recurring</p>
+          </button>
         </div>
         {type === 'recurring' ? (
           <div className="flex flex-col items-start w-full gap-1">
-            <p className="text-xs text-stone-800">Interval</p>
             <div className="flex items-center w-full gap-2">
               <button
                 type="button"
                 onClick={() => setInt('monthly')}
                 className={`text-xs text-stone-800 p-1 w-3/6 border ${
-                  int === 'monthly' ? 'border-stone-800' : 'border-white'
+                  int === 'monthly' ? 'border-stone-800' : 'border-gray-200'
                 } rounded-md hover:border-stone-800`}
               >
                 Every 30 days
@@ -260,7 +246,7 @@ const EditDraft = ({
                 type="button"
                 onClick={() => setInt('weekly')}
                 className={`text-xs text-stone-800 p-1 w-3/6 border ${
-                  int === 'weekly' ? 'border-stone-800' : 'border-white'
+                  int === 'weekly' ? 'border-stone-800' : 'border-gray-200'
                 } rounded-md hover:border-stone-800`}
               >
                 Every 7 days
@@ -273,16 +259,21 @@ const EditDraft = ({
         <div className="flex items-center gap-2">
           <div className="flex flex-col items-start w-4/12 gap-1">
             <p className="text-xs text-stone-800">Amount</p>
-            <div className="flex items-center w-full gap-0.5">
-              <p className="text-sm text-stone-800">$</p>
-              <input
-                type="number"
-                placeholder="Amount"
-                className="text-xs w-full bg-gray-50 border border-gray-200 focus:outline-none hover:bg-gray-200 focus:bg-gray-200 hover:border-gray-200 focus:border-gray-200 focus:ring-0 text-stone-800 ring-0 rounded-md p-2 pl-0.5"
-                onChange={(e) => setAmount(e.target.value)}
-                value={amount}
-              />
-            </div>
+            <NumericFormat
+              value={amount}
+              thousandSeparator=","
+              decimalSeparator="."
+              placeholder="$95.00"
+              decimalScale={2}
+              fixedDecimalScale={true}
+              prefix="$"
+              allowNegative={false}
+              onValueChange={(values) => {
+                const { value } = values;
+                setAmount(value); // Update the state
+              }}
+              className="text-xs w-full bg-gray-50 border border-gray-200 focus:outline-none hover:bg-gray-200 focus:bg-gray-200 hover:border-gray-200 focus:border-gray-200 focus:ring-0 text-stone-800 ring-0 rounded-md p-2 pl-0.5"
+            />
           </div>
           <div className="flex flex-col items-start w-8/12 gap-1">
             <p className="text-xs text-stone-800">Due By</p>

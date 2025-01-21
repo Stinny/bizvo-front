@@ -1,4 +1,4 @@
-import { Switch } from 'antd';
+import { Checkbox, Switch } from 'antd';
 import React, { useState } from 'react';
 import { Edit as EditIcon, Save, X } from 'react-feather';
 
@@ -50,14 +50,9 @@ const Desktop = ({
       </div>
       <div className="flex flex-col items-start w-full gap-4">
         <div className="flex items-center gap-3">
-          <Switch
-            size="small"
+          <Checkbox
             checked={news}
-            onChange={(checked) => setNews(checked)}
-            style={{
-              backgroundColor: news ? 'rgb(41 37 36)' : 'rgb(229 231 235)',
-              borderColor: '#000000',
-            }}
+            onChange={(e) => setNews(e.target.checked)}
           />
           <div className="flex flex-col items-start">
             <p className="text-xs text-stone-800">Newsletter</p>
@@ -67,56 +62,29 @@ const Desktop = ({
           </div>
         </div>
         <div className="flex items-center gap-3">
-          <Switch
-            size="small"
+          <Checkbox
             checked={paid}
-            onChange={(checked) => setPaid(checked)}
-            style={{
-              backgroundColor: paid ? 'rgb(41 37 36)' : 'rgb(229 231 235)',
-              borderColor: '#000000',
-            }}
+            onChange={(e) => setPaid(e.target.checked)}
           />
           <div className="flex flex-col items-start">
-            <p className="text-xs text-stone-800">Paid Invoices</p>
+            <p className="text-xs text-stone-800">Payments</p>
             <p className="text-xs text-stone-800">
-              Receive an email whenever an invoice is paid
+              Whenever an invoice payment is successful
             </p>
           </div>
         </div>
         <div className="flex items-center gap-3">
-          <Switch
-            size="small"
+          <Checkbox
             checked={late}
-            onChange={(checked) => setLate(checked)}
-            style={{
-              backgroundColor: late ? 'rgb(41 37 36)' : 'rgb(229 231 235)',
-              borderColor: '#000000',
-            }}
+            onChange={(e) => setLate(e.target.checked)}
           />
           <div className="flex flex-col items-start">
-            <p className="text-xs text-stone-800">Overdue Invoices</p>
+            <p className="text-xs text-stone-800">Overdue</p>
             <p className="text-xs text-stone-800">
-              Receive an email whenever an invoice is overdue
+              Whenever an invoice is overdue
             </p>
           </div>
         </div>
-        {/* <div className="flex items-center gap-3">
-          <Switch
-            size="small"
-            checked={revCol}
-            onChange={(checked) => setRevCol(checked)}
-            style={{
-              backgroundColor: revCol ? 'rgb(41 37 36)' : 'rgb(229 231 235)',
-              borderColor: '#000000',
-            }}
-          />
-          <div className="flex flex-col items-start">
-            <p className="text-xs text-stone-800">Review Collected</p>
-            <p className="text-xs text-stone-600">
-              Receive an email whenever a customer leaves a review
-            </p>
-          </div>
-        </div> */}
       </div>
     </div>
   ) : (
@@ -138,63 +106,34 @@ const Desktop = ({
           </button>
         </div>
       </div>
-      <div className="flex flex-col items-start w-full gap-6">
+      <div className="flex flex-col items-start w-full gap-4">
         <div className="flex items-center gap-3">
-          <Switch
-            size="small"
-            disabled
-            checked={currentUser?.news}
-            style={{
-              backgroundColor: currentUser?.news
-                ? 'rgb(41 37 36)'
-                : 'rgb(229 231 235)',
-              borderColor: '#000000',
-            }}
-          />
-          <p className="text-xs text-stone-800">Newsletter</p>
+          <Checkbox checked={news} disabled />
+          <div className="flex flex-col items-start">
+            <p className="text-xs text-stone-800">Newsletter</p>
+            <p className="text-xs text-stone-800">
+              Receive the monthly Bizvo newsletter
+            </p>
+          </div>
         </div>
         <div className="flex items-center gap-3">
-          <Switch
-            size="small"
-            disabled
-            checked={currentUser?.invoPaid}
-            style={{
-              backgroundColor: currentUser?.invoPaid
-                ? 'rgb(41 37 36)'
-                : 'rgb(229 231 235)',
-              borderColor: '#000000',
-            }}
-          />
-          <p className="text-xs text-stone-800">Paid Invoices</p>
+          <Checkbox checked={paid} disabled />
+          <div className="flex flex-col items-start">
+            <p className="text-xs text-stone-800">Payments</p>
+            <p className="text-xs text-stone-800">
+              Whenever an invoice payment is successful
+            </p>
+          </div>
         </div>
         <div className="flex items-center gap-3">
-          <Switch
-            size="small"
-            disabled
-            checked={currentUser?.invoLate}
-            style={{
-              backgroundColor: currentUser?.invoLate
-                ? 'rgb(41 37 36)'
-                : 'rgb(229 231 235)',
-              borderColor: '#000000',
-            }}
-          />
-          <p className="text-xs text-stone-800">Overdue Invoices</p>
+          <Checkbox checked={late} disabled />
+          <div className="flex flex-col items-start">
+            <p className="text-xs text-stone-800">Overdue</p>
+            <p className="text-xs text-stone-800">
+              Whenever an invoice is overdue
+            </p>
+          </div>
         </div>
-        {/* <div className="flex items-center gap-3">
-          <Switch
-            size="small"
-            disabled
-            checked={currentUser?.revCol}
-            style={{
-              backgroundColor: currentUser?.revCol
-                ? 'rgb(41 37 36)'
-                : 'rgb(229 231 235)',
-              borderColor: '#000000',
-            }}
-          />
-          <p className="text-xs text-stone-800">Review Collected</p>
-        </div> */}
       </div>
     </div>
   );

@@ -76,6 +76,13 @@ export const authApiSlice = apiSlice.injectEndpoints({
         body: { pass: pass, ect: ect, userId: userId },
       }),
     }),
+    sendMsg: builder.mutation({
+      query: ({ email, msg, type, userId }) => ({
+        url: '/auth/message',
+        method: 'POST',
+        body: { email: email, type: type, msg: msg, userId: userId },
+      }),
+    }),
   }),
 });
 
@@ -90,4 +97,5 @@ export const {
   useSendConfirmLinkMutation,
   useReqPswdLinkMutation,
   useResetPswdMutation,
+  useSendMsgMutation,
 } = authApiSlice;

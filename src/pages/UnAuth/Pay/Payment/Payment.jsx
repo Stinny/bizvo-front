@@ -8,6 +8,7 @@ import { loadStripe } from '@stripe/stripe-js';
 const stripeLoader = loadStripe(import.meta.env.VITE_STRIPE_KEY);
 const stripeOptions = {
   mode: 'payment',
+  // customer: 'cus_RcrVBPBl5bBPtw',
   amount: Math.round(10000 * 100),
   currency: 'usd',
   appearance: {
@@ -50,12 +51,17 @@ const stripeOptions = {
   },
 };
 
-const Payment = ({ setReadyForPayment, invoice, refetch, setSucc }) => {
+const Payment = ({ setReadyForPayment, invoice, trx, refetch, setSucc }) => {
+  if (invoice?.type === 'recurring') {
+    stripeOptions.setup_future_usage = 'off_session';
+  }
+
   return (
     <Elements stripe={stripeLoader} options={stripeOptions}>
       <Form
         setReadyForPayment={setReadyForPayment}
         invoice={invoice}
+        trx={trx}
         refetch={refetch}
         setSucc={setSucc}
       />

@@ -1,14 +1,10 @@
 import React, { useState } from 'react';
-import Navbar from '../../../components/Navbar/Navbar';
-import Sidenav from '../../../components/Sidenav/Sidenav';
-import Footer from '../../../components/Footer/Footer';
 import 'react-tabs/style/react-tabs.css';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import { useLocation } from 'react-router-dom';
 import Account from '../../../components/Settings/Account/Account';
 import Notifications from '../../../components/Settings/Notifications/Notifications';
 import Payments from '../../../components/Settings/Payments/Payments';
-import Cookies from 'js-cookie';
 
 const Desktop = ({
   refetch,

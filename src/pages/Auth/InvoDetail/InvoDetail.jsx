@@ -10,13 +10,8 @@ import Footer from '../../../components/Footer/Footer';
 const InvoDetail = () => {
   const { invoiceId } = useParams();
 
-  const {
-    data: invoice,
-    isLoading,
-    isSuccess,
-    isFetching,
-    refetch,
-  } = useGetInvoiceQuery({ invoiceId });
+  const { data, isLoading, isSuccess, isFetching, refetch } =
+    useGetInvoiceQuery({ invoiceId });
 
   useEffect(() => {
     refetch();
@@ -27,17 +22,18 @@ const InvoDetail = () => {
   if (isLoading || isFetching) {
     content = <Loading />;
   } else if (isSuccess) {
-    content = <Desktop invoice={invoice} refetch={refetch} />;
+    content = (
+      <Desktop invoice={data?.invoice} trxs={data?.trxs} refetch={refetch} />
+    );
   }
 
   return (
-    <div className="mx-auto max-w-3xl flex flex-col items-start gap-2 h-fit relative">
+    <div className="mx-auto max-w-3xl flex flex-col items-start gap-2 h-fit">
       <Navbar />
-      <div className="flex items-start gap-2 w-full mb-20">
+      <div className="flex items-start gap-2 w-full">
         <Sidenav />
         {content}
       </div>
-      <Footer />
     </div>
   );
 };

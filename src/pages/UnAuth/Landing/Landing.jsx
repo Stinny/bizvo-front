@@ -27,7 +27,7 @@ const Landing = () => {
 
           <Link
             to="/signup"
-            className="p-2 border border-stone-800 text-stone-800 rounded-md text-sm flex items-center justify-center"
+            className="p-2 border border-stone-800 text-stone-800 rounded-md text-xs font-medium flex items-center justify-center"
           >
             Start Collecting
           </Link>

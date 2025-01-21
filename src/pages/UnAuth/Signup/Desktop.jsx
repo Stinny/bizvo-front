@@ -45,7 +45,7 @@ const Desktop = ({
             <div className="flex gap-1 w-full">
               <BackBtn direction={'left'} home={true} />
               <div className="flex flex-col items-start w-full">
-                <p className="text-md text-stone-800 font-semibold">Signup</p>
+                <p className="text-md text-stone-800 font-medium">Signup</p>
                 <p className="text-stone-700 text-xs">
                   Already have an{' '}
                   <span>
@@ -90,7 +90,7 @@ const Desktop = ({
             </form>
             <button
               type="button"
-              className="p-2 w-full border border-stone-800 text-stone-800 rounded-md text-sm"
+              className="p-2 w-full border border-stone-800 text-stone-800 rounded-md text-xs font-medium"
               onClick={handleSignup}
             >
               Signup

@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
 import ReactPaginate from 'react-paginate';
 import { Link } from 'react-router-dom';
-import { ChevronLeft, ChevronRight, DollarSign } from 'react-feather';
+import { ChevronLeft, ChevronRight, DollarSign, Info } from 'react-feather';
 import StripeAmount from '../../../utils/StripeAmount';
 import { PayoutDate } from '../../../utils/PayoutDate';
 import Status from './Status';
+import { Tooltip } from 'flowbite-react';
 
 const Desktop = ({ payouts, balance, currentUser }) => {
   //stuff for pagination//
@@ -39,7 +40,22 @@ const Desktop = ({ payouts, balance, currentUser }) => {
       <div className="w-10/12 flex flex-col items-start gap-2">
         <div className="w-full flex items-center justify-between bg-white border border-gray-200 rounded-md p-2">
           <div className="flex flex-col items-start">
-            <p className="text-sm text-stone-800">Payouts</p>
+            <div className="flex items-center gap-1">
+              <p className="text-sm text-stone-800">Payouts</p>
+              <Tooltip
+                style="light"
+                arrow={false}
+                content={
+                  <p className="text-xs text-stone-800 w-64 text-left">
+                    Only received when bank is connected and there is an
+                    available balance. Balance will always show $0.00 if
+                    disconnected.
+                  </p>
+                }
+              >
+                <Info size={12} className="text-stone-800 dark:text-white" />
+              </Tooltip>
+            </div>
             <p className="text-xs text-stone-800">View balance and payouts</p>
           </div>
           <div className="flex flex-col items-start">
@@ -51,7 +67,9 @@ const Desktop = ({ payouts, balance, currentUser }) => {
                     currency={currentUser?.bankCurrency}
                   />
                 </p>
-                <p className="text-xs text-stone-800">Available</p>
+                <p className="text-stone-800" style={{ fontSize: '11px' }}>
+                  Available
+                </p>
               </div>
               <div className="flex flex-col items-start">
                 <p className="text-xs text-stone-800">
@@ -60,7 +78,12 @@ const Desktop = ({ payouts, balance, currentUser }) => {
                     currency={currentUser?.bankCurrency}
                   />
                 </p>
-                <p className="text-xs text-stone-800">Pending</p>
+                <p
+                  className="text-xs text-stone-800"
+                  style={{ fontSize: '11px' }}
+                >
+                  Pending
+                </p>
               </div>
             </div>
           </div>
@@ -96,8 +119,11 @@ const Desktop = ({ payouts, balance, currentUser }) => {
                 <div
                   className={`grid grid-cols-3 border border-gray-200 bg-white rounded-md p-2 hover:border-stone-800 w-full`}
                 >
-                  <div className="flex items-center">
-                    <p className="text-stone-800 text-xs">#{payout?._id}</p>
+                  <div className="flex flex-col items-start">
+                    <p className="text-stone-800" style={{ fontSize: '10px' }}>
+                      #{payout?._id}
+                    </p>
+                    <p className="text-stone-800 text-xs">{payout?.bankName}</p>
                   </div>
 
                   <div className="flex items-center justify-center">

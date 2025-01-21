@@ -23,6 +23,7 @@ const Desktop = ({ data, invoId, refetch, currentUser, succ, setSucc }) => {
   const [readyForPayment, setReadyForPayment] = useState(false);
   const [updatingInvo, setUpdatingInvo] = useState(false);
   const [updatedInvo, setUpdatedInvo] = useState({});
+  const [updatedTrx, setUpdatedTrx] = useState({});
 
   // const isOwner = data?.invoice?.sellerId === currentUser?._id;
   const isOwner = false;
@@ -40,6 +41,7 @@ const Desktop = ({ data, invoId, refetch, currentUser, succ, setSucc }) => {
       if (updateReq?.msg === 'Tax added') {
         //need to do something with updateReq.invoice
         setUpdatedInvo(updateReq?.invoice);
+        setUpdatedTrx(updateReq?.trx);
         setUpdatingInvo(false);
         setReadyForPayment(true);
       }
@@ -95,6 +97,8 @@ const Desktop = ({ data, invoId, refetch, currentUser, succ, setSucc }) => {
     content = data?.invoice?.paid ? (
       <Paid
         invoice={data?.invoice}
+        trx={data?.trx}
+        trxs={data?.trxs}
         currentUser={currentUser}
         succ={succ}
         setSucc={setSucc}
@@ -161,6 +165,7 @@ const Desktop = ({ data, invoId, refetch, currentUser, succ, setSucc }) => {
                 <Payment
                   setReadyForPayment={setReadyForPayment}
                   invoice={updatedInvo}
+                  trx={updatedTrx}
                   refetch={refetch}
                   setSucc={setSucc}
                 />
@@ -173,10 +178,7 @@ const Desktop = ({ data, invoId, refetch, currentUser, succ, setSucc }) => {
                       className="w-full flex flex-col bg-white items-start text-left border border-gray-200 rounded-md p-2"
                     >
                       <div className="w-full flex items-center justify-between">
-                        <div className="flex items-center gap-1">
-                          <Briefcase size={16} className="text-stone-800" />
-                          <p className="text-xs text-stone-800">Business</p>
-                        </div>
+                        <p className="text-xs text-stone-800">Sender</p>
                         {view === 'bus' ? (
                           <ChevronDown size={14} />
                         ) : (
@@ -219,10 +221,7 @@ const Desktop = ({ data, invoId, refetch, currentUser, succ, setSucc }) => {
                       className="w-full flex flex-col bg-white items-start text-left border border-gray-200 rounded-md p-2"
                     >
                       <div className="w-full flex items-center justify-between">
-                        <div className="flex items-center gap-1">
-                          <User size={16} className="text-stone-800" />
-                          <p className="text-xs text-stone-800">Customer</p>
-                        </div>
+                        <p className="text-xs text-stone-800">Receiver</p>
                         {view === 'cus' ? (
                           <ChevronDown size={14} />
                         ) : (

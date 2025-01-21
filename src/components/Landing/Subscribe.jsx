@@ -110,7 +110,7 @@ const Subscribe = () => {
         />
         <button
           type="submit"
-          className="p-2 border-stone-800 border rounded-md text-stone-800 text-xs w-3/12"
+          className="p-2 border-stone-800 border rounded-md text-stone-800 text-xs font-medium w-3/12"
           disabled={isLoading}
         >
           Subscribe

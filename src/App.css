@@ -162,7 +162,3 @@
   padding: 0px !important;
   height: 12px;
 }
-
-.ant-timeline-item:last-child::after {
-  display: none !important; /* Removes the bottom pseudo-element */
-}

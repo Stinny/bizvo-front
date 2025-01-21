@@ -1,3 +1,4 @@
+import { SunOutlined } from '@ant-design/icons';
 import { Switch } from 'antd';
 import React, { useEffect, useState } from 'react';
 import { Moon, Sun } from 'react-feather';
@@ -26,29 +27,17 @@ const DarkMode = () => {
 
   return (
     <div className="flex items-center gap-1">
-      {/* {darkMode ? (
-        <Moon size={14} className="text-white" />
+      {darkMode ? (
+        <Moon size={12} className="text-white" />
       ) : (
-        <Sun size={14} className="text-stone-800" />
+        <Sun size={12} className="text-stone-800" />
       )}
       <Switch
         size="small"
         checked={darkMode}
         onChange={(checked) => setDarkMode(checked)}
         style={{
-          backgroundColor: darkMode ? 'rgb(41 37 36)' : 'rgb(229 231 235)',
-        }}
-      /> */}
-      <Switch
-        size="small"
-        checked={darkMode}
-        onChange={(checked) => setDarkMode(checked)}
-        unCheckedChildren={
-          <Sun className="text-stone-800 mt-0.5 mb-0.25" size={10} />
-        }
-        checkedChildren={<Moon className="text-white mt-0.5" size={11} />}
-        style={{
-          backgroundColor: darkMode ? 'rgb(41 37 36)' : 'rgb(249 250 251)',
+          backgroundColor: darkMode ? 'rgb(82 82 82)' : 'rgb(229 231 235)',
         }}
       />
     </div>

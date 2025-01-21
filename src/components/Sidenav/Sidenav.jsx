@@ -1,6 +1,7 @@
 import React from 'react';
 import {
   AlertOctagon,
+  BarChart2,
   DollarSign,
   FileText,
   Home,
@@ -31,8 +32,8 @@ const Sidenav = () => {
           to="/dashboard"
           className={path === '/dashboard' ? activeLink : notActiveLink}
         >
-          <Home size={14} className="text-stone-800 dark:text-white" />
-          <p className="text-xs text-stone-800 dark:text-white">Home</p>
+          <BarChart2 size={14} className="text-stone-800 dark:text-white" />
+          <p className="text-xs text-stone-800 dark:text-white">Dashboard</p>
         </Link>
         <Link
           to="/dashboard/invoices"
