@@ -17,6 +17,7 @@ import {
   MoreVertical,
   Repeat,
   Send,
+  Trash,
   X,
   XSquare,
 } from 'react-feather';
@@ -37,6 +38,7 @@ import SendModal from '../../../../components/Invoices/SendModal';
 import 'react-tabs/style/react-tabs.css';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import { Timeline } from 'antd';
+import DeleteModal from '../../../../components/Invoices/DeleteModal';
 
 const Desktop = ({ invoice, trxs, refetch }) => {
   const currentUser = Cookies.get('currentUser')
@@ -69,7 +71,7 @@ const Desktop = ({ invoice, trxs, refetch }) => {
   const [sendConfirm, setSendConfirm] = useState(false);
   const [confirmMod, setConfirmMod] = useState(false);
   const [cancelMod, setCancelMod] = useState(false);
-  const [more, setMore] = useState(false);
+  const [del, setDel] = useState(false);
   const [seeTx, setSeeTx] = useState('');
 
   const handleSeeTx = (tx) => {
@@ -172,6 +174,7 @@ const Desktop = ({ invoice, trxs, refetch }) => {
     setType(invoice?.type);
     setInt(invoice?.interval);
     setDueDate(invoice?.dueDate);
+    setSend(invoice?.sent);
     setEdit(false);
   };
 
@@ -237,6 +240,12 @@ const Desktop = ({ invoice, trxs, refetch }) => {
           invoId={invoice?._id}
           refetch={refetch}
         />
+        <DeleteModal
+          open={del}
+          setOpen={setDel}
+          invoId={invoice?._id}
+          refetch={refetch}
+        />
         <div className="w-full flex items-center justify-between relative">
           <div className="flex gap-1">
             <BackBtn direction={'left'} />
@@ -260,36 +269,36 @@ const Desktop = ({ invoice, trxs, refetch }) => {
             {invoice?.status === 'paid' || invoice?.status === 'void' ? (
               ''
             ) : (
-              <Dropdown.Item
-                as="div"
-                className="text-xs text-stone-800 flex items-center justify-between w-full"
+              <button
+                type="button"
+                onClick={() => setEdit(!edit)}
+                className="w-full h-full outline-none border-none"
               >
-                <button
-                  type="button"
-                  onClick={() => setEdit(!edit)}
-                  className="text-xs text-stone-800 flex items-center w-full gap-1"
+                <Dropdown.Item
+                  as="div"
+                  className="w-full flex items-center gap-1 text-xs text-stone-800 hover:bg-white"
                 >
-                  <EditIcon size={14} className="text-stone-800" />
+                  <EditIcon size={13} className="text-stone-800" />
                   Edit
-                </button>
-              </Dropdown.Item>
+                </Dropdown.Item>
+              </button>
             )}
             {invoice?.sent ? (
               ''
             ) : (
-              <Dropdown.Item
-                as="div"
-                className="text-xs text-stone-800 flex items-center justify-between w-full"
+              <button
+                type="button"
+                onClick={() => setSendMod(true)}
+                className="flex items-center w-full h-full"
               >
-                <button
-                  type="button"
-                  onClick={() => setSendMod(true)}
-                  className="text-xs text-stone-800 flex items-center w-full gap-1"
+                <Dropdown.Item
+                  as="div"
+                  className="w-full flex items-center gap-1 text-xs text-stone-800 hover:bg-white"
                 >
-                  <Send size={12} />
+                  <Send size={12} className="text-stone-800" />
                   Send
-                </button>
-              </Dropdown.Item>
+                </Dropdown.Item>
+              </button>
             )}
 
             {invoice?.sent ? (
@@ -299,7 +308,7 @@ const Desktop = ({ invoice, trxs, refetch }) => {
               >
                 <Dropdown.Item
                   as="div"
-                  className="text-xs text-stone-800 flex items-center gap-1"
+                  className="text-xs text-stone-800 flex items-center gap-1 hover:bg-white"
                 >
                   <ExternalLink size={14} />
                   Open
@@ -308,20 +317,37 @@ const Desktop = ({ invoice, trxs, refetch }) => {
             ) : (
               ''
             )}
-            {invoice?.status === 'pending' ? (
-              <Dropdown.Item
-                as="div"
-                className="text-xs text-stone-800 flex items-center justify-between w-full"
+            {invoice?.status === 'draft' ? (
+              <button
+                type="button"
+                onClick={() => setDel(!del)}
+                className="w-full h-full"
               >
-                <button
-                  type="button"
-                  onClick={() => setCancelMod(!cancelMod)}
-                  className="text-xs text-stone-800 flex items-center w-full gap-1"
+                <Dropdown.Item
+                  as="div"
+                  className="text-xs text-stone-800 flex items-center gap-1 hover:bg-white"
+                >
+                  <Trash size={14} className="text-red-400" />
+                  Delete
+                </Dropdown.Item>
+              </button>
+            ) : (
+              ''
+            )}
+            {invoice?.status === 'pending' ? (
+              <button
+                type="button"
+                onClick={() => setCancelMod(!cancelMod)}
+                className="w-full h-full"
+              >
+                <Dropdown.Item
+                  as="div"
+                  className="text-xs text-stone-800 flex items-center gap-1 hover:bg-white"
                 >
                   <XSquare size={14} className="text-red-400" />
                   Cancel
-                </button>
-              </Dropdown.Item>
+                </Dropdown.Item>
+              </button>
             ) : (
               ''
             )}
@@ -381,7 +407,30 @@ const Desktop = ({ invoice, trxs, refetch }) => {
                 ) : (
                   ''
                 )}
-
+                <div className="flex items-center w-full gap-2">
+                  <button
+                    type="button"
+                    disabled
+                    className={`flex items-center justify-center gap-1 w-3/6 p-2 border ${
+                      type === 'single' ? 'border-stone-800' : 'border-gray-200'
+                    } rounded-md`}
+                  >
+                    <CreditCard size={14} className="text-stone-800" />
+                    <p className="text-xs text-stone-800">Single</p>
+                  </button>
+                  <button
+                    type="button"
+                    disabled
+                    className={`flex items-center justify-center gap-1 w-3/6 p-2 border ${
+                      type === 'recurring'
+                        ? 'border-stone-800'
+                        : 'border-gray-200'
+                    } rounded-md`}
+                  >
+                    <Repeat size={14} className="text-stone-800" />
+                    <p className="text-xs text-stone-800">Recurring</p>
+                  </button>
+                </div>
                 <div className="flex flex-col gap-1 items-start w-full">
                   <p className="text-xs text-stone-800">Customer</p>
                   <button
@@ -434,30 +483,6 @@ const Desktop = ({ invoice, trxs, refetch }) => {
                     disabled
                     value={desc}
                   />
-                </div>
-                <div className="flex items-center w-full gap-2">
-                  <button
-                    type="button"
-                    disabled
-                    className={`flex items-center justify-center gap-1 w-3/6 p-2 border ${
-                      type === 'single' ? 'border-stone-800' : 'border-gray-200'
-                    } rounded-md`}
-                  >
-                    <CreditCard size={14} className="text-stone-800" />
-                    <p className="text-xs text-stone-800">Single</p>
-                  </button>
-                  <button
-                    type="button"
-                    disabled
-                    className={`flex items-center justify-center gap-1 w-3/6 p-2 border ${
-                      type === 'recurring'
-                        ? 'border-stone-800'
-                        : 'border-gray-200'
-                    } rounded-md`}
-                  >
-                    <Repeat size={14} className="text-stone-800" />
-                    <p className="text-xs text-stone-800">Recurring</p>
-                  </button>
                 </div>
                 {type === 'recurring' ? (
                   <div className="flex flex-col items-start w-full gap-1">

@@ -50,6 +50,25 @@ export const customersApiSlice = apiSlice.injectEndpoints({
         },
       }),
     }),
+    getPaySetup: builder.mutation({
+      query: ({ customerId }) => ({
+        url: `/customers/setup/pay`,
+        method: 'POST',
+        body: {
+          customerId: customerId,
+        },
+      }),
+    }),
+    changePayMethod: builder.mutation({
+      query: ({ customerId, paymentMeth }) => ({
+        url: `/customers/pay/change`,
+        method: 'POST',
+        body: {
+          customerId: customerId,
+          paymentMeth: paymentMeth,
+        },
+      }),
+    }),
     getCustomers: builder.query({
       query: () => `/customers/get`,
     }),
@@ -69,4 +88,6 @@ export const {
   useGetCustomerQuery,
   useDeleteCustomerMutation,
   useGetCustomerOptsQuery,
+  useGetPaySetupMutation,
+  useChangePayMethodMutation,
 } = customersApiSlice;

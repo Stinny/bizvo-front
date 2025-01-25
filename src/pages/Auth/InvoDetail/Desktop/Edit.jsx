@@ -20,7 +20,6 @@ import { Link, useNavigate } from 'react-router-dom';
 import { Badge, Datepicker, Spinner, Tooltip } from 'flowbite-react';
 import { Checkbox } from 'antd';
 import Cookies from 'js-cookie';
-import EditDraft from './EditDraft';
 import { dateTheme } from '../../../../utils/dateTheme';
 import BackBtn from '../../../../components/BackBtn';
 import InvoStatus from '../../../../components/InvoStatus';
@@ -126,14 +125,11 @@ const Edit = ({
         style={customStyles}
         contentLabel="Send invo confirm modal"
       >
-        <div className="w-80 flex flex-col gap-4 items-start">
+        <div className="w-80 flex flex-col gap-2 items-start">
           <div className="w-full flex items-start justify-between">
             <div className="flex flex-col items-start">
-              <p className="text-sm text-stone-800">Send Invoice</p>
-
-              <p className="text-xs text-stone-800">
-                Are you sure you want to send?
-              </p>
+              <p className="text-sm text-stone-800">Sending Invoice</p>
+              <p className="text-xs text-stone-800">Confirm sending invoice</p>
             </div>
             <X
               size={16}
@@ -142,12 +138,14 @@ const Edit = ({
             />
           </div>
           <div className="flex flex-col items-start gap-2 w-full">
-            <div className="w-full text-left flex flex-col items-start gap-1 p-2 border border-gray-200 rounded-md">
+            <div className="w-full text-left flex items-center gap-1 p-2 border border-gray-200 rounded-md">
               <AlertOctagon size={16} className="text-red-400" />
-              <p className="text-xs text-stone-800">
-                Email will be sent to customer and can't be changed after.
-              </p>
+              <p className="text-xs text-stone-800">Permanent action</p>
             </div>
+            <p className="text-xs text-stone-800">
+              You have selected to send this invoice. The customer will be
+              notified and able to pay once sent.
+            </p>
           </div>
           <div className="w-full flex items-center justify-end">
             <div className="flex items-center gap-2">
@@ -156,7 +154,7 @@ const Edit = ({
                 className=" text-stone-800 rounded-md border border-stone-800 p-1 text-xs"
                 onClick={modalConfirmHandler}
               >
-                Save & Send
+                Send Invoice
               </button>
             </div>
           </div>
@@ -226,6 +224,28 @@ const Edit = ({
 
       <div className="flex items-center justify-center w-72 mx-auto">
         <div className="flex flex-col gap-4 w-full items-start">
+          <div className="flex items-center w-full gap-2">
+            <button
+              type="button"
+              onClick={() => setType('single')}
+              className={`flex items-center justify-center gap-1 w-3/6 p-2 border ${
+                type === 'single' ? 'border-stone-800' : 'border-gray-200'
+              } rounded-md hover:border-stone-800`}
+            >
+              <CreditCard size={14} className="text-stone-800" />
+              <p className="text-xs text-stone-800">Single</p>
+            </button>
+            <button
+              type="button"
+              onClick={() => setType('recurring')}
+              className={`flex items-center justify-center gap-1 w-3/6 p-2 border ${
+                type === 'recurring' ? 'border-stone-800' : 'border-gray-200'
+              } rounded-md hover:border-stone-800`}
+            >
+              <Repeat size={14} className="text-stone-800" />
+              <p className="text-xs text-stone-800">Recurring</p>
+            </button>
+          </div>
           <div className="flex flex-col items-start w-full gap-1">
             <p className="text-xs text-stone-800">Customer</p>
             {invoice?.sent ? (
@@ -353,28 +373,6 @@ const Edit = ({
                 </p>
               </div>
             </div>
-          </div>
-          <div className="flex items-center w-full gap-2">
-            <button
-              type="button"
-              onClick={() => setType('single')}
-              className={`flex items-center justify-center gap-1 w-3/6 p-2 border ${
-                type === 'single' ? 'border-stone-800' : 'border-gray-200'
-              } rounded-md hover:border-stone-800`}
-            >
-              <CreditCard size={14} className="text-stone-800" />
-              <p className="text-xs text-stone-800">Single</p>
-            </button>
-            <button
-              type="button"
-              onClick={() => setType('recurring')}
-              className={`flex items-center justify-center gap-1 w-3/6 p-2 border ${
-                type === 'recurring' ? 'border-stone-800' : 'border-gray-200'
-              } rounded-md hover:border-stone-800`}
-            >
-              <Repeat size={14} className="text-stone-800" />
-              <p className="text-xs text-stone-800">Recurring</p>
-            </button>
           </div>
           {type === 'recurring' ? (
             <div className="flex flex-col items-start w-full gap-1">

@@ -38,15 +38,23 @@ const Trxs = ({ trxs, setSeeTrx }) => {
   };
   return (
     <div className="flex flex-col gap-2 min-h-28 w-full">
-      <div className="w-full flex items-center">
-        <p className="text-stone-800 text-xs">History</p>
+      <div className="w-full flex items-center gap-1">
+        <button
+          type="button"
+          onClick={() => setSeeTrx(false)}
+          className="text-stone-800 flex items-center justify-center border border-stone-800 p-0.5 rounded-md"
+        >
+          <ChevronLeft size={12} />
+        </button>
+        <p className="text-stone-800 text-xs">Transactions</p>
       </div>
-      <div className="w-full flex flex-col gap-2 min-h-32">
+      <div className="w-full flex flex-col gap-2 min-h-24">
         {' '}
         {currentTrxs?.map((trx) => (
           <button
             type="button"
             onClick={() => handleSeeTx(`tx${trx?._id}`)}
+            key={`trx${trx?._id}`}
             className="border border-gray-200 rounded-md flex flex-col p-2 w-full"
           >
             <div className="w-full flex items-center justify-between">
@@ -54,7 +62,7 @@ const Trxs = ({ trxs, setSeeTrx }) => {
                 <div className="flex flex-col items-start">
                   <p
                     className="text-stone-800 font-medium"
-                    style={{ fontSize: '10px' }}
+                    style={{ fontSize: '11px' }}
                   >
                     {moment(trx?.done_on).format('MMM Do, YYYY')}
                   </p>
@@ -73,7 +81,7 @@ const Trxs = ({ trxs, setSeeTrx }) => {
               }`}
             >
               <Timeline
-                className="text-left ml-1 mt-2"
+                className="text-left ml-1 mt-4"
                 items={[
                   {
                     dot: <Send size={12} className="text-stone-800" />,
@@ -106,7 +114,7 @@ const Trxs = ({ trxs, setSeeTrx }) => {
                     dot: <CreditCard size={12} className="text-stone-800" />,
                     children: (
                       <p className="text-xs text-stone-800 pt-0.5">
-                        Paid after taxes{' '}
+                        Total paid{' '}
                         <span className="font-semibold">
                           $
                           {parseFloat(trx?.total / 100)?.toLocaleString(
@@ -126,15 +134,7 @@ const Trxs = ({ trxs, setSeeTrx }) => {
           </button>
         ))}
       </div>
-      <div className="w-full flex items-center justify-between">
-        <button
-          type="button"
-          onClick={() => setSeeTrx(false)}
-          className="text-stone-800 flex items-center gap-1 text-xs"
-        >
-          <ChevronLeft size={12} />
-          Details
-        </button>
+      <div className="w-full flex items-center justify-end">
         {trxs?.length > 3 ? (
           <ReactPaginate
             breakLabel="..."

@@ -90,6 +90,11 @@ const Form = ({ setReadyForPayment, invoice, refetch, setSucc, trx }) => {
     }
   };
 
+  const handleCancelPay = () => {
+    refetch();
+    setReadyForPayment(false);
+  };
+
   //handles loading the Stripe payment element
   useEffect(() => {
     if (!stripe || !elements) {
@@ -170,14 +175,14 @@ const Form = ({ setReadyForPayment, invoice, refetch, setSucc, trx }) => {
         <div className="w-full flex items-center gap-2">
           <button
             type="button"
-            onClick={() => setReadyForPayment(false)}
+            onClick={handleCancelPay}
             className="p-2 w-3/12 border border-stone-800 text-stone-800 rounded-md flex items-center justify-center"
           >
             <ChevronLeft size={16} />
           </button>
           <button
             type="button"
-            className="p-2 w-9/12 border border-stone-800 text-stone-800 rounded-md text-xs"
+            className="p-2 w-9/12 border border-stone-800 text-stone-800 rounded-md text-xs font-medium"
             onClick={handleConfirmPayment}
             disabled={isPayBtnDisabled || paying}
           >

@@ -18,7 +18,7 @@ const customStyles = {
     bottom: 'auto',
     marginRight: '-50%',
     transform: 'translate(-50%, -50%)',
-    fontFamily: 'Roboto Mono',
+    fontFamily: 'Geist',
     padding: '8px',
   },
   overlay: { zIndex: 900 },
@@ -109,37 +109,38 @@ const Desktop = ({
         style={customStyles}
         contentLabel="Send invo confirm modal"
       >
-        <div className="w-80 flex flex-col gap-4 items-start">
-          <div className="flex flex-col items-start">
-            <p className="text-sm text-stone-800">Sending Invoice</p>
-            <p className="text-xs text-stone-800">
-              Confirm sending this invoice
-            </p>
-          </div>
-          <div className="flex flex-col items-start gap-2 w-full">
-            <div className="w-full text-left flex flex-col items-start gap-1 p-2 border border-gray-200 rounded-md">
-              <AlertOctagon size={16} className="text-red-400" />
+        <div className="w-80 flex flex-col gap-2 items-start">
+          <div className="w-full flex items-start justify-between">
+            <div className="flex flex-col items-start">
+              <p className="text-sm text-stone-800">Sending Invoice</p>
               <p className="text-xs text-stone-800">
-                After sending only title, description, and due date can be
-                changed
+                Confirm sending this invoice
               </p>
             </div>
+            <X
+              size={16}
+              className="text-red-400 hover:cursor-pointer"
+              onClick={() => setConfirmMod(false)}
+            />
+          </div>
+          <div className="flex flex-col items-start gap-2 w-full">
+            <div className="w-full text-left flex items-center gap-1 p-2 border border-gray-200 rounded-md">
+              <AlertOctagon size={16} className="text-red-400" />
+              <p className="text-xs text-stone-800">Permanent action</p>
+            </div>
+            <p className="text-xs text-stone-800">
+              You have selected to send this invoice. The customer will be
+              notified and able to pay once sent.
+            </p>
           </div>
           <div className="w-full flex items-center justify-end">
             <div className="flex items-center gap-2">
               <button
                 type="button"
-                className="border border-red-400 text-red-400 rounded-md p-1 text-xs"
-                onClick={() => setConfirmMod(false)}
-              >
-                Cancel
-              </button>
-              <button
-                type="button"
                 className=" text-stone-800 rounded-md border border-stone-800 p-1 text-xs"
                 onClick={modalConfirmHandler}
               >
-                Save & Send
+                Send Invoice
               </button>
             </div>
           </div>
@@ -202,6 +203,28 @@ const Desktop = ({
           </div>
         )}
         <div className="flex flex-col gap-4 w-full items-start">
+          <div className="flex items-center w-full gap-2">
+            <button
+              type="button"
+              onClick={() => setType('single')}
+              className={`flex items-center justify-center gap-1 w-3/6 p-2 border ${
+                type === 'single' ? 'border-stone-800' : 'border-gray-200'
+              } rounded-md hover:border-stone-800`}
+            >
+              <CreditCard size={14} className="text-stone-800" />
+              <p className="text-xs text-stone-800">Single</p>
+            </button>
+            <button
+              type="button"
+              onClick={() => setType('recurring')}
+              className={`flex items-center justify-center gap-1 w-3/6 p-2 border ${
+                type === 'recurring' ? 'border-stone-800' : 'border-gray-200'
+              } rounded-md hover:border-stone-800`}
+            >
+              <Repeat size={14} className="text-stone-800" />
+              <p className="text-xs text-stone-800">Recurring</p>
+            </button>
+          </div>
           <div className="flex flex-col items-start w-full gap-1">
             <p className="text-xs text-stone-800">Customer</p>
             <Select
@@ -280,28 +303,6 @@ const Desktop = ({
               value={desc}
               maxLength={100}
             />
-          </div>
-          <div className="flex items-center w-full gap-2">
-            <button
-              type="button"
-              onClick={() => setType('single')}
-              className={`flex items-center justify-center gap-1 w-3/6 p-2 border ${
-                type === 'single' ? 'border-stone-800' : 'border-gray-200'
-              } rounded-md hover:border-stone-800`}
-            >
-              <CreditCard size={14} className="text-stone-800" />
-              <p className="text-xs text-stone-800">Single</p>
-            </button>
-            <button
-              type="button"
-              onClick={() => setType('recurring')}
-              className={`flex items-center justify-center gap-1 w-3/6 p-2 border ${
-                type === 'recurring' ? 'border-stone-800' : 'border-gray-200'
-              } rounded-md hover:border-stone-800`}
-            >
-              <Repeat size={14} className="text-stone-800" />
-              <p className="text-xs text-stone-800">Recurring</p>
-            </button>
           </div>
           {type === 'recurring' ? (
             <div className="flex flex-col items-start w-full gap-1">

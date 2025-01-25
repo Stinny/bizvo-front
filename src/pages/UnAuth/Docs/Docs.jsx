@@ -7,11 +7,14 @@ import Mobile from './Mobile';
 const Docs = () => {
   const location = useLocation();
   const [view, setView] = useState(location?.state?.view || 'home');
+  const [mobView, setMobView] = useState(
+    location?.state?.view || { value: 'home', label: 'Home' }
+  );
 
   let content;
 
   content = isMobile ? (
-    <Mobile view={view} setView={setView} />
+    <Mobile view={mobView} setView={setMobView} />
   ) : (
     <Desktop view={view} setView={setView} />
   );

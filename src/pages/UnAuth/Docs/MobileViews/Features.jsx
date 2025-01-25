@@ -14,7 +14,7 @@ import {
   Users,
 } from 'react-feather';
 
-const Features = ({ lastUpdated }) => {
+const Features = ({ lastUpdated, ViewSelect }) => {
   const [view, setView] = useState('');
 
   const handleView = (newView) => {
@@ -35,6 +35,7 @@ const Features = ({ lastUpdated }) => {
         <p className="text-xs text-stone-800 font-semibold">V1.0</p>
       </div>
       <div className="flex flex-col gap-4 items-start w-full text-left">
+        <ViewSelect />
         <p className="text-sm text-stone-800 font-medium">Features</p>
         <p className="text-xs text-stone-800">
           The features we offer are important to the businesses we support and
@@ -71,7 +72,7 @@ const Features = ({ lastUpdated }) => {
               representative for all transactions. Let us handle the complicated
               and boring stuff. This includes:
             </p>
-            <div className="flex items-center gap-2 mt-2">
+            <div className="flex flex-wrap gap-2 mt-2">
               <div className="p-1 border border-gray-200 rounded-md flex items-center justify-center">
                 <p className="text-xs text-stone-800">Tax calculation</p>
               </div>

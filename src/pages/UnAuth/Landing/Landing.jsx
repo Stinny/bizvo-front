@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import Navbar from '../../../components/Navbar/Navbar';
 import img from '../../../assets/tech.svg';
@@ -10,19 +10,33 @@ import { isMobile } from 'react-device-detect';
 import Mobile from './Mobile';
 
 const Landing = () => {
+  const badges = ['Sales Tax', 'VAT', 'GST', 'Refunds', 'Chargebacks']; // Badge text options
+  const [currentBadge, setCurrentBadge] = useState(0);
+
+  // Cycle through badges every 5 seconds
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentBadge((prev) => (prev + 1) % badges.length);
+    }, 3000);
+    return () => clearInterval(interval); // Cleanup interval on component unmount
+  }, [badges.length]);
+
   return isMobile ? (
-    <Mobile />
+    <Mobile badges={badges} currentBadge={currentBadge} />
   ) : (
     <div className="flex flex-col gap-2 max-w-3xl mx-auto relative">
       <Navbar />
       <div className="mx-auto flex items-center">
-        <div className="w-6/12 mx-auto flex flex-col gap-4 items-start">
-          <p className="text-4xl text-left text-stone-800 font-bold">
+        <div className="w-6/12 mx-auto flex flex-col gap-3 items-start">
+          <div className=" p-1 bg-stone-800 text-white rounded-md text-xs font-medium">
+            {badges[currentBadge]}
+          </div>
+          <p className="text-5xl text-left text-stone-800 font-bold">
             Online Invoicing Made Easier.
           </p>
-          <p className="text-md text-stone-800 text-left">
+          <p className="text-lg text-stone-800 text-left">
             Stop trying to be an accountant. Collect payments the easy way and
-            have taxes done for you.
+            have the hard stuff done for you.
           </p>
 
           <Link

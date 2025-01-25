@@ -6,18 +6,18 @@ import Features from '../../../components/Landing/Features';
 import Subscribe from '../../../components/Landing/Subscribe';
 import Footer from '../../../components/Footer/Footer';
 
-const Mobile = () => {
+const Mobile = ({ badges, currentBadge }) => {
   return (
     <div className="flex flex-col gap-4 w-full p-4 mx-auto relative">
       <Navbar />
       <div className="mx-auto flex flex-col">
-        <div className="w-full mx-auto flex flex-col gap-4 items-start">
-          <p className="text-4xl text-left text-stone-800 font-bold">
+        <div className="w-full mx-auto flex flex-col gap-3 items-start">
+          <p className="text-5xl text-left text-stone-800 font-bold">
             Online Invoicing Made Easier.
           </p>
-          <p className="text-md text-stone-800 text-left">
+          <p className="text-lg text-stone-800 text-left">
             Stop trying to be an accountant. Collect payments the easy way and
-            have taxes done for you.
+            have the hard stuff done for you.
           </p>
 
           <Link
@@ -27,8 +27,11 @@ const Mobile = () => {
             Start Collecting
           </Link>
         </div>
-        <div className="w-full">
+        <div className="w-full relative">
           <img src={img} className="w-full" />
+          <div className="absolute left-10 top-1/2 transform -translate-y-1/2 bg-stone-800 text-white rounded-md text-xs font-medium p-1">
+            {badges[currentBadge]}
+          </div>
         </div>
       </div>
       <Features />

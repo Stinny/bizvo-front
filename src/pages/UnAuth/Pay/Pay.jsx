@@ -20,6 +20,7 @@ const Pay = () => {
 
   //track paid status for success alert display
   const [succ, setSucc] = useState(false);
+  const [added, setAdded] = useState(false);
 
   //hook to getting invo from API
   const { data, isLoading, isSuccess, isFetching, refetch } =
@@ -48,6 +49,8 @@ const Pay = () => {
         currentUser={currentUser}
         succ={succ}
         setSucc={setSucc}
+        added={added}
+        setAdded={setAdded}
       />
     ) : (
       <Desktop
@@ -57,6 +60,8 @@ const Pay = () => {
         currentUser={currentUser}
         succ={succ}
         setSucc={setSucc}
+        added={added}
+        setAdded={setAdded}
       />
     );
   }

@@ -12,7 +12,7 @@ import { BiSolidBank } from 'react-icons/bi';
 import { BsStripe } from 'react-icons/bs';
 import { Link } from 'react-router-dom';
 
-const Payments = ({ lastUpdated }) => {
+const Payments = ({ lastUpdated, ViewSelect }) => {
   const [seeBank, setSeeBank] = useState(false);
   const [seeStr, setSeeStr] = useState(false);
   const [seeTx1, setSeeTx1] = useState(false);
@@ -29,6 +29,7 @@ const Payments = ({ lastUpdated }) => {
         <p className="text-xs text-stone-800 font-semibold">V1.0</p>
       </div>
       <div className="flex flex-col gap-4 items-start w-full text-left">
+        <ViewSelect />
         <p className="text-sm text-stone-800 font-medium">Payments & Payouts</p>
         <p className="text-xs text-stone-800">
           As a platform, we utilize Stripe to handle everything related to

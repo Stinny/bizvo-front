@@ -48,7 +48,7 @@ const Mobile = () => {
           ref={dropdownRef}
           className="w-full flex justify-end absolute top-full z-50 right-0"
         >
-          <div className="bg-white border border-gray-200 rounded-md flex flex-col items-center gap-2 p-2">
+          <div className="bg-white border border-gray-200 rounded-md flex flex-col items-center gap-2 p-2 w-28">
             <Link
               to="/docs"
               className="w-full p-1 pl-2 pr-2 text-xs text-stone-800 border border-white rounded-md hover:border-stone-800 hover:outline-non"

@@ -63,7 +63,7 @@ const Mobile = () => {
         <div className="w-full flex items-center justify-end mt-1">
           <Link
             to="/docs"
-            state={{ view: 'payments' }}
+            state={{ view: { value: 'payments', label: 'Payments' } }}
             className="flex items-center gap-1 text-stone-800 text-xs"
           >
             See docs <ChevronRight size={14} />

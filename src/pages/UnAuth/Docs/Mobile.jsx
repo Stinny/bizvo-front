@@ -1,154 +1,135 @@
 import React, { useEffect, useRef, useState } from 'react';
 import Navbar from '../../../components/Navbar/Navbar';
+import Footer from '../../../components/Footer/Footer';
 import Home from './MobileViews/Home';
 import Account from './MobileViews/Account';
 import Features from './MobileViews/Features';
 import Payments from './MobileViews/Payments';
 import Invoices from './MobileViews/Invoices';
 import Customers from './MobileViews/Customers';
-import { AlignRight, Layers } from 'react-feather';
-import { Link } from 'react-router-dom';
+import Tos from './MobileViews/Tos';
+import Privacy from './MobileViews/Privacy';
+import Select from 'react-select';
 
 const Mobile = ({ view, setView }) => {
-  const [open, setOpen] = useState(false);
-  const dropdownRef = useRef(null);
-
-  const toggleDropdown = () => {
-    setOpen((prev) => !prev);
-  };
-
-  const handleChangeView = (view) => {
-    setView(view);
-    setOpen(false);
-  };
-
-  //for handling when a user clicks away from the dropdown menu
-  const handleClickOutside = (event) => {
-    if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
-      setOpen(false); // Close the dropdown if clicking outside
-    }
-  };
-
-  useEffect(() => {
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
-    };
-  }, []);
-
-  const activeLink =
-    'w-full border border-stone-800 rounded-md text-stone-800 text-xs p-1';
-  const notActiveLink =
-    'w-full text-xs p-1 border border-white rounded-md hover:border-stone-800';
-
   const lastUpdated = 'January 18th, 2025';
+  const polUpdated = 'January 24th, 2025';
+
+  const options = [
+    { value: 'home', label: 'Home' },
+    { value: 'account', label: 'Account' },
+    { value: 'features', label: 'Features' },
+    { value: 'payments', label: 'Payments' },
+    { value: 'invos', label: 'Invoices' },
+    { value: 'custs', label: 'Customers' },
+    { value: 'tos', label: 'Terms of Service' },
+    { value: 'priv', label: 'Privacy Policy' },
+  ];
+
+  const ViewSelect = () => (
+    <Select
+      options={options}
+      onChange={(value) => setView(value)}
+      value={view}
+      placeholder="View"
+      menuPortalTarget={document.body}
+      menuPosition={'fixed'}
+      isSearchable
+      styles={{
+        control: (baseStyles, state) => ({
+          ...baseStyles,
+          borderColor: 'rgb(229 231 235)',
+          backgroundColor: 'rgb(249 250 251)',
+          borderWidth: 1,
+          '&:hover': {
+            backgroundColor: 'rgb(229 231 235)', // Keep the same border color on hover
+          },
+          '&:focus': {
+            backgroundColor: 'rgb(229 231 235)', // Keep the same border color on hover
+          },
+          fontSize: '12px',
+          borderRadius: '.375rem',
+          boxShadow: 'none',
+          zIndex: 40,
+          position: 'relative',
+          height: 33,
+          minHeight: 33,
+        }),
+        indicatorsContainer: (provided) => ({
+          ...provided,
+          height: 33,
+        }),
+        menuPortal: (provided) => ({
+          ...provided,
+          zIndex: 40,
+          fontSize: '12px',
+        }),
+        input: (base) => ({
+          ...base,
+          'input:focus': {
+            boxShadow: 'none',
+          },
+        }),
+        option: (provided, state) => ({
+          ...provided,
+          backgroundColor: state.isSelected
+            ? 'rgb(229 231 235)'
+            : state.isFocused
+            ? 'rgb(249 250 251)'
+            : '',
+          color: 'black',
+        }),
+      }}
+      className="w-full text-left"
+    />
+  );
 
   return (
     <div className="flex flex-col w-full gap-2 p-4">
-      <div className="w-full bg-white flex justify-between items-center border border-gray-200 rounded-md p-2 relative">
-        {/* logo section */}
-
-        <Link to="/" className="h-full flex gap-1 items-center">
-          <Layers size={20} className="font-black" />
-          <p
-            className="font-bold text-stone-800 text-lg"
-            style={{ fontFamily: 'Space Mono, monospace' }}
-          >
-            Bizvo
-          </p>
-        </Link>
-
-        <AlignRight
-          size={17}
-          onClick={toggleDropdown}
-          className="text-stone-800"
-        />
-        {open ? (
-          <div
-            ref={dropdownRef}
-            className="w-full flex justify-end absolute top-full z-50 right-0"
-          >
-            <div className="flex flex-col gap-1 items-start border border-gray-200 rounded-md bg-white p-2">
-              <button
-                type="button"
-                onClick={() => handleChangeView('home')}
-                className={view === 'home' ? activeLink : notActiveLink}
-              >
-                Home
-              </button>
-              <button
-                type="button"
-                onClick={() => handleChangeView('account')}
-                className={view === 'account' ? activeLink : notActiveLink}
-              >
-                Account
-              </button>
-              <button
-                type="button"
-                onClick={() => handleChangeView('features')}
-                className={view === 'features' ? activeLink : notActiveLink}
-              >
-                Features
-              </button>
-              <button
-                type="button"
-                onClick={() => handleChangeView('payments')}
-                className={view === 'payments' ? activeLink : notActiveLink}
-              >
-                Payments
-              </button>
-              <button
-                type="button"
-                onClick={() => handleChangeView('invos')}
-                className={view === 'invos' ? activeLink : notActiveLink}
-              >
-                Invoices
-              </button>
-              <button
-                type="button"
-                onClick={() => handleChangeView('custs')}
-                className={view === 'custs' ? activeLink : notActiveLink}
-              >
-                Customers
-              </button>
-            </div>
-          </div>
-        ) : (
-          ''
-        )}
-      </div>
+      <Navbar />
       <div className="w-full">
-        {view === 'home' ? (
-          <Home setView={setView} lastUpdated={lastUpdated} />
+        {view?.value === 'home' ? (
+          <Home ViewSelect={ViewSelect} lastUpdated={lastUpdated} />
         ) : (
           ''
         )}
-        {view === 'account' ? (
-          <Account setView={setView} lastUpdated={lastUpdated} />
+        {view?.value === 'account' ? (
+          <Account ViewSelect={ViewSelect} lastUpdated={lastUpdated} />
         ) : (
           ''
         )}
-        {view === 'features' ? (
-          <Features setView={setView} lastUpdated={lastUpdated} />
+        {view?.value === 'features' ? (
+          <Features ViewSelect={ViewSelect} lastUpdated={lastUpdated} />
         ) : (
           ''
         )}
-        {view === 'payments' ? (
-          <Payments setView={setView} lastUpdated={lastUpdated} />
+        {view?.value === 'payments' ? (
+          <Payments ViewSelect={ViewSelect} lastUpdated={lastUpdated} />
         ) : (
           ''
         )}
-        {view === 'invos' ? (
-          <Invoices setView={setView} lastUpdated={lastUpdated} />
+        {view?.value === 'invos' ? (
+          <Invoices ViewSelect={ViewSelect} lastUpdated={lastUpdated} />
         ) : (
           ''
         )}
-        {view === 'custs' ? (
-          <Customers setView={setView} lastUpdated={lastUpdated} />
+        {view?.value === 'custs' ? (
+          <Customers ViewSelect={ViewSelect} lastUpdated={lastUpdated} />
+        ) : (
+          ''
+        )}
+        {view?.value === 'tos' ? (
+          <Tos ViewSelect={ViewSelect} lastUpdated={polUpdated} />
+        ) : (
+          ''
+        )}
+        {view?.value === 'priv' ? (
+          <Privacy ViewSelect={ViewSelect} lastUpdated={polUpdated} />
         ) : (
           ''
         )}
       </div>
+      <Footer />
     </div>
   );
 };

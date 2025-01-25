@@ -8,6 +8,8 @@ import Features from './Views/Features';
 import Payments from './Views/Payments';
 import Invoices from './Views/Invoices';
 import Customers from './Views/Customers';
+import Tos from './Views/Tos';
+import Privacy from './Views/Privacy';
 
 const Desktop = ({ view, setView }) => {
   const activeLink =
@@ -16,6 +18,7 @@ const Desktop = ({ view, setView }) => {
     'w-full text-xs p-1 border border-white rounded-md hover:border-stone-800';
 
   const lastUpdated = 'January 18th, 2025';
+  const polUpdated = 'January 24th, 2025';
 
   return (
     <div className="flex flex-col max-w-3xl mx-auto gap-2">
@@ -65,39 +68,39 @@ const Desktop = ({ view, setView }) => {
             >
               Customers
             </button>
+            <div className="w-full flex flex-col gap-1 border-t border-gray-200 pt-1">
+              <button
+                type="button"
+                onClick={() => setView('tos')}
+                className={view === 'tos' ? activeLink : notActiveLink}
+              >
+                Terms
+              </button>
+              <button
+                type="button"
+                onClick={() => setView('priv')}
+                className={view === 'priv' ? activeLink : notActiveLink}
+              >
+                Privacy
+              </button>
+              <Link
+                to="/contact"
+                className="flex items-center justify-center border-stone-800 border rounded-md p-1 w-full text-xs text-stone-800"
+              >
+                Message Us
+              </Link>
+            </div>
           </div>
         </div>
 
-        {view === 'home' ? (
-          <Home setView={setView} lastUpdated={lastUpdated} />
-        ) : (
-          ''
-        )}
-        {view === 'account' ? (
-          <Account setView={setView} lastUpdated={lastUpdated} />
-        ) : (
-          ''
-        )}
-        {view === 'features' ? (
-          <Features setView={setView} lastUpdated={lastUpdated} />
-        ) : (
-          ''
-        )}
-        {view === 'payments' ? (
-          <Payments setView={setView} lastUpdated={lastUpdated} />
-        ) : (
-          ''
-        )}
-        {view === 'invos' ? (
-          <Invoices setView={setView} lastUpdated={lastUpdated} />
-        ) : (
-          ''
-        )}
-        {view === 'custs' ? (
-          <Customers setView={setView} lastUpdated={lastUpdated} />
-        ) : (
-          ''
-        )}
+        {view === 'home' ? <Home lastUpdated={lastUpdated} /> : ''}
+        {view === 'account' ? <Account lastUpdated={lastUpdated} /> : ''}
+        {view === 'features' ? <Features lastUpdated={lastUpdated} /> : ''}
+        {view === 'payments' ? <Payments lastUpdated={lastUpdated} /> : ''}
+        {view === 'invos' ? <Invoices lastUpdated={lastUpdated} /> : ''}
+        {view === 'custs' ? <Customers lastUpdated={lastUpdated} /> : ''}
+        {view === 'tos' ? <Tos lastUpdated={polUpdated} /> : ''}
+        {view === 'priv' ? <Privacy lastUpdated={polUpdated} /> : ''}
       </div>
     </div>
   );

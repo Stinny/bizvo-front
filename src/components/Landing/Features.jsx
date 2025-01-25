@@ -83,7 +83,7 @@ const Features = () => {
       </div>
       <Link
         to="/docs"
-        state={{ view: 'features' }}
+        state={{ view: { value: 'features', label: 'Features' } }}
         className="text-xs text-stone-800 flex items-end gap-1"
       >
         All features <ChevronRight size={14} />

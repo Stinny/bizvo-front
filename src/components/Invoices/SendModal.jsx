@@ -93,12 +93,14 @@ const SendModal = ({
               </div>
             </div>
           ) : (
-            <div className="w-80 flex flex-col gap-4 items-start">
+            <div className="w-80 flex flex-col gap-2 items-start">
               <div className="w-full flex items-start justify-between">
                 <div className="flex flex-col items-start">
-                  <p className="text-sm text-stone-800">Send Invoice</p>
+                  <p className="text-sm text-stone-800">Sending Invoice</p>
 
-                  <p className="text-xs text-stone-800">#{invoId}</p>
+                  <p className="text-xs text-stone-800">
+                    Confirm sending invoice
+                  </p>
                 </div>
                 <X
                   size={16}
@@ -107,17 +109,14 @@ const SendModal = ({
                 />
               </div>
               <div className="flex flex-col items-start gap-2 w-full">
-                <div className="flex flex-col items-start w-full">
-                  <p className="text-xs text-stone-800">Sending to:</p>
-                  <p className="text-xs text-stone-800">{invoEmail}</p>
-                </div>
-                <div className="w-full text-left flex flex-col items-start gap-1 p-2 border border-gray-200 rounded-md">
+                <div className="w-full text-left flex items-center gap-1 p-2 border border-gray-200 rounded-md">
                   <AlertOctagon size={16} className="text-red-400" />
-                  <p className="text-xs text-stone-800">
-                    After sending only title, description, and due date can be
-                    changed
-                  </p>
+                  <p className="text-xs text-stone-800">Permanent action</p>
                 </div>
+                <p className="text-xs text-stone-800">
+                  Sending to <span className="font-medium">{invoEmail}</span>,
+                  they will be notified and able to pay once sent.
+                </p>
               </div>
               <div className="w-full flex items-center justify-end">
                 <div className="flex items-center gap-2">

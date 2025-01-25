@@ -22,7 +22,7 @@ const customStyles = {
 };
 Modal.setAppElement('#root');
 
-const DeleteModal = ({ invoId, open, setOpen }) => {
+const DeleteModal = ({ invoId, open, setOpen, refetch }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -59,11 +59,11 @@ const DeleteModal = ({ invoId, open, setOpen }) => {
           <Spinner />
         </div>
       ) : (
-        <div className="w-72 flex flex-col gap-4 items-start">
+        <div className="w-72 flex flex-col gap-2 items-start">
           <div className="w-full flex items-start justify-between">
             <div className="flex flex-col items-start">
               <p className="text-sm text-stone-800">Delete Invoice</p>
-              <p className="text-xs text-stone-800">#{invoId}</p>
+              <p className="text-xs text-stone-800">Confirm deleting invoice</p>
             </div>
             <X
               size={16}
@@ -72,8 +72,9 @@ const DeleteModal = ({ invoId, open, setOpen }) => {
             />
           </div>
           <div className="flex flex-col gap-2 items-start w-full">
-            <p className="text-sm text-stone-800">
-              Are you sure you want to delete?
+            <p className="text-xs text-stone-800">
+              This is a draft invoice and has not been sent yet. Are you sure
+              you want to delete?
             </p>
           </div>
           <div className="w-full flex items-center justify-end">
@@ -83,7 +84,7 @@ const DeleteModal = ({ invoId, open, setOpen }) => {
                 className="border border-red-400 text-red-400 rounded-md p-1 text-xs"
                 onClick={handleDeleteInvo}
               >
-                Delete
+                Delete Invoice
               </button>
             </div>
           </div>
