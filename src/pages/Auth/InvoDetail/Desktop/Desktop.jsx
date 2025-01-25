@@ -289,7 +289,7 @@ const Desktop = ({ invoice, trxs, refetch }) => {
               <button
                 type="button"
                 onClick={() => setSendMod(true)}
-                className="flex items-center w-full h-full"
+                className="w-full h-full"
               >
                 <Dropdown.Item
                   as="div"
