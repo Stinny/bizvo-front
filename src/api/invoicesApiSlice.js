@@ -102,6 +102,16 @@ export const invoicesApiSlice = apiSlice.injectEndpoints({
         },
       }),
     }),
+    getNewLink: builder.mutation({
+      query: ({ invoId, iat }) => ({
+        url: `/invoices/new/link`,
+        method: 'POST',
+        body: {
+          invoId: invoId,
+          iat: iat,
+        },
+      }),
+    }),
     getInvoices: builder.query({
       query: () => `/invoices/get`,
     }),
@@ -126,4 +136,5 @@ export const {
   useUpdateInvoForPayMutation,
   useConfirmPayInvoMutation,
   useCancelInvoiceMutation,
+  useGetNewLinkMutation,
 } = invoicesApiSlice;

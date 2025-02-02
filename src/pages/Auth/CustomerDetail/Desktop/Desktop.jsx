@@ -3,7 +3,14 @@ import Navbar from '../../../../components/Navbar/Navbar';
 import Sidenav from '../../../../components/Sidenav/Sidenav';
 import Footer from '../../../../components/Footer/Footer';
 import Edit from './Edit';
-import { AlertOctagon, Edit as EditIcon, Send } from 'react-feather';
+import {
+  AlertOctagon,
+  ChevronDown,
+  ChevronRight,
+  CreditCard,
+  Edit as EditIcon,
+  Send,
+} from 'react-feather';
 import { useEditCustomerMutation } from '../../../../api/customersApiSlice';
 import { showNotification } from '../../../../api/toastSlice';
 import { useDispatch } from 'react-redux';
@@ -23,6 +30,7 @@ const Desktop = ({ customer, refetch }) => {
   const [desc, setDesc] = useState(customer?.description);
   const [error, setError] = useState('');
   const [edit, setEdit] = useState(false);
+  const [viewPay, setViewPay] = useState(false);
 
   //edit customer API hook
   const [editCustomer, { isLoading: editing }] = useEditCustomerMutation();
@@ -225,6 +233,47 @@ const Desktop = ({ customer, refetch }) => {
                 disabled
                 value={desc}
               />
+            </div>
+          ) : (
+            ''
+          )}
+          {customer?.payment?.id ? (
+            <div className="flex flex-col gap-1 items-start w-full">
+              <p className="text-xs text-stone-800">Payment Method</p>
+              <button
+                type="button"
+                onClick={() => setViewPay(!viewPay)}
+                className="w-full flex flex-col bg-gray-50 items-start text-left border border-gray-50 rounded-md p-2"
+              >
+                <div className="w-full flex items-center justify-between">
+                  <div className="flex items-center gap-2">
+                    <p className="text-xs text-stone-800">
+                      {customer?.payment?.id}
+                    </p>
+                  </div>
+                  {viewPay ? (
+                    <ChevronDown size={14} />
+                  ) : (
+                    <ChevronRight size={14} />
+                  )}
+                </div>
+
+                <div
+                  className={`transition-[max-height] duration-300 ease-in-out overflow-hidden ${
+                    viewPay ? 'max-h-40' : 'max-h-0'
+                  }`}
+                >
+                  <p className="text-xs text-stone-800 mt-4">Type</p>
+                  <p className="text-xs text-stone-800 flex items-center gap-1 mt-1">
+                    <CreditCard size={12} />
+                    {customer?.payment?.brand}
+                  </p>
+                  <p className="text-xs text-stone-800 mt-2">Last 4</p>
+                  <p className="text-xs text-stone-800">
+                    xxxx xxxx xxxx {customer?.payment?.lastFour}
+                  </p>
+                </div>
+              </button>
             </div>
           ) : (
             ''

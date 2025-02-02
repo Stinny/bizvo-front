@@ -16,7 +16,6 @@ import {
 } from '../../../api/accountApiSlice';
 import { showNotification } from '../../../api/toastSlice';
 import ReactCountryFlag from 'react-country-flag';
-import moment from 'moment';
 import Modal from 'react-modal';
 import useHandleLogoutUser from '../../../utils/logout';
 import Randomstring from 'randomstring';

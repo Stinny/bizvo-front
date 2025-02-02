@@ -8,12 +8,6 @@ export const accountApiSlice = apiSlice.injectEndpoints({
     getStatsTemp: builder.query({
       query: () => `/accounts/get/stats`,
     }),
-    checkSlug: builder.query({
-      query: (slug) => ({
-        url: '/accounts/checkSlug?slug=' + slug, // Call the backend to check the slug
-        method: 'GET',
-      }),
-    }),
     setup: builder.mutation({
       query: (formData) => ({
         url: '/accounts/setup',
@@ -69,6 +63,5 @@ export const {
   useEditNotisMutation,
   useDeleteAccountMutation,
   useUploadLogoMutation,
-  useCheckSlugQuery,
   useGetStatsTempQuery,
 } = accountApiSlice;

@@ -8,6 +8,8 @@ import Footer from '../../../components/Footer/Footer';
 import { Code } from 'react-feather';
 import { isMobile } from 'react-device-detect';
 import Mobile from './Mobile';
+import DiffPays from '../../../components/Landing/DiffPays';
+import Why from '../../../components/Landing/Why';
 
 const Landing = () => {
   const badges = ['Sales Tax', 'VAT', 'GST', 'Refunds', 'Chargebacks']; // Badge text options
@@ -24,19 +26,19 @@ const Landing = () => {
   return isMobile ? (
     <Mobile badges={badges} currentBadge={currentBadge} />
   ) : (
-    <div className="flex flex-col gap-2 max-w-3xl mx-auto relative">
+    <div className="flex flex-col gap-16 max-w-3xl mx-auto relative">
       <Navbar />
       <div className="mx-auto flex items-center">
         <div className="w-6/12 mx-auto flex flex-col gap-3 items-start">
           <div className=" p-1 bg-stone-800 text-white rounded-md text-xs font-medium">
             {badges[currentBadge]}
           </div>
-          <p className="text-5xl text-left text-stone-800 font-bold">
-            Online Invoicing Made Easier.
+          <p className="text-4xl text-left text-stone-800 font-bold">
+            Customer Payments Made Easy.
           </p>
           <p className="text-lg text-stone-800 text-left">
-            Stop trying to be an accountant. Collect payments the easy way and
-            have the hard stuff done for you.
+            Stop playing accountant. Collect payments the easy way and have the
+            hard stuff done for you.
           </p>
 
           <Link
@@ -51,6 +53,8 @@ const Landing = () => {
         </div>
       </div>
       <Features />
+      <Why />
+      <DiffPays />
       <Subscribe />
       <Footer />
     </div>

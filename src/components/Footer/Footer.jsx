@@ -12,32 +12,36 @@ const Footer = () => {
 
   return isMobile ? (
     <footer className="w-full bg-transparent flex justify-center">
-      <div className="w-full bg-white flex justify-end items-center gap-3">
+      <div className="w-full bg-white flex justify-between items-center">
         <button type="button" onClick={() => window.scroll(0, 0)} className="">
           <Layers size={16} className="font-black" />
         </button>
-        <Link
-          to="/contact"
-          className="flex text-xs p-1 justify-center items-center text-stone-800 rounded-md"
-        >
-          <MessageSquare size={16} className="text-stone-800" />
-        </Link>
-        <FaXTwitter className="text-sm text-stone-800" />
+        <div className="flex items-center gap-3">
+          <Link
+            to="/contact"
+            className="flex text-xs p-1 justify-center items-center text-stone-800 rounded-md"
+          >
+            <MessageSquare size={16} className="text-stone-800" />
+          </Link>
+          <FaXTwitter className="text-sm text-stone-800" />
+        </div>
       </div>
     </footer>
   ) : (
     <footer className="w-full bg-transparent absolute top-full">
-      <div className="max-w-3xl bg-white flex justify-end items-center gap-3 mt-4 mb-6">
+      <div className="max-w-3xl bg-white flex justify-between items-center mt-4 mb-6">
         <button type="button" onClick={() => window.scroll(0, 0)} className="">
           <Layers size={16} className="font-black" />
         </button>
-        <Link
-          to="/contact"
-          className="flex text-xs p-1 justify-center items-center text-stone-800 rounded-md"
-        >
-          <MessageSquare size={16} className="text-stone-800" />
-        </Link>
-        <FaXTwitter className="text-sm text-stone-800" />
+        <div className="flex items-center gap-3">
+          <Link
+            to="/contact"
+            className="flex text-xs p-1 justify-center items-center text-stone-800 rounded-md"
+          >
+            <MessageSquare size={16} className="text-stone-800" />
+          </Link>
+          <FaXTwitter className="text-sm text-stone-800" />
+        </div>
       </div>
     </footer>
   );

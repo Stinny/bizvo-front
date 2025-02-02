@@ -16,13 +16,13 @@ import BackBtn from '../../../components/BackBtn';
 
 const Desktop = () => {
   return (
-    <div className="flex flex-col max-w-3xl mx-auto">
+    <div className="flex flex-col max-w-3xl mx-auto mt-32">
       <div className="w-80 flex flex-col items-start mx-auto">
         <div className="w-full flex items-center justify-center">
           <Link to="/" className="h-full flex gap-1 items-center">
-            <Layers size={20} className="font-black" />
+            <Layers size={18} className="font-black" />
             <p
-              className="font-bold text-stone-800 text-lg"
+              className="font-bold text-stone-800 text-md"
               style={{ fontFamily: 'Space Mono, monospace' }}
             >
               Bizvo

@@ -34,7 +34,7 @@ const Mobile = ({ view, setView }) => {
       placeholder="View"
       menuPortalTarget={document.body}
       menuPosition={'fixed'}
-      isSearchable
+      isSearchable={false}
       styles={{
         control: (baseStyles, state) => ({
           ...baseStyles,

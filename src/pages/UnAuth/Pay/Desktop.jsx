@@ -1,4 +1,4 @@
-import { Avatar, Badge, Spinner } from 'flowbite-react';
+import { Avatar, Badge, Spinner, Tooltip } from 'flowbite-react';
 import React, { useState } from 'react';
 import {
   AlertOctagon,
@@ -20,10 +20,14 @@ import moment from 'moment';
 import { useUpdateInvoForPayMutation } from '../../../api/invoicesApiSlice';
 import InvoStatus from '../../../components/InvoStatus';
 import { Timeline } from 'antd';
+import BizModal from './BizModal';
+import LinkExp from './LinkExp';
+import Invalid from './Invalid';
 
 const Desktop = ({
   data,
   invoId,
+  token,
   refetch,
   currentUser,
   succ,
@@ -34,6 +38,7 @@ const Desktop = ({
   const [view, setView] = useState('');
   const [readyForPayment, setReadyForPayment] = useState(false);
   const [updatingInvo, setUpdatingInvo] = useState(false);
+  const [seeBiz, setSeeBiz] = useState(false);
   const [updatedInvo, setUpdatedInvo] = useState({});
   const [updatedTrx, setUpdatedTrx] = useState({});
 
@@ -128,43 +133,23 @@ const Desktop = ({
 
   let content;
 
-  if (data?.msg === 'Not found' || data?.msg === 'Invalid token') {
+  if (!data?.valid) {
     content = (
-      <div
-        className="mx-auto flex flex-col gap-2 items-start mt-16"
-        style={{ width: '370px' }}
-      >
-        <div className="w-full bg-white border border-gray-200 rounded-md flex flex-col gap-2 items-center justify-center h-72">
-          <AlertOctagon size={16} className="text-red-400" />
-          <div className="flex flex-col items-center text-center gap-2">
-            <p className="text-stone-800 text-xs">#{invoId}</p>
-            <p className="text-stone-800 text-xs font-semibold">
-              Invoice does not exist
-            </p>
-          </div>
-        </div>
-        <div className="w-full bg-white border border-gray-200 rounded-md p-2 flex flex-col items-center text-center">
-          <Link to="/" className="h-full flex gap-1">
-            <Layers size={18} className="font-black" />
-            <p
-              className="font-bold text-stone-800 text-sm"
-              style={{ fontFamily: 'Space Mono, monospace' }}
-            >
-              Bizvo
-            </p>
-          </Link>
-          <p className="text-stone-800" style={{ fontSize: '11px' }}>
-            Online Invoicing Made Easier
-          </p>
-        </div>
-      </div>
+      <Invalid
+        invoId={invoId}
+        token={token}
+        exp={data?.exp}
+        customer={data?.customer}
+        invoice={data?.invoice}
+      />
     );
-  } else if (data?.msg === 'Found') {
+  } else if (data?.valid) {
     content =
       data?.invoice?.status === 'paid' || data?.invoice?.status === 'live' ? (
         <Paid
           invoice={data?.invoice}
           trx={data?.trx}
+          biz={data?.biz}
           trxs={data?.trxs}
           customer={data?.customer}
           currentUser={currentUser}
@@ -173,33 +158,47 @@ const Desktop = ({
           added={added}
           setAdded={setAdded}
           refetch={refetch}
+          seeBiz={seeBiz}
+          setSeeBiz={setSeeBiz}
         />
       ) : (
         <>
+          <BizModal open={seeBiz} setOpen={setSeeBiz} biz={data?.biz} />
           {updatingInvo || updating ? (
             <div
-              className="mx-auto flex flex-col items-center justify-center h-72"
+              className="mx-auto flex flex-col items-center justify-center h-96"
               style={{ width: '370px' }}
             >
               <Spinner />
             </div>
           ) : (
             <div
-              className="mx-auto flex flex-col gap-2 items-start"
+              className="mx-auto flex flex-col gap-2 items-start mt-28"
               style={{ width: '370px' }}
             >
-              <div className="w-full flex justify-center items-center text-center">
-                {data?.invoice?.status === 'void' ? (
-                  <p className="text-stone-900" style={{ fontSize: '12px' }}>
-                    Canceled on{' '}
-                    {moment(data?.invoice?.canceledOn).format('MMMM Do, YYYY')}
-                  </p>
-                ) : (
-                  <p className="text-stone-900" style={{ fontSize: '12px' }}>
-                    Due by{' '}
-                    {moment(data?.invoice?.dueDate).format('MMMM Do, YYYY')}
-                  </p>
-                )}
+              <div className="w-full flex justify-between items-center pl-1 pr-1">
+                <div className="flex items-center">
+                  {data?.invoice?.status === 'void' ? (
+                    <p
+                      className="text-stone-800 font-medium"
+                      style={{ fontSize: '12px' }}
+                    >
+                      Canceled on{' '}
+                      {moment(data?.invoice?.canceledOn).format(
+                        'MMMM Do, YYYY'
+                      )}
+                    </p>
+                  ) : (
+                    <p
+                      className="text-stone-800 font-medium"
+                      style={{ fontSize: '12px' }}
+                    >
+                      Due by{' '}
+                      {moment(data?.invoice?.dueDate).format('MMMM Do, YYYY')}
+                    </p>
+                  )}
+                </div>
+                <LinkExp expDate={data?.invoice?.linkExp} refetch={refetch} />
               </div>
               {isOwner ? (
                 <div className="w-full flex items-center justify-start gap-2 border border-gray-200 bg-white rounded-md p-2">
@@ -225,7 +224,12 @@ const Desktop = ({
                 </div>
                 <div className="w-full grid grid-cols-7">
                   <div className="flex items-center justify-start">
-                    <Avatar size="md" img={data?.invoice?.seller?.logo} />
+                    <Avatar
+                      size="md"
+                      img={data?.biz?.logo}
+                      onClick={() => setSeeBiz(!seeBiz)}
+                      className="hover:cursor-pointer"
+                    />
                   </div>
                   <div className="flex flex-col items-start col-span-6">
                     <p className="text-stone-800 text-sm text-left">
@@ -274,14 +278,14 @@ const Desktop = ({
                               </p>
                               <div className="flex flex-col gap-1 items-start w-full">
                                 <p className="text-xs text-stone-800">
-                                  {data?.invoice?.seller?.name}
+                                  {data?.biz?.name}
                                 </p>
                                 <p className="text-xs text-stone-800">
-                                  {data?.invoice?.seller?.email}
+                                  {data?.biz?.email}
                                 </p>
                                 <p className="text-stone-800 flex items-center gap-1">
                                   <span className="text-xs">
-                                    {data?.invoice?.seller?.country?.label}
+                                    {data?.biz?.country}
                                   </span>
                                 </p>
                               </div>
@@ -374,7 +378,7 @@ const Desktop = ({
                   </p>
                 </Link>
                 <p className="text-stone-800" style={{ fontSize: '11px' }}>
-                  Online Invoicing Made Easier
+                  Customer Payments Made Easy
                 </p>
               </div>
             </div>

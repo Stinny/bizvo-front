@@ -2,6 +2,7 @@ import { Checkbox } from 'antd';
 import { Tooltip } from 'flowbite-react';
 import React from 'react';
 import { BarChart, CreditCard, FileText, Info, Send } from 'react-feather';
+import DashEvents from '../../../components/Events/DashEvents';
 
 const Desktop = ({ data, currentUser }) => {
   const invoInfo = (
@@ -136,10 +137,12 @@ const Desktop = ({ data, currentUser }) => {
             </p>
           </div>
         </div>
-        <div className="col-span-6 flex-grow">
-          <div className="border rounded-md border-gray-200 dark:border-white bg-white dark:bg-neutral-800 flex items-center justify-center w-full h-full">
+        <div className="col-span-6 flex flex-grow">
+          {/* <div className="border rounded-md border-gray-200 dark:border-white bg-white dark:bg-neutral-800 flex items-center justify-center w-full h-full">
             <BarChart size={18} className="dark:text-white" />
-          </div>
+          </div> */}
+
+          <DashEvents />
         </div>
       </div>
       <div className="border rounded-md border-gray-200 dark:border-white bg-white dark:bg-neutral-800 flex flex-col gap-1 items-start p-2 w-full">

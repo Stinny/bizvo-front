@@ -28,10 +28,10 @@ const Mobile = ({
           <div className="w-full flex items-center justify-center">
             <Link to="/">
               <p
-                className="font-bold text-stone-800 dark:text-white text-md flex items-center gap-1"
+                className="font-bold text-stone-800 dark:text-white text-sm flex items-center gap-1"
                 style={{ fontFamily: 'Geist Mono' }}
               >
-                <Layers size={18} className="font-black dark:text-white" />
+                <Layers size={16} className="font-black dark:text-white" />
                 Bizvo
               </p>
             </Link>

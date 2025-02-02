@@ -4,10 +4,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import Cookies from 'js-cookie';
 import useHandleLogoutUser from '../../../utils/logout';
 import Form from './Form';
-import {
-  useCheckSlugQuery,
-  useSetupMutation,
-} from '../../../api/accountApiSlice';
+import { useSetupMutation } from '../../../api/accountApiSlice';
 import { useDispatch } from 'react-redux';
 import { showNotification } from '../../../api/toastSlice';
 import { Tooltip } from 'flowbite-react';
@@ -24,7 +21,6 @@ const Desktop = () => {
   //form state
   const [name, setName] = useState('');
   const [country, setCountry] = useState(undefined);
-  const [slug, setSlug] = useState('');
   const [desc, setDesc] = useState('');
   const [address, setAddress] = useState('');
   const [logo, setLogo] = useState(null);
@@ -34,15 +30,6 @@ const Desktop = () => {
 
   //hook for setup req
   const [setup, { isLoading: settingUp }] = useSetupMutation();
-
-  const {
-    data,
-    error: slugCheckErr,
-    isLoading: checkingSlug,
-    isSuccess: checkedSlug,
-  } = useCheckSlugQuery(slug, {
-    skip: slug.length === 0, // Skip the query if the slug input is empty
-  });
 
   //handles req for finishing setup
   const handleFinishSetup = async (e) => {
@@ -90,8 +77,6 @@ const Desktop = () => {
         setName={setName}
         country={country}
         setCountry={setCountry}
-        slug={slug}
-        setSlug={setSlug}
         desc={desc}
         setDesc={setDesc}
         error={error}

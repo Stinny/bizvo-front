@@ -29,7 +29,7 @@ const Desktop = ({ payouts, balance, currentUser }) => {
     !payouts?.length && !currentUser.bankAdded ? (
       <div className="w-10/12 bg-white border rounded-md border-gray-200 p-2 h-96 flex items-center justify-center">
         <div className="flex flex-col items-center text-center">
-          <DollarSign size={18} className="text-stone-800 mb-2" />
+          <DollarSign size={16} className="text-stone-800 mb-2" />
           <p className="text-sm text-stone-800">No Payouts</p>
           <p className="text-xs text-stone-800 w-72">
             Only seen when you are paid via bank account
@@ -148,7 +148,7 @@ const Desktop = ({ payouts, balance, currentUser }) => {
         ) : (
           <div className="w-full bg-white border rounded-md border-gray-200 p-2 h-96 flex items-center justify-center">
             <div className="flex flex-col items-center text-center">
-              <DollarSign size={18} className="text-stone-800 mb-2" />
+              <DollarSign size={16} className="text-stone-800 mb-2" />
               <p className="text-sm text-stone-800">No Payouts</p>
               <p className="text-xs text-stone-600 w-72">
                 Receive a payout when you accumulate a balance

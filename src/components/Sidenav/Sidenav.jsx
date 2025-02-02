@@ -2,6 +2,7 @@ import React from 'react';
 import {
   AlertOctagon,
   BarChart2,
+  Clock,
   DollarSign,
   FileText,
   Home,
@@ -34,6 +35,15 @@ const Sidenav = () => {
         >
           <BarChart2 size={14} className="text-stone-800 dark:text-white" />
           <p className="text-xs text-stone-800 dark:text-white">Dashboard</p>
+        </Link>
+        <Link
+          to="/dashboard/events"
+          className={
+            path.startsWith('/dashboard/events') ? activeLink : notActiveLink
+          }
+        >
+          <Clock size={14} className="text-stone-800 dark:text-white" />
+          <p className="text-xs text-stone-800 dark:text-white">Events</p>
         </Link>
         <Link
           to="/dashboard/invoices"

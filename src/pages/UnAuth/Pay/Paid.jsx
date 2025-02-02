@@ -22,9 +22,12 @@ import { Link } from 'react-router-dom';
 import Trxs from './Trxs';
 import InvoStatus from '../../../components/InvoStatus';
 import Method from './Method';
+import BizModal from './BizModal';
+import LinkExp from './LinkExp';
 
 const Paid = ({
   invoice,
+  biz,
   currentUser,
   succ,
   setSucc,
@@ -34,6 +37,8 @@ const Paid = ({
   trxs,
   customer,
   refetch,
+  seeBiz,
+  setSeeBiz,
 }) => {
   const [seeTrx, setSeeTrx] = useState(false);
   const [seePay, setSeePay] = useState(false);
@@ -81,8 +86,9 @@ const Paid = ({
   return (
     <div
       style={{ width: '370px' }}
-      className="mx-auto flex flex-col gap-2 items-start"
+      className="mx-auto flex flex-col gap-2 items-start mt-28"
     >
+      <BizModal open={seeBiz} setOpen={setSeeBiz} biz={biz} />
       <div className="w-full flex justify-center items-center text-center">
         {invoice?.type === 'single' ? (
           <p
@@ -92,12 +98,17 @@ const Paid = ({
             Paid on {moment(invoice?.paidOn).format('MMMM Do, YYYY')}
           </p>
         ) : (
-          <p
-            className="text-stone-800 font-medium"
-            style={{ fontSize: '12px' }}
-          >
-            Next payment {moment(invoice?.dueDate).format('MMMM Do, YYYY')}
-          </p>
+          <div className="w-full flex justify-between items-center pl-1 pr-1">
+            <div className="flex items-center">
+              <p
+                className="text-stone-800 font-medium"
+                style={{ fontSize: '12px' }}
+              >
+                Due next {moment(invoice?.dueDate).format('MMMM Do, YYYY')}
+              </p>
+            </div>
+            <LinkExp expDate={invoice?.linkExp} />
+          </div>
         )}
       </div>
       {succ ? (
@@ -129,7 +140,12 @@ const Paid = ({
         </div>
         <div className="w-full grid grid-cols-7">
           <div className="flex items-center justify-start">
-            <Avatar size="md" img={invoice?.seller?.logo} />
+            <Avatar
+              size="md"
+              img={biz?.logo}
+              onClick={() => setSeeBiz(!seeBiz)}
+              className="hover:cursor-pointer"
+            />
           </div>
           <div className="flex flex-col items-start col-span-6">
             <p className="text-stone-800 text-sm text-left">{invoice?.title}</p>
@@ -182,16 +198,10 @@ const Paid = ({
                         Sender
                       </p>
                       <div className="flex flex-col gap-1 items-start w-full">
-                        <p className="text-xs text-stone-800">
-                          {invoice?.seller?.name}
-                        </p>
-                        <p className="text-xs text-stone-800">
-                          {invoice?.seller?.email}
-                        </p>
+                        <p className="text-xs text-stone-800">{biz?.name}</p>
+                        <p className="text-xs text-stone-800">{biz?.email}</p>
                         <p className="text-stone-800 flex items-center gap-1">
-                          <span className="text-xs">
-                            {invoice?.seller?.country?.label}
-                          </span>
+                          <span className="text-xs">{biz?.country}</span>
                         </p>
                       </div>
                     </div>
@@ -353,7 +363,7 @@ const Paid = ({
           </p>
         </Link>
         <p className="text-stone-800" style={{ fontSize: '11px' }}>
-          Online Invoicing Made Easier
+          Customer Payments Made Easy
         </p>
       </div>
     </div>

@@ -24,6 +24,7 @@ import PswdReset from './pages/UnAuth/PswdReset/PswdReset';
 import ReqLink from './pages/UnAuth/PswdReset/ReqLink';
 import Pricing from './pages/UnAuth/Pricing/Pricing';
 import Docs from './pages/UnAuth/Docs/Docs';
+import Events from './pages/Auth/Events/Events';
 
 const App = () => {
   return (
@@ -57,6 +58,8 @@ const App = () => {
             <Route path="dashboard" element={<Home />} />
 
             <Route path="dashboard/add" element={<Add />} />
+
+            <Route path="dashboard/events" element={<Events />} />
 
             <Route path="dashboard/invoices" element={<Invoices />} />
 

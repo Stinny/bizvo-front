@@ -35,8 +35,17 @@ const Pay = () => {
 
   let content;
   if (isLoading || isFetching) {
-    content = (
-      <div className="mx-auto w-96 h-72 mt-16 bg-white border border-gray-200 rounded-md flex items-center justify-center">
+    content = isMobile ? (
+      <div className="w-full h-full p-4">
+        <div className="w-full h-96 bg-white border border-gray-200 rounded-md flex items-center justify-center">
+          <Spinner />
+        </div>
+      </div>
+    ) : (
+      <div
+        className="mx-auto h-96 mt-16 bg-white border border-gray-200 rounded-md flex items-center justify-center"
+        style={{ width: '370px' }}
+      >
         <Spinner />
       </div>
     );
@@ -45,6 +54,7 @@ const Pay = () => {
       <Mobile
         data={data}
         invoId={invoId}
+        token={token}
         refetch={refetch}
         currentUser={currentUser}
         succ={succ}
@@ -56,6 +66,7 @@ const Pay = () => {
       <Desktop
         data={data}
         invoId={invoId}
+        token={token}
         refetch={refetch}
         currentUser={currentUser}
         succ={succ}
