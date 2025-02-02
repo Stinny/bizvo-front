@@ -51,7 +51,7 @@ const Subscribe = () => {
   }, [success]);
 
   return isMobile ? (
-    <div className="flex flex-col items-center gap-1 w-full mx-auto mt-10 mb-10">
+    <div className="flex flex-col items-center gap-1 w-full mx-auto mt-8 mb-8 p-4">
       {showSuccess && (
         <div className="w-full flex items-center justify-start gap-2 bg-white border border-gray-200 rounded-md p-2">
           <CheckCircle size={16} className="text-green-500" />
@@ -82,7 +82,7 @@ const Subscribe = () => {
       </form>
       <div className="w-full flex justify-start">
         <p className="text-stone-800 text-xs">
-          Subscribe to receive news & updates. We respect your privacy.
+          Subscribe for updates. We respect your privacy.
         </p>
       </div>
     </div>
