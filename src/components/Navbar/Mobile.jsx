@@ -26,8 +26,6 @@ const Mobile = () => {
 
   return (
     <div className="w-full bg-white flex justify-between items-center border border-gray-200 rounded-md p-2 relative">
-      {/* logo section */}
-
       <Link to="/">
         <p
           className="font-bold text-stone-800 dark:text-white text-md flex items-center gap-1"

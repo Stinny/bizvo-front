@@ -20,50 +20,13 @@ const Home = ({ ViewSelect, lastUpdated }) => {
         <p className="text-xs text-stone-800">
           Using a platform like Bizvo to collect payments is beneficial to
           businesses providng digital services to avoid the financial burden
-          that comes with taxes. Let us handle some of this burden for you.
+          that comes with transactions. Spend more time on growing your business
+          and less time handling transactions.
         </p>
-        <div className="flex flex-col items-start gap-3 w-24">
-          <button
-            type="button"
-            onClick={() => setView('account')}
-            className="flex items-center justify-between gap-2 text-xs text-stone-800 w-full"
-          >
-            Account
-            <ChevronRight size={14} />
-          </button>
-          <button
-            type="button"
-            onClick={() => setView('features')}
-            className="flex items-center justify-between gap-2 text-xs text-stone-800 w-full"
-          >
-            Features
-            <ChevronRight size={14} />
-          </button>
-          <button
-            type="button"
-            onClick={() => setView('payments')}
-            className="flex items-center justify-between gap-2 text-xs text-stone-800 w-full"
-          >
-            Payments
-            <ChevronRight size={14} />
-          </button>
-          <button
-            type="button"
-            onClick={() => setView('invos')}
-            className="flex items-center justify-between gap-2 text-xs text-stone-800 w-full"
-          >
-            Invoices
-            <ChevronRight size={14} />
-          </button>
-          <button
-            type="button"
-            onClick={() => setView('custs')}
-            className="flex items-center justify-between gap-2 text-xs text-stone-800 w-full"
-          >
-            Customers
-            <ChevronRight size={14} />
-          </button>
-        </div>
+
+        <p className="text-xs text-stone-800">
+          Use the dropdown above to view the other categories.
+        </p>
       </div>
     </div>
   );

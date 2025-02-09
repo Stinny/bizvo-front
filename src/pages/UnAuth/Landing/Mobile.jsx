@@ -12,8 +12,8 @@ const Mobile = ({ badges, currentBadge }) => {
   return (
     <div className="flex flex-col gap-10 w-full p-4 mx-auto relative">
       <Navbar />
-      <div className="mx-auto flex flex-col gap-4">
-        <div className="w-full mx-auto flex flex-col gap-3 items-start">
+      <div className="mx-auto flex flex-col gap-8">
+        <div className="w-full flex flex-col gap-3 items-start">
           <p className="text-4xl text-left text-stone-800 font-bold">
             Customer Payments Made Easy.
           </p>
@@ -31,7 +31,7 @@ const Mobile = ({ badges, currentBadge }) => {
         </div>
         <div className="w-full relative">
           <img src={img} className="w-full" />
-          <div className="absolute left-6 top-1/2 transform -translate-y-1/2 bg-stone-800 text-white rounded-md text-sm font-medium p-1">
+          <div className="absolute left-6 top-1/2 transform -translate-y-1/2 bg-stone-800 text-white rounded-md text-xs font-medium p-1">
             {badges[currentBadge]}
           </div>
         </div>

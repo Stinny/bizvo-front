@@ -17,7 +17,7 @@ import { Link } from 'react-router-dom';
 const Features = () => {
   return isMobile ? (
     <div className="w-full flex flex-col gap-1 items-end">
-      <div className="flex flex-col gap-4 w-full">
+      <div className="flex flex-col gap-2 w-full">
         <div className="w-full p-2 border border-gray-200 bg-white rounded-md flex flex-col items-start">
           <File size={18} className="text-stone-800" />
           <p className="text-sm font-bold text-stone-800 mt-1">MoR Services</p>
@@ -41,7 +41,7 @@ const Features = () => {
           </div>
           <p className="text-xs text-stone-800 text-left mt-3">and more..</p>
         </div>
-        <div className="w-full grid grid-cols-2 gap-4">
+        <div className="w-full grid grid-cols-2 gap-2">
           <div className="p-2 border border-gray-200 bg-white rounded-md flex flex-col items-start">
             <CreditCard size={18} className="text-stone-800" />
             <p className="text-sm font-bold text-stone-800 mt-1">
@@ -76,7 +76,7 @@ const Features = () => {
               Payment Links
             </p>
             <p className="text-xs text-stone-800 text-left">
-              Secure links for easy and fast payments.
+              Secure links for fast and easy payments.
             </p>
           </div>
         </div>
@@ -150,7 +150,7 @@ const Features = () => {
               Payment Links
             </p>
             <p className="text-xs text-stone-800 text-left">
-              Secure links for easy and fast payments.
+              Secure links for fast and easy payments.
             </p>
           </div>
         </div>

@@ -136,8 +136,6 @@ const Navbar = () => {
         <Mobile />
       ) : (
         <div className="max-w-3xl bg-white flex justify-between items-center border border-gray-200 rounded-md p-2">
-          {/* logo section */}
-
           <Link to="/">
             <p
               className="font-bold text-stone-800 dark:text-white text-sm flex items-center gap-1"
@@ -148,9 +146,6 @@ const Navbar = () => {
             </p>
           </Link>
 
-          <Toast />
-
-          {/* links section */}
           <div className="h-full flex items-center justify-between">
             <div className="flex gap-3 items-center">
               <Link

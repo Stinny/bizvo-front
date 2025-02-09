@@ -12,7 +12,7 @@ const Footer = () => {
 
   return isMobile ? (
     <footer className="w-full bg-transparent flex justify-center">
-      <div className="w-full bg-white flex justify-between items-center">
+      <div className="w-full bg-white flex justify-between items-center p-2">
         <button type="button" onClick={() => window.scroll(0, 0)} className="">
           <Layers size={16} className="font-black" />
         </button>

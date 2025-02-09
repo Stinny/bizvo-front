@@ -19,7 +19,7 @@ const Landing = () => {
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentBadge((prev) => (prev + 1) % badges.length);
-    }, 3000);
+    }, 2000);
     return () => clearInterval(interval); // Cleanup interval on component unmount
   }, [badges.length]);
 
@@ -28,11 +28,8 @@ const Landing = () => {
   ) : (
     <div className="flex flex-col gap-16 max-w-3xl mx-auto relative">
       <Navbar />
-      <div className="mx-auto flex items-center">
+      <div className="mx-auto flex items-center gap-12">
         <div className="w-6/12 mx-auto flex flex-col gap-3 items-start">
-          <div className=" p-1 bg-stone-800 text-white rounded-md text-xs font-medium">
-            {badges[currentBadge]}
-          </div>
           <p className="text-4xl text-left text-stone-800 font-bold">
             Customer Payments Made Easy.
           </p>
@@ -48,8 +45,11 @@ const Landing = () => {
             Start Collecting
           </Link>
         </div>
-        <div className="w-6/12 flex justify-end p-10 pr-0">
+        <div className="w-6/12 flex justify-end relative">
           <img src={img} className="w-full" />
+          <div className="absolute left-6 top-1/2 transform -translate-y-1/2 bg-stone-800 text-white rounded-md text-xs font-medium p-1">
+            {badges[currentBadge]}
+          </div>
         </div>
       </div>
       <Features />
