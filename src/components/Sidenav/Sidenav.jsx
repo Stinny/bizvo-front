@@ -14,6 +14,7 @@ import {
 } from 'react-feather';
 import { Link } from 'react-router-dom';
 import Cookies from 'js-cookie';
+import { Badge } from 'antd';
 
 const Sidenav = () => {
   const currentUser = Cookies.get('currentUser')
@@ -42,7 +43,9 @@ const Sidenav = () => {
             path.startsWith('/dashboard/events') ? activeLink : notActiveLink
           }
         >
-          <Clock size={14} className="text-stone-800 dark:text-white" />
+          <Badge dot={true} status="processing">
+            <Clock size={14} className="text-stone-800 dark:text-white" />
+          </Badge>
           <p className="text-xs text-stone-800 dark:text-white">Events</p>
         </Link>
         <Link

@@ -1,11 +1,15 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import Desktop from './Desktop';
 import { useGetEventsQuery } from '../../../api/eventsApiSlice';
 import Loading from '../../../components/Loading';
 import Navbar from '../../../components/Navbar/Navbar';
 import Sidenav from '../../../components/Sidenav/Sidenav';
+import { useLocation, useSearchParams } from 'react-router-dom';
 
 const Events = () => {
+  const location = useLocation();
+  const [evId, setEvId] = useState(location?.state?.evId || null);
+
   const { data, isLoading, isFetching, isSuccess, refetch } =
     useGetEventsQuery();
 
@@ -18,7 +22,7 @@ const Events = () => {
   if (isLoading || isFetching) {
     content = <Loading />;
   } else if (isSuccess) {
-    content = <Desktop events={data} />;
+    content = <Desktop events={data} evId={evId} />;
   }
 
   return (

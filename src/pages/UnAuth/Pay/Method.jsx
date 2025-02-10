@@ -15,7 +15,7 @@ const Method = ({ setSeePay, customer, invoice, refetch, added, setAdded }) => {
       const intentReq = await getPaySetup({
         customerId: customer?._id,
       }).unwrap();
-      console.log(intentReq);
+
       if (intentReq?.sec) {
         setSec(intentReq?.sec);
         setReady(true);
@@ -79,8 +79,9 @@ const Method = ({ setSeePay, customer, invoice, refetch, added, setAdded }) => {
               Change
             </button>
           </div>
-          <p className="text-stone-800 text-xs">
-            This payment method is charged on a recurring basis.
+          <p className="text-stone-800 text-xs text-left">
+            This payment method is charged on a recurring basis. If changed,
+            payment will be made next due date.
           </p>
         </div>
       )}

@@ -91,23 +91,48 @@ const Paid = ({
       <BizModal open={seeBiz} setOpen={setSeeBiz} biz={biz} />
       <div className="w-full flex justify-center items-center text-center">
         {invoice?.type === 'single' ? (
-          <p
-            className="text-stone-800 font-medium"
-            style={{ fontSize: '12px' }}
-          >
-            Paid on {moment(invoice?.paidOn).format('MMMM Do, YYYY')}
-          </p>
+          <div className="w-full flex justify-between items-center pl-1 pr-1">
+            <div className="flex items-center">
+              <Tooltip
+                style="light"
+                arrow={false}
+                content={
+                  <p className="text-xs text-stone-800 text-left">
+                    When invoice was paid
+                  </p>
+                }
+              >
+                <p
+                  className="text-stone-800 font-medium"
+                  style={{ fontSize: '12px' }}
+                >
+                  {moment(invoice?.paidOn).format('MMMM Do, YYYY')}
+                </p>
+              </Tooltip>
+            </div>
+            <LinkExp expDate={invoice?.linkExp} refetch={refetch} />
+          </div>
         ) : (
           <div className="w-full flex justify-between items-center pl-1 pr-1">
             <div className="flex items-center">
-              <p
-                className="text-stone-800 font-medium"
-                style={{ fontSize: '12px' }}
+              <Tooltip
+                style="light"
+                arrow={false}
+                content={
+                  <p className="text-xs text-stone-800 text-left">
+                    When next payment will occur
+                  </p>
+                }
               >
-                Due next {moment(invoice?.dueDate).format('MMMM Do, YYYY')}
-              </p>
+                <p
+                  className="text-stone-800 font-medium"
+                  style={{ fontSize: '12px' }}
+                >
+                  {moment(invoice?.dueDate).format('MMMM Do, YYYY')}
+                </p>
+              </Tooltip>
             </div>
-            <LinkExp expDate={invoice?.linkExp} />
+            <LinkExp expDate={invoice?.linkExp} refetch={refetch} />
           </div>
         )}
       </div>
@@ -249,20 +274,17 @@ const Paid = ({
                 disabled={invoice?.type === 'single'}
                 className="w-full flex flex-col items-start border border-gray-200 rounded-md p-2 relative"
               >
-                {invoice?.type === 'recurring' ? (
-                  <p className="text-xs text-stone-800 font-medium">Recent</p>
-                ) : (
-                  <p className="text-xs text-stone-800 font-medium">
-                    Transaction
-                  </p>
-                )}
+                <p className="text-xs text-stone-800 font-medium">
+                  Transaction
+                </p>
+
                 <Timeline
                   className="text-left ml-1 mt-2"
                   items={[
                     {
                       dot: <Send size={12} className="text-stone-800" />,
                       children: (
-                        <p className="text-xs text-stone-800">
+                        <p className="text-xs text-stone-800 pt-1">
                           Invoice sent{' '}
                           <span className="font-semibold">
                             ${(trx?.amount / 100).toFixed(2)}
@@ -273,7 +295,7 @@ const Paid = ({
                     {
                       dot: <Percent size={12} className="text-stone-800" />,
                       children: (
-                        <p className="text-xs text-stone-800">
+                        <p className="text-xs text-stone-800 pt-1">
                           {taxType} added{' '}
                           <span className="font-semibold">
                             ${(trx?.tax?.amount / 100).toFixed(2)}
@@ -284,7 +306,7 @@ const Paid = ({
                     {
                       dot: <CreditCard size={12} className="text-stone-800" />,
                       children: (
-                        <p className="text-xs text-stone-800">
+                        <p className="text-xs text-stone-800 pt-1">
                           Paid after taxes{' '}
                           <span className="font-semibold">
                             $

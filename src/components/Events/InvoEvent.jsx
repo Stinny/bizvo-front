@@ -13,6 +13,9 @@ const InvoEvent = ({ even }) => {
     case 'create':
       evTxt = 'Invoice created';
       break;
+    case 'cancel':
+      evTxt = 'Invoice canceled';
+      break;
     case 'edit':
       evTxt = 'Invoice updated';
       break;
@@ -25,9 +28,11 @@ const InvoEvent = ({ even }) => {
     default:
       break;
   }
+
   return (
     <Link
-      to={`/dashboard/events/${even?._id}`}
+      to={`/dashboard/events`}
+      state={{ evId: even?._id }}
       className={`w-full flex items-center justify-between border border-gray-200 hover:border-stone-800 rounded-md p-2 pb-1 pt-1 ${
         even?.seen ? '' : 'bg-gray-50'
       }`}

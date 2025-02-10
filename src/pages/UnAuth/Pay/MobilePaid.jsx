@@ -95,14 +95,24 @@ const MobilePaid = ({
         ) : (
           <div className="w-full flex justify-between items-center pl-1 pr-1">
             <div className="flex items-center">
-              <p
-                className="text-stone-800 font-medium"
-                style={{ fontSize: '12px' }}
+              <Tooltip
+                style="light"
+                arrow={false}
+                content={
+                  <p className="text-xs text-stone-800 text-left">
+                    When next payment will occur
+                  </p>
+                }
               >
-                Due next {moment(invoice?.dueDate).format('MMMM Do, YYYY')}
-              </p>
+                <p
+                  className="text-stone-800 font-medium"
+                  style={{ fontSize: '12px' }}
+                >
+                  {moment(invoice?.dueDate).format('MMMM Do, YYYY')}
+                </p>
+              </Tooltip>
             </div>
-            <LinkExp expDate={invoice?.linkExp} />
+            <LinkExp expDate={invoice?.linkExp} refetch={refetch} />
           </div>
         )}
       </div>
@@ -243,13 +253,10 @@ const MobilePaid = ({
                 onClick={() => setSeeTrx(!seeTrx)}
                 className="w-full flex flex-col items-start border border-gray-200 rounded-md p-2 relative"
               >
-                {invoice?.type === 'recurring' ? (
-                  <p className="text-xs text-stone-800 font-medium">Recent</p>
-                ) : (
-                  <p className="text-xs text-stone-800 font-medium">
-                    Transaction
-                  </p>
-                )}
+                <p className="text-xs text-stone-800 font-medium">
+                  Transaction
+                </p>
+
                 <Timeline
                   className="text-left ml-1 mt-4"
                   items={[

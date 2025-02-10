@@ -1,5 +1,5 @@
-import React, { useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import { useLocation, useParams } from 'react-router-dom';
 import { useGetInvoiceQuery } from '../../../api/invoicesApiSlice';
 import Loading from '../../../components/Loading';
 import Desktop from './Desktop/Desktop';
@@ -9,6 +9,10 @@ import Footer from '../../../components/Footer/Footer';
 
 const InvoDetail = () => {
   const { invoiceId } = useParams();
+  const location = useLocation();
+  const [activeTabIndex, setActiveTabIndex] = useState(
+    location?.state?.tab || 0
+  );
 
   const { data, isLoading, isSuccess, isFetching, refetch } =
     useGetInvoiceQuery({ invoiceId });
@@ -23,7 +27,14 @@ const InvoDetail = () => {
     content = <Loading />;
   } else if (isSuccess) {
     content = (
-      <Desktop invoice={data?.invoice} trxs={data?.trxs} refetch={refetch} />
+      <Desktop
+        invoice={data?.invoice}
+        trxs={data?.trxs}
+        events={data?.events}
+        activeTabIndex={activeTabIndex}
+        setActiveTabIndex={setActiveTabIndex}
+        refetch={refetch}
+      />
     );
   }
 

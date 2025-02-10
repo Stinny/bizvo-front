@@ -4,7 +4,14 @@ import { AlertOctagon, ChevronLeft } from 'react-feather';
 import { useConfirmPayInvoMutation } from '../../../../api/invoicesApiSlice';
 import { Spinner } from 'flowbite-react';
 
-const Form = ({ setReadyForPayment, invoice, refetch, setSucc, trx }) => {
+const Form = ({
+  setReadyForPayment,
+  invoice,
+  refetch,
+  setSucc,
+  trx,
+  customer,
+}) => {
   const [error, setError] = useState('');
   const [isPayBtnDisabled, setIsPayBtnDisabled] = useState(true);
 

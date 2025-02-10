@@ -3,7 +3,7 @@ import { FileText, Users } from 'react-feather';
 import { Link } from 'react-router-dom';
 import DateFormat from './DateFormat';
 
-const CustEvent = ({ even }) => {
+const CustEvent = ({ even, handleOpenEvent }) => {
   let evTxt;
 
   switch (even?.type) {
@@ -17,8 +17,9 @@ const CustEvent = ({ even }) => {
       break;
   }
   return (
-    <Link
-      to={`/dashboard/events/${even?._id}`}
+    <button
+      type="button"
+      onClick={() => handleOpenEvent(even)}
       className={`w-full flex items-center justify-between border border-gray-200 hover:border-stone-800 rounded-md p-2 ${
         even?.seen ? '' : 'bg-gray-50'
       }`}
@@ -42,7 +43,7 @@ const CustEvent = ({ even }) => {
           <DateFormat createdAt={even?.createdAt} />
         </p>
       </div>
-    </Link>
+    </button>
   );
 };
 

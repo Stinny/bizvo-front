@@ -38,8 +38,8 @@ const LinkExp = ({ expDate, refetch }) => {
       style="light"
       arrow={false}
       content={
-        <p className="text-xs text-stone-800 w-52 text-left">
-          Time until payment link expires. A new one can be sent.
+        <p className="text-xs text-stone-800 text-left">
+          Time until payment link expires
         </p>
       }
     >

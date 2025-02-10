@@ -1,4 +1,4 @@
-import { Avatar, Badge, Spinner } from 'flowbite-react';
+import { Avatar, Badge, Spinner, Tooltip } from 'flowbite-react';
 import React, { useState } from 'react';
 import {
   AlertOctagon,
@@ -108,7 +108,7 @@ const Mobile = ({
     trxItems.push({
       dot: <Percent size={12} className="text-stone-800" />,
       children: (
-        <p className="text-xs text-stone-800">
+        <p className="text-xs text-stone-800 pt-1">
           {taxType} added{' '}
           <span className="font-semibold">
             ${(data?.trx?.tax?.amount / 100).toFixed(2)}
@@ -125,7 +125,7 @@ const Mobile = ({
       dot: <Spinner size="xs" />,
       children: (
         <p className="text-xs text-stone-800 pt-1">
-          Awaiting payment and taxes
+          Awaiting taxes and payment
         </p>
       ),
     });
@@ -193,15 +193,24 @@ const Mobile = ({
                           )}
                         </p>
                       ) : (
-                        <p
-                          className="text-stone-800 font-medium"
-                          style={{ fontSize: '12px' }}
+                        <Tooltip
+                          style="light"
+                          arrow={false}
+                          content={
+                            <p className="text-xs text-stone-800 text-left">
+                              When payment is due by
+                            </p>
+                          }
                         >
-                          Due by{' '}
-                          {moment(data?.invoice?.dueDate).format(
-                            'MMMM Do, YYYY'
-                          )}
-                        </p>
+                          <p
+                            className="text-stone-800 font-medium"
+                            style={{ fontSize: '12px' }}
+                          >
+                            {moment(data?.invoice?.dueDate).format(
+                              'MMMM Do, YYYY'
+                            )}
+                          </p>
+                        </Tooltip>
                       )}
                     </div>
                     <LinkExp

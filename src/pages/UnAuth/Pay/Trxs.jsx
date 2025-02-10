@@ -46,7 +46,7 @@ const Trxs = ({ trxs, setSeeTrx }) => {
         >
           <ChevronLeft size={12} />
         </button>
-        <p className="text-stone-800 text-xs">Transactions</p>
+        <p className="text-stone-800 text-xs">All Transactions</p>
       </div>
       <div className="w-full flex flex-col gap-2 min-h-24">
         {' '}
@@ -86,7 +86,7 @@ const Trxs = ({ trxs, setSeeTrx }) => {
                   {
                     dot: <Send size={12} className="text-stone-800" />,
                     children: (
-                      <p className="text-xs text-stone-800 pt-0.5">
+                      <p className="text-xs text-stone-800 pt-1">
                         Invoice sent{' '}
                         <span className="font-semibold">
                           ${(trx?.amount / 100).toFixed(2)}
@@ -97,7 +97,7 @@ const Trxs = ({ trxs, setSeeTrx }) => {
                   {
                     dot: <Percent size={12} className="text-stone-800" />,
                     children: (
-                      <p className="text-xs text-stone-800 pt-0.5">
+                      <p className="text-xs text-stone-800 pt-1">
                         {trx?.tax?.type === 'vat'
                           ? 'VAT'
                           : trx?.tax?.type === 'gst'
@@ -113,7 +113,7 @@ const Trxs = ({ trxs, setSeeTrx }) => {
                   {
                     dot: <CreditCard size={12} className="text-stone-800" />,
                     children: (
-                      <p className="text-xs text-stone-800 pt-0.5">
+                      <p className="text-xs text-stone-800 pt-1">
                         Total paid{' '}
                         <span className="font-semibold">
                           $

@@ -27,19 +27,6 @@ const BizModal = ({ open, setOpen, biz }) => {
     >
       <div className="w-80 flex flex-col gap-4 items-start">
         <div className="w-full flex items-start justify-between">
-          <div className="flex flex-col items-start">
-            <p className="text-sm text-stone-800">Sender Details</p>
-            <p className="text-xs text-stone-800">
-              Viewing more details on the sender
-            </p>
-          </div>
-          <X
-            size={16}
-            className="text-red-400 hover:cursor-pointer"
-            onClick={() => setOpen(false)}
-          />
-        </div>
-        <div className="flex flex-col gap-4 w-full p-2 border border-gray-200 rounded-md">
           <div className="w-full flex items-center gap-2">
             <div className="flex items-center justify-start">
               <Avatar size="sm" img={biz?.logo} />
@@ -51,6 +38,13 @@ const BizModal = ({ open, setOpen, biz }) => {
               </p>
             </div>
           </div>
+          <X
+            size={16}
+            className="text-red-400 hover:cursor-pointer"
+            onClick={() => setOpen(false)}
+          />
+        </div>
+        <div className="flex flex-col gap-3 w-full">
           <div className="flex flex-col items-start gap-1 w-full">
             <p className="text-stone-800 text-xs text-left font-medium">
               About

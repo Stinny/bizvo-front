@@ -39,15 +39,22 @@ import 'react-tabs/style/react-tabs.css';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import { Timeline } from 'antd';
 import DeleteModal from '../../../../components/Invoices/DeleteModal';
+import Events from '../../../../components/Invoices/Even';
+import Even from '../../../../components/Invoices/Even';
 
-const Desktop = ({ invoice, trxs, refetch }) => {
+const Desktop = ({
+  invoice,
+  trxs,
+  events,
+  refetch,
+  setActiveTabIndex,
+  activeTabIndex,
+}) => {
   const currentUser = Cookies.get('currentUser')
     ? JSON.parse(Cookies.get('currentUser'))
     : null;
 
   const dispatch = useDispatch();
-
-  const [activeTabIndex, setActiveTabIndex] = useState(0);
 
   //form state
   const [title, setTitle] = useState(invoice?.title);
@@ -186,7 +193,7 @@ const Desktop = ({ invoice, trxs, refetch }) => {
 
   if (gettingCustOpts || savingInvo) {
     content = (
-      <div className="w-full h-96 flex items-center justify-center">
+      <div className="w-10/12 h-96 flex items-center justify-center">
         <Spinner />
       </div>
     );
@@ -360,7 +367,8 @@ const Desktop = ({ invoice, trxs, refetch }) => {
         >
           <TabList>
             <Tab>Details</Tab>
-            <Tab>History</Tab>
+            <Tab>Transactions</Tab>
+            <Tab>Events</Tab>
           </TabList>
 
           <TabPanel>
@@ -570,10 +578,10 @@ const Desktop = ({ invoice, trxs, refetch }) => {
                       <div className="flex items-center">
                         <div className="flex flex-col items-start">
                           <p
-                            className="text-stone-800 font-semibold"
+                            className="text-stone-800 font-medium"
                             style={{ fontSize: '11px' }}
                           >
-                            {moment(trx?.done_on).format('MMMM Do, YYYY')}
+                            ${(trx?.total / 100).toFixed(2)}
                           </p>
                         </div>
                       </div>
@@ -597,7 +605,7 @@ const Desktop = ({ invoice, trxs, refetch }) => {
                             dot: <Send size={12} className="text-stone-800" />,
                             position: 'left',
                             children: (
-                              <p className="text-xs text-stone-800">
+                              <p className="text-xs text-stone-800 pt-1">
                                 Invoice sent{' '}
                                 <span className="font-semibold">
                                   ${(trx?.amount / 100).toFixed(2)}
@@ -614,7 +622,7 @@ const Desktop = ({ invoice, trxs, refetch }) => {
                             ),
                             position: 'left',
                             children: (
-                              <p className="text-xs text-stone-800">
+                              <p className="text-xs text-stone-800 pt-1">
                                 Total after taxes{' '}
                                 <span className="font-semibold">
                                   ${(trx?.total / 100).toFixed(2)}
@@ -626,7 +634,7 @@ const Desktop = ({ invoice, trxs, refetch }) => {
                             dot: <X size={12} className="text-red-400" />,
                             position: 'left',
                             children: (
-                              <p className="text-xs text-stone-800">
+                              <p className="text-xs text-stone-800 pt-1">
                                 {taxType}{' '}
                                 <span className="font-semibold">
                                   ${(trx?.tax?.amount / 100).toFixed(2)}
@@ -638,7 +646,7 @@ const Desktop = ({ invoice, trxs, refetch }) => {
                             dot: <X size={12} className="text-red-400" />,
                             position: 'left',
                             children: (
-                              <p className="text-xs text-stone-800">
+                              <p className="text-xs text-stone-800 pt-1">
                                 Bizvo fee{' '}
                                 <span className="font-semibold">
                                   ${(trx?.bizvoFee / 100).toFixed(2)}
@@ -650,7 +658,7 @@ const Desktop = ({ invoice, trxs, refetch }) => {
                             dot: <X size={12} className="text-red-400" />,
                             position: 'left',
                             children: (
-                              <p className="text-xs text-stone-800">
+                              <p className="text-xs text-stone-800 pt-1">
                                 Processing fee{' '}
                                 <span className="font-semibold">
                                   ${(trx?.stripeFee / 100).toFixed(2)}
@@ -667,7 +675,7 @@ const Desktop = ({ invoice, trxs, refetch }) => {
                             ),
                             position: 'left',
                             children: (
-                              <p className="text-xs text-stone-800">
+                              <p className="text-xs text-stone-800 pt-1">
                                 You earn{' '}
                                 <span className="font-semibold">
                                   ${(trx?.earned / 100).toFixed(2)}
@@ -683,9 +691,26 @@ const Desktop = ({ invoice, trxs, refetch }) => {
               </div>
             ) : (
               <div className="h-64 w-full flex items-center justify-center">
-                <p className="text-xs text-stone-800">No history</p>
+                <p className="text-xs text-stone-800">No transactions</p>
               </div>
             )}
+          </TabPanel>
+          <TabPanel>
+            <div className="bg-white dark:bg-neutral-800 flex flex-col w-full gap-2 items-start">
+              {events?.length ? (
+                <>
+                  {events?.map((even) => (
+                    <Even even={even} />
+                  ))}
+                </>
+              ) : (
+                <div className="w-full h-64 flex items-center justify-center">
+                  <p className="text-stone-800 dark:text-white text-xs">
+                    No events
+                  </p>
+                </div>
+              )}
+            </div>
           </TabPanel>
         </Tabs>
       </div>

@@ -1,9 +1,10 @@
 import React from 'react';
-import { FileText } from 'react-feather';
+import InvoEvent from '../Events/InvoEvent';
+import CustEvent from '../Events/CustEvent';
 import { Link } from 'react-router-dom';
-import DateFormat from './DateFormat';
+import DateFormat from '../Events/DateFormat';
 
-const InvoEvent = ({ even, handleOpenEvent }) => {
+const Even = ({ even }) => {
   let evTxt;
 
   switch (even?.type) {
@@ -13,11 +14,11 @@ const InvoEvent = ({ even, handleOpenEvent }) => {
     case 'create':
       evTxt = 'Invoice created';
       break;
-    case 'edit':
-      evTxt = 'Invoice updated';
-      break;
     case 'cancel':
       evTxt = 'Invoice canceled';
+      break;
+    case 'edit':
+      evTxt = 'Invoice updated';
       break;
     case 'paid':
       evTxt = (
@@ -30,43 +31,32 @@ const InvoEvent = ({ even, handleOpenEvent }) => {
   }
 
   return (
-    <button
-      type="button"
-      onClick={() => handleOpenEvent(even)}
+    <Link
+      to={`/dashboard/events`}
+      state={{ evId: even?._id }}
       className={`w-full flex items-center justify-between border border-gray-200 hover:border-stone-800 rounded-md p-2 ${
         even?.seen ? '' : 'bg-gray-50'
       }`}
     >
-      <div className="flex items-center justify-start w-32">
+      <div className="flex items-center justify-start">
         {even?.type === 'paid' ? (
           <p
-            className="text-stone-800 dark:text-white"
+            className="text-stone-800 dark:text-white font-medium"
             style={{ fontSize: '11px' }}
           >
             Invoice paid {evTxt}
           </p>
         ) : (
           <p
-            className="text-stone-800 dark:text-white"
+            className="text-stone-800 dark:text-white font-medium"
             style={{ fontSize: '11px' }}
           >
             {evTxt}
           </p>
         )}
       </div>
-      <div className="w-12 flex justify-center">
-        <FileText size={12} />
-      </div>
-      <div className="flex items-center justify-end w-44">
-        <p
-          className="text-stone-800 dark:text-white"
-          style={{ fontSize: '11px' }}
-        >
-          <DateFormat createdAt={even?.createdAt} />
-        </p>
-      </div>
-    </button>
+    </Link>
   );
 };
 
-export default InvoEvent;
+export default Even;
