@@ -1,29 +1,31 @@
 import React from 'react';
-import { FileText } from 'react-feather';
+import {
+  AlertOctagon,
+  CheckCircle,
+  CreditCard,
+  FileText,
+  RefreshCw,
+  Send,
+  XSquare,
+} from 'react-feather';
 import { Link } from 'react-router-dom';
 import DateFormat from './DateFormat';
 
 const InvoEvent = ({ even, handleOpenEvent }) => {
-  let evTxt;
+  let evIcon;
 
   switch (even?.type) {
     case 'sent':
-      evTxt = 'Invoice sent';
-      break;
-    case 'create':
-      evTxt = 'Invoice created';
-      break;
-    case 'edit':
-      evTxt = 'Invoice updated';
+      evIcon = <Send size={12} className="text-stone-800" />;
       break;
     case 'cancel':
-      evTxt = 'Invoice canceled';
+      evIcon = <XSquare size={12} className="text-red-400" />;
       break;
     case 'paid':
-      evTxt = (
-        <span className="font-medium">${(even?.value / 100).toFixed(2)}</span>
-      );
-
+      evIcon = <CheckCircle size={12} className="text-green-400" />;
+      break;
+    case 'fail':
+      evIcon = <AlertOctagon size={12} className="text-red-400" />;
       break;
     default:
       break;
@@ -36,28 +38,37 @@ const InvoEvent = ({ even, handleOpenEvent }) => {
       className={`w-full flex items-center justify-between border border-gray-200 hover:border-stone-800 rounded-md p-2 ${
         even?.seen ? '' : 'bg-gray-50'
       }`}
+      key={even?._id}
     >
-      <div className="flex items-center justify-start w-32">
+      <div className="flex items-center justify-start text-left w-80">
         {even?.type === 'paid' ? (
           <p
             className="text-stone-800 dark:text-white"
             style={{ fontSize: '11px' }}
           >
-            Invoice paid {evTxt}
+            {even?.content}{' '}
+            <span className="font-medium">
+              ${(even?.amount / 100).toFixed(2)}
+            </span>
+          </p>
+        ) : even?.type === 'sent' ? (
+          <p
+            className="text-stone-800 dark:text-white"
+            style={{ fontSize: '11px' }}
+          >
+            {even?.content} <span className="font-medium">{even?.email}</span>
           </p>
         ) : (
           <p
             className="text-stone-800 dark:text-white"
             style={{ fontSize: '11px' }}
           >
-            {evTxt}
+            {even?.content}
           </p>
         )}
       </div>
-      <div className="w-12 flex justify-center">
-        <FileText size={12} />
-      </div>
-      <div className="flex items-center justify-end w-44">
+      <div className="w-10 flex justify-start">{evIcon}</div>
+      <div className="flex items-center justify-end w-52">
         <p
           className="text-stone-800 dark:text-white"
           style={{ fontSize: '11px' }}

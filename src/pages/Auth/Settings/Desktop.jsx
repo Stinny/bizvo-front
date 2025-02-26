@@ -5,6 +5,7 @@ import { useLocation } from 'react-router-dom';
 import Account from '../../../components/Settings/Account/Account';
 import Notifications from '../../../components/Settings/Notifications/Notifications';
 import Payments from '../../../components/Settings/Payments/Payments';
+import Apps from '../../../components/Settings/Apps/Apps';
 
 const Desktop = ({
   refetch,
@@ -25,6 +26,7 @@ const Desktop = ({
           <Tab>Account</Tab>
           <Tab>Payments</Tab>
           <Tab>Notifications</Tab>
+          <Tab>Apps</Tab>
         </TabList>
 
         <TabPanel>
@@ -41,6 +43,9 @@ const Desktop = ({
             refetch={refetch}
             setActiveTabIndex={setActiveTabIndex}
           />
+        </TabPanel>
+        <TabPanel>
+          <Apps currentUser={currentUser} refetch={refetch} />
         </TabPanel>
       </Tabs>
     </div>

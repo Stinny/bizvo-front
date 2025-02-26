@@ -17,13 +17,13 @@ const Mobile = ({ view, setView }) => {
 
   const options = [
     { value: 'home', label: 'Home' },
-    { value: 'account', label: 'Account' },
-    { value: 'features', label: 'Features' },
-    { value: 'payments', label: 'Payments' },
+    { value: 'account', label: 'Onboard' },
+    { value: 'payments', label: 'Fees' },
     { value: 'invos', label: 'Invoices' },
     { value: 'custs', label: 'Customers' },
-    { value: 'tos', label: 'Terms of Service' },
-    { value: 'priv', label: 'Privacy Policy' },
+    { value: 'features', label: 'Features' },
+    { value: 'tos', label: 'Terms' },
+    { value: 'priv', label: 'Privacy' },
   ];
 
   const ViewSelect = () => (

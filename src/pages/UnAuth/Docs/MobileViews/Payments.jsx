@@ -1,6 +1,7 @@
 import { Timeline } from 'antd';
 import React, { useState } from 'react';
 import {
+  ChevronDown,
   ChevronRight,
   ChevronUp,
   CreditCard,
@@ -30,107 +31,44 @@ const Payments = ({ lastUpdated, ViewSelect }) => {
       </div>
       <div className="flex flex-col gap-4 items-start w-full text-left">
         <ViewSelect />
-        <p className="text-sm text-stone-800 font-medium">Payments & Payouts</p>
+        <p className="text-sm text-stone-800 font-medium">Fees</p>
         <p className="text-xs text-stone-800">
-          As a platform, we utilize Stripe to handle everything related to
-          payments and payouts. This allows us to operate securely and remain
-          compliant while providing invoicing services to online businesses like
-          yours.
+          As a platform, we aim to keep fees simple and as low as possible.
+          These fees allow us to cover operating and processing costs.
         </p>
 
-        <p className="text-xs text-stone-800">
-          All successful transactions incur a 2% Bizvo fee and a 2.9% + 30¢
-          Stripe fee. See pricing{' '}
-          <Link to="/pricing" className="font-semibold">
-            here.
-          </Link>
-        </p>
-
-        <p className="text-xs text-stone-800">
-          We accept card payments from 150+ countries. Any payments that
-          originate from outside the U.S. incur an additional 1.5% fee.
-        </p>
-        <p className="text-xs text-stone-800">Payout options:</p>
-        <div className="flex flex-col items-start gap-2 w-full">
-          <button
-            type="button"
-            onClick={() => setSeeBank(!seeBank)}
-            className="border border-gray-200 rounded-md flex flex-col p-2 w-full"
-          >
-            <div className="w-full flex items-center justify-between">
-              <div className="flex items-center">
-                <BiSolidBank className="mr-1 text-stone-800 text-lg" />
-                <div className="flex flex-col items-start">
-                  <p className="text-xs text-stone-800">Bank Account</p>
-                </div>
-              </div>
-              {seeBank ? <ChevronUp size={14} /> : <ChevronRight size={14} />}
-            </div>
-
-            <div
-              className={`transition-[max-height] duration-300 ease-in-out overflow-hidden w-full flex flex-col gap-2 ${
-                seeBank ? 'max-h-72' : 'max-h-0'
-              }`}
-            >
-              <p className="text-stone-800 text-xs text-left mt-4">
-                When receiving payouts to a bank account, you can choose between
-                monthly or weekly payouts. Payouts occur when you accumulate a
-                balance in your Bizvo account.
-              </p>
-              <p className="text-stone-800 text-xs text-left">
-                Funds appear in your pending balance. As funds become available,
-                they move to your available balance and will be paid out.
-              </p>
-              <p className="text-stone-800 text-xs text-left font-semibold">
-                You can disconnect a bank account at any time.
-              </p>
-            </div>
-          </button>
-          <button
-            type="button"
-            onClick={() => setSeeStr(!seeStr)}
-            className="border border-gray-200 rounded-md flex flex-col p-2 w-full"
-          >
-            <div className="w-full flex items-center justify-between">
-              <div className="flex items-center">
-                <BsStripe className="mr-1 text-stone-800 text-lg" />
-                <div className="flex flex-col items-start">
-                  <p className="text-xs text-stone-800">Stripe Account</p>
-                </div>
-              </div>
-              {seeStr ? <ChevronUp size={14} /> : <ChevronRight size={14} />}
-            </div>
-
-            <div
-              className={`transition-[max-height] duration-300 ease-in-out overflow-hidden w-full flex flex-col gap-2 ${
-                seeStr ? 'max-h-72' : 'max-h-0'
-              }`}
-            >
-              <p className="text-stone-800 text-xs text-left mt-4">
-                When receiving payouts to a Stripe account, funds are
-                immediately transferred to your connected account after every
-                successful payment. You will not accumulate a balance in your
-                Bizvo account, only in your Stripe account. What you do with
-                your funds is up to you.
-              </p>
-              <p className="text-stone-800 text-xs text-left">
-                This can provide a more straightforward experience if you
-                already have a Stripe account set up that has received payments
-                in the past.
-              </p>
-              <p className="text-stone-800 text-xs text-left font-semibold">
-                You can disconnect a Stripe account at any time.
-              </p>
-            </div>
-          </button>
+        <div className="p-1 border border-gray-200 rounded-md flex items-center justify-center gap-1">
+          <p className="text-sm text-stone-800 font-medium">2%</p>
+          <p className="text-xs text-stone-800">+ processing fees below</p>
         </div>
+        <p className="text-xs text-stone-800">
+          All successful transactions will incur these fees.
+        </p>
+        <p className="text-xs text-stone-800 font-medium">Card Fees</p>
+        <p className="text-stone-800 text-xs text-left">
+          2.9% + $0.30 for domestic cards
+        </p>
+        <p className="text-stone-800 text-xs text-left">
+          3.9% + $0.30 for international cards (customer outside the U.S.)
+        </p>
+        <p className="text-xs text-stone-800 font-medium">Tax Fees</p>
+        <p className="text-stone-800 text-xs text-left">
+          0.5% for calculating, collecting, and remitting
+        </p>
+        <p className="text-xs text-stone-800 font-medium">Payout Fees</p>
+        <p className="text-stone-800 text-xs text-left">
+          0.25% of total payout
+        </p>
         <p className="text-sm text-stone-800 font-medium">Taxes</p>
         <p className="text-stone-800 text-xs text-left">
           Taxes are calculated based on the customer location and the invoice
           amount to ensure accuracy. The tax is added ontop of the invoice
           amount and collected from customers at the time of payment.
         </p>
-        <p className="text-xs text-stone-800">We collect:</p>
+        <p className="text-stone-800 text-xs text-left">
+          Taxes are collected as a fee and remitted to the government.
+        </p>
+        <p className="text-xs text-stone-800 font-medium">Tax types</p>
         <div className="flex items-center gap-2">
           <div className="p-1 border border-gray-200 rounded-md flex items-center justify-center">
             <p className="text-xs text-stone-800">Sales Tax</p>
@@ -143,10 +81,13 @@ const Payments = ({ lastUpdated, ViewSelect }) => {
           </div>
         </div>
         <p className="text-stone-800 text-xs text-left">
-          As a platform, we closely monitor tax thresholds for each jurisdiction
-          and will collect and remit when required. This is done automattically
-          and you have no tax settings to configure. As always, any taxes on
-          income made will be responsible to the businesses owner.
+          We closely monitor tax thresholds for each jurisdiction and will
+          collect and remit when required. This is done automatically and there
+          is no tax settings to configure as a business. Any taxes on income
+          made will be responsible to the business owner.
+        </p>
+        <p className="text-sm text-stone-800 font-medium">
+          Example Transactions
         </p>
         <div className="w-full flex flex-col items-start">
           <div className="flex flex-col gap-2 w-full">
@@ -161,7 +102,11 @@ const Payments = ({ lastUpdated, ViewSelect }) => {
                     <p className="text-xs text-stone-800">Ex. Transaction #1</p>
                   </div>
                 </div>
-                {seeTx1 ? <ChevronUp size={14} /> : <ChevronRight size={14} />}
+                {seeTx1 ? (
+                  <ChevronDown size={14} />
+                ) : (
+                  <ChevronRight size={14} />
+                )}
               </div>
 
               <div
@@ -177,8 +122,8 @@ const Payments = ({ lastUpdated, ViewSelect }) => {
                       dot: <Send size={14} className="text-stone-800" />,
                       position: 'left',
                       children: (
-                        <p className="text-xs text-stone-800">
-                          Invoice sent for{' '}
+                        <p className="text-xs text-stone-800 pt-1">
+                          Invoice sent{' '}
                           <span className="font-semibold">$125.00</span>
                         </p>
                       ),
@@ -187,8 +132,8 @@ const Payments = ({ lastUpdated, ViewSelect }) => {
                       dot: <CreditCard size={14} className="text-stone-800" />,
                       position: 'left',
                       children: (
-                        <p className="text-xs text-stone-800">
-                          Paid after taxes{' '}
+                        <p className="text-xs text-stone-800 pt-1">
+                          Total paid{' '}
                           <span className="font-semibold">$132.94</span>
                         </p>
                       ),
@@ -197,8 +142,8 @@ const Payments = ({ lastUpdated, ViewSelect }) => {
                       dot: <X size={14} className="text-red-400" />,
                       position: 'left',
                       children: (
-                        <p className="text-xs text-stone-800">
-                          Taxes <span className="font-semibold">$7.94</span>
+                        <p className="text-xs text-stone-800 pt-1">
+                          Tax <span className="font-semibold">$7.94</span>
                         </p>
                       ),
                     },
@@ -206,8 +151,8 @@ const Payments = ({ lastUpdated, ViewSelect }) => {
                       dot: <X size={14} className="text-red-400" />,
                       position: 'left',
                       children: (
-                        <p className="text-xs text-stone-800">
-                          Bizvo fee <span className="font-semibold">$2.66</span>
+                        <p className="text-xs text-stone-800 pt-1">
+                          Bizvo <span className="font-semibold">$2.66</span>
                         </p>
                       ),
                     },
@@ -215,8 +160,8 @@ const Payments = ({ lastUpdated, ViewSelect }) => {
                       dot: <X size={14} className="text-red-400" />,
                       position: 'left',
                       children: (
-                        <p className="text-xs text-stone-800">
-                          Stripe fee{' '}
+                        <p className="text-xs text-stone-800 pt-1">
+                          Processing{' '}
                           <span className="font-semibold">$4.16</span>
                         </p>
                       ),
@@ -225,7 +170,7 @@ const Payments = ({ lastUpdated, ViewSelect }) => {
                       dot: <DollarSign size={14} className="text-stone-800" />,
                       position: 'left',
                       children: (
-                        <p className="text-xs text-stone-800">
+                        <p className="text-xs text-stone-800 pt-1">
                           Business earns{' '}
                           <span className="font-semibold">$118.18</span>
                         </p>
@@ -246,7 +191,11 @@ const Payments = ({ lastUpdated, ViewSelect }) => {
                     <p className="text-xs text-stone-800">Ex. Transaction #2</p>
                   </div>
                 </div>
-                {seeTx2 ? <ChevronUp size={14} /> : <ChevronRight size={14} />}
+                {seeTx2 ? (
+                  <ChevronDown size={14} />
+                ) : (
+                  <ChevronRight size={14} />
+                )}
               </div>
 
               <div
@@ -262,8 +211,8 @@ const Payments = ({ lastUpdated, ViewSelect }) => {
                       dot: <Send size={14} className="text-stone-800" />,
                       position: 'left',
                       children: (
-                        <p className="text-xs text-stone-800">
-                          Invoice sent for{' '}
+                        <p className="text-xs text-stone-800 pt-1">
+                          Invoice sent{' '}
                           <span className="font-semibold">$125.00</span>
                         </p>
                       ),
@@ -272,8 +221,8 @@ const Payments = ({ lastUpdated, ViewSelect }) => {
                       dot: <CreditCard size={14} className="text-stone-800" />,
                       position: 'left',
                       children: (
-                        <p className="text-xs text-stone-800">
-                          Paid after taxes{' '}
+                        <p className="text-xs text-stone-800 pt-1">
+                          Total paid{' '}
                           <span className="font-semibold">$132.94</span>
                         </p>
                       ),
@@ -282,8 +231,8 @@ const Payments = ({ lastUpdated, ViewSelect }) => {
                       dot: <X size={14} className="text-red-400" />,
                       position: 'left',
                       children: (
-                        <p className="text-xs text-stone-800">
-                          Taxes <span className="font-semibold">$7.94</span>
+                        <p className="text-xs text-stone-800 pt-1">
+                          Tax <span className="font-semibold">$7.94</span>
                         </p>
                       ),
                     },
@@ -291,8 +240,8 @@ const Payments = ({ lastUpdated, ViewSelect }) => {
                       dot: <X size={14} className="text-red-400" />,
                       position: 'left',
                       children: (
-                        <p className="text-xs text-stone-800">
-                          Bizvo fee <span className="font-semibold">$2.66</span>
+                        <p className="text-xs text-stone-800 pt-1">
+                          Bizvo <span className="font-semibold">$2.66</span>
                         </p>
                       ),
                     },
@@ -300,8 +249,8 @@ const Payments = ({ lastUpdated, ViewSelect }) => {
                       dot: <X size={14} className="text-red-400" />,
                       position: 'left',
                       children: (
-                        <p className="text-xs text-stone-800">
-                          Stripe fee{' '}
+                        <p className="text-xs text-stone-800 pt-1">
+                          Processing{' '}
                           <span className="font-semibold">$4.16</span>
                         </p>
                       ),
@@ -310,7 +259,7 @@ const Payments = ({ lastUpdated, ViewSelect }) => {
                       dot: <DollarSign size={14} className="text-stone-800" />,
                       position: 'left',
                       children: (
-                        <p className="text-xs text-stone-800">
+                        <p className="text-xs text-stone-800 pt-1">
                           Business earns{' '}
                           <span className="font-semibold">$118.18</span>
                         </p>
@@ -331,7 +280,11 @@ const Payments = ({ lastUpdated, ViewSelect }) => {
                     <p className="text-xs text-stone-800">Ex. Transaction #3</p>
                   </div>
                 </div>
-                {seeTx3 ? <ChevronUp size={14} /> : <ChevronRight size={14} />}
+                {seeTx3 ? (
+                  <ChevronDown size={14} />
+                ) : (
+                  <ChevronRight size={14} />
+                )}
               </div>
 
               <div
@@ -347,8 +300,8 @@ const Payments = ({ lastUpdated, ViewSelect }) => {
                       dot: <Send size={14} className="text-stone-800" />,
                       position: 'left',
                       children: (
-                        <p className="text-xs text-stone-800">
-                          Invoice sent for{' '}
+                        <p className="text-xs text-stone-800 pt-1">
+                          Invoice sent{' '}
                           <span className="font-semibold">$125.00</span>
                         </p>
                       ),
@@ -357,8 +310,8 @@ const Payments = ({ lastUpdated, ViewSelect }) => {
                       dot: <CreditCard size={14} className="text-stone-800" />,
                       position: 'left',
                       children: (
-                        <p className="text-xs text-stone-800">
-                          Paid after taxes{' '}
+                        <p className="text-xs text-stone-800 pt-1">
+                          Total paid{' '}
                           <span className="font-semibold">$132.94</span>
                         </p>
                       ),
@@ -367,8 +320,8 @@ const Payments = ({ lastUpdated, ViewSelect }) => {
                       dot: <X size={14} className="text-red-400" />,
                       position: 'left',
                       children: (
-                        <p className="text-xs text-stone-800">
-                          Taxes <span className="font-semibold">$7.94</span>
+                        <p className="text-xs text-stone-800 pt-1">
+                          Tax <span className="font-semibold">$7.94</span>
                         </p>
                       ),
                     },
@@ -376,8 +329,8 @@ const Payments = ({ lastUpdated, ViewSelect }) => {
                       dot: <X size={14} className="text-red-400" />,
                       position: 'left',
                       children: (
-                        <p className="text-xs text-stone-800">
-                          Bizvo fee <span className="font-semibold">$2.66</span>
+                        <p className="text-xs text-stone-800 pt-1">
+                          Bizvo <span className="font-semibold">$2.66</span>
                         </p>
                       ),
                     },
@@ -385,8 +338,8 @@ const Payments = ({ lastUpdated, ViewSelect }) => {
                       dot: <X size={14} className="text-red-400" />,
                       position: 'left',
                       children: (
-                        <p className="text-xs text-stone-800">
-                          Stripe fee{' '}
+                        <p className="text-xs text-stone-800 pt-1">
+                          Processing{' '}
                           <span className="font-semibold">$4.16</span>
                         </p>
                       ),
@@ -395,7 +348,7 @@ const Payments = ({ lastUpdated, ViewSelect }) => {
                       dot: <DollarSign size={14} className="text-stone-800" />,
                       position: 'left',
                       children: (
-                        <p className="text-xs text-stone-800">
+                        <p className="text-xs text-stone-800 pt-1">
                           Business earns{' '}
                           <span className="font-semibold">$118.18</span>
                         </p>

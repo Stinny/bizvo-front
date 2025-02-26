@@ -38,21 +38,14 @@ const Desktop = ({ view, setView }) => {
               onClick={() => setView('account')}
               className={view === 'account' ? activeLink : notActiveLink}
             >
-              Account
-            </button>
-            <button
-              type="button"
-              onClick={() => setView('features')}
-              className={view === 'features' ? activeLink : notActiveLink}
-            >
-              Features
+              Onboard
             </button>
             <button
               type="button"
               onClick={() => setView('payments')}
               className={view === 'payments' ? activeLink : notActiveLink}
             >
-              Payments
+              Fees
             </button>
             <button
               type="button"
@@ -67,6 +60,13 @@ const Desktop = ({ view, setView }) => {
               className={view === 'custs' ? activeLink : notActiveLink}
             >
               Customers
+            </button>
+            <button
+              type="button"
+              onClick={() => setView('features')}
+              className={view === 'features' ? activeLink : notActiveLink}
+            >
+              Features
             </button>
             <div className="w-full flex flex-col gap-1 border-t border-gray-200 pt-1">
               <button
@@ -93,7 +93,11 @@ const Desktop = ({ view, setView }) => {
           </div>
         </div>
 
-        {view === 'home' ? <Home lastUpdated={lastUpdated} /> : ''}
+        {view === 'home' ? (
+          <Home lastUpdated={lastUpdated} setView={setView} />
+        ) : (
+          ''
+        )}
         {view === 'account' ? <Account lastUpdated={lastUpdated} /> : ''}
         {view === 'features' ? <Features lastUpdated={lastUpdated} /> : ''}
         {view === 'payments' ? <Payments lastUpdated={lastUpdated} /> : ''}

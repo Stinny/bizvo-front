@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   AlertOctagon,
   BarChart2,
@@ -15,8 +15,11 @@ import {
 import { Link } from 'react-router-dom';
 import Cookies from 'js-cookie';
 import { Badge } from 'antd';
+import io from 'socket.io-client';
 
 const Sidenav = () => {
+  const [forceUpdate, setForceUpdate] = useState(false);
+
   const currentUser = Cookies.get('currentUser')
     ? JSON.parse(Cookies.get('currentUser'))
     : null;
@@ -26,6 +29,32 @@ const Sidenav = () => {
     'w-full flex items-center gap-2 border border-stone-800 dark:border-white dark:text-white rounded-md p-1';
   const notActiveLink =
     'w-full flex items-center gap-2 p-1 border border-white dark:border-neutral-800 rounded-md hover:border-stone-800 dark:hover:border-white';
+
+  useEffect(() => {
+    const socket = io(import.meta.env.VITE_WEBSOCK_URL); // Change URL to your server URL
+
+    const fetchEventsCount = () => {
+      socket.emit('getEventsCount', currentUser?._id);
+    };
+
+    socket.on('eventsCount', (numberOfEvents) => {
+      if (numberOfEvents > currentUser?.events) {
+        currentUser.events = numberOfEvents;
+        const updatedUser = JSON.stringify(currentUser);
+        Cookies.set('currentUser', updatedUser, { sameSite: 'Lax' });
+        setForceUpdate((prevState) => !prevState);
+      }
+    });
+
+    fetchEventsCount();
+
+    const interval = setInterval(fetchEventsCount, 60000); // Fetch events count every 30s
+
+    return () => {
+      clearInterval(interval);
+      socket.disconnect();
+    };
+  }, []);
 
   return (
     <div className="bg-white dark:bg-neutral-800 border border-gray-200 rounded-md flex flex-col items-start p-2 w-2/12">
@@ -43,7 +72,7 @@ const Sidenav = () => {
             path.startsWith('/dashboard/events') ? activeLink : notActiveLink
           }
         >
-          <Badge dot={true} status="processing">
+          <Badge dot={currentUser?.events > 0} status="processing" color="#000">
             <Clock size={14} className="text-stone-800 dark:text-white" />
           </Badge>
           <p className="text-xs text-stone-800 dark:text-white">Events</p>
@@ -83,16 +112,6 @@ const Sidenav = () => {
         >
           <Settings size={14} className="text-stone-800 dark:text-white" />
           <p className="text-xs text-stone-800 dark:text-white">Settings</p>
-        </Link>
-        <Link
-          to="/dashboard/add"
-          className="w-full flex items-center justify-center gap-1 border border-stone-800 dark:border-white rounded-md p-1"
-        >
-          <p className="text-xs text-stone-800 dark:text-white">New</p>
-          <Plus
-            size={12}
-            className="text-stone-800 font-bold dark:text-white"
-          />
         </Link>
         {!currentUser?.bankAdded && !currentUser?.stripeOnboard ? (
           <div className="w-full text-left flex flex-col items-start gap-1 p-1 border border-gray-200 rounded-md">

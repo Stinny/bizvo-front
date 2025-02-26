@@ -27,15 +27,7 @@ const Home = ({ setView, lastUpdated }) => {
             onClick={() => setView('account')}
             className="flex items-center justify-between gap-2 text-xs text-stone-800 w-full"
           >
-            Account
-            <ChevronRight size={14} />
-          </button>
-          <button
-            type="button"
-            onClick={() => setView('features')}
-            className="flex items-center justify-between gap-2 text-xs text-stone-800 w-full"
-          >
-            Features
+            Onboard
             <ChevronRight size={14} />
           </button>
           <button
@@ -43,7 +35,7 @@ const Home = ({ setView, lastUpdated }) => {
             onClick={() => setView('payments')}
             className="flex items-center justify-between gap-2 text-xs text-stone-800 w-full"
           >
-            Payments
+            Fees
             <ChevronRight size={14} />
           </button>
           <button
@@ -60,6 +52,14 @@ const Home = ({ setView, lastUpdated }) => {
             className="flex items-center justify-between gap-2 text-xs text-stone-800 w-full"
           >
             Customers
+            <ChevronRight size={14} />
+          </button>
+          <button
+            type="button"
+            onClick={() => setView('features')}
+            className="flex items-center justify-between gap-2 text-xs text-stone-800 w-full"
+          >
+            Features
             <ChevronRight size={14} />
           </button>
         </div>

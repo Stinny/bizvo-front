@@ -19,7 +19,7 @@ const MobilePlaceholder = ({ currentUser }) => {
 
   return (
     <div className="h-screen w-full p-4 mx-auto flex items-center justify-center">
-      <div className="w-full mx-auto flex flex-col gap-6 items-center justify-center">
+      <div className="w-full mx-auto flex flex-col gap-6 items-center justify-center mb-20">
         <div className="w-full flex items-center justify-center">
           <Link to="/" className="h-full flex gap-1 items-center">
             <Layers size={20} className="font-black" />
@@ -33,12 +33,12 @@ const MobilePlaceholder = ({ currentUser }) => {
         </div>
 
         <div className="flex flex-col gap-1 items-center">
-          <p className="text-sm text-stone-800 text-center">
+          <p className="text-sm text-stone-800 text-center font-medium">
             Mobile view not available
           </p>
-          <p className="text-xs text-stone-700 text-center">
-            To view your dashboard login using a desktop browser. Mobile views
-            on the way!
+          <p className="text-xs text-stone-800 text-center w-64">
+            To access your dashboard login using a desktop browser. A mobile
+            view is on the way!
           </p>
         </div>
 

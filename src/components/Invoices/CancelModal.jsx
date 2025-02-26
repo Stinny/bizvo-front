@@ -1,5 +1,5 @@
 import { Spinner } from 'flowbite-react';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { AlertOctagon, X } from 'react-feather';
 import Modal from 'react-modal';
 import { useCancelInvoiceMutation } from '../../api/invoicesApiSlice';
@@ -8,7 +8,7 @@ import { useDispatch } from 'react-redux';
 
 const customStyles = {
   content: {
-    top: '50%',
+    top: '30%',
     left: '50%',
     right: 'auto',
     bottom: 'auto',
@@ -30,6 +30,13 @@ const CancelModal = ({ open, setOpen, invoId, refetch }) => {
 
   //hanlder function to send invoice
   const handleCancelInvo = async () => {
+    setError('');
+
+    if (!msg.trim()) {
+      setError('Missing a reason');
+      return;
+    }
+
     try {
       const cancelReq = await cancelInvoice({
         invoId: invoId,
@@ -51,6 +58,10 @@ const CancelModal = ({ open, setOpen, invoId, refetch }) => {
     }
   };
 
+  useEffect(() => {
+    setError('');
+  }, [msg]);
+
   return (
     <Modal
       isOpen={open}
@@ -63,7 +74,7 @@ const CancelModal = ({ open, setOpen, invoId, refetch }) => {
           <Spinner />
         </div>
       ) : (
-        <div className="w-80 flex flex-col gap-4 items-start">
+        <div className="w-80 flex flex-col gap-2 items-start">
           <div className="w-full flex items-start justify-between">
             <div className="flex flex-col items-start">
               <p className="text-sm text-stone-800">Cancel Invoice</p>
@@ -75,7 +86,7 @@ const CancelModal = ({ open, setOpen, invoId, refetch }) => {
               onClick={() => setOpen(false)}
             />
           </div>
-          <div className="flex flex-col items-start gap-1 w-full">
+          <div className="flex flex-col items-start gap-2 w-full">
             {error ? (
               <div className="w-full flex items-center justify-start gap-2 border border-gray-200 rounded-md p-2">
                 <AlertOctagon size={16} className="text-red-400" />
@@ -85,8 +96,8 @@ const CancelModal = ({ open, setOpen, invoId, refetch }) => {
               ''
             )}
             <p className="text-xs text-stone-800">
-              This is permanant and payment will become unavailable. Are you
-              sure you want to cancel?
+              This invoice will not be able to accept payment. Are you sure you
+              want to cancel?
             </p>
             <textarea
               placeholder="Reason for canceling"

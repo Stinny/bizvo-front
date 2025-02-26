@@ -10,6 +10,7 @@ import {
   ChevronsRight,
   ChevronUp,
   Clipboard,
+  Clock,
   CreditCard,
   DollarSign,
   Edit as EditIcon,
@@ -39,8 +40,6 @@ import 'react-tabs/style/react-tabs.css';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import { Timeline } from 'antd';
 import DeleteModal from '../../../../components/Invoices/DeleteModal';
-import Events from '../../../../components/Invoices/Even';
-import Even from '../../../../components/Invoices/Even';
 
 const Desktop = ({
   invoice,
@@ -285,7 +284,7 @@ const Desktop = ({
                   as="div"
                   className="w-full flex items-center gap-1 text-xs text-stone-800 hover:bg-white"
                 >
-                  <EditIcon size={13} className="text-stone-800" />
+                  <EditIcon size={12} className="text-stone-800" />
                   Edit
                 </Dropdown.Item>
               </button>
@@ -310,20 +309,31 @@ const Desktop = ({
 
             {invoice?.sent ? (
               <Link
-                to={`http://localhost:5173/pay/${invoice?._id}?iat=${invoice?.token}`}
+                to={`http://localhost:5173/pay/${invoice?._id}?iat=${invoice?.token}&uid=${currentUser?._id}`}
                 target="_blank"
               >
                 <Dropdown.Item
                   as="div"
                   className="text-xs text-stone-800 flex items-center gap-1 hover:bg-white"
                 >
-                  <ExternalLink size={14} />
-                  Open
+                  <ExternalLink size={12} />
+                  View
                 </Dropdown.Item>
               </Link>
             ) : (
               ''
             )}
+
+            <Link to="/dashboard/events" state={{ invoId: invoice?._id }}>
+              <Dropdown.Item
+                as="div"
+                className="text-xs text-stone-800 flex items-center gap-1 hover:bg-white"
+              >
+                <Clock size={12} />
+                Events
+              </Dropdown.Item>
+            </Link>
+
             {invoice?.status === 'draft' ? (
               <button
                 type="button"
@@ -334,7 +344,7 @@ const Desktop = ({
                   as="div"
                   className="text-xs text-stone-800 flex items-center gap-1 hover:bg-white"
                 >
-                  <Trash size={14} className="text-red-400" />
+                  <Trash size={12} className="text-red-400" />
                   Delete
                 </Dropdown.Item>
               </button>
@@ -351,7 +361,7 @@ const Desktop = ({
                   as="div"
                   className="text-xs text-stone-800 flex items-center gap-1 hover:bg-white"
                 >
-                  <XSquare size={14} className="text-red-400" />
+                  <XSquare size={12} className="text-red-400" />
                   Cancel
                 </Dropdown.Item>
               </button>
@@ -368,7 +378,6 @@ const Desktop = ({
           <TabList>
             <Tab>Details</Tab>
             <Tab>Transactions</Tab>
-            <Tab>Events</Tab>
           </TabList>
 
           <TabPanel>
@@ -694,23 +703,6 @@ const Desktop = ({
                 <p className="text-xs text-stone-800">No transactions</p>
               </div>
             )}
-          </TabPanel>
-          <TabPanel>
-            <div className="bg-white dark:bg-neutral-800 flex flex-col w-full gap-2 items-start">
-              {events?.length ? (
-                <>
-                  {events?.map((even) => (
-                    <Even even={even} />
-                  ))}
-                </>
-              ) : (
-                <div className="w-full h-64 flex items-center justify-center">
-                  <p className="text-stone-800 dark:text-white text-xs">
-                    No events
-                  </p>
-                </div>
-              )}
-            </div>
           </TabPanel>
         </Tabs>
       </div>

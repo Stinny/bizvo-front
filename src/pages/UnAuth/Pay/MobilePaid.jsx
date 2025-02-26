@@ -22,7 +22,7 @@ import { Timeline } from 'antd';
 import InvoStatus from '../../../components/InvoStatus';
 import Method from './Method';
 import BizModal from './BizModal';
-import LinkExp from './LinkExp';
+import LinkExp from '../../../components/Pay/LinkExp';
 
 const MobilePaid = ({
   invoice,

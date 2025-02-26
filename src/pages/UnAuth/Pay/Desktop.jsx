@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import {
   AlertOctagon,
   Briefcase,
+  CheckCircle,
   ChevronDown,
   ChevronRight,
   Info,
@@ -13,16 +14,18 @@ import {
   XSquare,
 } from 'react-feather';
 import { Link } from 'react-router-dom';
-import Payment from './Payment/Payment';
-import Paid from './Paid';
 import ReactCountryFlag from 'react-country-flag';
 import moment from 'moment';
 import { useUpdateInvoForPayMutation } from '../../../api/invoicesApiSlice';
-import InvoStatus from '../../../components/InvoStatus';
-import { Timeline } from 'antd';
-import BizModal from './BizModal';
-import LinkExp from './LinkExp';
+import LinkExp from '../../../components/Pay/LinkExp';
 import Invalid from './Invalid';
+import Amount from '../../../components/Pay/Amount';
+import Status from '../../../components/Pay/Status';
+import Title from '../../../components/Pay/Title';
+import Content from '../../../components/Pay/Content';
+import Payment from '../../../components/Pay/Payment';
+import Trxs from './Trxs';
+import Method from './Method';
 
 const Desktop = ({
   data,
@@ -35,16 +38,13 @@ const Desktop = ({
   added,
   setAdded,
 }) => {
-  const [view, setView] = useState('');
+  const [view, setView] = useState('details');
   const [readyForPayment, setReadyForPayment] = useState(false);
   const [updatingInvo, setUpdatingInvo] = useState(false);
-  const [seeBiz, setSeeBiz] = useState(false);
   const [updatedInvo, setUpdatedInvo] = useState({});
   const [updatedTrx, setUpdatedTrx] = useState({});
 
-  // const isOwner = data?.invoice?.sellerId === currentUser?._id;
-  const isOwner = false;
-  const interval = data?.invoice?.interval === 'weekly' ? '/week' : '/month';
+  const isOwner = data?.invoice?.sellerId === currentUser?._id;
 
   //hook for updating invo
   const [updateInvoForPay, { isLoading: updating }] =
@@ -70,71 +70,19 @@ const Desktop = ({
     }
   };
 
-  const handleView = (newView) => {
-    if (newView === view) {
-      setView('');
-    } else {
-      setView(newView);
-    }
-  };
-
-  let trxItems = [
-    {
-      dot: <Send size={12} className="text-stone-800" />,
-      children: (
-        <p className="text-xs text-stone-800 pt-1">
-          Invoice sent{' '}
-          <span className="font-semibold">
-            ${(data?.invoice?.amountInCents / 100).toFixed(2)}
-          </span>
-        </p>
-      ),
-    },
-  ];
-
-  let taxType;
-  switch (data?.trx?.tax?.type) {
-    case 'vat':
-      taxType = 'VAT';
-      break;
-    case 'gst':
-      taxType = 'GST';
-      break;
-    default:
-      taxType = 'Sales Tax';
-      break;
-  }
-  if (data?.trx?.tax?.id) {
-    trxItems.push({
-      dot: <Percent size={12} className="text-stone-800" />,
-      children: (
-        <p className="text-xs text-stone-800 pt-1">
-          {taxType} added{' '}
-          <span className="font-semibold">
-            ${(data?.trx?.tax?.amount / 100).toFixed(2)}
-          </span>
-        </p>
-      ),
-    });
-    trxItems.push({
-      dot: <Spinner size="xs" />,
-      children: <p className="text-xs text-stone-800 pt-1">Awaiting payment</p>,
-    });
-  } else {
-    trxItems.push({
-      dot: <Spinner size="xs" />,
-      children: (
-        <p className="text-xs text-stone-800 pt-1">
-          Awaiting taxes and payment
-        </p>
-      ),
-    });
-  }
-
   let content;
 
-  if (!data?.valid) {
+  if (updatingInvo || updating) {
     content = (
+      <div
+        className="mx-auto flex flex-col items-center justify-center h-96 mt-16"
+        style={{ width: '370px' }}
+      >
+        <Spinner />
+      </div>
+    );
+  } else {
+    content = !data?.valid ? (
       <Invalid
         invoId={invoId}
         token={token}
@@ -142,259 +90,132 @@ const Desktop = ({
         customer={data?.customer}
         invoice={data?.invoice}
       />
-    );
-  } else if (data?.valid) {
-    content =
-      data?.invoice?.status === 'paid' || data?.invoice?.status === 'live' ? (
-        <Paid
-          invoice={data?.invoice}
-          trx={data?.trx}
-          biz={data?.biz}
-          trxs={data?.trxs}
-          customer={data?.customer}
-          currentUser={currentUser}
-          succ={succ}
-          setSucc={setSucc}
-          added={added}
-          setAdded={setAdded}
-          refetch={refetch}
-          seeBiz={seeBiz}
-          setSeeBiz={setSeeBiz}
-        />
-      ) : (
-        <>
-          <BizModal open={seeBiz} setOpen={setSeeBiz} biz={data?.biz} />
-          {updatingInvo || updating ? (
-            <div
-              className="mx-auto flex flex-col items-center justify-center h-96"
-              style={{ width: '370px' }}
-            >
-              <Spinner />
-            </div>
-          ) : (
-            <div
-              className="mx-auto flex flex-col gap-2 items-start mt-28"
-              style={{ width: '370px' }}
-            >
-              <div className="w-full flex justify-between items-center pl-1 pr-1">
-                <div className="flex items-center">
-                  {data?.invoice?.status === 'void' ? (
-                    <p
-                      className="text-stone-800 font-medium"
-                      style={{ fontSize: '12px' }}
-                    >
-                      Canceled on{' '}
-                      {moment(data?.invoice?.canceledOn).format(
-                        'MMMM Do, YYYY'
-                      )}
-                    </p>
-                  ) : (
-                    <Tooltip
-                      style="light"
-                      arrow={false}
-                      content={
-                        <p className="text-xs text-stone-800 text-left">
-                          When payment is due by
-                        </p>
-                      }
-                    >
-                      <p
-                        className="text-stone-800 font-medium"
-                        style={{ fontSize: '12px' }}
-                      >
-                        {moment(data?.invoice?.dueDate).format('MMMM Do, YYYY')}
-                      </p>
-                    </Tooltip>
-                  )}
-                </div>
-                <LinkExp expDate={data?.invoice?.linkExp} refetch={refetch} />
-              </div>
-              {isOwner ? (
-                <div className="w-full flex items-center justify-start gap-2 border border-gray-200 bg-white rounded-md p-2">
-                  <Info size={14} className="text-blue-400" />
-                  <p className="text-xs text-stone-800">
-                    Created by you, payment unavailable!
-                  </p>
-                </div>
+    ) : (
+      <div
+        className="mx-auto flex flex-col items-start mt-16"
+        style={{ width: '370px' }}
+      >
+        <div className="w-full flex items-center justify-center mb-6">
+          <LinkExp
+            expDate={data?.invoice?.linkExp}
+            refetch={refetch}
+            isOwner={isOwner}
+          />
+        </div>
+
+        {succ ? (
+          <div className="w-full flex items-center justify-start gap-2 border border-gray-200 bg-white rounded-md p-2 mb-2">
+            <CheckCircle size={14} className="text-green-400" />
+            <p className="text-xs text-stone-800">Payment was successful</p>
+          </div>
+        ) : (
+          ''
+        )}
+        {added ? (
+          <div className="w-full flex items-center justify-start gap-2 border border-gray-200 bg-white rounded-md p-2 mb-2">
+            <CheckCircle size={14} className="text-green-400" />
+            <p className="text-xs text-stone-800">Payment method changed</p>
+          </div>
+        ) : (
+          ''
+        )}
+
+        <div className="w-full bg-white border border-gray-200 rounded-md flex flex-col items-start gap-4 p-2">
+          <Status invoice={data?.invoice} />
+          {view === 'details' ? (
+            <>
+              {readyForPayment ? (
+                <Payment
+                  setReadyForPayment={setReadyForPayment}
+                  invoice={updatedInvo}
+                  trx={updatedTrx}
+                  customer={data?.customer}
+                  refetch={refetch}
+                  setSucc={setSucc}
+                />
               ) : (
-                ''
-              )}
-              <div className="w-full bg-white border border-gray-200 rounded-md flex flex-col gap-4 items-start p-2">
-                <div className="w-full flex justify-between items-start">
-                  <div className="flex flex-col items-start">
-                    <p className="text-stone-800 text-sm">
-                      {data?.invoice?.type === 'single'
-                        ? 'Invoice'
-                        : 'Recurring Invoice'}
-                    </p>
-                    <p className="text-stone-800 text-xs">#{invoId}</p>
-                  </div>
-                  <InvoStatus status={data?.invoice?.status} />
-                </div>
-                <div className="w-full grid grid-cols-7">
-                  <div className="flex items-center justify-start">
-                    <Avatar
-                      size="md"
-                      img={data?.biz?.logo}
-                      onClick={() => setSeeBiz(!seeBiz)}
-                      className="hover:cursor-pointer"
-                    />
-                  </div>
-                  <div className="flex flex-col items-start col-span-6">
-                    <p className="text-stone-800 text-sm text-left">
-                      {data?.invoice?.title}
-                    </p>
-                    <p className="text-stone-800 text-xs text-left">
-                      {data?.invoice?.description}
-                    </p>
-                  </div>
-                </div>
-                {readyForPayment ? (
-                  <Payment
-                    setReadyForPayment={setReadyForPayment}
-                    invoice={updatedInvo}
-                    trx={updatedTrx}
+                <>
+                  <Title invoice={data?.invoice} biz={data?.biz} />
+                  <Content
+                    invoice={data?.invoice}
                     customer={data?.customer}
-                    refetch={refetch}
-                    setSucc={setSucc}
+                    biz={data?.biz}
+                    trx={data?.trx}
                   />
-                ) : (
-                  <>
-                    <div className="flex flex-col gap-2 items-start w-full">
-                      <button
-                        type="button"
-                        onClick={() => handleView('bus')}
-                        className="w-full flex flex-col bg-white items-start text-left border border-gray-200 rounded-md p-2"
-                      >
-                        <div className="w-full flex items-center justify-between">
-                          <p className="text-xs text-stone-800">Participants</p>
-
-                          {view === 'bus' ? (
-                            <ChevronDown size={14} />
-                          ) : (
-                            <ChevronRight size={14} />
-                          )}
-                        </div>
-
-                        <div
-                          className={`transition-[max-height] duration-300 ease-in-out overflow-hidden w-full ${
-                            view === 'bus' ? 'max-h-fit' : 'max-h-0'
-                          }`}
-                        >
-                          <div className="w-full flex flex-col gap-4 items-start text-left p-2 mt-1">
-                            <div className="flex flex-col items-start w-full gap-1">
-                              <p className="text-xs text-stone-800 font-medium">
-                                Sender
-                              </p>
-                              <div className="flex flex-col gap-1 items-start w-full">
-                                <p className="text-xs text-stone-800">
-                                  {data?.biz?.name}
-                                </p>
-                                <p className="text-xs text-stone-800">
-                                  {data?.biz?.email}
-                                </p>
-                                <p className="text-stone-800 flex items-center gap-1">
-                                  <span className="text-xs">
-                                    {data?.biz?.country}
-                                  </span>
-                                </p>
-                              </div>
-                            </div>
-                            <div className="w-full flex flex-col items-start gap-1">
-                              <p className="text-xs text-stone-800 font-medium">
-                                Receiver
-                              </p>
-                              <div className="flex flex-col gap-1 items-start w-full">
-                                <p className="text-xs text-stone-800">
-                                  {data?.invoice?.customer?.name}
-                                </p>
-                                <p className="text-xs text-stone-800">
-                                  {data?.invoice?.customer?.email}
-                                </p>
-                                <p className="text-stone-800 flex items-center gap-1">
-                                  <span className="text-xs">
-                                    {data?.invoice?.customer?.country?.label}
-                                  </span>
-                                </p>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </button>
-                      <div className="w-full flex flex-col items-start border border-gray-200 rounded-md p-2 relative">
-                        <Timeline
-                          className="text-left ml-1 mt-2"
-                          items={trxItems}
-                        />
-                      </div>
-                    </div>
-                    {data?.invoice?.status === 'void' ? (
-                      <div className="w-full flex flex-col items-center justify-center h-16 border border-gray-200 rounded-md bg-gray-50">
-                        <XSquare size={14} className="text-red-400" />
-                        <p className="text-stone-800 text-xs">
-                          Invoice was canceled
-                        </p>
-                      </div>
-                    ) : (
-                      <div className="w-full flex justify-between items-end">
-                        <div className="flex flex-col items-start">
-                          <p className="text-stone-800 text-xs">Amount:</p>
-                          <p className="text-stone-800 text-sm font-semibold">
-                            $
-                            {parseFloat(data?.invoice?.amount)?.toLocaleString(
-                              undefined,
-                              {
-                                minimumFractionDigits: 2,
-                                maximumFractionDigits: 2,
-                              }
-                            )}
-                            {data?.invoice?.type === 'recurring' ? (
-                              <span
-                                className="font-medium"
-                                style={{ fontSize: '10px' }}
-                              >
-                                {interval}
-                              </span>
-                            ) : (
-                              ''
-                            )}
-                          </p>
-                        </div>
-                        {readyForPayment ? (
-                          ''
-                        ) : (
-                          <button
-                            type="button"
-                            onClick={handleMoveToPayment}
-                            className="p-2 border border-stone-800 text-stone-800 rounded-md text-xs font-medium"
-                            disabled={isOwner || updating}
-                          >
-                            Pay Now
-                          </button>
-                        )}
-                      </div>
-                    )}
-                  </>
-                )}
-              </div>
-              <div className="w-full bg-white border border-gray-200 rounded-md p-2 flex flex-col items-center text-center mb-12">
-                <Link to="/">
-                  <p
-                    className="font-bold text-stone-800 dark:text-white text-sm flex items-center gap-1"
-                    style={{ fontFamily: 'Geist Mono' }}
-                  >
-                    <Layers size={16} className="font-black dark:text-white" />
-                    Bizvo
-                  </p>
-                </Link>
-                <p className="text-stone-800" style={{ fontSize: '11px' }}>
-                  Customer Payments Made Easy
-                </p>
-              </div>
-            </div>
+                  <Amount
+                    invoice={data?.invoice}
+                    handleMoveToPayment={handleMoveToPayment}
+                    updating={updating}
+                    setView={setView}
+                    trx={data?.trx}
+                  />
+                </>
+              )}
+            </>
+          ) : (
+            ''
           )}
-        </>
-      );
+
+          {view === 'trxs' ? <Trxs setView={setView} trxs={data?.trxs} /> : ''}
+          {view === 'paymeth' ? (
+            <Method
+              invoice={updatedInvo}
+              trx={updatedTrx}
+              customer={data?.customer}
+              setView={setView}
+              added={added}
+              setAdded={setAdded}
+              refetch={refetch}
+            />
+          ) : (
+            ''
+          )}
+        </div>
+
+        <div className="w-full flex items-center justify-center text-center mt-8">
+          <Link to="/" className="flex items-center gap-1">
+            <p
+              className="text-stone-800 dark:text-white flex items-center"
+              style={{ fontSize: '11px' }}
+            >
+              Powered by
+            </p>
+            <p
+              className="font-bold text-stone-800 dark:text-white text-sm flex items-center gap-1"
+              style={{ fontFamily: 'Geist Mono' }}
+            >
+              <Layers size={16} className="font-black dark:text-white" />
+              Bizvo
+            </p>
+          </Link>
+        </div>
+      </div>
+    );
+
+    /* {isOwner ? (
+          <div className="w-full flex flex-col gap-1 items-start border border-gray-200 rounded-md p-2">
+            <div className="flex items-center gap-1">
+              <Info size={13} className="text-blue-400" />
+              <p className="text-xs text-stone-800 font-medium">
+                Preview Only
+              </p>
+            </div>
+            <p className="text-xs text-stone-800 text-left">
+              Payment and changes are unavailable in preview. Open this
+              invoice in your dashboard using the button below.
+            </p>
+            <div className="w-full flex justify-end">
+              <Link
+                to={`/dashboard/invoices/${data?.invoice?._id}`}
+                className="font-medium text-xs text-stone-800 flex items-center justify-center border border-stone-800 rounded-md p-0.5"
+              >
+                <ChevronRight size={12} />
+              </Link>
+            </div>
+          </div>
+        ) : (
+          ''
+        )} */
   }
 
   return content;

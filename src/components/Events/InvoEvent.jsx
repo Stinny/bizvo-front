@@ -1,29 +1,31 @@
 import React from 'react';
-import { FileText } from 'react-feather';
+import {
+  AlertOctagon,
+  CheckCircle,
+  CreditCard,
+  FileText,
+  RefreshCw,
+  Send,
+  XSquare,
+} from 'react-feather';
 import { Link } from 'react-router-dom';
 import DateFormat from './DateFormat';
 
 const InvoEvent = ({ even }) => {
-  let evTxt;
+  let evIcon;
 
   switch (even?.type) {
     case 'sent':
-      evTxt = 'Invoice sent';
-      break;
-    case 'create':
-      evTxt = 'Invoice created';
+      evIcon = <Send size={12} className="text-stone-800" />;
       break;
     case 'cancel':
-      evTxt = 'Invoice canceled';
-      break;
-    case 'edit':
-      evTxt = 'Invoice updated';
+      evIcon = <XSquare size={12} className="text-red-400" />;
       break;
     case 'paid':
-      evTxt = (
-        <span className="font-medium">${(even?.value / 100).toFixed(2)}</span>
-      );
-
+      evIcon = <CheckCircle size={12} className="text-green-400" />;
+      break;
+    case 'fail':
+      evIcon = <AlertOctagon size={12} className="text-red-400" />;
       break;
     default:
       break;
@@ -37,26 +39,27 @@ const InvoEvent = ({ even }) => {
         even?.seen ? '' : 'bg-gray-50'
       }`}
     >
-      <div className="flex items-center justify-start w-32">
-        {even?.type === 'paid' ? (
+      <div className="flex items-center justify-start w-52">
+        {even?.type === 'paidd' ? (
           <p
             className="text-stone-800 dark:text-white"
             style={{ fontSize: '11px' }}
           >
-            Invoice paid {evTxt}
+            {even?.content}{' '}
+            <span className="font-medium">
+              ${(even?.amount / 100).toFixed(2)}
+            </span>
           </p>
         ) : (
           <p
             className="text-stone-800 dark:text-white"
             style={{ fontSize: '11px' }}
           >
-            {evTxt}
+            {even?.content}
           </p>
         )}
       </div>
-      <div className="w-12 flex justify-center">
-        <FileText size={12} />
-      </div>
+      <div className="w-12 flex justify-center">{evIcon}</div>
       <div className="flex items-center justify-end w-44">
         <p
           className="text-stone-800 dark:text-white"

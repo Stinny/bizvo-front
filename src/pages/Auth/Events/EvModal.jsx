@@ -2,11 +2,14 @@ import { Spinner } from 'flowbite-react';
 import React, { useEffect, useState } from 'react';
 import {
   AlertOctagon,
+  CheckCircle,
   ChevronRight,
   ExternalLink,
   FileText,
+  Send,
   Users,
   X,
+  XSquare,
 } from 'react-feather';
 import Modal from 'react-modal';
 import DateFormat from './DateFormat';
@@ -14,7 +17,7 @@ import { Link } from 'react-router-dom';
 
 const customStyles = {
   content: {
-    top: '50%',
+    top: '30%',
     left: '50%',
     right: 'auto',
     bottom: 'auto',
@@ -27,32 +30,20 @@ const customStyles = {
 Modal.setAppElement('#root');
 
 const EvModal = ({ open, setOpen, even }) => {
-  let evTxt;
+  let evIcon;
 
   switch (even?.type) {
     case 'sent':
-      evTxt = 'Invoice was sent';
-      break;
-    case 'create':
-      evTxt =
-        even?.source === 'invoice'
-          ? 'Invoice was created'
-          : 'Customer was created';
-      break;
-    case 'edit':
-      evTxt =
-        even?.source === 'invoice'
-          ? 'Invoice was updated'
-          : 'Customer was updated';
+      evIcon = <Send size={12} className="text-stone-800" />;
       break;
     case 'cancel':
-      evTxt = 'Invoice was canceled';
+      evIcon = <XSquare size={12} className="text-red-400" />;
       break;
     case 'paid':
-      evTxt = (
-        <span className="font-medium">${(even?.value / 100).toFixed(2)}</span>
-      );
-
+      evIcon = <CheckCircle size={12} className="text-green-400" />;
+      break;
+    case 'fail':
+      evIcon = <AlertOctagon size={12} className="text-red-400" />;
       break;
     default:
       break;
@@ -65,7 +56,7 @@ const EvModal = ({ open, setOpen, even }) => {
       style={customStyles}
       contentLabel="Event modal"
     >
-      <div className="w-80 flex flex-col gap-3 items-start relative">
+      <div className="w-80 flex flex-col gap-2 items-start relative">
         <div className="w-full flex items-start justify-between">
           <div className="flex gap-1">
             <div className="flex flex-col items-start">
@@ -90,46 +81,35 @@ const EvModal = ({ open, setOpen, even }) => {
           <p className="text-xs text-stone-800 font-medium">Details</p>
 
           {even?.type === 'paid' ? (
-            <p className="text-stone-800 dark:text-white text-xs">
-              Invoice was paid {evTxt}
+            <p className="text-stone-800 dark:text-white text-xs flex items-center gap-1">
+              <span>{evIcon}</span>
+              {even?.content}{' '}
+              <span className="font-medium">
+                ${(even?.amount / 100).toFixed(2)}
+              </span>
             </p>
           ) : (
-            <p className="text-stone-800 dark:text-white text-xs">{evTxt}</p>
+            <p className="text-stone-800 dark:text-white text-xs flex items-center gap-1">
+              <span>{evIcon}</span>
+              {even?.content}
+            </p>
           )}
-          {even?.source === 'invoice' ? (
-            <Link
-              to={`/dashboard/invoices/${even?.invoiceId}`}
-              state={{ tab: 2 }}
-              className="w-full flex items-center justify-between border border-gray-200 rounded-md p-2"
-            >
-              <div className="flex flex-col items-start">
-                <p className="text-xs text-stone-800 flex items-center gap-1">
-                  <FileText size={12} />
-                  Invoice
-                </p>
-                <p className="text-stone-800" style={{ fontSize: '11px' }}>
-                  #{even?.invoiceId}
-                </p>
-              </div>
-              <ChevronRight size={12} className="text-stone-800" />
-            </Link>
-          ) : (
-            <Link
-              to={`/dashboard/customers/${even?.customerId}`}
-              className="w-full flex items-center justify-between border border-gray-200 rounded-md p-2"
-            >
-              <div className="flex flex-col items-start">
-                <p className="text-xs text-stone-800 flex items-center gap-1">
-                  <Users size={12} />
-                  Customer
-                </p>
-                <p className="text-stone-800" style={{ fontSize: '11px' }}>
-                  #{even?.customerId}
-                </p>
-              </div>
-              <ChevronRight size={12} className="text-stone-800" />
-            </Link>
-          )}
+
+          <Link
+            to={`/dashboard/invoices/${even?.invoiceId}`}
+            className="w-full flex items-center justify-between border border-gray-200 hover:border-stone-800 rounded-md p-2"
+          >
+            <div className="flex flex-col items-start">
+              <p className="text-xs text-stone-800 flex items-center gap-1">
+                <FileText size={12} />
+                Invoice
+              </p>
+              <p className="text-stone-800" style={{ fontSize: '11px' }}>
+                #{even?.invoiceId}
+              </p>
+            </div>
+            <ChevronRight size={12} className="text-stone-800" />
+          </Link>
         </div>
       </div>
     </Modal>

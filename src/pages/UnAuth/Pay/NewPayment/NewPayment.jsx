@@ -7,13 +7,17 @@ import { loadStripe } from '@stripe/stripe-js';
 
 const stripeLoader = loadStripe(import.meta.env.VITE_STRIPE_KEY);
 
-const Payment = ({
+const NewPayment = ({
   setReadyForPayment,
   invoice,
   trx,
   refetch,
   setSucc,
   customer,
+  view,
+  handleView,
+  error,
+  setError,
 }) => {
   const stripeOptions = {
     mode: 'payment',
@@ -39,7 +43,7 @@ const Payment = ({
           borderColor: 'rgb(229 231 235)',
           backgroundColor: 'rgb(249 250 251)',
           boxShadow: 'none',
-          padding: '2px',
+          padding: '3px',
         },
         '.Input:focus': {
           borderColor: 'rgb(229 231 235)',
@@ -60,9 +64,9 @@ const Payment = ({
     },
   };
 
-  if (invoice?.type === 'recurring') {
-    stripeOptions.setup_future_usage = 'off_session';
-  }
+  // if (invoice?.type === 'recurring') {
+  //   stripeOptions.setup_future_usage = 'off_session';
+  // }
 
   return (
     <Elements stripe={stripeLoader} options={stripeOptions}>
@@ -73,9 +77,13 @@ const Payment = ({
         customer={customer}
         refetch={refetch}
         setSucc={setSucc}
+        view={view}
+        handleView={handleView}
+        error={error}
+        setError={setError}
       />
     </Elements>
   );
 };
 
-export default Payment;
+export default NewPayment;

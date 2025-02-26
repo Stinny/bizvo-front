@@ -16,6 +16,7 @@ const Pay = () => {
   //get invo tkn from url query params
   const [searchParams] = useSearchParams();
   const token = searchParams.get('iat');
+  const uid = searchParams.get('uid');
   const { invoId } = useParams();
 
   //track paid status for success alert display
@@ -27,7 +28,20 @@ const Pay = () => {
     useGetInvoiceToPayQuery({
       invoId: invoId,
       invoTkn: token,
+      uid: uid ? uid : '',
     });
+
+  useEffect(() => {
+    if (succ || added) {
+      const timer = setTimeout(() => {
+        setSucc(false);
+        setAdded(false);
+      }, 5000); // 5 seconds
+
+      // Cleanup the timer if the component unmounts
+      return () => clearTimeout(timer);
+    }
+  }, [succ, added]);
 
   useEffect(() => {
     refetch();
@@ -43,7 +57,7 @@ const Pay = () => {
       </div>
     ) : (
       <div
-        className="mx-auto h-96 mt-16 bg-white border border-gray-200 rounded-md flex items-center justify-center"
+        className="mx-auto h-96 mt-20 bg-white border border-gray-200 rounded-md flex items-center justify-center"
         style={{ width: '370px' }}
       >
         <Spinner />

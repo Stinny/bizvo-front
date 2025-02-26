@@ -17,11 +17,11 @@ import ReactCountryFlag from 'react-country-flag';
 import moment from 'moment';
 import { useUpdateInvoForPayMutation } from '../../../api/invoicesApiSlice';
 import MobilePaid from './MobilePaid';
-import Payment from './Payment/Payment';
+import Payment from './NewPayment/NewPayment';
 import InvoStatus from '../../../components/InvoStatus';
 import { Timeline } from 'antd';
 import BizModal from './BizModal';
-import LinkExp from './LinkExp';
+import LinkExp from '../../../components/Pay/LinkExp';
 import Invalid from './Invalid';
 
 const Mobile = ({

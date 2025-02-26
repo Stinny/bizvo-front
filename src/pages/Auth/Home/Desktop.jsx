@@ -138,10 +138,6 @@ const Desktop = ({ data, currentUser }) => {
           </div>
         </div>
         <div className="col-span-6 flex flex-grow">
-          {/* <div className="border rounded-md border-gray-200 dark:border-white bg-white dark:bg-neutral-800 flex items-center justify-center w-full h-full">
-            <BarChart size={18} className="dark:text-white" />
-          </div> */}
-
           <DashEvents />
         </div>
       </div>

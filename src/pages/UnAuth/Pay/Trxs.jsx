@@ -11,7 +11,7 @@ import {
 } from 'react-feather';
 import ReactPaginate from 'react-paginate';
 
-const Trxs = ({ trxs, setSeeTrx }) => {
+const Trxs = ({ trxs, setView }) => {
   const [seeTx, setSeeTx] = useState('');
 
   //stuff for pagination//
@@ -41,12 +41,12 @@ const Trxs = ({ trxs, setSeeTrx }) => {
       <div className="w-full flex items-center gap-1">
         <button
           type="button"
-          onClick={() => setSeeTrx(false)}
+          onClick={() => setView('details')}
           className="text-stone-800 flex items-center justify-center border border-stone-800 p-0.5 rounded-md"
         >
           <ChevronLeft size={12} />
         </button>
-        <p className="text-stone-800 text-xs">All Transactions</p>
+        <p className="text-stone-800 text-xs">Transaction History</p>
       </div>
       <div className="w-full flex flex-col gap-2 min-h-24">
         {' '}
@@ -64,7 +64,7 @@ const Trxs = ({ trxs, setSeeTrx }) => {
                     className="text-stone-800 font-medium"
                     style={{ fontSize: '11px' }}
                   >
-                    {moment(trx?.done_on).format('MMM Do, YYYY')}
+                    {moment(trx?.done_on).format('MMMM Do, YYYY')}
                   </p>
                 </div>
               </div>
@@ -87,7 +87,7 @@ const Trxs = ({ trxs, setSeeTrx }) => {
                     dot: <Send size={12} className="text-stone-800" />,
                     children: (
                       <p className="text-xs text-stone-800 pt-1">
-                        Invoice sent{' '}
+                        Invoiced for{' '}
                         <span className="font-semibold">
                           ${(trx?.amount / 100).toFixed(2)}
                         </span>

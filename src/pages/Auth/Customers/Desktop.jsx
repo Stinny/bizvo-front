@@ -1,20 +1,38 @@
-import React, { useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { ChevronLeft, ChevronRight, Plus, Send, Users } from 'react-feather';
 import ReactPaginate from 'react-paginate';
 import ReactCountryFlag from 'react-country-flag';
 
 const Desktop = ({ customers }) => {
+  const [searchTerm, setSearchTerm] = useState('');
+
+  const filteredCusts = useMemo(() => {
+    return customers.filter((cust) => {
+      const id = cust?._id ? cust?._id.toLowerCase() : '';
+      const name = cust?.name ? cust?.name.toLowerCase() : '';
+      const email = cust?.email ? cust?.email.toLowerCase() : '';
+      const term = searchTerm.toLowerCase();
+
+      // Check if ID or title matches search term
+      const matchesSearch =
+        id.includes(term) || name.includes(term) || email.includes(term);
+
+      // Return invoices that match all conditions
+      return matchesSearch;
+    });
+  }, [searchTerm, customers]);
+
   //stuff for pagination//
   const [itemOffset, setItemOffset] = useState(0);
   const itemsPerPage = 15;
 
   const endOffset = itemOffset + itemsPerPage;
-  const currentCusts = customers.slice(itemOffset, endOffset);
-  const pageCount = Math.ceil(customers.length / itemsPerPage);
+  const currentCusts = filteredCusts.slice(itemOffset, endOffset);
+  const pageCount = Math.ceil(customers?.length / itemsPerPage);
 
   const handlePageClick = (event) => {
-    const newOffset = (event.selected * itemsPerPage) % customers.length;
+    const newOffset = (event.selected * itemsPerPage) % filteredCusts.length;
 
     setItemOffset(newOffset);
   };
@@ -29,8 +47,19 @@ const Desktop = ({ customers }) => {
           <p className="text-sm text-stone-800">Customers</p>
           <p className="text-xs text-stone-800">Viewing all customers</p>
         </div>
-        <div className="w-24 flex items-center justify-end">
-          {customers?.length > 15 ? (
+        <div className="flex items-center gap-2">
+          <div className="flex items-center gap-1">
+            <input
+              type="text"
+              placeholder="Search customers"
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              className="p-0.5 pl-1 border border-gray-200 bg-gray-50 hover:bg-gray-200 focus:bg-gray-200 focus:ring-0 focus:border-gray-200 rounded-md"
+              style={{ fontSize: '11px' }}
+            />
+          </div>
+
+          <div className="flex items-center justify-end">
             <ReactPaginate
               breakLabel="..."
               nextLabel={<ChevronRight size={12} />}
@@ -38,42 +67,48 @@ const Desktop = ({ customers }) => {
               marginPagesDisplayed={0}
               pageRangeDisplayed={0}
               pageCount={pageCount}
-              renderOnZeroPageCount={null}
+              renderOnZeroPageCount={true}
               previousLabel={<ChevronLeft size={12} />}
               className="flex items-center gap-1"
               activeLinkClassName="activePage"
               pageLinkClassName="notActivePage"
               breakLinkClassName="breakLink"
             />
-          ) : (
-            ''
-          )}
+          </div>
         </div>
       </div>
-      <div className="w-full grid grid-cols-3 gap-2">
-        {currentCusts?.map((customer, index) => (
-          <Link
-            to={`/dashboard/customers/${customer?._id}`}
-            className="w-full bg-white hover:border-stone-800 border border-gray-200 rounded-md flex items-center justify-start relative p-2"
-            key={index}
-          >
-            <div className="flex items-center justify-between w-full">
-              <div className="flex flex-col items-start text-left overflow-hidden gap-1">
-                <p
-                  className="text-stone-800 overflow-hidden"
-                  style={{ fontSize: '10px' }}
-                >
-                  {customer?.email}
-                </p>
-                <p className="text-xs text-stone-800 text-left">
-                  {customer?.name}
-                </p>
+      {currentCusts?.length ? (
+        <div className="w-full grid grid-cols-3 gap-2">
+          {currentCusts?.map((customer, index) => (
+            <Link
+              to={`/dashboard/customers/${customer?._id}`}
+              className="w-full bg-white hover:border-stone-800 border border-gray-200 rounded-md flex items-center justify-start relative p-2"
+              key={index}
+            >
+              <div className="flex items-center justify-between w-full">
+                <div className="flex flex-col items-start text-left overflow-hidden gap-1">
+                  <p
+                    className="text-stone-800 overflow-hidden"
+                    style={{ fontSize: '10px' }}
+                  >
+                    {customer?.email}
+                  </p>
+                  <p className="text-xs text-stone-800 text-left">
+                    {customer?.name}
+                  </p>
+                </div>
+                <ReactCountryFlag countryCode={customer?.country?.value} />
               </div>
-              <ReactCountryFlag countryCode={customer?.country?.value} />
-            </div>
-          </Link>
-        ))}
-      </div>
+            </Link>
+          ))}
+        </div>
+      ) : (
+        <div className="w-full h-80 flex items-center justify-center border border-gray-200 rounded-md">
+          <div className="flex flex-col items-center text-center gap-1">
+            <p className="text-xs text-stone-800">No customers found</p>
+          </div>
+        </div>
+      )}
     </div>
   ) : (
     <div className="w-10/12 bg-white border rounded-md border-gray-200 p-2 h-96 flex items-center justify-center">

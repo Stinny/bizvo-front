@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import Cookies from 'js-cookie';
 import {
   BarChart2,
@@ -9,12 +9,13 @@ import {
   Layers,
   LogOut,
   MessageSquare,
+  Plus,
   Settings,
 } from 'react-feather';
 import { Link } from 'react-router-dom';
 import useHandleLogoutUser from '../../utils/logout';
 import { isMobile } from 'react-device-detect';
-import { Avatar, Dropdown } from 'flowbite-react';
+import { Avatar, Dropdown, Tooltip } from 'flowbite-react';
 import img from '../../assets/green.png';
 import Toast from '../Toast';
 import DarkMode from './DarkMode';
@@ -29,24 +30,33 @@ const Navbar = () => {
 
   const [open, setOpen] = useState(false);
   const dropdownRef = useRef(null);
+  const avatarRef = useRef(null);
 
-  const toggleDropdown = () => {
+  const toggleDropdown = (event) => {
+    event.stopPropagation(); // Stop bubbling to prevent unintended outside click detection
     setOpen((prev) => !prev);
   };
 
-  //for handling when a user clicks away from the dropdown menu
   const handleClickOutside = (event) => {
-    if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
-      setOpen(false); // Close the dropdown if clicking outside
+    if (
+      dropdownRef.current &&
+      !dropdownRef.current.contains(event.target) &&
+      avatarRef.current &&
+      !avatarRef.current.contains(event.target) // Ensure avatar click doesn't trigger outside click
+    ) {
+      setOpen(false);
     }
   };
 
   useEffect(() => {
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => {
+    if (open) {
+      document.addEventListener('mousedown', handleClickOutside);
+    } else {
       document.removeEventListener('mousedown', handleClickOutside);
-    };
-  }, []);
+    }
+
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, [open]);
 
   let content;
 
@@ -67,15 +77,28 @@ const Navbar = () => {
 
         <Toast />
 
-        <Avatar
-          size="xs"
-          img={currentUser?.logo?.url}
-          onClick={toggleDropdown}
-          className="hover:cursor-pointer"
-        />
+        <div className="flex items-center justify-end" ref={avatarRef}>
+          <Link
+            to="/dashboard/add"
+            className="w-full flex items-center justify-center gap-1 border border-stone-800 dark:border-white rounded-md p-0.5 mr-2"
+          >
+            <p
+              className="text-stone-800 dark:text-white"
+              style={{ fontSize: '11px' }}
+            >
+              New +
+            </p>
+          </Link>
+          <Avatar
+            size="xs"
+            img={currentUser?.logo?.url}
+            onClick={toggleDropdown}
+            className="hover:cursor-pointer w-10"
+          />
+        </div>
       </div>
 
-      {open ? (
+      {open && (
         <div
           ref={dropdownRef}
           className="w-full flex justify-end absolute top-full z-10"
@@ -116,18 +139,26 @@ const Navbar = () => {
             </div>
             <div className="border-t border-gray-200 flex items-center justify-between w-full pt-2">
               <DarkMode />
-              <button
-                type="button"
-                onClick={() => logout('logout')}
-                className="flex items-center justify-center"
+
+              <Tooltip
+                arrow={false}
+                style="light"
+                content={<p className="text-xs text-stone-800">Logout</p>}
               >
-                <LogOut size={14} className="text-stone-800 dark:text-white" />
-              </button>
+                <button
+                  type="button"
+                  onClick={() => logout('logout')}
+                  className="flex items-center justify-center"
+                >
+                  <LogOut
+                    size={14}
+                    className="text-stone-800 dark:text-white"
+                  />
+                </button>
+              </Tooltip>
             </div>
           </div>
         </div>
-      ) : (
-        ''
       )}
     </nav>
   ) : (

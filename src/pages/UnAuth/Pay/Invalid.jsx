@@ -103,16 +103,16 @@ const Invalid = ({ invoId, token, exp, customer, invoice }) => {
               <div className="flex flex-col items-center text-center gap-4">
                 <Clock size={18} className="text-red-400" />
                 <p className="text-stone-800 text-xs w-64">
-                  Payment link has expired. Send new link to make a payment and
-                  view full invoice.
+                  Payment link has expired. Send a new link to make payment and
+                  view the full invoice.
                 </p>
               </div>
             ) : (
-              <div className="flex flex-col items-center text-center gap-4 pb-4">
+              <div className="flex flex-col items-center text-center gap-4 pb-6 pt-4">
                 <AlertOctagon size={18} className="text-red-400" />
                 <p className="text-stone-800 text-xs w-64">
-                  Invoice does not exist or link is invalid. No payment or other
-                  changes can be made here.
+                  Invoice does not exist or the link is invalid. Payment and
+                  other changes are unavailable.
                 </p>
               </div>
             )}
@@ -250,12 +250,13 @@ const Invalid = ({ invoId, token, exp, customer, invoice }) => {
                 </p>
               </div>
             ) : (
-              <div className="flex flex-col items-center text-center gap-4 pb-4">
+              <div className="flex flex-col items-center text-center gap-4 pb-8 pt-6">
                 <AlertOctagon size={18} className="text-red-400" />
                 <p className="text-stone-800 text-xs w-64">
                   {exp
-                    ? `Payment link has expired. Send new link to make a payment and view full invoice.`
-                    : `Invoice does not exist or link is invalid. No payment or other changes can be made here.`}
+                    ? `Payment link has expired. Send a new link to make payment and view the full invoice.`
+                    : `Invoice does not exist or the link is invalid. Payment and
+                  other changes are unavailable.`}
                 </p>
               </div>
             )}
@@ -315,8 +316,11 @@ const Invalid = ({ invoId, token, exp, customer, invoice }) => {
           </div>
         </div>
       )}
-      <div className="w-full bg-white border border-gray-200 rounded-md p-2 flex flex-col items-center text-center">
-        <Link to="/">
+      <div className="w-full flex items-center justify-center text-center mt-10">
+        <Link to="/" className="flex items-center gap-1">
+          <p className="text-stone-800 dark:text-white text-xs flex items-center">
+            Powered by
+          </p>
           <p
             className="font-bold text-stone-800 dark:text-white text-sm flex items-center gap-1"
             style={{ fontFamily: 'Geist Mono' }}
@@ -325,9 +329,6 @@ const Invalid = ({ invoId, token, exp, customer, invoice }) => {
             Bizvo
           </p>
         </Link>
-        <p className="text-stone-800" style={{ fontSize: '11px' }}>
-          Customer Payments Made Easy
-        </p>
       </div>
     </div>
   );

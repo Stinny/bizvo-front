@@ -2,7 +2,7 @@ import { Tooltip } from 'flowbite-react';
 import React, { useEffect, useState } from 'react';
 import { Clock } from 'react-feather';
 
-const LinkExp = ({ expDate, refetch }) => {
+const LinkExp = ({ expDate, refetch, isOwner }) => {
   const calculateTimeLeft = () => {
     const now = new Date(); // Local time
     const expirationTime = new Date(expDate); // Convert UTC to local
@@ -28,7 +28,7 @@ const LinkExp = ({ expDate, refetch }) => {
   }, [expDate]);
 
   useEffect(() => {
-    if (timeLeft?.minutes === 0 && timeLeft?.seconds === 0) {
+    if (timeLeft?.minutes === 0 && timeLeft?.seconds === 0 && !isOwner) {
       refetch();
     }
   }, [timeLeft]);
@@ -38,15 +38,21 @@ const LinkExp = ({ expDate, refetch }) => {
       style="light"
       arrow={false}
       content={
-        <p className="text-xs text-stone-800 text-left">
-          Time until payment link expires
+        <p className="text-xs text-stone-800 text-left w-52">
+          Time until this payment link expires. Easily send a new one to the
+          receivers email below.
         </p>
       }
     >
-      <p className="hover:cursor-pointer">
+      <p
+        className={`font-medium text-xs hover:cursor-pointer flex items-center gap-1  ${
+          timeLeft?.minutes < 1 ? 'text-red-300' : 'text-stone-800'
+        }`}
+      >
+        <Clock size={12} />
         <span
           className={`font-medium text-xs  ${
-            timeLeft?.minutes < 1 ? 'text-red-400' : 'text-stone-800'
+            timeLeft?.minutes < 1 ? 'text-red-300' : 'text-stone-800'
           }`}
         >
           {String(timeLeft.minutes).padStart(2, '0')}:

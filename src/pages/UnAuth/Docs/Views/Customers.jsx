@@ -1,4 +1,5 @@
 import React from 'react';
+import { Info } from 'react-feather';
 
 const Customers = ({ lastUpdated }) => {
   return (
@@ -14,13 +15,18 @@ const Customers = ({ lastUpdated }) => {
         <p className="text-sm text-stone-800 font-medium">Customers</p>
         <p className="text-xs text-stone-800">
           Creating and managing customers is important for successful payments
-          and tax reporting. Customer details are used during the tax
-          calculation process. At least one customer needs to be created to
-          attach to an invoice.
+          and tax reporting. Customer details are always used during the tax
+          calculation process. Details must always be as accurate as possible.
         </p>
+        <div className="p-1 border border-gray-200 rounded-md flex items-center justify-center gap-1">
+          <Info size={12} className="text-blue-400" />
+          <p className="text-xs text-stone-800">
+            At least one customer is required to create invoices
+          </p>
+        </div>
         <p className="text-xs text-stone-800">
-          Creating a customer is really easy and only requires one step. What is
-          needed:
+          Creating a customer is really easy and only requires one form. Any
+          customer can be edited at any time. What is needed:
         </p>
         <div className="flex items-center gap-2">
           <div className="p-1 border border-gray-200 rounded-md flex items-center justify-center">
@@ -41,6 +47,8 @@ const Customers = ({ lastUpdated }) => {
         </div>
         <p className="text-xs text-stone-800">
           You can also choose to add a phone number and a brief description.
+          Each customer created will be unique to the email. Having more than
+          one customer with the same email is not allowed.
         </p>
       </div>
     </div>

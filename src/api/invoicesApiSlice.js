@@ -64,13 +64,24 @@ export const invoicesApiSlice = apiSlice.injectEndpoints({
       }),
     }),
     confirmPayInvo: builder.mutation({
-      query: ({ invoiceId, tkn, payOrigin }) => ({
+      query: ({ invoiceId, tkn, payOrigin, allow }) => ({
         url: `/invoices/confirm/pay`,
         method: 'POST',
         body: {
           invoiceId: invoiceId,
           confirmTkn: tkn,
           payOrigin: payOrigin,
+          allow: allow,
+        },
+      }),
+    }),
+    confirmPayInvoExist: builder.mutation({
+      query: ({ invoiceId, trxId }) => ({
+        url: `/invoices/confirm/pay/exists`,
+        method: 'POST',
+        body: {
+          invoiceId: invoiceId,
+          trxId: trxId,
         },
       }),
     }),
@@ -119,8 +130,8 @@ export const invoicesApiSlice = apiSlice.injectEndpoints({
       query: ({ invoiceId }) => `/invoices/get/${invoiceId}`,
     }),
     getInvoiceToPay: builder.query({
-      query: ({ invoId, invoTkn }) =>
-        `/invoices/get/pay/${invoId}?iat=${invoTkn}`,
+      query: ({ invoId, invoTkn, uid }) =>
+        `/invoices/get/pay/${invoId}?iat=${invoTkn}&uid=${uid}`,
     }),
   }),
 });
@@ -137,4 +148,5 @@ export const {
   useConfirmPayInvoMutation,
   useCancelInvoiceMutation,
   useGetNewLinkMutation,
+  useConfirmPayInvoExistMutation,
 } = invoicesApiSlice;

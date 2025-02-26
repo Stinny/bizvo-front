@@ -13,11 +13,11 @@ const Desktop = ({ payouts, balance, currentUser }) => {
   const itemsPerPage = 8;
 
   const endOffset = itemOffset + itemsPerPage;
-  const currentPayouts = payouts.slice(itemOffset, endOffset);
-  const pageCount = Math.ceil(payouts.length / itemsPerPage);
+  const currentPayouts = payouts?.slice(itemOffset, endOffset);
+  const pageCount = Math.ceil(payouts?.length / itemsPerPage);
 
   const handlePageClick = (event) => {
-    const newOffset = (event.selected * itemsPerPage) % payouts.length;
+    const newOffset = (event.selected * itemsPerPage) % payouts?.length;
 
     setItemOffset(newOffset);
   };
@@ -87,25 +87,21 @@ const Desktop = ({ payouts, balance, currentUser }) => {
               </div>
             </div>
           </div>
-          <div className="w-24 flex items-center justify-end">
-            {payouts?.length > 8 ? (
-              <ReactPaginate
-                breakLabel="..."
-                nextLabel={<ChevronRight size={12} />}
-                onPageChange={handlePageClick}
-                marginPagesDisplayed={0}
-                pageRangeDisplayed={0}
-                pageCount={pageCount}
-                renderOnZeroPageCount={null}
-                previousLabel={<ChevronLeft size={12} />}
-                className="flex items-center gap-1"
-                activeLinkClassName="activePage"
-                pageLinkClassName="notActivePage"
-                breakLinkClassName="breakLink"
-              />
-            ) : (
-              ''
-            )}
+          <div className="flex items-center justify-end">
+            <ReactPaginate
+              breakLabel="..."
+              nextLabel={<ChevronRight size={12} />}
+              onPageChange={handlePageClick}
+              marginPagesDisplayed={0}
+              pageRangeDisplayed={0}
+              pageCount={pageCount}
+              renderOnZeroPageCount={null}
+              previousLabel={<ChevronLeft size={12} />}
+              className="flex items-center gap-1"
+              activeLinkClassName="activePage"
+              pageLinkClassName="notActivePage"
+              breakLinkClassName="breakLink"
+            />
           </div>
         </div>
         {payouts?.length ? (
@@ -150,7 +146,7 @@ const Desktop = ({ payouts, balance, currentUser }) => {
             <div className="flex flex-col items-center text-center">
               <DollarSign size={16} className="text-stone-800 mb-2" />
               <p className="text-sm text-stone-800">No Payouts</p>
-              <p className="text-xs text-stone-600 w-72">
+              <p className="text-xs text-stone-800 w-52">
                 Receive a payout when you accumulate a balance
               </p>
             </div>
