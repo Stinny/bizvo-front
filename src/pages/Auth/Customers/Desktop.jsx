@@ -116,14 +116,15 @@ const Desktop = ({ customers }) => {
         <Users size={16} className="text-stone-800 mb-2" />
         <p className="text-sm text-stone-800">No Customers</p>
         <p className="text-xs text-stone-800 w-72">
-          Create customers to send invoices to
+          Create and save customers to attach to invoices
         </p>
         <Link
           to="/dashboard/customers/add"
-          className="flex items-center justify-center gap-1 border border-stone-800 rounded-md p-1 mt-2"
+          className="flex items-center justify-center gap-1 border border-stone-800 rounded-md p-0.5 pl-2 pr-2 mt-2"
         >
-          <p className="text-xs text-stone-800">New</p>
-          <Plus size={12} className="text-stone-800 font-bold" />
+          <p className="text-stone-800" style={{ fontSize: '11px' }}>
+            New +
+          </p>
         </Link>
       </div>
     </div>

@@ -51,6 +51,7 @@ const Account = ({ currentUser, refetch }) => {
   //form state
   const [email, setEmail] = useState(currentUser?.email);
   const [country, setCountry] = useState(currentUser?.country);
+  const [bizType, setBizType] = useState(currentUser?.bizType);
   const [name, setName] = useState(currentUser?.name);
   const [about, setAbout] = useState(currentUser?.about);
   const [logo, setLogo] = useState(null);
@@ -98,6 +99,7 @@ const Account = ({ currentUser, refetch }) => {
       formData.append('logoImg', logo);
       formData.append('email', email);
       formData.append('country', JSON.stringify(country));
+      formData.append('bizType', JSON.stringify(bizType));
 
       const editReq = await editAccount(formData).unwrap();
 
@@ -400,12 +402,12 @@ const Account = ({ currentUser, refetch }) => {
             onClick={() => setEdit(!edit)}
             className="text-stone-800"
           >
-            <EditIcon size={16} />
+            <EditIcon size={14} />
           </button>
         </div>
       </div>
       <div className="w-full flex flex-col gap-2">
-        <p className="text-xs text-stone-800 font-semibold">Account</p>
+        <p className="text-xs text-stone-800 font-medium">Account</p>
         <div className="flex items-start w-full gap-2">
           <div className="flex flex-col gap-2 w-full">
             <div className="flex flex-col items-start w-full gap-1">
@@ -455,7 +457,7 @@ const Account = ({ currentUser, refetch }) => {
             </div>
           </div>
         </div>
-        <p className="text-xs text-stone-800 font-semibold">Profile</p>
+        <p className="text-xs text-stone-800 font-medium">Profile</p>
         <div className="flex items-start w-full gap-2">
           <div className="flex flex-col w-full gap-2">
             <div className="flex flex-col gap-2 w-full">

@@ -5,6 +5,8 @@ import {
   ChevronDown,
   ChevronLeft,
   ChevronRight,
+  CornerLeftUp,
+  CornerUpLeft,
   CreditCard,
   Percent,
   Send,
@@ -44,9 +46,9 @@ const Trxs = ({ trxs, setView }) => {
           onClick={() => setView('details')}
           className="text-stone-800 flex items-center justify-center border border-stone-800 p-0.5 rounded-md"
         >
-          <ChevronLeft size={12} />
+          <CornerUpLeft size={12} />
         </button>
-        <p className="text-stone-800 text-xs">Transaction History</p>
+        <p className="text-stone-800 text-xs">Transactions</p>
       </div>
       <div className="w-full flex flex-col gap-2 min-h-24">
         {' '}

@@ -111,7 +111,7 @@ const Bank = ({ currentUser, refetch }) => {
                   style={{ fontSize: '10px' }}
                   className="text-stone-800 p-0.5 pr-2 pl-2 border border-stone-800 rounded-md flex items-center justify-center gap-1"
                 >
-                  <Calendar size={12} />
+                  <Calendar size={14} />
                   {schedule === 'Monthly' ? 'Monthly' : 'Weekly'}
                 </button>
                 <div className="flex items-center gap-2">
@@ -120,14 +120,14 @@ const Bank = ({ currentUser, refetch }) => {
                     onClick={() => setDel(!del)}
                     className="text-red-400"
                   >
-                    <Trash size={16} />
+                    <Trash size={14} />
                   </button>
                   <button
                     type="button"
                     onClick={handleGetUpdateUrl}
                     className="text-stone-800"
                   >
-                    <Edit size={16} />
+                    <Edit size={14} />
                   </button>
                 </div>
               </>
@@ -186,14 +186,14 @@ const Bank = ({ currentUser, refetch }) => {
                     className=" text-red-400"
                     onClick={handleSchedCancel}
                   >
-                    <X size={16} />
+                    <X size={14} />
                   </button>
                   <button
                     type="button"
                     className=" text-stone-800"
                     onClick={handleSaveSched}
                   >
-                    <Save size={16} />
+                    <Save size={14} />
                   </button>
                 </div>
               </div>

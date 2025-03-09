@@ -37,14 +37,18 @@ const Desktop = ({
   setSucc,
   added,
   setAdded,
+  rem,
+  setRem,
+  view,
+  setView,
+  uid,
 }) => {
-  const [view, setView] = useState('details');
   const [readyForPayment, setReadyForPayment] = useState(false);
   const [updatingInvo, setUpdatingInvo] = useState(false);
   const [updatedInvo, setUpdatedInvo] = useState({});
   const [updatedTrx, setUpdatedTrx] = useState({});
 
-  const isOwner = data?.invoice?.sellerId === currentUser?._id;
+  const isOwner = data?.invoice?.sellerId === currentUser?._id && uid;
 
   //hook for updating invo
   const [updateInvoForPay, { isLoading: updating }] =
@@ -114,7 +118,15 @@ const Desktop = ({
         {added ? (
           <div className="w-full flex items-center justify-start gap-2 border border-gray-200 bg-white rounded-md p-2 mb-2">
             <CheckCircle size={14} className="text-green-400" />
-            <p className="text-xs text-stone-800">Payment method changed</p>
+            <p className="text-xs text-stone-800">Payment method added</p>
+          </div>
+        ) : (
+          ''
+        )}
+        {rem ? (
+          <div className="w-full flex items-center justify-start gap-2 border border-gray-200 bg-white rounded-md p-2 mb-2">
+            <XSquare size={14} className="text-red-400" />
+            <p className="text-xs text-stone-800">Payment method removed</p>
           </div>
         ) : (
           ''
@@ -165,6 +177,8 @@ const Desktop = ({
               setView={setView}
               added={added}
               setAdded={setAdded}
+              rem={rem}
+              setRem={setRem}
               refetch={refetch}
             />
           ) : (
@@ -191,31 +205,6 @@ const Desktop = ({
         </div>
       </div>
     );
-
-    /* {isOwner ? (
-          <div className="w-full flex flex-col gap-1 items-start border border-gray-200 rounded-md p-2">
-            <div className="flex items-center gap-1">
-              <Info size={13} className="text-blue-400" />
-              <p className="text-xs text-stone-800 font-medium">
-                Preview Only
-              </p>
-            </div>
-            <p className="text-xs text-stone-800 text-left">
-              Payment and changes are unavailable in preview. Open this
-              invoice in your dashboard using the button below.
-            </p>
-            <div className="w-full flex justify-end">
-              <Link
-                to={`/dashboard/invoices/${data?.invoice?._id}`}
-                className="font-medium text-xs text-stone-800 flex items-center justify-center border border-stone-800 rounded-md p-0.5"
-              >
-                <ChevronRight size={12} />
-              </Link>
-            </div>
-          </div>
-        ) : (
-          ''
-        )} */
   }
 
   return content;

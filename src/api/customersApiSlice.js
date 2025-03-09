@@ -69,6 +69,16 @@ export const customersApiSlice = apiSlice.injectEndpoints({
         },
       }),
     }),
+    removePayMethod: builder.mutation({
+      query: ({ customerId, paymentMeth }) => ({
+        url: `/customers/pay/remove`,
+        method: 'POST',
+        body: {
+          customerId: customerId,
+          paymentMeth: paymentMeth,
+        },
+      }),
+    }),
     getCustomers: builder.query({
       query: () => `/customers/get`,
     }),
@@ -90,4 +100,5 @@ export const {
   useGetCustomerOptsQuery,
   useGetPaySetupMutation,
   useChangePayMethodMutation,
+  useRemovePayMethodMutation,
 } = customersApiSlice;

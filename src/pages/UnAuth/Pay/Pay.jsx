@@ -19,9 +19,13 @@ const Pay = () => {
   const uid = searchParams.get('uid');
   const { invoId } = useParams();
 
+  //view
+  const [view, setView] = useState('details');
+
   //track paid status for success alert display
   const [succ, setSucc] = useState(false);
   const [added, setAdded] = useState(false);
+  const [rem, setRem] = useState(false);
 
   //hook to getting invo from API
   const { data, isLoading, isSuccess, isFetching, refetch } =
@@ -32,16 +36,21 @@ const Pay = () => {
     });
 
   useEffect(() => {
-    if (succ || added) {
+    if (succ || added || rem) {
       const timer = setTimeout(() => {
         setSucc(false);
         setAdded(false);
+        setRem(false);
       }, 5000); // 5 seconds
 
       // Cleanup the timer if the component unmounts
       return () => clearTimeout(timer);
     }
-  }, [succ, added]);
+
+    if (added || rem) {
+      setView('payMeth');
+    }
+  }, [succ, added, rem]);
 
   useEffect(() => {
     refetch();
@@ -75,6 +84,11 @@ const Pay = () => {
         setSucc={setSucc}
         added={added}
         setAdded={setAdded}
+        rem={rem}
+        setRem={setRem}
+        view={view}
+        setView={setView}
+        uid={uid}
       />
     ) : (
       <Desktop
@@ -87,6 +101,11 @@ const Pay = () => {
         setSucc={setSucc}
         added={added}
         setAdded={setAdded}
+        rem={rem}
+        setRem={setRem}
+        view={view}
+        setView={setView}
+        uid={uid}
       />
     );
   }

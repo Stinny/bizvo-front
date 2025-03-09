@@ -6,6 +6,8 @@ import { Checkbox, Skeleton } from 'antd';
 import InvoStatus from '../../../components/InvoStatus';
 import { Spinner } from 'flowbite-react';
 import { isMobile } from 'react-device-detect';
+import { BiLogoGmail } from 'react-icons/bi';
+import { PiMicrosoftOutlookLogo } from 'react-icons/pi';
 
 const Invalid = ({ invoId, token, exp, customer, invoice }) => {
   const [send, setSend] = useState(false);
@@ -65,20 +67,24 @@ const Invalid = ({ invoId, token, exp, customer, invoice }) => {
           </div>
           <Skeleton />
           <div className="w-full flex flex-col gap-4 items-center border border-gray-200 rounded-md p-4">
-            {' '}
             <CheckCircle size={18} className="text-green-400" />
-            <div className="flex flex-col items-center text-center gap-2">
-              <p className="text-stone-800 text-xs w-72">
-                A valid payment link has been sent or one already exists. Please
-                check your inbox.
-              </p>
+            <div className="flex flex-col items-center text-center gap-4">
               <div className="w-full flex flex-col items-center">
-                <p className="text-stone-800 text-xs text-center font-medium">
-                  Sent to
-                </p>
                 <p className="text-stone-800 text-xs text-center text-wrap">
                   {customer?.email}
                 </p>
+              </div>
+              <p className="text-stone-800 text-xs w-72">
+                A valid payment link has been sent or one already exists. Please
+                check your email inbox.
+              </p>
+              <div className="w-full flex items-center justify-center gap-3">
+                <a href="https://gmail.com" target="_blank">
+                  <BiLogoGmail className="text-xl" />
+                </a>
+                <a href="https://outlook.com" target="_blank">
+                  <PiMicrosoftOutlookLogo className="text-xl" />
+                </a>
               </div>
             </div>
           </div>
@@ -101,11 +107,23 @@ const Invalid = ({ invoId, token, exp, customer, invoice }) => {
           <div className="w-full flex flex-col items-center gap-4 border border-gray-200 rounded-md p-2 pt-4">
             {exp ? (
               <div className="flex flex-col items-center text-center gap-4">
-                <Clock size={18} className="text-red-400" />
+                <div className="flex items-center gap-1">
+                  <Clock size={14} className="text-red-300" />
+                  <p className="text-red-300 text-xs">0:00</p>
+                </div>
                 <p className="text-stone-800 text-xs w-64">
-                  Payment link has expired. Send a new link to make payment and
-                  view the full invoice.
+                  This payment link has expired. Send a new link below to view
+                  the full invoice.
                 </p>
+                <div className="flex items-center gap-1">
+                  <Checkbox
+                    checked={send}
+                    onChange={(e) => setSend(e.target.checked)}
+                  />
+                  <div className="flex flex-col items-start">
+                    <p className="text-xs text-stone-800">Send new link</p>
+                  </div>
+                </div>
               </div>
             ) : (
               <div className="flex flex-col items-center text-center gap-4 pb-6 pt-4">
@@ -152,17 +170,6 @@ const Invalid = ({ invoId, token, exp, customer, invoice }) => {
                         </button>
                       )}
                     </form>
-                    <div className="flex items-center gap-1">
-                      <Checkbox
-                        checked={send}
-                        onChange={(e) => setSend(e.target.checked)}
-                      />
-                      <div className="flex flex-col items-start">
-                        <p className="text-xs text-stone-800">
-                          Send new payment link
-                        </p>
-                      </div>
-                    </div>
                   </div>
                 )}
               </>
@@ -172,8 +179,11 @@ const Invalid = ({ invoId, token, exp, customer, invoice }) => {
           </div>
         </div>
       )}
-      <div className="w-full bg-white border border-gray-200 rounded-md p-2 flex flex-col items-center text-center">
-        <Link to="/">
+      <div className="w-full flex items-center justify-center text-center mt-10">
+        <Link to="/" className="flex items-center gap-1">
+          <p className="text-stone-800 dark:text-white text-xs flex items-center">
+            Powered by
+          </p>
           <p
             className="font-bold text-stone-800 dark:text-white text-sm flex items-center gap-1"
             style={{ fontFamily: 'Geist Mono' }}
@@ -182,9 +192,6 @@ const Invalid = ({ invoId, token, exp, customer, invoice }) => {
             Bizvo
           </p>
         </Link>
-        <p className="text-stone-800" style={{ fontSize: '11px' }}>
-          Customer Payments Made Easy
-        </p>
       </div>
     </div>
   ) : (
@@ -209,18 +216,23 @@ const Invalid = ({ invoId, token, exp, customer, invoice }) => {
           <div className="w-full flex flex-col gap-4 items-center border border-gray-200 rounded-md p-4">
             {' '}
             <CheckCircle size={18} className="text-green-400" />
-            <div className="flex flex-col items-center text-center gap-2">
-              <p className="text-stone-800 text-xs w-72">
-                A valid payment link has been sent or one already exists. Please
-                check your inbox.
-              </p>
+            <div className="flex flex-col items-center text-center gap-4">
               <div className="w-full flex flex-col items-center">
-                <p className="text-stone-800 text-xs text-center font-medium">
-                  Sent to
-                </p>
                 <p className="text-stone-800 text-xs text-center text-wrap">
                   {customer?.email}
                 </p>
+              </div>
+              <p className="text-stone-800 text-xs w-72">
+                A valid payment link has been sent or one already exists. Please
+                check your email inbox.
+              </p>
+              <div className="w-full flex items-center justify-center gap-3">
+                <a href="https://gmail.com" target="_blank">
+                  <BiLogoGmail className="text-xl" />
+                </a>
+                <a href="https://outlook.com" target="_blank">
+                  <PiMicrosoftOutlookLogo className="text-xl" />
+                </a>
               </div>
             </div>
           </div>
@@ -243,20 +255,30 @@ const Invalid = ({ invoId, token, exp, customer, invoice }) => {
           <div className="w-full flex flex-col items-center gap-4 border border-gray-200 rounded-md p-2 pt-4">
             {exp ? (
               <div className="flex flex-col items-center text-center gap-4">
-                <Clock size={18} className="text-red-400" />
+                <div className="flex items-center gap-1">
+                  <Clock size={14} className="text-red-300" />
+                  <p className="text-red-300 text-xs">0:00</p>
+                </div>
                 <p className="text-stone-800 text-xs w-64">
-                  Payment link has expired. Send new link to make a payment and
-                  view full invoice.
+                  This payment link has expired. Send a new link below to view
+                  the full invoice.
                 </p>
+                <div className="flex items-center gap-1">
+                  <Checkbox
+                    checked={send}
+                    onChange={(e) => setSend(e.target.checked)}
+                  />
+                  <div className="flex flex-col items-start">
+                    <p className="text-xs text-stone-800">Send new link</p>
+                  </div>
+                </div>
               </div>
             ) : (
               <div className="flex flex-col items-center text-center gap-4 pb-8 pt-6">
                 <AlertOctagon size={18} className="text-red-400" />
                 <p className="text-stone-800 text-xs w-64">
-                  {exp
-                    ? `Payment link has expired. Send a new link to make payment and view the full invoice.`
-                    : `Invoice does not exist or the link is invalid. Payment and
-                  other changes are unavailable.`}
+                  Invoice does not exist or the link is invalid. Payment and
+                  other changes are unavailable.
                 </p>
               </div>
             )}
@@ -296,17 +318,6 @@ const Invalid = ({ invoId, token, exp, customer, invoice }) => {
                         </button>
                       )}
                     </form>
-                    <div className="flex items-center gap-1">
-                      <Checkbox
-                        checked={send}
-                        onChange={(e) => setSend(e.target.checked)}
-                      />
-                      <div className="flex flex-col items-start">
-                        <p className="text-xs text-stone-800">
-                          Send new payment link
-                        </p>
-                      </div>
-                    </div>
                   </div>
                 )}
               </>

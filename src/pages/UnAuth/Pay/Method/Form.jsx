@@ -9,7 +9,7 @@ import { Checkbox } from 'antd';
 const Form = ({ setReady, sec, customer, invoice, refetch, setAdded }) => {
   const [error, setError] = useState('');
   const [isPayBtnDisabled, setIsPayBtnDisabled] = useState(true);
-  const [allow, setAllow] = useState(false);
+  const [allow, setAllow] = useState(true);
 
   const stripe = useStripe();
   const elements = useElements();
@@ -112,8 +112,7 @@ const Form = ({ setReady, sec, customer, invoice, refetch, setAdded }) => {
   return (
     <div className="w-full flex flex-col gap-2 items-start">
       <p className="text-stone-800 text-xs text-left">
-        This will replace your current payment method. No payments will be made
-        at this time.
+        This will replace any existing payment method. No charges will be made.
       </p>
       {error ? (
         <div className="w-full flex items-center justify-start gap-2 border border-gray-200 rounded-md p-2">
@@ -130,7 +129,7 @@ const Form = ({ setReady, sec, customer, invoice, refetch, setAdded }) => {
           onChange={(e) => setAllow(e.target.checked)}
         />
         <div className="flex flex-col items-start">
-          <p className="text-xs text-stone-800">Save for next payment</p>
+          <p className="text-xs text-stone-800">Allow for future use</p>
         </div>
       </div>
       {changing ? (
@@ -152,7 +151,7 @@ const Form = ({ setReady, sec, customer, invoice, refetch, setAdded }) => {
             onClick={handleConfirmPayment}
             disabled={isPayBtnDisabled || changing || !allow}
           >
-            Change
+            Add
           </button>
         </div>
       )}

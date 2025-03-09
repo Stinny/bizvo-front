@@ -24,7 +24,7 @@ const Desktop = ({
       >
         <TabList>
           <Tab>Account</Tab>
-          <Tab>Payments</Tab>
+          <Tab>Payouts</Tab>
           <Tab>Notifications</Tab>
           <Tab>Apps</Tab>
         </TabList>

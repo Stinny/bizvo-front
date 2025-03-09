@@ -40,7 +40,7 @@ const InvoEvent = ({ even, handleOpenEvent }) => {
       }`}
       key={even?._id}
     >
-      <div className="flex items-center justify-start text-left w-80">
+      <div className="flex items-center justify-start text-left">
         {even?.type === 'paid' ? (
           <p
             className="text-stone-800 dark:text-white"
@@ -48,7 +48,11 @@ const InvoEvent = ({ even, handleOpenEvent }) => {
           >
             {even?.content}{' '}
             <span className="font-medium">
-              ${(even?.amount / 100).toFixed(2)}
+              $
+              {parseFloat(even?.amount / 100)?.toLocaleString(undefined, {
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2,
+              })}
             </span>
           </p>
         ) : even?.type === 'sent' ? (
@@ -67,7 +71,7 @@ const InvoEvent = ({ even, handleOpenEvent }) => {
           </p>
         )}
       </div>
-      <div className="w-10 flex justify-start">{evIcon}</div>
+      {/* <div className="w-10 flex justify-start">{evIcon}</div> */}
       <div className="flex items-center justify-end w-52">
         <p
           className="text-stone-800 dark:text-white"

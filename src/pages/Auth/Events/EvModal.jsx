@@ -62,7 +62,7 @@ const EvModal = ({ open, setOpen, even }) => {
             <div className="flex flex-col items-start">
               <p className="text-sm text-stone-800">Viewing Event</p>
 
-              <p className="text-xs text-stone-700">#{even?._id}</p>
+              <p className="text-xs text-stone-800">#{even?._id}</p>
             </div>
           </div>
           <X
@@ -81,16 +81,31 @@ const EvModal = ({ open, setOpen, even }) => {
           <p className="text-xs text-stone-800 font-medium">Details</p>
 
           {even?.type === 'paid' ? (
-            <p className="text-stone-800 dark:text-white text-xs flex items-center gap-1">
-              <span>{evIcon}</span>
+            <p
+              className="text-stone-800 dark:text-white"
+              style={{ fontSize: '11px' }}
+            >
               {even?.content}{' '}
               <span className="font-medium">
-                ${(even?.amount / 100).toFixed(2)}
+                $
+                {parseFloat(even?.amount / 100)?.toLocaleString(undefined, {
+                  minimumFractionDigits: 2,
+                  maximumFractionDigits: 2,
+                })}
               </span>
             </p>
+          ) : even?.type === 'sent' ? (
+            <p
+              className="text-stone-800 dark:text-white"
+              style={{ fontSize: '11px' }}
+            >
+              {even?.content} <span className="font-medium">{even?.email}</span>
+            </p>
           ) : (
-            <p className="text-stone-800 dark:text-white text-xs flex items-center gap-1">
-              <span>{evIcon}</span>
+            <p
+              className="text-stone-800 dark:text-white"
+              style={{ fontSize: '11px' }}
+            >
               {even?.content}
             </p>
           )}

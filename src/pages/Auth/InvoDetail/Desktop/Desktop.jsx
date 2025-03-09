@@ -590,7 +590,11 @@ const Desktop = ({
                             className="text-stone-800 font-medium"
                             style={{ fontSize: '11px' }}
                           >
-                            ${(trx?.total / 100).toFixed(2)}
+                            $
+                            {parseFloat(trx?.total)?.toLocaleString(undefined, {
+                              minimumFractionDigits: 2,
+                              maximumFractionDigits: 2,
+                            })}
                           </p>
                         </div>
                       </div>
@@ -617,7 +621,14 @@ const Desktop = ({
                               <p className="text-xs text-stone-800 pt-1">
                                 Invoice sent{' '}
                                 <span className="font-semibold">
-                                  ${(trx?.amount / 100).toFixed(2)}
+                                  $
+                                  {parseFloat(trx?.amount)?.toLocaleString(
+                                    undefined,
+                                    {
+                                      minimumFractionDigits: 2,
+                                      maximumFractionDigits: 2,
+                                    }
+                                  )}
                                 </span>
                               </p>
                             ),
@@ -634,7 +645,14 @@ const Desktop = ({
                               <p className="text-xs text-stone-800 pt-1">
                                 Total after taxes{' '}
                                 <span className="font-semibold">
-                                  ${(trx?.total / 100).toFixed(2)}
+                                  $
+                                  {parseFloat(trx?.total)?.toLocaleString(
+                                    undefined,
+                                    {
+                                      minimumFractionDigits: 2,
+                                      maximumFractionDigits: 2,
+                                    }
+                                  )}
                                 </span>
                               </p>
                             ),
@@ -687,7 +705,14 @@ const Desktop = ({
                               <p className="text-xs text-stone-800 pt-1">
                                 You earn{' '}
                                 <span className="font-semibold">
-                                  ${(trx?.earned / 100).toFixed(2)}
+                                  $
+                                  {parseFloat(trx?.earned)?.toLocaleString(
+                                    undefined,
+                                    {
+                                      minimumFractionDigits: 2,
+                                      maximumFractionDigits: 2,
+                                    }
+                                  )}
                                 </span>
                               </p>
                             ),

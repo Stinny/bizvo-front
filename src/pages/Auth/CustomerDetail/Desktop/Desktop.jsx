@@ -138,7 +138,7 @@ const Desktop = ({ customer, refetch }) => {
             onClick={() => setEdit(!edit)}
             className="text-stone-800"
           >
-            <EditIcon size={16} />
+            <EditIcon size={14} />
           </button>
         </div>
       </div>

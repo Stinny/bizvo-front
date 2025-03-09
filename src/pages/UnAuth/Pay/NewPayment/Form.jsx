@@ -172,7 +172,7 @@ const Form = ({
               onChange={(e) => setAllow(e.target.checked)}
             />
             <div className="flex flex-col items-start">
-              <p className="text-xs text-stone-800">Save for next payment</p>
+              <p className="text-xs text-stone-800">Save for future use</p>
             </div>
           </div>
           {paying ? (

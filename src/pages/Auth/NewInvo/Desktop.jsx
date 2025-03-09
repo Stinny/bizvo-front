@@ -118,7 +118,7 @@ const Desktop = ({
               </p>
             </div>
             <X
-              size={16}
+              size={14}
               className="text-red-400 hover:cursor-pointer"
               onClick={() => setConfirmMod(false)}
             />
@@ -129,8 +129,8 @@ const Desktop = ({
               <p className="text-xs text-stone-800">Permanent action</p>
             </div>
             <p className="text-xs text-stone-800">
-              You have selected to send this invoice. The customer will be
-              notified and able to pay once sent.
+              You have selected to send this invoice. The customer will receive
+              a payment link to view the full invoice and submit payment.
             </p>
           </div>
           <div className="w-full flex items-center justify-end">
@@ -164,13 +164,13 @@ const Desktop = ({
               className="w-52"
               arrow={false}
             >
-              <div className="flex items-center gap-2">
+              <div className="flex items-center gap-1">
                 <Checkbox disabled />
                 <p className="text-xs text-stone-800">Send to customer</p>
               </div>
             </Tooltip>
           ) : (
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-1">
               <Checkbox
                 checked={send}
                 onChange={(e) => setSend(e.target.checked)}
@@ -183,14 +183,14 @@ const Desktop = ({
         <div className="w-24"></div>
         <div className="flex items-center gap-3 absolute top-0 right-0 mr-1 mt-1">
           <Link to="/dashboard/add" className="text-red-400">
-            <X size={16} />
+            <X size={14} />
           </Link>
           <button
             type="button"
             onClick={handleSaveInvoice}
             className="text-stone-800"
           >
-            <Save size={16} />
+            <Save size={14} />
           </button>
         </div>
       </div>

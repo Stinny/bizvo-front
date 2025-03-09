@@ -185,7 +185,7 @@ const Edit = ({
                   className="w-52"
                   arrow={false}
                 >
-                  <div className="flex items-center gap-2">
+                  <div className="flex items-center gap-1">
                     <Checkbox disabled />
                     <p className="text-xs text-stone-800">Send to customer</p>
                   </div>
@@ -209,7 +209,7 @@ const Edit = ({
             onClick={handleCancelEdits}
             className="text-red-400 font-bold"
           >
-            <X size={16} />
+            <X size={14} />
           </button>
 
           <button
@@ -217,7 +217,7 @@ const Edit = ({
             onClick={handleSaveEdits}
             className="text-stone-800"
           >
-            <Save size={16} />
+            <Save size={14} />
           </button>
         </div>
       </div>
@@ -384,7 +384,7 @@ const Edit = ({
                     int === 'monthly' ? 'border-stone-800' : 'border-gray-200'
                   } rounded-md hover:border-stone-800`}
                 >
-                  Every 30 days
+                  Monthly
                 </button>
                 <button
                   type="button"
@@ -393,7 +393,7 @@ const Edit = ({
                     int === 'weekly' ? 'border-stone-800' : 'border-gray-200'
                   } rounded-md hover:border-stone-800`}
                 >
-                  Every 7 days
+                  Weekly
                 </button>
               </div>
             </div>

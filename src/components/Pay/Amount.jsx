@@ -1,6 +1,12 @@
 import { Dropdown } from 'flowbite-react';
 import React, { useEffect, useRef, useState } from 'react';
-import { AlignRight, Clock, CreditCard, MoreVertical } from 'react-feather';
+import {
+  AlignRight,
+  Clock,
+  CreditCard,
+  Download,
+  MoreVertical,
+} from 'react-feather';
 
 const Amount = ({ handleMoveToPayment, updating, invoice, setView, trx }) => {
   const interval = invoice?.interval === 'weekly' ? '/week' : '/month';
@@ -99,18 +105,29 @@ const Amount = ({ handleMoveToPayment, updating, invoice, setView, trx }) => {
               className="w-full flex justify-end absolute top-full z-50 right-0"
             >
               <div className="bg-white border border-gray-200 rounded-md flex flex-col items-center gap-2 p-2">
-                <button
-                  type="button"
-                  onClick={() => setView('trxs')}
-                  className="w-full flex items-center gap-2 text-xs text-stone-800 hover:bg-white p-1"
-                >
-                  <Clock size={12} className="text-stone-800" />
-                  History
-                </button>
+                {invoice?.type === 'recurring' ? (
+                  <button
+                    type="button"
+                    onClick={() => setView('trxs')}
+                    className="w-full flex items-center gap-1 text-xs text-stone-800 hover:bg-white border border-white rounded-md hover:border-stone-800 p-1"
+                  >
+                    <Clock size={12} className="text-stone-800" />
+                    Transactions
+                  </button>
+                ) : (
+                  <button
+                    type="button"
+                    // onClick={() => setView('trxs')}
+                    className="w-full flex items-center gap-2 text-xs text-stone-800 hover:bg-white border border-white rounded-md hover:border-stone-800 p-1"
+                  >
+                    <Download size={12} className="text-stone-800" />
+                    PDF
+                  </button>
+                )}
                 <button
                   type="button"
                   onClick={() => setView('paymeth')}
-                  className="w-full flex items-center gap-2 text-xs text-stone-800 hover:bg-white p-1"
+                  className="w-full flex items-center gap-1 text-xs text-stone-800 hover:bg-white border border-white rounded-md hover:border-stone-800 p-1"
                 >
                   <CreditCard size={12} className="text-stone-800" />
                   Payment

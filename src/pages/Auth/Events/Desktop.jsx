@@ -104,7 +104,7 @@ const Desktop = ({
         <div className="flex flex-col items-start">
           <p className="text-sm text-stone-800">Events</p>
           <p className="text-xs text-stone-800">
-            {searchTerm ? 'Viewing events' : 'Viewing all events'}
+            {searchTerm ? `For invoice: ${searchTerm}` : 'Viewing all events'}
           </p>
         </div>
 
@@ -118,7 +118,7 @@ const Desktop = ({
               >
                 <X
                   size={12}
-                  className="text-stone-800 hover:cursor-pointer"
+                  className="text-red-400 hover:cursor-pointer"
                   onClick={handleClearInvoFilter}
                 />
               </Tooltip>

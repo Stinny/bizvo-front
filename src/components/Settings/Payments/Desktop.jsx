@@ -37,7 +37,7 @@ const Desktop = ({ currentUser, refetch }) => {
     <div className="w-full flex flex-col gap-4 pb-6">
       <div className="w-full flex items-start justify-between">
         <div className="flex flex-col items-start">
-          <p className="text-sm text-stone-800">Payment Settings</p>
+          <p className="text-sm text-stone-800">Payout Settings</p>
           <p className="text-xs text-stone-800">
             Connect and manage how you get paid
           </p>

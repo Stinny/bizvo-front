@@ -81,7 +81,7 @@ const Stripe = ({ currentUser, refetch }) => {
                   disabled={removing || isLoading}
                   className="text-red-400"
                 >
-                  <Trash size={16} />
+                  <Trash size={14} />
                 </button>
                 <button
                   type="button"
@@ -89,7 +89,7 @@ const Stripe = ({ currentUser, refetch }) => {
                   disabled={removing || isLoading}
                   className="text-stone-800"
                 >
-                  <Edit size={16} />
+                  <Edit size={14} />
                 </button>
               </div>
             </div>

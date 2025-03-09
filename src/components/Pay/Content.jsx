@@ -85,25 +85,10 @@ const Content = ({ invoice, biz, trx, customer }) => {
       });
     } else {
       trxItems.push({
-        dot: <CreditCard size={12} className="text-stone-800" />,
-        children: (
-          <p className="text-xs text-stone-800 pt-1">
-            Total due{' '}
-            <span className="font-medium">
-              $
-              {parseFloat(trx?.total / 100)?.toLocaleString(undefined, {
-                minimumFractionDigits: 2,
-                maximumFractionDigits: 2,
-              })}
-            </span>
-          </p>
-        ),
-      });
-      trxItems.push({
         dot: <Badge dot={true} status="processing" color="#000" />,
         children: (
           <p className="text-xs text-stone-800 pt-1">
-            {invoice?.status !== 'live' ? `Due by` : `Due next`}{' '}
+            {invoice?.status !== 'live' ? `Payment due` : `Upcoming charge`}{' '}
             <span className="font-medium">
               {moment(invoice?.dueDate).format('MMMM Do')}
             </span>
@@ -181,7 +166,7 @@ const Content = ({ invoice, biz, trx, customer }) => {
           className="w-full flex flex-col bg-white items-start text-left border border-gray-200 rounded-md p-2"
         >
           <div className="w-full flex items-center justify-between">
-            <p className="text-stone-800 text-xs">Details</p>
+            <p className="text-stone-800 text-xs">History</p>
 
             {view === 'due' ? (
               <ChevronDown size={14} />
@@ -198,7 +183,9 @@ const Content = ({ invoice, biz, trx, customer }) => {
             <div className="w-full flex flex-col gap-4 items-start text-left p-2 mt-1">
               <div className="flex flex-col items-start w-full gap-2">
                 <div className="w-full flex justify-between items-center">
-                  <p className="text-xs text-stone-800 font-medium">Sent</p>
+                  <p className=" text-stone-800" style={{ fontSize: '11px' }}>
+                    Received
+                  </p>
                   <p className="text-stone-800" style={{ fontSize: '11px' }}>
                     {moment(invoice?.sentOn).format('MMMM Do, YYYY')}
                   </p>
@@ -207,7 +194,12 @@ const Content = ({ invoice, biz, trx, customer }) => {
                 {invoice?.status === 'paid' ? (
                   <>
                     <div className="w-full flex justify-between items-center">
-                      <p className="text-xs text-stone-800 font-medium">Due</p>
+                      <p
+                        className="text-stone-800"
+                        style={{ fontSize: '11px' }}
+                      >
+                        Due
+                      </p>
                       <p
                         className="text-stone-800"
                         style={{ fontSize: '11px' }}
@@ -216,7 +208,12 @@ const Content = ({ invoice, biz, trx, customer }) => {
                       </p>
                     </div>
                     <div className="w-full flex justify-between items-center">
-                      <p className="text-xs text-stone-800 font-medium">Paid</p>
+                      <p
+                        className="text-stone-800"
+                        style={{ fontSize: '11px' }}
+                      >
+                        Paid
+                      </p>
                       <p
                         className="text-stone-800"
                         style={{ fontSize: '11px' }}
@@ -231,8 +228,11 @@ const Content = ({ invoice, biz, trx, customer }) => {
                 {invoice?.status === 'live' ? (
                   <>
                     <div className="w-full flex justify-between items-center">
-                      <p className="text-xs text-stone-800 font-medium">
-                        Due last
+                      <p
+                        className=" text-stone-800"
+                        style={{ fontSize: '11px' }}
+                      >
+                        Previous
                       </p>
                       <p
                         className="text-stone-800"
@@ -242,8 +242,11 @@ const Content = ({ invoice, biz, trx, customer }) => {
                       </p>
                     </div>
                     <div className="w-full flex justify-between items-center">
-                      <p className="text-xs text-stone-800 font-medium">
-                        Due next
+                      <p
+                        className=" text-stone-800"
+                        style={{ fontSize: '11px' }}
+                      >
+                        Upcoming
                       </p>
                       <p
                         className="text-stone-800"

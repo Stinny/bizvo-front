@@ -37,14 +37,14 @@ const Desktop = ({
         )}
         <div className="flex items-center gap-3">
           <button type="button" onClick={handleCancel} className="text-red-400">
-            <X size={16} />
+            <X size={14} />
           </button>
           <button
             type="button"
             onClick={handleSaveNotis}
             className="text-stone-800"
           >
-            <Save size={16} />
+            <Save size={14} />
           </button>
         </div>
       </div>
@@ -102,7 +102,7 @@ const Desktop = ({
             onClick={() => setEdit(!edit)}
             className="text-stone-800"
           >
-            <EditIcon size={16} />
+            <EditIcon size={14} />
           </button>
         </div>
       </div>
