@@ -470,7 +470,7 @@ const Desktop = ({
                   <input
                     type="text"
                     placeholder="Title"
-                    className="text-xs bg-gray-50 border border-gray-50 focus:outline-none text-stone-800 ring-0 w-full rounded-md p-2"
+                    className="text-xs bg-white border border-gray-200 focus:outline-none text-stone-800 ring-0 w-full rounded-md p-2"
                     disabled
                     value={title}
                   />
@@ -479,7 +479,7 @@ const Desktop = ({
                   <p className="text-xs text-stone-800">Description</p>
                   <textarea
                     placeholder="About this invoice.."
-                    className="text-xs bg-gray-50 border border-gray-50 focus:outline-none text-stone-800 ring-0 w-full rounded-md p-2 resize-none h-20"
+                    className="text-xs bg-white border border-gray-200 focus:outline-none text-stone-800 ring-0 w-full rounded-md p-2 resize-none h-20"
                     disabled
                     value={desc}
                   />

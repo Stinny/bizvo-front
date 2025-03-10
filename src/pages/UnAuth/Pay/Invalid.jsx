@@ -104,14 +104,14 @@ const Invalid = ({ invoId, token, exp, customer, invoice }) => {
           </div>
           <Skeleton />
 
-          <div className="w-full flex flex-col items-center gap-4 border border-gray-200 rounded-md p-2 pt-4">
+          <div className="w-full flex flex-col items-center justify-center gap-4 border border-gray-200 rounded-md p-4 h-56">
             {exp ? (
               <div className="flex flex-col items-center text-center gap-4">
                 <div className="flex items-center gap-1">
                   <Clock size={14} className="text-red-400" />
                   <p className="text-red-400 text-xs">0:00</p>
                 </div>
-                <p className="text-stone-800 text-xs w-64">
+                <p className="text-stone-800 text-sm w-64">
                   This payment link has expired. Send a new link below to view
                   the full invoice.
                 </p>

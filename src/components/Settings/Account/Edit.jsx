@@ -109,7 +109,7 @@ const Edit = ({
                     <input
                       type="text"
                       placeholder="Address"
-                      className="text-xs bg-gray-50 border border-gray-50 focus:outline-none text-stone-800 ring-0 w-full rounded-md p-2"
+                      className="text-xs bg-white border border-gray-200 focus:outline-none text-stone-800 ring-0 w-full rounded-md p-2"
                       disabled
                       value={currentUser?.email}
                     />
@@ -153,13 +153,13 @@ const Edit = ({
                   control: (baseStyles, state) => ({
                     ...baseStyles,
                     borderColor: 'rgb(229 231 235)',
-                    backgroundColor: 'rgb(249 250 251)',
+                    backgroundColor: '#fff',
                     borderWidth: 1,
                     '&:hover': {
-                      backgroundColor: 'rgb(229 231 235)', // Keep the same border color on hover
+                      backgroundColor: 'rgb(249 250 251)', // Keep the same border color on hover
                     },
                     '&:focus': {
-                      backgroundColor: 'rgb(229 231 235)', // Keep the same border color on hover
+                      backgroundColor: 'rgb(249 250 251)', // Keep the same border color on hover
                     },
                     fontSize: '12px',
                     borderRadius: '.375rem',
@@ -187,7 +187,7 @@ const Edit = ({
                   option: (provided, state) => ({
                     ...provided,
                     backgroundColor: state.isSelected
-                      ? 'rgb(229 231 235)'
+                      ? 'rgb(249 250 251)'
                       : state.isFocused
                       ? 'rgb(249 250 251)'
                       : '',
@@ -203,11 +203,11 @@ const Edit = ({
         <form className="flex items-start w-full gap-2">
           <div className="flex flex-col w-full gap-2">
             <div className="flex flex-col items-start w-full gap-1">
-              <p className="text-xs text-stone-700">Name</p>
+              <p className="text-xs text-stone-800">Name</p>
               <input
                 type="text"
                 placeholder="Name"
-                className="text-xs bg-gray-50 border border-gray-200 focus:border-gray-200 focus:bg-gray-200 focus:outline-none text-stone-800 focus:ring-0 w-full rounded-md p-2"
+                className="text-xs bg-white border border-gray-200 focus:border-gray-200 focus:bg-gray-50 hover:bg-gray-50 focus:outline-none text-stone-800 focus:ring-0 w-full rounded-md p-2"
                 onChange={(e) => setName(e.target.value)}
                 value={name}
               />
@@ -236,10 +236,10 @@ const Edit = ({
           </div>
           <div className="flex flex-col w-full">
             <div className="flex flex-col items-start w-full gap-1">
-              <p className="text-xs text-stone-700">What You Sell</p>
+              <p className="text-xs text-stone-800">Describe your services</p>
               <textarea
                 placeholder="Describe your services.."
-                className="text-xs bg-gray-50 border border-gray-200 focus:ring-0 focus:border-gray-200 focus:outline-none focus:bg-gray-200 text-stone-800 ring-0 w-full rounded-md p-2 resize-none h-20"
+                className="text-xs bg-white border border-gray-200 focus:ring-0 focus:border-gray-200 focus:outline-none focus:bg-gray-50 hover:bg-gray-50 text-stone-800 ring-0 w-full rounded-md p-2 resize-none h-20"
                 onChange={(e) => setAbout(e.target.value)}
                 value={about}
               />

@@ -113,9 +113,7 @@ const Desktop = ({
           <div className="w-full flex items-start justify-between">
             <div className="flex flex-col items-start">
               <p className="text-sm text-stone-800">Sending Invoice</p>
-              <p className="text-xs text-stone-800">
-                Confirm sending this invoice
-              </p>
+              <p className="text-xs text-stone-800">Confirm before sending</p>
             </div>
             <X
               size={14}
@@ -129,18 +127,26 @@ const Desktop = ({
               <p className="text-xs text-stone-800">Permanent action</p>
             </div>
             <p className="text-xs text-stone-800">
-              You have selected to send this invoice. The customer will receive
-              a payment link to view the full invoice and submit payment.
+              No more edits can be made once sent. Your customer will receive a
+              payment link to view the full invoice and submit payment.
             </p>
           </div>
-          <div className="w-full flex items-center justify-end">
+          <div className="w-full flex items-center justify-between">
+            <div className="flex items-center gap-1">
+              <Checkbox
+                checked={send}
+                onChange={(e) => setSend(e.target.checked)}
+              />
+              <p className="text-xs text-stone-800">Send to customer</p>
+            </div>
             <div className="flex items-center gap-2">
               <button
                 type="button"
-                className=" text-stone-800 rounded-md border border-stone-800 p-1 text-xs"
+                className=" text-stone-800 rounded-md border border-stone-800 p-1 pl-2 pr-2 text-xs"
                 onClick={modalConfirmHandler}
+                disabled={!send}
               >
-                Send Invoice
+                Send
               </button>
             </div>
           </div>

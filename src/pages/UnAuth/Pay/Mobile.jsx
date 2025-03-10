@@ -93,10 +93,7 @@ const Mobile = ({
         invoice={data?.invoice}
       />
     ) : (
-      <div
-        className="mx-auto flex flex-col items-start mt-4"
-        style={{ width: '370px' }}
-      >
+      <div className="flex flex-col items-start mt-4 p-4">
         <div className="w-full flex items-center justify-center mb-6">
           <LinkExp
             expDate={data?.invoice?.linkExp}

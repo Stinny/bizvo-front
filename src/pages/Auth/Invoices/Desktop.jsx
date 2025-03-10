@@ -213,7 +213,7 @@ const Desktop = ({ invoices }) => {
         </div>
       </div>
       {filteredInvos?.length ? (
-        <div className="grid grid-cols-3 w-full gap-2">
+        <div className="grid grid-cols-2 w-full gap-2">
           {currentInvos?.map((invoice, index) => (
             <Link
               to={`/dashboard/invoices/${invoice?._id}`}
@@ -222,7 +222,7 @@ const Desktop = ({ invoices }) => {
             >
               <div className="w-full flex flex-col items-start gap-1 p-2">
                 <div className="flex flex-col items-start text-left gap-1">
-                  <p className="text-stone-800" style={{ fontSize: '10px' }}>
+                  <p className="text-stone-800" style={{ fontSize: '11px' }}>
                     #{invoice?._id}
                   </p>
                   <p className="text-xs text-stone-800">{invoice?.title}</p>

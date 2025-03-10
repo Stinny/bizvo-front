@@ -433,7 +433,7 @@ const Account = ({ currentUser, refetch }) => {
                 <input
                   type="text"
                   placeholder="Address"
-                  className="text-xs bg-gray-50 border border-gray-50 focus:outline-none text-stone-800 ring-0 w-full rounded-md p-2"
+                  className="text-xs bg-white border border-gray-200 focus:outline-none text-stone-800 ring-0 w-full rounded-md p-2"
                   disabled
                   value={currentUser?.email}
                 />
@@ -446,11 +446,11 @@ const Account = ({ currentUser, refetch }) => {
               <div className="flex w-full">
                 <input
                   type="text"
-                  className="border text-xs bg-gray-50 border-gray-50 rounded-tl-md rounded-bl-md p-2 flex-1"
+                  className="border text-xs bg-white border-gray-200 rounded-tl-md rounded-bl-md border-r-0 p-2 flex-1"
                   value={`${currentUser?.country?.label}`}
                   disabled
                 />
-                <div className="rounded-tr-md rounded-br-md bg-gray-50 border border-l-0 border-gray-50 flex items-center justify-center p-1 pr-2">
+                <div className="rounded-tr-md rounded-br-md bg-white border border-l-0 border-gray-200 flex items-center justify-center p-1 pr-2">
                   <ReactCountryFlag countryCode={currentUser?.country?.value} />
                 </div>
               </div>
@@ -466,7 +466,7 @@ const Account = ({ currentUser, refetch }) => {
                 <input
                   type="text"
                   placeholder="My Bizz"
-                  className="text-xs bg-gray-50 border border-gray-50 focus:outline-none text-stone-800 ring-0 w-full rounded-md p-2"
+                  className="text-xs bg-white border border-gray-200 focus:outline-none text-stone-800 ring-0 w-full rounded-md p-2"
                   disabled
                   value={currentUser?.name}
                 />
@@ -481,11 +481,11 @@ const Account = ({ currentUser, refetch }) => {
           </div>
           <div className="flex flex-col w-full">
             <div className="flex flex-col items-start w-full gap-1">
-              <p className="text-xs text-stone-800">What You Sell</p>
+              <p className="text-xs text-stone-800">Description of services</p>
               {currentUser?.about ? (
                 <textarea
                   placeholder="About this customer.."
-                  className="text-xs bg-gray-50 border border-gray-50 focus:outline-none text-stone-800 ring-0 w-full rounded-md p-2 resize-none h-20"
+                  className="text-xs bg-white border border-gray-200 focus:outline-none text-stone-800 ring-0 w-full rounded-md p-2 resize-none h-20"
                   disabled
                   value={currentUser?.about}
                 />

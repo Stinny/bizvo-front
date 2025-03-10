@@ -89,7 +89,7 @@ const Desktop = ({ customers }) => {
                 <div className="flex flex-col items-start text-left overflow-hidden gap-1">
                   <p
                     className="text-stone-800 overflow-hidden"
-                    style={{ fontSize: '10px' }}
+                    style={{ fontSize: '11px' }}
                   >
                     {customer?.email}
                   </p>
@@ -97,7 +97,7 @@ const Desktop = ({ customers }) => {
                     {customer?.name}
                   </p>
                 </div>
-                <ReactCountryFlag countryCode={customer?.country?.value} />
+                {/* <ReactCountryFlag countryCode={customer?.country?.value} /> */}
               </div>
             </Link>
           ))}

@@ -157,8 +157,8 @@ const Form = ({
         </div>
 
         <div
-          className={`transition-[max-height] duration-300 ease-in-out overflow-hidden ${
-            view === 'new' ? 'max-h-44' : 'max-h-0'
+          className={`transition-[max-height] duration-300 ease-in-out overflow-hidden w-full ${
+            view === 'new' ? 'min-h-32' : 'max-h-0'
           }`}
         >
           <div
