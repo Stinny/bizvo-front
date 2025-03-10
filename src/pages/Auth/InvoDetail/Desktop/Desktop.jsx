@@ -272,9 +272,7 @@ const Desktop = ({
             )}
             className="w-24"
           >
-            {invoice?.status === 'paid' || invoice?.status === 'void' ? (
-              ''
-            ) : (
+            {invoice?.status === 'draft' ? (
               <button
                 type="button"
                 onClick={() => setEdit(!edit)}
@@ -288,23 +286,8 @@ const Desktop = ({
                   Edit
                 </Dropdown.Item>
               </button>
-            )}
-            {invoice?.sent ? (
-              ''
             ) : (
-              <button
-                type="button"
-                onClick={() => setSendMod(true)}
-                className="w-full h-full"
-              >
-                <Dropdown.Item
-                  as="div"
-                  className="w-full flex items-center gap-1 text-xs text-stone-800 hover:bg-white"
-                >
-                  <Send size={12} className="text-stone-800" />
-                  Send
-                </Dropdown.Item>
-              </button>
+              ''
             )}
 
             {invoice?.sent ? (
@@ -351,7 +334,7 @@ const Desktop = ({
             ) : (
               ''
             )}
-            {invoice?.status === 'pending' ? (
+            {invoice?.status === 'pending' || invoice?.status === 'live' ? (
               <button
                 type="button"
                 onClick={() => setCancelMod(!cancelMod)}
@@ -576,7 +559,7 @@ const Desktop = ({
 
           <TabPanel>
             {trxs?.length ? (
-              <div className="flex flex-col items-start h-64">
+              <div className="flex flex-col items-start gap-2 min-h-64">
                 {trxs?.map((trx) => (
                   <button
                     type="button"
@@ -591,10 +574,13 @@ const Desktop = ({
                             style={{ fontSize: '11px' }}
                           >
                             $
-                            {parseFloat(trx?.total)?.toLocaleString(undefined, {
-                              minimumFractionDigits: 2,
-                              maximumFractionDigits: 2,
-                            })}
+                            {parseFloat(trx?.total / 100)?.toLocaleString(
+                              undefined,
+                              {
+                                minimumFractionDigits: 2,
+                                maximumFractionDigits: 2,
+                              }
+                            )}
                           </p>
                         </div>
                       </div>
@@ -622,13 +608,12 @@ const Desktop = ({
                                 Invoice sent{' '}
                                 <span className="font-semibold">
                                   $
-                                  {parseFloat(trx?.amount)?.toLocaleString(
-                                    undefined,
-                                    {
-                                      minimumFractionDigits: 2,
-                                      maximumFractionDigits: 2,
-                                    }
-                                  )}
+                                  {parseFloat(
+                                    trx?.amount / 100
+                                  )?.toLocaleString(undefined, {
+                                    minimumFractionDigits: 2,
+                                    maximumFractionDigits: 2,
+                                  })}
                                 </span>
                               </p>
                             ),
@@ -643,16 +628,32 @@ const Desktop = ({
                             position: 'left',
                             children: (
                               <p className="text-xs text-stone-800 pt-1">
-                                Total after taxes{' '}
+                                Total paid{' '}
                                 <span className="font-semibold">
                                   $
-                                  {parseFloat(trx?.total)?.toLocaleString(
+                                  {parseFloat(trx?.total / 100)?.toLocaleString(
                                     undefined,
                                     {
                                       minimumFractionDigits: 2,
                                       maximumFractionDigits: 2,
                                     }
                                   )}
+                                </span>
+                              </p>
+                            ),
+                          },
+                          {
+                            dot: (
+                              <CheckCircle
+                                size={12}
+                                className="text-stone-800"
+                              />
+                            ),
+                            children: (
+                              <p className="text-xs text-stone-800 pt-1">
+                                Transaction done{' '}
+                                <span className="font-medium">
+                                  {moment(trx?.doneOn).format('MMMM Do, yyyy')}
                                 </span>
                               </p>
                             ),
@@ -706,13 +707,12 @@ const Desktop = ({
                                 You earn{' '}
                                 <span className="font-semibold">
                                   $
-                                  {parseFloat(trx?.earned)?.toLocaleString(
-                                    undefined,
-                                    {
-                                      minimumFractionDigits: 2,
-                                      maximumFractionDigits: 2,
-                                    }
-                                  )}
+                                  {parseFloat(
+                                    trx?.earned / 100
+                                  )?.toLocaleString(undefined, {
+                                    minimumFractionDigits: 2,
+                                    maximumFractionDigits: 2,
+                                  })}
                                 </span>
                               </p>
                             ),

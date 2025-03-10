@@ -110,9 +110,10 @@ const Form = ({ setReady, sec, customer, invoice, refetch, setAdded }) => {
   }, [stripe, elements]);
 
   return (
-    <div className="w-full flex flex-col gap-2 items-start">
-      <p className="text-stone-800 text-xs text-left">
-        This will replace any existing payment method. No charges will be made.
+    <div className="w-full flex flex-col gap-4 items-start">
+      <p className="text-stone-800 text-sm text-left">
+        Add payment method for future transactions. No payments will be made
+        when adding.
       </p>
       {error ? (
         <div className="w-full flex items-center justify-start gap-2 border border-gray-200 rounded-md p-2">

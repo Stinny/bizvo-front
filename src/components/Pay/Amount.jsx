@@ -95,7 +95,7 @@ const Amount = ({ handleMoveToPayment, updating, invoice, setView, trx }) => {
         <>
           {' '}
           <AlignRight
-            size={16}
+            size={18}
             onClick={toggleDropdown}
             className="text-stone-800 hover:cursor-pointer"
           />

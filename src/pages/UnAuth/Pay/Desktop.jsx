@@ -132,7 +132,7 @@ const Desktop = ({
           ''
         )}
 
-        <div className="w-full bg-white border border-gray-200 rounded-md flex flex-col items-start gap-4 p-2">
+        <div className="w-full bg-white border border-gray-200 rounded-md flex flex-col items-start gap-6 p-2">
           <Status invoice={data?.invoice} />
           {view === 'details' ? (
             <>

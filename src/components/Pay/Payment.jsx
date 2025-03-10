@@ -40,14 +40,14 @@ const Payment = ({
   }, []);
 
   return (
-    <div className="w-full flex flex-col items-start gap-4">
+    <div className="w-full flex flex-col items-start gap-6">
       <Timeline
         className="text-left p-1"
         items={[
           {
-            dot: <Send size={12} className="text-stone-800" />,
+            dot: <Send size={14} className="text-stone-800" />,
             children: (
-              <p className="text-xs text-stone-800 pt-1">
+              <p className="text-sm text-stone-800">
                 Invoiced for{' '}
                 <span className="font-medium">
                   $
@@ -60,10 +60,10 @@ const Payment = ({
             ),
           },
           {
-            dot: <Percent size={12} className="text-stone-800" />,
+            dot: <Percent size={14} className="text-stone-800" />,
             children: (
-              <p className="text-xs text-stone-800 pt-1">
-                {taxType}{' '}
+              <p className="text-sm text-stone-800">
+                Added tax{' '}
                 <span className="font-medium">
                   $
                   {parseFloat(taxAmount)?.toLocaleString(undefined, {
@@ -75,9 +75,9 @@ const Payment = ({
             ),
           },
           {
-            dot: <CreditCard size={12} className="text-stone-800" />,
+            dot: <CreditCard size={14} className="text-stone-800" />,
             children: (
-              <p className="text-xs text-stone-800 pt-1">
+              <p className="text-sm text-stone-800">
                 Total due{' '}
                 <span className="font-medium">
                   $

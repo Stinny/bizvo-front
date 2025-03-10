@@ -108,8 +108,8 @@ const Invalid = ({ invoId, token, exp, customer, invoice }) => {
             {exp ? (
               <div className="flex flex-col items-center text-center gap-4">
                 <div className="flex items-center gap-1">
-                  <Clock size={14} className="text-red-300" />
-                  <p className="text-red-300 text-xs">0:00</p>
+                  <Clock size={14} className="text-red-400" />
+                  <p className="text-red-400 text-xs">0:00</p>
                 </div>
                 <p className="text-stone-800 text-xs w-64">
                   This payment link has expired. Send a new link below to view
@@ -256,8 +256,8 @@ const Invalid = ({ invoId, token, exp, customer, invoice }) => {
             {exp ? (
               <div className="flex flex-col items-center text-center gap-4">
                 <div className="flex items-center gap-1">
-                  <Clock size={14} className="text-red-300" />
-                  <p className="text-red-300 text-xs">0:00</p>
+                  <Clock size={14} className="text-red-400" />
+                  <p className="text-red-400 text-xs">0:00</p>
                 </div>
                 <p className="text-stone-800 text-xs w-64">
                   This payment link has expired. Send a new link below to view
@@ -292,12 +292,9 @@ const Invalid = ({ invoId, token, exp, customer, invoice }) => {
                 ) : (
                   <div className="w-full flex flex-col items-start gap-1">
                     <form className="w-full flex gap-1">
-                      <input
-                        className="text-xs w-full border border-gray-50 rounded-md p-2 bg-gray-50 focus:border-gray-200 focus:bg-gray-200 focus:outline-none focus:ring-0"
-                        type="email"
-                        disabled
-                        value={customer?.email}
-                      />
+                      <div className="text-xs text-left text-stone-800 w-full border border-gray-50 rounded-md p-2 bg-gray-50 focus:border-gray-200 focus:bg-gray-200 focus:outline-none focus:ring-0">
+                        {customer?.email}
+                      </div>
                       {send ? (
                         <button
                           type="button"

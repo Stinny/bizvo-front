@@ -96,8 +96,8 @@ const Method = ({
 
             <p className="text-stone-800 text-xs">Payment Method</p>
           </div>
-          <div className="w-full flex flex-col items-center justify-center gap-2 border border-gray-200 rounded-md p-2 h-36">
-            <p className="text-xs text-stone-800 w-52">
+          <div className="w-full flex flex-col items-center justify-center gap-4 border border-gray-200 rounded-md p-2 h-56">
+            <p className="text-sm text-stone-800 w-64">
               Remove saved payment method? This may impact other received
               invoices.
             </p>
@@ -106,7 +106,7 @@ const Method = ({
                 type="button"
                 onClick={() => setDel(false)}
                 className="p-1 border border-stone-800 rounded-md font-medium"
-                style={{ fontSize: '10px' }}
+                style={{ fontSize: '11px' }}
               >
                 Cancel
               </button>
@@ -114,7 +114,7 @@ const Method = ({
                 type="button"
                 onClick={removePaymentMeth}
                 className="p-1 border border-red-400 text-red-400 rounded-md font-medium"
-                style={{ fontSize: '10px' }}
+                style={{ fontSize: '11px' }}
                 disabled={removing}
               >
                 Remove
@@ -141,38 +141,29 @@ const Method = ({
           </div>
           {customer?.payment?.id ? (
             <div className="w-full flex flex-col items-start gap-4">
-              <div className="w-full flex flex-col items-center justify-center gap-2 border border-gray-200 rounded-md p-2 h-36 relative">
+              <div className="w-full flex flex-col items-center justify-center gap-4 border border-gray-200 rounded-md p-2 h-56 relative">
                 <p className="text-xs text-stone-800 font-medium">
                   xxxx xxxx xxxx {customer?.payment?.lastFour}
                 </p>
-                <p className="text-xs text-stone-800 w-52">
-                  Saved from past transactions. Can be charged for any future
+                <p className="text-sm text-stone-800 w-64">
+                  Saved payment method. This can be used for any future invoice
                   payments.
                 </p>
-                <div className="flex items-center gap-2 absolute bottom-0 right-0 mb-2 mr-2">
-                  <button
-                    type="button"
-                    onClick={() => setDel(true)}
-                    className="text-red-400"
-                  >
-                    <Trash size={14} />
-                  </button>
-                  {/* <button
-                    type="button"
-                    onClick={handleMoveToMethod}
-                    className="text-stone-800"
-                    disabled={isLoading}
-                  >
-                    <Edit size={14} />
-                  </button> */}
-                </div>
+                <button
+                  type="button"
+                  onClick={() => setDel(true)}
+                  className="text-red-400"
+                >
+                  <Trash size={14} />
+                </button>
               </div>
             </div>
           ) : (
             <div className="w-full flex flex-col items-start gap-4">
-              <div className="w-full flex flex-col items-center justify-center gap-2 border border-gray-200 rounded-md p-2 h-36 relative">
-                <p className="text-xs text-stone-800 w-52">
-                  Add a payment method to use for future payments
+              <div className="w-full flex flex-col items-center justify-center gap-4 border border-gray-200 rounded-md p-2 h-56 relative">
+                <p className="text-xs text-stone-800 w-64">
+                  Add a payment method to use for future transactions. Make
+                  payments quicker with one click.
                 </p>
                 <button
                   type="button"

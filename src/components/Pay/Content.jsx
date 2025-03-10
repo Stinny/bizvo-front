@@ -3,6 +3,7 @@ import { Spinner } from 'flowbite-react';
 import moment from 'moment';
 import React, { useState } from 'react';
 import {
+  CheckCircle,
   ChevronDown,
   ChevronRight,
   CreditCard,
@@ -32,6 +33,9 @@ const Content = ({ invoice, biz, trx, customer }) => {
     case 'gst':
       taxType = 'GST';
       break;
+    case 'hst':
+      taxType = 'HST';
+      break;
     default:
       taxType = 'Sales Tax';
       break;
@@ -39,9 +43,9 @@ const Content = ({ invoice, biz, trx, customer }) => {
 
   let trxItems = [
     {
-      dot: <Send size={12} className="text-stone-800" />,
+      dot: <Send size={14} className="text-stone-800" />,
       children: (
-        <p className="text-xs text-stone-800 pt-1">
+        <p className="text-sm text-stone-800">
           Invoiced for{' '}
           <span className="font-medium">
             $
@@ -53,55 +57,67 @@ const Content = ({ invoice, biz, trx, customer }) => {
         </p>
       ),
     },
-  ];
-
-  if (trx?.tax?.id) {
-    trxItems.push({
-      dot: <Percent size={12} className="text-stone-800" />,
+    {
+      dot: <Percent size={14} className="text-stone-800" />,
       children: (
-        <p className="text-xs text-stone-800 pt-1">
-          {taxType}{' '}
+        <p className="text-sm text-stone-800">
+          Added tax{' '}
           <span className="font-medium">
             ${(trx?.tax?.amount / 100).toFixed(2)}
           </span>
         </p>
       ),
+    },
+  ];
+
+  if (trx?.done) {
+    trxItems.push({
+      dot: <CreditCard size={14} className="text-stone-800" />,
+      children: (
+        <p className="text-sm text-stone-800">
+          Total paid{' '}
+          <span className="font-medium">
+            $
+            {parseFloat(trx?.total / 100)?.toLocaleString(undefined, {
+              minimumFractionDigits: 2,
+              maximumFractionDigits: 2,
+            })}
+          </span>
+        </p>
+      ),
     });
-    if (trx?.done) {
-      trxItems.push({
-        dot: <CreditCard size={12} className="text-stone-800" />,
-        children: (
-          <p className="text-xs text-stone-800 pt-1">
-            Total paid{' '}
-            <span className="font-medium">
-              $
-              {parseFloat(trx?.total / 100)?.toLocaleString(undefined, {
-                minimumFractionDigits: 2,
-                maximumFractionDigits: 2,
-              })}
-            </span>
-          </p>
-        ),
-      });
-    } else {
-      trxItems.push({
-        dot: <Badge dot={true} status="processing" color="#000" />,
-        children: (
-          <p className="text-xs text-stone-800 pt-1">
-            {invoice?.status !== 'live' ? `Payment due` : `Upcoming charge`}{' '}
-            <span className="font-medium">
-              {moment(invoice?.dueDate).format('MMMM Do')}
-            </span>
-          </p>
-        ),
-      });
-    }
+    trxItems.push({
+      dot: <CheckCircle size={14} className="text-stone-800" />,
+      children: (
+        <p className="text-sm text-stone-800">
+          Transaction done{' '}
+          <span className="font-medium">
+            {moment(trx?.doneOn).format('MMMM Do, yyyy')}
+          </span>
+        </p>
+      ),
+    });
   } else {
+    trxItems.push({
+      dot: <CreditCard size={14} className="text-stone-800" />,
+      children: (
+        <p className="text-sm text-stone-800">
+          Total amount{' '}
+          <span className="font-medium">
+            $
+            {parseFloat(trx?.total / 100)?.toLocaleString(undefined, {
+              minimumFractionDigits: 2,
+              maximumFractionDigits: 2,
+            })}
+          </span>
+        </p>
+      ),
+    });
     trxItems.push({
       dot: <Badge dot={true} status="processing" color="#000" />,
       children: (
-        <p className="text-xs text-stone-800 pt-1">
-          {invoice?.status !== 'live' ? `Due by` : `Due next`}{' '}
+        <p className="text-sm text-stone-800">
+          {invoice?.status !== 'live' ? `Payment due` : `Next payment`}{' '}
           <span className="font-medium">
             {moment(invoice?.dueDate).format('MMMM Do')}
           </span>
@@ -122,7 +138,7 @@ const Content = ({ invoice, biz, trx, customer }) => {
           className="w-full flex flex-col bg-white items-start text-left border border-gray-200 rounded-md p-2"
         >
           <div className="w-full flex items-center justify-between">
-            <p className="text-xs text-stone-800">Participants</p>
+            <p className="text-sm text-stone-800">Participants</p>
 
             {view === 'bus' ? (
               <ChevronDown size={14} />
@@ -136,7 +152,7 @@ const Content = ({ invoice, biz, trx, customer }) => {
               view === 'bus' ? 'max-h-fit' : 'max-h-0'
             }`}
           >
-            <div className="w-full flex flex-col gap-4 items-start text-left p-2 mt-1">
+            <div className="w-full flex flex-col gap-4 items-start text-left mt-2">
               <div className="flex flex-col items-start w-full gap-1">
                 <p className="text-xs text-stone-800 font-medium">Sender</p>
                 <div className="flex flex-col gap-1 items-start w-full">
@@ -166,7 +182,7 @@ const Content = ({ invoice, biz, trx, customer }) => {
           className="w-full flex flex-col bg-white items-start text-left border border-gray-200 rounded-md p-2"
         >
           <div className="w-full flex items-center justify-between">
-            <p className="text-stone-800 text-xs">History</p>
+            <p className="text-stone-800 text-sm">Details</p>
 
             {view === 'due' ? (
               <ChevronDown size={14} />
@@ -180,85 +196,38 @@ const Content = ({ invoice, biz, trx, customer }) => {
               view === 'due' ? 'max-h-fit' : 'max-h-0'
             }`}
           >
-            <div className="w-full flex flex-col gap-4 items-start text-left p-2 mt-1">
-              <div className="flex flex-col items-start w-full gap-2">
-                <div className="w-full flex justify-between items-center">
-                  <p className=" text-stone-800" style={{ fontSize: '11px' }}>
-                    Received
-                  </p>
-                  <p className="text-stone-800" style={{ fontSize: '11px' }}>
-                    {moment(invoice?.sentOn).format('MMMM Do, YYYY')}
-                  </p>
+            <div className="w-full flex flex-col gap-4 items-start text-left mt-2">
+              <div className="flex items-start w-full gap-2">
+                <div className="flex flex-col gap-2 w-3/6">
+                  <div className="w-full flex flex-col">
+                    <p className=" text-stone-800 font-medium text-xs">
+                      Received
+                    </p>
+                    <p className="text-stone-800 text-xs">
+                      {moment(invoice?.sentOn).format('MMMM Do, YYYY')}
+                    </p>
+                  </div>
+                  <div className="w-full flex flex-col">
+                    <p className=" text-stone-800 font-medium text-xs">Type</p>
+                    <p className="text-stone-800 text-xs">
+                      {invoice?.type === 'single' ? 'Single' : 'Recurring'}
+                    </p>
+                  </div>
                 </div>
-
-                {invoice?.status === 'paid' ? (
-                  <>
-                    <div className="w-full flex justify-between items-center">
-                      <p
-                        className="text-stone-800"
-                        style={{ fontSize: '11px' }}
-                      >
-                        Due
-                      </p>
-                      <p
-                        className="text-stone-800"
-                        style={{ fontSize: '11px' }}
-                      >
-                        {moment(invoice?.dueDate).format('MMMM Do, YYYY')}
-                      </p>
-                    </div>
-                    <div className="w-full flex justify-between items-center">
-                      <p
-                        className="text-stone-800"
-                        style={{ fontSize: '11px' }}
-                      >
-                        Paid
-                      </p>
-                      <p
-                        className="text-stone-800"
-                        style={{ fontSize: '11px' }}
-                      >
-                        {moment(invoice?.paidOn).format('MMMM Do, YYYY')}
-                      </p>
-                    </div>
-                  </>
-                ) : (
-                  ''
-                )}
-                {invoice?.status === 'live' ? (
-                  <>
-                    <div className="w-full flex justify-between items-center">
-                      <p
-                        className=" text-stone-800"
-                        style={{ fontSize: '11px' }}
-                      >
-                        Previous
-                      </p>
-                      <p
-                        className="text-stone-800"
-                        style={{ fontSize: '11px' }}
-                      >
-                        {moment(invoice?.lastDueDate).format('MMMM Do, YYYY')}
-                      </p>
-                    </div>
-                    <div className="w-full flex justify-between items-center">
-                      <p
-                        className=" text-stone-800"
-                        style={{ fontSize: '11px' }}
-                      >
-                        Upcoming
-                      </p>
-                      <p
-                        className="text-stone-800"
-                        style={{ fontSize: '11px' }}
-                      >
-                        {moment(invoice?.dueDate).format('MMMM Do, YYYY')}
-                      </p>
-                    </div>
-                  </>
-                ) : (
-                  ''
-                )}
+                <div className="flex flex-col gap-2 w-3/6">
+                  <div className="w-full flex flex-col">
+                    <p className="text-stone-800 font-medium text-xs">Tax</p>
+                    <p className="text-stone-800 text-xs">{taxType}</p>
+                  </div>
+                  <div className="w-full flex flex-col">
+                    <p className=" text-stone-800 font-medium text-xs">
+                      Recent Trx
+                    </p>
+                    <p className="text-stone-800 text-xs">
+                      {invoice?.recentTrx}
+                    </p>
+                  </div>
+                </div>
               </div>
             </div>
           </div>

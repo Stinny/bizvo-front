@@ -2,6 +2,8 @@ import { Timeline } from 'antd';
 import moment from 'moment';
 import React, { useState } from 'react';
 import {
+  Check,
+  CheckCircle,
   ChevronDown,
   ChevronLeft,
   ChevronRight,
@@ -18,7 +20,7 @@ const Trxs = ({ trxs, setView }) => {
 
   //stuff for pagination//
   const [itemOffset, setItemOffset] = useState(0);
-  const itemsPerPage = 3;
+  const itemsPerPage = 5;
 
   const endOffset = itemOffset + itemsPerPage;
   const currentTrxs = trxs.slice(itemOffset, endOffset);
@@ -50,7 +52,7 @@ const Trxs = ({ trxs, setView }) => {
         </button>
         <p className="text-stone-800 text-xs">Transactions</p>
       </div>
-      <div className="w-full flex flex-col gap-2 min-h-24">
+      <div className="w-full flex flex-col gap-2 min-h-52">
         {' '}
         {currentTrxs?.map((trx) => (
           <button
@@ -66,7 +68,11 @@ const Trxs = ({ trxs, setView }) => {
                     className="text-stone-800 font-medium"
                     style={{ fontSize: '11px' }}
                   >
-                    {moment(trx?.done_on).format('MMMM Do, YYYY')}
+                    $
+                    {parseFloat(trx?.total / 100)?.toLocaleString(undefined, {
+                      minimumFractionDigits: 2,
+                      maximumFractionDigits: 2,
+                    })}
                   </p>
                 </div>
               </div>
@@ -91,7 +97,14 @@ const Trxs = ({ trxs, setView }) => {
                       <p className="text-xs text-stone-800 pt-1">
                         Invoiced for{' '}
                         <span className="font-semibold">
-                          ${(trx?.amount / 100).toFixed(2)}
+                          $
+                          {parseFloat(trx?.amount / 100)?.toLocaleString(
+                            undefined,
+                            {
+                              minimumFractionDigits: 2,
+                              maximumFractionDigits: 2,
+                            }
+                          )}
                         </span>
                       </p>
                     ),
@@ -100,12 +113,7 @@ const Trxs = ({ trxs, setView }) => {
                     dot: <Percent size={12} className="text-stone-800" />,
                     children: (
                       <p className="text-xs text-stone-800 pt-1">
-                        {trx?.tax?.type === 'vat'
-                          ? 'VAT'
-                          : trx?.tax?.type === 'gst'
-                          ? 'GST'
-                          : 'Sales Tax'}{' '}
-                        added{' '}
+                        Added tax{' '}
                         <span className="font-semibold">
                           ${(trx?.tax?.amount / 100).toFixed(2)}
                         </span>
@@ -130,6 +138,17 @@ const Trxs = ({ trxs, setView }) => {
                       </p>
                     ),
                   },
+                  {
+                    dot: <CheckCircle size={12} className="text-stone-800" />,
+                    children: (
+                      <p className="text-xs text-stone-800 pt-1">
+                        Transaction done{' '}
+                        <span className="font-medium">
+                          {moment(trx?.doneOn).format('MMMM Do, yyyy')}
+                        </span>
+                      </p>
+                    ),
+                  },
                 ]}
               />
             </div>
@@ -137,7 +156,7 @@ const Trxs = ({ trxs, setView }) => {
         ))}
       </div>
       <div className="w-full flex items-center justify-end">
-        {trxs?.length > 3 ? (
+        {trxs?.length > 5 ? (
           <ReactPaginate
             breakLabel="..."
             nextLabel={<ChevronRight size={12} />}

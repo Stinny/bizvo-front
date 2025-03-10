@@ -94,7 +94,7 @@ const Mobile = ({
       />
     ) : (
       <div
-        className="mx-auto flex flex-col items-start mt-16"
+        className="mx-auto flex flex-col items-start mt-4"
         style={{ width: '370px' }}
       >
         <div className="w-full flex items-center justify-center mb-6">
@@ -130,7 +130,7 @@ const Mobile = ({
           ''
         )}
 
-        <div className="w-full bg-white border border-gray-200 rounded-md flex flex-col items-start gap-4 p-2">
+        <div className="w-full bg-white border border-gray-200 rounded-md flex flex-col items-start gap-6 p-2">
           <Status invoice={data?.invoice} />
           {view === 'details' ? (
             <>
