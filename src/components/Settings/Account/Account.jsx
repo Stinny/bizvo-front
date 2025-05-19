@@ -4,6 +4,7 @@ import {
   AlertOctagon,
   Check,
   Clipboard,
+  Copy,
   Edit as EditIcon,
   Lock,
   Trash,
@@ -222,7 +223,7 @@ const Account = ({ currentUser, refetch }) => {
             <Spinner />
           </div>
         ) : (
-          <div className="w-80 flex flex-col gap-4 items-start">
+          <div className="w-80 flex flex-col gap-2 items-start">
             <div className="w-full flex items-start justify-between">
               <div className="flex flex-col items-start">
                 <p className="text-sm text-stone-800">Delete Account</p>
@@ -248,10 +249,10 @@ const Account = ({ currentUser, refetch }) => {
                 - All other account data will be unavailable
               </p>
             </div>
-            <div className="flex flex-col w-full">
+            <div className="flex flex-col w-full gap-1">
               <input
                 type="text"
-                className="border border-gray-200 w-full bg-gray-50 hover:border-gray-200 focus:bg-gray-200 focus:ring-0 hover:bg-gray-200 focus:border-gray-200 rounded-md text-xs"
+                className="border border-gray-200 w-full p-2 hover:border-gray-200 focus:bg-gray-50 hover:bg-gray-50 focus:outline-none rounded-sm text-xs"
                 placeholder={deleteKey}
                 onChange={(e) => setKey(e.target.value)}
                 value={key}
@@ -266,18 +267,18 @@ const Account = ({ currentUser, refetch }) => {
                 {deleteKey === key.trim() ? (
                   <button
                     type="button"
-                    className="border border-red-400 text-red-400 rounded-md p-1 text-xs"
+                    className="border border-red-400 text-red-400 rounded-sm p-1 text-xs"
                     onClick={handleDeleteAcc}
                   >
-                    Delete Account
+                    Delete
                   </button>
                 ) : (
                   <button
                     type="button"
-                    className="border border-gray-100 text-gray-100 rounded-md p-1 text-xs"
+                    className="border border-gray-100 text-gray-100 rounded-sm p-1 text-xs"
                     disabled
                   >
-                    Delete Account
+                    Delete
                   </button>
                 )}
               </div>
@@ -319,9 +320,9 @@ const Account = ({ currentUser, refetch }) => {
               ''
             )}
             {currentUser?.googleAuth ? (
-              <div className="w-full flex flex-col gap-1 items-center justify-center border border-gray-200 rounded-md p-4">
+              <div className="w-full flex flex-col gap-1 items-center justify-center border border-gray-200 rounded-sm p-4">
                 <div className="flex items-center justify-center gap-2">
-                  <p className="text-sm text-stone-800">Authenticated using</p>{' '}
+                  <p className="text-sm text-stone-800">Authenticated with</p>{' '}
                   <FcGoogle className="text-lg" />
                 </div>
                 <p className="text-xs text-stone-800 text-center">
@@ -386,8 +387,8 @@ const Account = ({ currentUser, refetch }) => {
               style="light"
               arrow={false}
             >
-              <Clipboard
-                size={14}
+              <Copy
+                size={12}
                 className="text-stone-800 hover:cursor-pointer"
                 onClick={copyToClipboard}
               />
@@ -407,7 +408,6 @@ const Account = ({ currentUser, refetch }) => {
         </div>
       </div>
       <div className="w-full flex flex-col gap-2">
-        <p className="text-xs text-stone-800 font-medium">Account</p>
         <div className="flex items-start w-full gap-2">
           <div className="flex flex-col gap-2 w-full">
             <div className="flex flex-col items-start w-full gap-1">
@@ -433,7 +433,7 @@ const Account = ({ currentUser, refetch }) => {
                 <input
                   type="text"
                   placeholder="Address"
-                  className="text-xs bg-white border border-gray-200 focus:outline-none text-stone-800 ring-0 w-full rounded-md p-2"
+                  className="text-xs bg-white border border-gray-200 focus:outline-none text-stone-800 ring-0 w-full rounded-sm p-2"
                   disabled
                   value={currentUser?.email}
                 />
@@ -446,18 +446,18 @@ const Account = ({ currentUser, refetch }) => {
               <div className="flex w-full">
                 <input
                   type="text"
-                  className="border text-xs bg-white border-gray-200 rounded-tl-md rounded-bl-md border-r-0 p-2 flex-1"
+                  className="border text-xs bg-white border-gray-200 rounded-tl-sm rounded-bl-sm border-r-0 p-2 flex-1"
                   value={`${currentUser?.country?.label}`}
                   disabled
                 />
-                <div className="rounded-tr-md rounded-br-md bg-white border border-l-0 border-gray-200 flex items-center justify-center p-1 pr-2">
+                <div className="rounded-tr-sm rounded-br-sm bg-white border border-l-0 border-gray-200 flex items-center justify-center p-1 pr-2">
                   <ReactCountryFlag countryCode={currentUser?.country?.value} />
                 </div>
               </div>
             </div>
           </div>
         </div>
-        <p className="text-xs text-stone-800 font-medium">Profile</p>
+
         <div className="flex items-start w-full gap-2">
           <div className="flex flex-col w-full gap-2">
             <div className="flex flex-col gap-2 w-full">
@@ -466,7 +466,7 @@ const Account = ({ currentUser, refetch }) => {
                 <input
                   type="text"
                   placeholder="My Bizz"
-                  className="text-xs bg-white border border-gray-200 focus:outline-none text-stone-800 ring-0 w-full rounded-md p-2"
+                  className="text-xs bg-white border border-gray-200 focus:outline-none text-stone-800 ring-0 w-full rounded-sm p-2"
                   disabled
                   value={currentUser?.name}
                 />
@@ -485,7 +485,7 @@ const Account = ({ currentUser, refetch }) => {
               {currentUser?.about ? (
                 <textarea
                   placeholder="About this customer.."
-                  className="text-xs bg-white border border-gray-200 focus:outline-none text-stone-800 ring-0 w-full rounded-md p-2 resize-none h-20"
+                  className="text-xs bg-white border border-gray-200 focus:outline-none text-stone-800 ring-0 w-full rounded-sm p-2 resize-none h-20"
                   disabled
                   value={currentUser?.about}
                 />
@@ -496,26 +496,6 @@ const Account = ({ currentUser, refetch }) => {
               )}
             </div>
           </div>
-        </div>
-      </div>
-      <div className="w-full flex justify-end">
-        <div className="flex items-center gap-1">
-          <button
-            type="button"
-            onClick={() => setDel(!del)}
-            className="text-red-400 p-0.5 pl-2 pr-2 border border-red-400 rounded-md"
-            style={{ fontSize: '10px' }}
-          >
-            Delete
-          </button>
-          <button
-            type="button"
-            onClick={() => setPswd(!pswd)}
-            className="text-stone-800 p-0.5 pl-2 pr-2 border border-stone-800 rounded-md"
-            style={{ fontSize: '10px' }}
-          >
-            New Password
-          </button>
         </div>
       </div>
     </div>

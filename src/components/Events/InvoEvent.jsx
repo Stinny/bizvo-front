@@ -35,16 +35,13 @@ const InvoEvent = ({ even }) => {
     <Link
       to={`/dashboard/events`}
       state={{ evId: even?._id }}
-      className={`w-full flex items-center justify-between border border-gray-200 hover:border-stone-800 rounded-md p-2 pb-1 pt-1 ${
+      className={`w-full flex items-center justify-between border border-gray-200 hover:border-stone-800 rounded-md p-2 ${
         even?.seen ? '' : 'bg-gray-50'
       }`}
     >
       <div className="flex items-center justify-start">
         {even?.type === 'paid' ? (
-          <p
-            className="text-stone-800 dark:text-white"
-            style={{ fontSize: '11px' }}
-          >
+          <p className="text-stone-800 dark:text-white text-xs">
             {even?.content}{' '}
             <span className="font-medium">
               $
@@ -55,10 +52,7 @@ const InvoEvent = ({ even }) => {
             </span>
           </p>
         ) : even?.type === 'sent' ? (
-          <p
-            className="text-stone-800 dark:text-white"
-            style={{ fontSize: '11px' }}
-          >
+          <p className="text-stone-800 dark:text-white text-xs">
             {even?.content} <span className="font-medium">{even?.email}</span>
           </p>
         ) : (

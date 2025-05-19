@@ -8,7 +8,7 @@ import { useDispatch } from 'react-redux';
 
 const customStyles = {
   content: {
-    top: '50%',
+    top: '30%',
     left: '50%',
     right: 'auto',
     bottom: 'auto',
@@ -122,7 +122,7 @@ const SendModal = ({
                 <div className="flex items-center gap-2">
                   <button
                     type="button"
-                    className=" text-stone-800 rounded-md border border-stone-800 p-1 text-xs"
+                    className=" text-stone-800 rounded-sm border border-stone-800 p-1 text-xs"
                     onClick={handleSendInvo}
                   >
                     Send Invoice

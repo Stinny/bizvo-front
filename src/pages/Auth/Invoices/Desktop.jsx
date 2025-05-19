@@ -10,9 +10,9 @@ import {
   Plus,
   Send,
 } from 'react-feather';
-import { Badge, Dropdown } from 'flowbite-react';
+import { Dropdown } from 'flowbite-react';
 import InvoStatus from '../../../components/InvoStatus';
-import { Checkbox } from 'antd';
+import { Badge, Checkbox } from 'antd';
 
 const Desktop = ({ invoices }) => {
   const [searchTerm, setSearchTerm] = useState('');
@@ -58,30 +58,31 @@ const Desktop = ({ invoices }) => {
 
   content = invoices?.length ? (
     <div className="w-10/12 flex flex-col items-start gap-2">
-      <div className="w-full flex items-center justify-between bg-white border border-gray-200 rounded-md p-2">
+      <div className="w-full flex items-center justify-between bg-white border border-gray-200 rounded-sm p-2">
         <div className="flex flex-col items-start">
           <p className="text-sm text-stone-800">Invoices</p>
           <p className="text-xs text-stone-800">Viewing all invoices</p>
         </div>
 
         <div className="flex items-center justify-end gap-2">
-          <div className="flex items-center gap-1">
+          <div className="flex items-center gap-2">
             <Dropdown
               dismissOnClick={true}
               placement="left"
               renderTrigger={() => (
-                <Filter
-                  size={12}
-                  className="text-stone-800 hover:cursor-pointer"
-                />
+                <Badge color="black" dot={searchStat === 'all' ? false : true}>
+                  <Filter
+                    size={12}
+                    className="text-stone-800 hover:cursor-pointer"
+                  />
+                </Badge>
               )}
               className="p-2"
             >
-              <div className="flex flex-col items-start w-full">
+              <div className="flex flex-col items-start w-16">
                 <div className="w-full flex items-start gap-4">
-                  <div className="w-full flex flex-col items-start gap-1">
-                    <p className="text-xs text-stone-800">Status</p>
-                    <div className="flex items-center gap-1">
+                  <div className="w-full grid grid-cols-1 gap-1">
+                    <div className="flex items-center gap-1 w-full">
                       <Checkbox
                         checked={searchStat === 'all'}
                         onChange={(e) => {
@@ -90,25 +91,31 @@ const Desktop = ({ invoices }) => {
                       />
                       <p className="text-xs text-stone-800">All</p>
                     </div>
-                    <div className="flex items-center gap-1">
-                      <Checkbox
-                        checked={searchStat === 'draft'}
-                        onChange={(e) => {
-                          if (e.target.checked) setSearchStat('draft');
-                        }}
-                      />
-                      <p className="text-xs text-stone-800">Draft</p>
+                    <div className="flex items-center justify-between w-full">
+                      <div className="flex items-center gap-1">
+                        <Checkbox
+                          checked={searchStat === 'draft'}
+                          onChange={(e) => {
+                            if (e.target.checked) setSearchStat('draft');
+                          }}
+                        />
+                        <p className="text-xs text-stone-800">Draft</p>
+                      </div>
+                      <Badge color="lightblue" dot={true} />
                     </div>
-                    <div className="flex items-center gap-1">
-                      <Checkbox
-                        checked={searchStat === 'pending'}
-                        onChange={(e) => {
-                          if (e.target.checked) setSearchStat('pending');
-                        }}
-                      />
-                      <p className="text-xs text-stone-800">Await</p>
+                    <div className="flex items-center justify-between w-full">
+                      <div className="flex items-center gap-1">
+                        <Checkbox
+                          checked={searchStat === 'pending'}
+                          onChange={(e) => {
+                            if (e.target.checked) setSearchStat('pending');
+                          }}
+                        />
+                        <p className="text-xs text-stone-800">Await</p>
+                      </div>
+                      <Badge color="yellow" size="large" dot={true} />
                     </div>
-                    {searchType === 'single' || searchType === 'all' ? (
+                    <div className="flex items-center justify-between w-full">
                       <div className="flex items-center gap-1">
                         <Checkbox
                           checked={searchStat === 'paid'}
@@ -118,70 +125,31 @@ const Desktop = ({ invoices }) => {
                         />
                         <p className="text-xs text-stone-800">Paid</p>
                       </div>
-                    ) : (
-                      ''
-                    )}
-                    {searchType === 'recurring' || searchType === 'all' ? (
+                      <Badge color="lime" size="large" dot={true} />
+                    </div>
+                    <div className="flex items-center justify-between w-full">
                       <div className="flex items-center gap-1">
                         <Checkbox
-                          checked={searchStat === 'live'}
+                          checked={searchStat === 'late'}
                           onChange={(e) => {
-                            if (e.target.checked) setSearchStat('live');
+                            if (e.target.checked) setSearchStat('late');
                           }}
                         />
-                        <p className="text-xs text-stone-800">Live</p>
+                        <p className="text-xs text-stone-800">Late</p>
                       </div>
-                    ) : (
-                      ''
-                    )}
-
-                    <div className="flex items-center gap-1">
-                      <Checkbox
-                        checked={searchStat === 'late'}
-                        onChange={(e) => {
-                          if (e.target.checked) setSearchStat('late');
-                        }}
-                      />
-                      <p className="text-xs text-stone-800">Late</p>
+                      <Badge color="red" size="large" dot={true} />
                     </div>
-                    <div className="flex items-center gap-1">
-                      <Checkbox
-                        checked={searchStat === 'void'}
-                        onChange={(e) => {
-                          if (e.target.checked) setSearchStat('void');
-                        }}
-                      />
-                      <p className="text-xs text-stone-800">Void</p>
-                    </div>
-                  </div>
-                  <div className="w-full flex flex-col items-start gap-1">
-                    <p className="text-xs text-stone-800">Type</p>
-                    <div className="flex items-center gap-1">
-                      <Checkbox
-                        checked={searchType === 'all'}
-                        onChange={(e) => {
-                          if (e.target.checked) setSearchType('all');
-                        }}
-                      />
-                      <p className="text-xs text-stone-800">All</p>
-                    </div>
-                    <div className="flex items-center gap-1">
-                      <Checkbox
-                        checked={searchType === 'recurring'}
-                        onChange={(e) => {
-                          if (e.target.checked) setSearchType('recurring');
-                        }}
-                      />
-                      <p className="text-xs text-stone-800">Recurring</p>
-                    </div>
-                    <div className="flex items-center gap-1">
-                      <Checkbox
-                        checked={searchType === 'single'}
-                        onChange={(e) => {
-                          if (e.target.checked) setSearchType('single');
-                        }}
-                      />
-                      <p className="text-xs text-stone-800">Single</p>
+                    <div className="flex items-center justify-between w-full">
+                      <div className="flex items-center gap-1">
+                        <Checkbox
+                          checked={searchStat === 'void'}
+                          onChange={(e) => {
+                            if (e.target.checked) setSearchStat('void');
+                          }}
+                        />
+                        <p className="text-xs text-stone-800">Void</p>
+                      </div>
+                      <Badge color="gray" size="large" dot={true} />
                     </div>
                   </div>
                 </div>
@@ -192,7 +160,7 @@ const Desktop = ({ invoices }) => {
               placeholder="Search invoices"
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="p-0.5 pl-1 border border-gray-200 bg-gray-50 hover:bg-gray-200 focus:bg-gray-200 focus:ring-0 focus:border-gray-200 rounded-md"
+              className="p-1 border border-gray-200 hover:bg-gray-50 focus:bg-gray-50 focus:outline-0 focus:border-gray-200 rounded-sm"
               style={{ fontSize: '11px' }}
             />
           </div>
@@ -213,29 +181,27 @@ const Desktop = ({ invoices }) => {
         </div>
       </div>
       {filteredInvos?.length ? (
-        <div className="grid grid-cols-2 w-full gap-2">
+        <div className="grid grid-cols-3 w-full gap-2">
           {currentInvos?.map((invoice, index) => (
             <Link
               to={`/dashboard/invoices/${invoice?._id}`}
-              className="w-full bg-white hover:border-stone-800 border border-gray-200 rounded-md flex flex-col items-start relative"
+              className="w-full bg-white hover:border-stone-800 border border-gray-200 rounded-sm flex flex-col items-start p-2 relative"
               key={index}
             >
-              <div className="w-full flex flex-col items-start gap-1 p-2">
+              <div className="w-full flex flex-col items-start gap-1">
                 <div className="flex flex-col items-start text-left gap-1">
-                  <p className="text-stone-800" style={{ fontSize: '11px' }}>
-                    #{invoice?._id}
-                  </p>
                   <p className="text-xs text-stone-800">{invoice?.title}</p>
+                  <p className="text-stone-800 text-xs font-medium">
+                    $
+                    {parseFloat(invoice?.amount)?.toLocaleString(undefined, {
+                      minimumFractionDigits: 2,
+                      maximumFractionDigits: 2,
+                    })}
+                  </p>
                 </div>
               </div>
-              <div className="w-full flex justify-between border-t border-gray-200 p-2">
-                <p className="text-stone-800 text-xs font-semibold">
-                  $
-                  {parseFloat(invoice?.amount)?.toLocaleString(undefined, {
-                    minimumFractionDigits: 2,
-                    maximumFractionDigits: 2,
-                  })}
-                </p>
+
+              <div className="absolute right-0 bottom-0 mr-2">
                 <InvoStatus status={invoice?.status} />
               </div>
             </Link>
@@ -257,7 +223,7 @@ const Desktop = ({ invoices }) => {
         </p>
         <Link
           to="/dashboard/invoices/add"
-          className="flex items-center justify-center gap-1 border border-stone-800 rounded-md p-0.5 pl-2 pr-2 mt-2"
+          className="flex items-center justify-center gap-1 border border-stone-800 rounded-sm p-0.5 pl-2 pr-2 mt-2"
         >
           <p className="text-stone-800" style={{ fontSize: '11px' }}>
             New +

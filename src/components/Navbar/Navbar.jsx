@@ -62,7 +62,7 @@ const Navbar = () => {
 
   content = currentUser ? (
     <nav className="w-full bg-transparent flex flex-col relative overflow-visible">
-      <div className="max-w-3xl bg-white dark:bg-neutral-800 flex justify-between items-center border border-gray-200 dark:border-white rounded-md p-2">
+      <div className="max-w-3xl bg-white dark:bg-neutral-800 flex justify-between items-center border border-gray-200 dark:border-white rounded-sm p-2">
         {/* logo section */}
 
         <Link to="/dashboard">
@@ -80,7 +80,7 @@ const Navbar = () => {
         <div className="flex items-center justify-end" ref={avatarRef}>
           <Link
             to="/dashboard/add"
-            className="w-full flex items-center justify-center gap-1 border border-stone-800 dark:border-white rounded-md p-0.5 mr-2"
+            className="w-full flex items-center justify-center gap-1 border border-stone-800 dark:border-white rounded-sm p-0.5 mr-2"
           >
             <p
               className="text-stone-800 dark:text-white"
@@ -103,11 +103,11 @@ const Navbar = () => {
           ref={dropdownRef}
           className="w-full flex justify-end absolute top-full z-10"
         >
-          <div className="bg-white dark:bg-neutral-800 border border-gray-200 dark:boder-white rounded-md flex flex-col items-start p-2">
+          <div className="bg-white dark:bg-neutral-800 border border-gray-200 dark:boder-white rounded-sm flex flex-col items-start p-2">
             <div className="flex flex-col gap-2 items-start w-full pb-2">
               <Link
                 to="/dashboard"
-                className="w-full p-1 pl-2 pr-2 text-xs text-stone-800 flex items-center gap-1 border border-white dark:border-neutral-800 dark:hover:border-white rounded-md hover:border-stone-800 hover:outline-non"
+                className="w-full p-1 pl-2 pr-2 text-xs text-stone-800 flex items-center gap-1 border border-white dark:border-neutral-800 dark:hover:border-white rounded-sm hover:border-stone-800 hover:outline-non"
               >
                 <BarChart2
                   size={14}
@@ -118,8 +118,21 @@ const Navbar = () => {
                 </p>
               </Link>
               <Link
+                to="/settings"
+                className="w-full p-1 pl-2 pr-2 text-xs text-stone-800 flex items-center gap-1 border border-white dark:border-neutral-800 dark:hover:border-white rounded-sm hover:border-stone-800 hover:outline-non"
+              >
+                <Settings
+                  size={14}
+                  className="text-stone-800 dark:text-white"
+                />
+
+                <p className="text-xs text-stone-800 dark:text-white">
+                  Settings
+                </p>
+              </Link>
+              <Link
                 to="/contact"
-                className="w-full p-1 pl-2 pr-2 text-xs text-stone-800 flex items-center gap-1 border border-white dark:border-neutral-800 dark:hover:border-white rounded-md hover:border-stone-800 hover:outline-non"
+                className="w-full p-1 pl-2 pr-2 text-xs text-stone-800 flex items-center gap-1 border border-white dark:border-neutral-800 dark:hover:border-white rounded-sm hover:border-stone-800 hover:outline-non"
               >
                 <MessageSquare
                   size={14}
@@ -128,13 +141,6 @@ const Navbar = () => {
                 <p className="text-xs text-stone-800 dark:text-white">
                   Message
                 </p>
-              </Link>
-              <Link
-                to="/docs"
-                className="w-full p-1 pl-2 pr-2 text-xs text-stone-800 flex items-center gap-1 border border-white dark:border-neutral-800 dark:hover:border-white rounded-md hover:border-stone-800 hover:outline-non"
-              >
-                <Book size={14} className="text-stone-800 dark:text-white" />
-                <p className="text-xs text-stone-800 dark:text-white">Docs</p>
               </Link>
             </div>
             <div className="border-t border-gray-200 flex items-center justify-between w-full pt-2">
@@ -166,7 +172,7 @@ const Navbar = () => {
       {isMobile ? (
         <Mobile />
       ) : (
-        <div className="max-w-3xl bg-white flex justify-between items-center border border-gray-200 rounded-md p-2">
+        <div className="max-w-3xl bg-white flex justify-between items-center border border-gray-200 rounded-sm p-2">
           <Link to="/">
             <p
               className="font-bold text-stone-800 dark:text-white text-sm flex items-center gap-1"
@@ -194,7 +200,7 @@ const Navbar = () => {
               </Link>
               <Link
                 to="/login"
-                className="flex text-xs font-medium items-center justify-center border border-stone-800 text-stone-800 rounded-md p-1 pl-2 pr-2"
+                className="flex text-xs font-medium items-center justify-center border border-stone-800 text-stone-800 rounded-sm p-1 pl-2 pr-2"
               >
                 Login
               </Link>

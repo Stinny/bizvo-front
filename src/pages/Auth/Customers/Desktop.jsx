@@ -42,7 +42,7 @@ const Desktop = ({ customers }) => {
 
   content = customers?.length ? (
     <div className="w-10/12 flex flex-col items-start gap-2">
-      <div className="w-full flex items-center justify-between bg-white border border-gray-200 rounded-md p-2">
+      <div className="w-full flex items-center justify-between bg-white border border-gray-200 rounded-sm p-2">
         <div className="flex flex-col items-start">
           <p className="text-sm text-stone-800">Customers</p>
           <p className="text-xs text-stone-800">Viewing all customers</p>
@@ -54,7 +54,7 @@ const Desktop = ({ customers }) => {
               placeholder="Search customers"
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="p-0.5 pl-1 border border-gray-200 bg-gray-50 hover:bg-gray-200 focus:bg-gray-200 focus:ring-0 focus:border-gray-200 rounded-md"
+              className="p-1 border border-gray-200 hover:bg-gray-50 focus:bg-gray-50 focus:ring-0 focus:border-gray-200 rounded-sm outline-none"
               style={{ fontSize: '11px' }}
             />
           </div>
@@ -82,7 +82,7 @@ const Desktop = ({ customers }) => {
           {currentCusts?.map((customer, index) => (
             <Link
               to={`/dashboard/customers/${customer?._id}`}
-              className="w-full bg-white hover:border-stone-800 border border-gray-200 rounded-md flex items-center justify-start relative p-2"
+              className="w-full bg-white hover:border-stone-800 border border-gray-200 rounded-sm flex items-center justify-start relative p-2"
               key={index}
             >
               <div className="flex items-center justify-between w-full">
@@ -103,7 +103,7 @@ const Desktop = ({ customers }) => {
           ))}
         </div>
       ) : (
-        <div className="w-full h-80 flex items-center justify-center border border-gray-200 rounded-md">
+        <div className="w-full h-80 flex items-center justify-center">
           <div className="flex flex-col items-center text-center gap-1">
             <p className="text-xs text-stone-800">No customers found</p>
           </div>

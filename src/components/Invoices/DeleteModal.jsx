@@ -6,17 +6,18 @@ import { useDeleteInvoiceMutation } from '../../api/invoicesApiSlice';
 import { showNotification } from '../../api/toastSlice';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+import { Spin } from 'antd';
 
 const customStyles = {
   content: {
-    top: '50%',
+    top: '30%',
     left: '50%',
     right: 'auto',
     bottom: 'auto',
     marginRight: '-50%',
     transform: 'translate(-50%, -50%)',
     fontFamily: 'Geist',
-    zIndex: 1000,
+    padding: '8px',
   },
   overlay: { zIndex: 1000 },
 };
@@ -56,7 +57,7 @@ const DeleteModal = ({ invoId, open, setOpen, refetch }) => {
     >
       {isLoading ? (
         <div className="w-72 h-52 flex items-center justify-center">
-          <Spinner />
+          <Spin size="small" />
         </div>
       ) : (
         <div className="w-72 flex flex-col gap-2 items-start">
@@ -72,19 +73,20 @@ const DeleteModal = ({ invoId, open, setOpen, refetch }) => {
             />
           </div>
           <div className="flex flex-col gap-2 items-start w-full">
+            <p className="text-xs text-stone-800 font-medium">#{invoId}</p>
             <p className="text-xs text-stone-800">
-              This is a draft invoice and has not been sent yet. Are you sure
-              you want to delete?
+              This is only a draft invoice, but it does contain saved details.
+              Are you sure you want to delete?
             </p>
           </div>
           <div className="w-full flex items-center justify-end">
             <div className="flex items-center gap-2">
               <button
                 type="button"
-                className="border border-red-400 text-red-400 rounded-md p-1 text-xs"
+                className="border border-red-400 text-red-400 rounded-md p-1 text-xs cursor-pointer"
                 onClick={handleDeleteInvo}
               >
-                Delete Invoice
+                Delete
               </button>
             </div>
           </div>

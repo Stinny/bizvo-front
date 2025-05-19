@@ -81,9 +81,6 @@ const Desktop = () => {
         setDesc={setDesc}
         error={error}
         handleFinishSetup={handleFinishSetup}
-        data={data}
-        checkingSlug={checkingSlug}
-        checkedSlug={checkedSlug}
         settingUp={settingUp}
       />
     );

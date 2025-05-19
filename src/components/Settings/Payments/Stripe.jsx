@@ -64,7 +64,7 @@ const Stripe = ({ currentUser, refetch }) => {
               <input
                 type="text"
                 placeholder="Pending"
-                className="text-xs bg-gray-50 border border-gray-50 focus:outline-none text-stone-800 ring-0 w-full rounded-md p-2"
+                className="text-xs border border-gray-200 focus:outline-none text-stone-800 ring-0 w-full rounded-sm p-2"
                 disabled
                 value={currentUser?.stripeId}
               />
@@ -99,7 +99,7 @@ const Stripe = ({ currentUser, refetch }) => {
               <div className="flex items-center gap-1">
                 <button
                   type="button"
-                  className="border border-red-400 text-red-400 rounded-md p-0.5 pl-2 pr-2 text-xs"
+                  className="border border-red-400 text-red-400 rounded-sm p-0.5 pl-2 pr-2 text-xs"
                   onClick={handleRemoveStripe}
                   disabled={removing || isLoading}
                 >
@@ -107,7 +107,7 @@ const Stripe = ({ currentUser, refetch }) => {
                 </button>
                 <button
                   type="button"
-                  className=" text-stone-800 rounded-md border border-stone-800 p-0.5 pl-2 pr-2 text-xs"
+                  className=" text-stone-800 rounded-sm border border-stone-800 p-0.5 pl-2 pr-2 text-xs"
                   onClick={() => setDel(false)}
                   disabled={removing || isLoading}
                 >

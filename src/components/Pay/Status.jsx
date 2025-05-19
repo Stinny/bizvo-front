@@ -8,9 +8,9 @@ const Status = ({ invoice }) => {
         <p className="text-stone-800 text-sm">
           {invoice?.type === 'single' ? 'Invoice' : 'Recurring Invoice'}
         </p>
-        <p className="text-stone-800 text-xs">#{invoice?._id}</p>
+        <p className="text-stone-800 text-xs">{invoice?._id}</p>
       </div>
-      <InvoStatus status={invoice?.status} />
+      <InvoStatus status={invoice?.status} full={true} />
     </div>
   );
 };

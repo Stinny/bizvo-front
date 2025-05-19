@@ -56,16 +56,22 @@ const Desktop = ({
           <p className="text-sm text-stone-800">New Customer</p>
           <p className="text-xs text-stone-700">Create a new customer below</p>
         </div>
-        <div className="flex items-center gap-3 absolute top-0 right-0 mr-1 mt-1">
-          <Link to="/dashboard/add" className="text-red-400">
-            <X size={16} />
+
+        <div className="flex items-center gap-2 absolute top-0 right-0 mr-1 mt-1">
+          <Link to="/dashboard/add" className="text-red-400 cursor-pointer">
+            <X size={14} />
           </Link>
           <button
             type="button"
             onClick={handleCreateCustomer}
-            className="text-stone-800"
+            className="w-full cursor-pointer flex items-center justify-center gap-1 border border-stone-800 dark:border-white rounded-sm p-0.5 pl-1.5 pr-1.5"
           >
-            <Save size={16} />
+            <p
+              className="text-stone-800 dark:text-white"
+              style={{ fontSize: '11px' }}
+            >
+              Save
+            </p>
           </button>
         </div>
       </div>
@@ -85,7 +91,7 @@ const Desktop = ({
               <input
                 type="text"
                 placeholder="Name"
-                className="border text-xs border-gray-200 bg-gray-50 focus:border-gray-200 focus:outline-none text-stone-800 hover:bg-gray-200 hover:border-gray-200 focus:bg-gray-200 focus:ring-0 w-full rounded-md p-2 pr-10"
+                className="border text-xs border-gray-200 focus:outline-none text-stone-800 hover:bg-gray-50 hover:border-gray-200 focus:bg-gray-50 focus:ring-0 w-full rounded-sm p-2 pr-10"
                 onChange={(e) => setName(e.target.value)}
                 value={name}
                 maxLength={25}
@@ -120,7 +126,7 @@ const Desktop = ({
             <input
               type="email"
               placeholder="Email"
-              className="border text-xs border-gray-200 bg-gray-50 focus:border-gray-200 focus:outline-none text-stone-800 hover:bg-gray-200 hover:border-gray-200 focus:bg-gray-200 focus:ring-0 w-full rounded-md p-2"
+              className="border text-xs border-gray-200 focus:outline-none text-stone-800 hover:bg-gray-50 focus:bg-gray-50 focus:ring-0 w-full rounded-sm p-2"
               onChange={(e) => setEmail(e.target.value)}
               value={email}
             />
@@ -128,7 +134,7 @@ const Desktop = ({
               <input
                 type="tel"
                 placeholder="(123)-456-7890"
-                className="border w-full text-xs border-gray-200 bg-gray-50 focus:border-gray-200 focus:outline-none text-stone-800 hover:bg-gray-200 hover:border-gray-200 focus:bg-gray-200 focus:ring-0 rounded-md p-2"
+                className="border w-full text-xs border-gray-200 focus:border-gray-200 focus:outline-none text-stone-800 hover:bg-gray-50 focus:bg-gray-50 focus:ring-0 rounded-sm p-2"
                 onChange={(e) => setPhone(e.target.value)}
                 value={phone}
               />
@@ -141,7 +147,7 @@ const Desktop = ({
             <input
               type="text"
               placeholder="Address"
-              className="border text-xs border-gray-200 bg-gray-50 focus:border-gray-200 focus:outline-none text-stone-800 hover:bg-gray-200 hover:border-gray-200 focus:bg-gray-200 focus:ring-0 w-full rounded-md p-2"
+              className="border text-xs border-gray-200 focus:border-gray-200 focus:outline-none text-stone-800 hover:bg-gray-50 focus:bg-gray-50 focus:ring-0 w-full rounded-sm p-2"
               onChange={(e) => setAddress(e.target.value)}
               value={address}
             />
@@ -161,16 +167,16 @@ const Desktop = ({
                   control: (baseStyles, state) => ({
                     ...baseStyles,
                     borderColor: 'rgb(229 231 235)',
-                    backgroundColor: 'rgb(249 250 251)',
+                    backgroundColor: '#fff',
                     borderWidth: 1,
                     '&:hover': {
-                      backgroundColor: 'rgb(229 231 235)', // Keep the same border color on hover
+                      backgroundColor: 'rgb(249 250 251)', // Keep the same border color on hover
                     },
                     '&:focus': {
-                      backgroundColor: 'rgb(229 231 235)', // Keep the same border color on hover
+                      backgroundColor: 'rgb(249 250 251)', // Keep the same border color on hover
                     },
                     fontSize: '12px',
-                    borderRadius: '.375rem',
+                    borderRadius: '.250rem',
                     boxShadow: 'none',
                     zIndex: 999,
                     position: 'relative',
@@ -204,7 +210,7 @@ const Desktop = ({
               <input
                 type="text"
                 placeholder="01234"
-                className="border text-xs border-gray-200 bg-gray-50 focus:border-gray-200 focus:outline-none text-stone-800 hover:bg-gray-200 hover:border-gray-200 focus:bg-gray-200 focus:ring-0 w-full rounded-md p-2"
+                className="border text-xs border-gray-200 focus:outline-none text-stone-800 hover:bg-gray-50 focus:bg-gray-50 focus:ring-0 w-full rounded-sm p-2"
                 onChange={(e) => setZip(e.target.value)}
                 value={zip}
               />
@@ -226,7 +232,7 @@ const Desktop = ({
             <div className="relative w-full">
               <textarea
                 placeholder="About this customer.."
-                className="border border-gray-200 hover:border-gray-200 hover:bg-gray-200 focus:bg-gray-200 focus:border-gray-200 focus:ring-0 w-full h-16 rounded-md p-2 bg-gray-50 resize-none text-xs"
+                className="border border-gray-200 hover:bg-gray-50 focus:bg-gray-50 outline-none focus:ring-0 w-full h-16 rounded-sm p-2 resize-none text-xs"
                 onChange={(e) => setDesc(e.target.value)}
                 value={desc}
                 maxLength={75}

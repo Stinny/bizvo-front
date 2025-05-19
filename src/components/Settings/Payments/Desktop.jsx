@@ -1,6 +1,6 @@
 import React from 'react';
 import { CreditCard, ExternalLink } from 'react-feather';
-import { BiSolidBank } from 'react-icons/bi';
+import { RiBankLine } from 'react-icons/ri';
 import { BsStripe } from 'react-icons/bs';
 import {
   useGetBankUrlMutation,
@@ -9,6 +9,7 @@ import {
 import { Badge, Spinner } from 'flowbite-react';
 import Bank from './Bank';
 import Stripe from './Stripe';
+import { Spin } from 'antd';
 
 const Desktop = ({ currentUser, refetch }) => {
   const [getBankUrl, { isLoading: gettingBank }] = useGetBankUrlMutation();
@@ -34,12 +35,12 @@ const Desktop = ({ currentUser, refetch }) => {
   };
 
   return (
-    <div className="w-full flex flex-col gap-4 pb-6">
+    <div className="w-full flex flex-col items-start gap-2">
       <div className="w-full flex items-start justify-between">
         <div className="flex flex-col items-start">
           <p className="text-sm text-stone-800">Payout Settings</p>
           <p className="text-xs text-stone-800">
-            Connect and manage how you get paid
+            Manage bank connection and payout schedule
           </p>
         </div>
         {currentUser?.bankAdded || currentUser?.stripeOnboard ? (
@@ -67,60 +68,87 @@ const Desktop = ({ currentUser, refetch }) => {
       currentUser?.stripeOnboard ? (
         ''
       ) : (
-        <div className="w-full grid grid-cols-2 gap-2">
-          <div className="p-2 border border-gray-200 rounded-md flex flex-col items-start">
-            {gettingBank ? (
-              <div className="w-full h-full flex items-center justify-center">
-                <Spinner />
+        <div className="p-2 border border-gray-200 rounded-sm flex flex-col items-start gap-1 w-7/12">
+          {gettingBank ? (
+            <div className="w-full h-16 flex items-center justify-center">
+              <Spin size="small" />
+            </div>
+          ) : (
+            <>
+              <div className="flex items-center gap-1">
+                <RiBankLine className="text-stone-800" />
+                <p className="text-sm text-stone-800">Bank Account</p>
               </div>
-            ) : (
-              <>
-                <div className="flex items-center gap-1">
-                  <BiSolidBank className="text-stone-800" />
-                  <p className="text-sm text-stone-800">Bank Account</p>
-                </div>
-                <p className="text-xs text-stone-800">
-                  Payouts via bank account
-                </p>
+              <p className="text-xs text-stone-800">
+                Be paid directly to your bank account on a weekly or monthly
+                basis.
+              </p>
 
-                <button
-                  type="button"
-                  onClick={handleGetBankUrl}
-                  className="border rounded-md border-stone-800 hover:outline-none p-0.5 pl-1 pr-1 text-xs mt-2"
-                >
-                  Connect
-                </button>
-              </>
-            )}
-          </div>
-          <div className="p-2 border border-gray-200 rounded-md flex flex-col items-start">
-            {gettingStripe ? (
-              <div className="w-full h-full flex items-center justify-center">
-                <Spinner />
-              </div>
-            ) : (
-              <>
-                <div className="flex items-center gap-1">
-                  <BsStripe className="text-stone-800" />
-                  <p className="text-sm text-stone-800">Stripe Account</p>
-                </div>
-
-                <p className="text-xs text-stone-800">
-                  Payouts via Stripe account
-                </p>
-
-                <button
-                  type="button"
-                  onClick={handleGetStripeUrl}
-                  disabled={gettingBank}
-                  className="border rounded-md border-stone-800 hover:outline-none p-0.5 pl-1 pr-1 text-xs mt-2"
-                >
-                  Connect
-                </button>
-              </>
-            )}
-          </div>
+              <button
+                type="button"
+                onClick={handleGetBankUrl}
+                className="border rounded-sm border-stone-800 hover:outline-none p-1 pl-2 pr-2 text-xs self-end hover:cursor-pointer"
+              >
+                Connect
+              </button>
+            </>
+          )}
         </div>
+
+        // <div className="w-full grid grid-cols-2 gap-2">
+        //   <div className="p-2 border border-gray-200 rounded-sm flex flex-col items-start">
+        //     {gettingBank ? (
+        //       <div className="w-full h-full flex items-center justify-center">
+        //         <Spinner />
+        //       </div>
+        //     ) : (
+        //       <>
+        //         <div className="flex items-center gap-1">
+        //           <RiBankLine className="text-stone-800" />
+        //           <p className="text-sm text-stone-800">Bank Account</p>
+        //         </div>
+        //         <p className="text-xs text-stone-800">
+        //           Payouts via bank account
+        //         </p>
+
+        //         <button
+        //           type="button"
+        //           onClick={handleGetBankUrl}
+        //           className="border rounded-sm border-stone-800 hover:outline-none p-1 pl-2 pr-2 text-xs mt-2"
+        //         >
+        //           Connect
+        //         </button>
+        //       </>
+        //     )}
+        //   </div>
+        //   <div className="p-2 border border-gray-200 rounded-sm flex flex-col items-start">
+        //     {gettingStripe ? (
+        //       <div className="w-full h-full flex items-center justify-center">
+        //         <Spinner />
+        //       </div>
+        //     ) : (
+        //       <>
+        //         <div className="flex items-center gap-1">
+        //           <BsStripe className="text-stone-800" />
+        //           <p className="text-sm text-stone-800">Stripe Account</p>
+        //         </div>
+
+        //         <p className="text-xs text-stone-800">
+        //           Payouts via Stripe account
+        //         </p>
+
+        //         <button
+        //           type="button"
+        //           onClick={handleGetStripeUrl}
+        //           disabled={gettingBank}
+        //           className="border rounded-sm border-stone-800 hover:outline-none p-1 pl-2 pr-2 text-xs mt-2"
+        //         >
+        //           Connect
+        //         </button>
+        //       </>
+        //     )}
+        //   </div>
+        // </div>
       )}
 
       {currentUser?.bankPending || currentUser?.bankAdded ? (
@@ -134,12 +162,9 @@ const Desktop = ({ currentUser, refetch }) => {
       ) : (
         ''
       )}
-      <div className="w-full flex items-center justify-center text-center mt-4">
-        <p
-          className="text-stone-800 text-center w-64"
-          style={{ fontSize: '11px' }}
-        >
-          All payments incur a 2% Bizvo fee and 2.9% + 30¢ processing fee
+      <div className="w-full flex items-center text-left">
+        <p className="text-stone-800 text-center text-xs">
+          All payments incur a 2% Bizvo fee + processing fees
         </p>
       </div>
     </div>

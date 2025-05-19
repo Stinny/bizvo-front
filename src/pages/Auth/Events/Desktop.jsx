@@ -98,9 +98,9 @@ const Desktop = ({
   }, []);
 
   return allEvents?.length ? (
-    <div className="dark:border-white bg-white dark:bg-neutral-800 flex flex-col w-10/12 gap-2 items-start">
+    <div className="dark:border-white dark:bg-neutral-800 flex flex-col w-10/12 gap-2 items-start">
       <EvModal open={openEv} setOpen={setOpenEv} even={evToView} />
-      <div className="w-full flex items-center justify-between bg-white border border-gray-200 rounded-md p-2">
+      <div className="w-full flex items-center justify-between bg-white border border-gray-200 rounded-sm p-2">
         <div className="flex flex-col items-start">
           <p className="text-sm text-stone-800">Events</p>
           <p className="text-xs text-stone-800">
@@ -130,7 +130,7 @@ const Desktop = ({
               placeholder="Search by invoice ID"
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="p-0.5 pl-1 border border-gray-200 bg-gray-50 hover:bg-gray-200 focus:bg-gray-200 focus:ring-0 focus:border-gray-200 rounded-md"
+              className="p-1 pl-1 border border-gray-200 hover:bg-gray-50 focus:bg-gray-50 focus:outline-0 focus:border-gray-200 rounded-sm"
               style={{ fontSize: '11px' }}
             />
           </div>
@@ -164,7 +164,7 @@ const Desktop = ({
           ))}
         </>
       ) : (
-        <div className="w-full h-80 flex items-center justify-center border border-gray-200 rounded-md">
+        <div className="w-full h-80 flex items-center justify-center border border-gray-200 rounded-sm">
           <div className="flex flex-col items-center text-center gap-1">
             <p className="text-xs text-stone-800">
               No events found for invoice
@@ -175,7 +175,7 @@ const Desktop = ({
       )}
     </div>
   ) : (
-    <div className="w-10/12 bg-white border rounded-md border-gray-200 p-2 h-96 flex items-center justify-center">
+    <div className="w-10/12 bg-white border rounded-sm border-gray-200 p-2 h-96 flex items-center justify-center">
       <div className="flex flex-col items-center text-center">
         <Clock size={16} className="text-stone-800 mb-2" />
         <p className="text-sm text-stone-800">No events</p>

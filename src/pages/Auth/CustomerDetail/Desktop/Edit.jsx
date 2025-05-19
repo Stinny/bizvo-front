@@ -72,20 +72,26 @@ const Edit = ({
 
           <p className="text-xs text-stone-800">#{customerId}</p>
         </div>
-        <div className="flex items-center gap-3 absolute right-0 top-0 mr-1 mt-1">
+
+        <div className="flex items-center gap-2 absolute top-0 right-0 mr-1 mt-1">
           <button
             type="button"
             onClick={() => setDel(!del)}
-            className="text-red-400 font-bold"
+            className="text-red-400 font-bold cursor-pointer"
           >
-            <Trash size={16} />
+            <X size={14} />
           </button>
           <button
             type="button"
             onClick={handleSaveEdits}
-            className="text-stone-800 font-bold"
+            className="w-full cursor-pointer flex items-center justify-center gap-1 border border-stone-800 dark:border-white rounded-sm p-0.5 pl-1.5 pr-1.5"
           >
-            <Save size={16} />
+            <p
+              className="text-stone-800 dark:text-white"
+              style={{ fontSize: '11px' }}
+            >
+              Save
+            </p>
           </button>
         </div>
       </div>

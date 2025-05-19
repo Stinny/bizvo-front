@@ -24,6 +24,7 @@ import Status from '../../../components/Pay/Status';
 import Trxs from './Trxs';
 import Method from './Method';
 import Payment from '../../../components/Pay/Payment';
+import { Spin } from 'antd';
 
 const Mobile = ({
   data,
@@ -76,11 +77,8 @@ const Mobile = ({
 
   if (updatingInvo || updating) {
     content = (
-      <div
-        className="mx-auto flex flex-col items-center justify-center h-96 mt-16"
-        style={{ width: '370px' }}
-      >
-        <Spinner />
+      <div className="w-full flex flex-col items-center justify-center h-96 mt-16">
+        <Spin size="small" />
       </div>
     );
   } else {
@@ -94,13 +92,13 @@ const Mobile = ({
       />
     ) : (
       <div className="flex flex-col items-start mt-4 p-4">
-        <div className="w-full flex items-center justify-center mb-6">
+        {/* <div className="w-full flex items-center justify-center mb-6">
           <LinkExp
             expDate={data?.invoice?.linkExp}
             refetch={refetch}
             isOwner={isOwner}
           />
-        </div>
+        </div> */}
 
         {succ ? (
           <div className="w-full flex items-center justify-start gap-2 border border-gray-200 bg-white rounded-md p-2 mb-2">

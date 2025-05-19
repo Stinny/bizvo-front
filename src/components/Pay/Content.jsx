@@ -9,6 +9,7 @@ import {
   CreditCard,
   Percent,
   Send,
+  XSquare,
 } from 'react-feather';
 
 //content component for pay page
@@ -90,19 +91,39 @@ const Content = ({ invoice, biz, trx, customer }) => {
       dot: <CheckCircle size={14} className="text-stone-800" />,
       children: (
         <p className="text-sm text-stone-800">
-          Transaction done{' '}
+          Paid on{' '}
           <span className="font-medium">
             {moment(trx?.doneOn).format('MMMM Do, yyyy')}
           </span>
         </p>
       ),
     });
+  } else if (trx?.void) {
+    trxItems.push({
+      dot: <CreditCard size={14} className="text-stone-800" />,
+      children: (
+        <p className="text-sm text-stone-800">
+          Total due{' '}
+          <span className="font-medium">
+            $
+            {parseFloat(trx?.total / 100)?.toLocaleString(undefined, {
+              minimumFractionDigits: 2,
+              maximumFractionDigits: 2,
+            })}
+          </span>
+        </p>
+      ),
+    });
+    trxItems.push({
+      dot: <XSquare size={14} className="text-red-400" />,
+      children: <p className="text-sm text-stone-800">Invoice was canceled</p>,
+    });
   } else {
     trxItems.push({
       dot: <CreditCard size={14} className="text-stone-800" />,
       children: (
         <p className="text-sm text-stone-800">
-          Total amount{' '}
+          Total due{' '}
           <span className="font-medium">
             $
             {parseFloat(trx?.total / 100)?.toLocaleString(undefined, {
@@ -115,27 +136,22 @@ const Content = ({ invoice, biz, trx, customer }) => {
     });
     trxItems.push({
       dot: <Badge dot={true} status="processing" color="#000" />,
-      children: (
-        <p className="text-sm text-stone-800">
-          {invoice?.status !== 'live' ? `Payment due` : `Next payment`}{' '}
-          <span className="font-medium">
-            {moment(invoice?.dueDate).format('MMMM Do')}
-          </span>
-        </p>
-      ),
+      children: <p className="text-sm text-stone-800">Waiting for payment</p>,
     });
   }
 
   return (
     <div className="flex flex-col gap-4 items-start w-full">
-      <Timeline className="text-left p-1" items={trxItems} />
+      <div className="w-full pl-1">
+        <Timeline className="text-left" items={trxItems} />
+      </div>
 
       <div className="w-full flex flex-col gap-2">
         {' '}
         <button
           type="button"
           onClick={() => handleView('bus')}
-          className="w-full flex flex-col bg-white items-start text-left border border-gray-200 rounded-md p-2"
+          className="w-full flex flex-col bg-white items-start text-left border border-gray-200 rounded-sm p-2"
         >
           <div className="w-full flex items-center justify-between">
             <p className="text-sm text-stone-800">Participants</p>
@@ -179,7 +195,7 @@ const Content = ({ invoice, biz, trx, customer }) => {
         <button
           type="button"
           onClick={() => handleView('due')}
-          className="w-full flex flex-col bg-white items-start text-left border border-gray-200 rounded-md p-2"
+          className="w-full flex flex-col bg-white items-start text-left border border-gray-200 rounded-sm p-2"
         >
           <div className="w-full flex items-center justify-between">
             <p className="text-stone-800 text-sm">Details</p>
@@ -201,31 +217,35 @@ const Content = ({ invoice, biz, trx, customer }) => {
                 <div className="flex flex-col gap-2 w-3/6">
                   <div className="w-full flex flex-col">
                     <p className=" text-stone-800 font-medium text-xs">
-                      Received
+                      Received on
                     </p>
                     <p className="text-stone-800 text-xs">
                       {moment(invoice?.sentOn).format('MMMM Do, YYYY')}
                     </p>
                   </div>
+
                   <div className="w-full flex flex-col">
-                    <p className=" text-stone-800 font-medium text-xs">Type</p>
-                    <p className="text-stone-800 text-xs">
-                      {invoice?.type === 'single' ? 'Single' : 'Recurring'}
+                    <p className="text-stone-800 font-medium text-xs">
+                      Tax type
                     </p>
+                    <p className="text-stone-800 text-xs">{taxType}</p>
                   </div>
                 </div>
                 <div className="flex flex-col gap-2 w-3/6">
                   <div className="w-full flex flex-col">
-                    <p className="text-stone-800 font-medium text-xs">Tax</p>
-                    <p className="text-stone-800 text-xs">{taxType}</p>
-                  </div>
-                  <div className="w-full flex flex-col">
                     <p className=" text-stone-800 font-medium text-xs">
-                      Recent Trx
+                      Due by
                     </p>
                     <p className="text-stone-800 text-xs">
-                      {invoice?.recentTrx}
+                      {moment(invoice?.dueDate).format('MMMM Do, YYYY')}
                     </p>
+                  </div>
+
+                  <div className="w-full flex flex-col">
+                    <p className=" text-stone-800 font-medium text-xs">
+                      Transaction
+                    </p>
+                    <p className="text-stone-800 text-xs">{trx?._id}</p>
                   </div>
                 </div>
               </div>

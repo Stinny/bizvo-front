@@ -8,7 +8,6 @@ import { showNotification } from '../../../api/toastSlice';
 import { useDispatch } from 'react-redux';
 import Navbar from '../../../components/Navbar/Navbar';
 import Sidenav from '../../../components/Sidenav/Sidenav';
-import Footer from '../../../components/Footer/Footer';
 import Cookies from 'js-cookie';
 
 const NewInvo = () => {
@@ -89,8 +88,8 @@ const NewInvo = () => {
       return;
     }
 
-    if (amount < 1) {
-      setError('Missing an amount');
+    if (amount < 5 || !amount) {
+      setError('Amount needs to be at least $5');
       return;
     }
 

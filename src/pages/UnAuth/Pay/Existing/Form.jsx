@@ -61,7 +61,7 @@ const Form = ({
       <button
         type="button"
         onClick={() => handleView('old')}
-        className="w-full flex flex-col flex-grow border border-gray-200 rounded-md p-2"
+        className="w-full cursor-pointer flex flex-col flex-grow border border-gray-200 rounded-sm p-2"
       >
         <div className="w-full flex items-center justify-between">
           <div className="flex items-center gap-2">
@@ -93,13 +93,13 @@ const Form = ({
               <button
                 type="button"
                 onClick={handleCancelPay}
-                className="p-2 w-2/12 border border-stone-800 text-stone-800 rounded-md flex items-center justify-center"
+                className="p-2 w-2/12 cursor-pointer border border-stone-800 text-stone-800 rounded-sm flex items-center justify-center"
               >
                 <ChevronLeft size={16} />
               </button>
               <button
                 type="button"
-                className="p-2 w-10/12 border border-stone-800 text-stone-800 rounded-md text-xs font-medium"
+                className="p-2 cursor-pointer w-10/12 border border-stone-800 text-stone-800 rounded-sm text-xs font-medium"
                 onClick={handleConfirmPayment}
                 // disabled={}
               >

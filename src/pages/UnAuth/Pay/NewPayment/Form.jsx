@@ -9,7 +9,7 @@ import {
 } from 'react-feather';
 import { useConfirmPayInvoMutation } from '../../../../api/invoicesApiSlice';
 import { Spinner } from 'flowbite-react';
-import { Checkbox, Timeline } from 'antd';
+import { Checkbox, Spin, Timeline } from 'antd';
 
 const Form = ({
   setReadyForPayment,
@@ -140,22 +140,7 @@ const Form = ({
 
   return (
     <div className="w-full flex flex-col gap-2 items-start">
-      <button
-        type="button"
-        onClick={() => handleView('new')}
-        className="w-full flex flex-col flex-grow border border-gray-200 rounded-md p-2"
-      >
-        <div className="w-full flex items-center justify-between">
-          <div className="flex items-center gap-2">
-            <p className="text-xs text-stone-800">New Payment Method</p>
-          </div>
-          <div
-            className={`w-2.5 h-2.5 border border-gray-200 hover:border-stone-800 rounded-sm ${
-              view === 'new' ? 'bg-stone-800' : 'bg-white'
-            }`}
-          ></div>
-        </div>
-
+      <div className="w-full cursor-pointer flex flex-col flex-grow border border-gray-200 rounded-sm p-2">
         <div
           className={`transition-[max-height] duration-300 ease-in-out overflow-hidden w-full ${
             view === 'new' ? 'min-h-32' : 'max-h-0'
@@ -166,31 +151,23 @@ const Form = ({
             className="w-full mt-2"
             ref={paymentElementRef}
           />
-          <div className="flex items-center gap-1 mt-2">
-            <Checkbox
-              checked={allow}
-              onChange={(e) => setAllow(e.target.checked)}
-            />
-            <div className="flex flex-col items-start">
-              <p className="text-xs text-stone-800">Save for future use</p>
-            </div>
-          </div>
+
           {paying ? (
             <div className="w-full p-2 flex items-center justify-center">
-              <Spinner />
+              <Spin size="small" />
             </div>
           ) : (
             <div className="w-full flex items-center gap-2 mt-2">
               <button
                 type="button"
                 onClick={handleCancelPay}
-                className="p-2 w-2/12 border border-stone-800 text-stone-800 rounded-md flex items-center justify-center"
+                className="p-2 w-2/12 border cursor-pointer border-stone-800 text-stone-800 rounded-sm flex items-center justify-center"
               >
                 <ChevronLeft size={16} />
               </button>
               <button
                 type="button"
-                className="p-2 w-10/12 border border-stone-800 text-stone-800 rounded-md text-xs font-medium"
+                className="p-2 w-10/12 border cursor-pointer border-stone-800 text-stone-800 rounded-sm text-xs font-medium"
                 onClick={handleConfirmPayment}
                 disabled={isPayBtnDisabled || paying || disablePay}
               >
@@ -206,7 +183,7 @@ const Form = ({
             </div>
           )}
         </div>
-      </button>
+      </div>
     </div>
   );
 };

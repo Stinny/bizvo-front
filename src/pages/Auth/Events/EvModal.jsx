@@ -62,7 +62,7 @@ const EvModal = ({ open, setOpen, even }) => {
             <div className="flex flex-col items-start">
               <p className="text-sm text-stone-800">Viewing Event</p>
 
-              <p className="text-xs text-stone-800">#{even?._id}</p>
+              <p className="text-xs text-stone-800">{even?._id}</p>
             </div>
           </div>
           <X
@@ -71,21 +71,18 @@ const EvModal = ({ open, setOpen, even }) => {
             onClick={() => setOpen(false)}
           />
         </div>
-        <div className="flex flex-col items-start gap-1 w-full">
+        <div className="flex flex-col items-start w-full">
           <p className="text-xs text-stone-800 font-medium">When</p>
           <p className="text-stone-800 text-xs dark:text-white">
             <DateFormat createdAt={even?.createdAt} />
           </p>
         </div>
-        <div className="flex flex-col items-start gap-1 w-full">
+        <div className="flex flex-col items-start w-full">
           <p className="text-xs text-stone-800 font-medium">Details</p>
 
           {even?.type === 'paid' ? (
-            <p
-              className="text-stone-800 dark:text-white"
-              style={{ fontSize: '11px' }}
-            >
-              {even?.content}{' '}
+            <p className="text-stone-800 dark:text-white text-xs">
+              Invoice was paid{' '}
               <span className="font-medium">
                 $
                 {parseFloat(even?.amount / 100)?.toLocaleString(undefined, {
@@ -94,38 +91,28 @@ const EvModal = ({ open, setOpen, even }) => {
                 })}
               </span>
             </p>
-          ) : even?.type === 'sent' ? (
-            <p
-              className="text-stone-800 dark:text-white"
-              style={{ fontSize: '11px' }}
-            >
-              {even?.content} <span className="font-medium">{even?.email}</span>
+          ) : even?.type === 'cancel' ? (
+            <p className="text-stone-800 dark:text-white text-xs">
+              Invoice was canceled
             </p>
           ) : (
-            <p
-              className="text-stone-800 dark:text-white"
-              style={{ fontSize: '11px' }}
-            >
-              {even?.content}
+            <p className="text-stone-800 dark:text-white text-xs">
+              Invoice is overdue
             </p>
           )}
-
-          <Link
-            to={`/dashboard/invoices/${even?.invoiceId}`}
-            className="w-full flex items-center justify-between border border-gray-200 hover:border-stone-800 rounded-md p-2"
-          >
-            <div className="flex flex-col items-start">
-              <p className="text-xs text-stone-800 flex items-center gap-1">
-                <FileText size={12} />
-                Invoice
-              </p>
-              <p className="text-stone-800" style={{ fontSize: '11px' }}>
-                #{even?.invoiceId}
-              </p>
-            </div>
-            <ChevronRight size={12} className="text-stone-800" />
-          </Link>
         </div>
+        <Link
+          to={`/dashboard/invoices/${even?.invoiceId}`}
+          className="w-full flex items-center justify-between border border-gray-200 hover:border-stone-800 rounded-md p-2"
+        >
+          <div className="flex flex-col items-start">
+            <p className="text-xs text-stone-800 flex items-center gap-1">
+              <FileText size={12} />
+              Invoice
+            </p>
+          </div>
+          <ChevronRight size={12} className="text-stone-800" />
+        </Link>
       </div>
     </Modal>
   );

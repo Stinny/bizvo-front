@@ -6,7 +6,7 @@ const Title = ({ invoice, biz }) => {
   const [seeBiz, setSeeBiz] = useState(false);
 
   return (
-    <div className="w-full grid grid-cols-7 border border-gray-200 rounded-md p-2">
+    <div className="w-full grid grid-cols-7 border border-gray-200 rounded-sm p-2">
       <BizModal open={seeBiz} setOpen={setSeeBiz} biz={biz} />
       <div className="flex items-center justify-start">
         <Avatar

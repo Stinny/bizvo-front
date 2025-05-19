@@ -1,32 +1,21 @@
-import React, { useEffect, useState } from 'react';
-import Modal from 'react-modal';
+import React, { useEffect, useRef, useState } from 'react';
 import Edit from './Edit';
-import { Badge, Dropdown, Spinner, Tooltip } from 'flowbite-react';
 import {
-  AlertOctagon,
-  CheckCircle,
+  AlignRight,
   ChevronDown,
   ChevronRight,
-  ChevronsRight,
-  ChevronUp,
-  Clipboard,
   Clock,
   CreditCard,
   DollarSign,
   Edit as EditIcon,
   ExternalLink,
-  MoreVertical,
-  Repeat,
   Send,
   Trash,
   X,
   XSquare,
 } from 'react-feather';
 import { useGetCustomerOptsQuery } from '../../../../api/customersApiSlice';
-import {
-  useEditInvoiceMutation,
-  useSendInvoiceMutation,
-} from '../../../../api/invoicesApiSlice';
+import { useEditInvoiceMutation } from '../../../../api/invoicesApiSlice';
 import { showNotification } from '../../../../api/toastSlice';
 import { useDispatch } from 'react-redux';
 import moment from 'moment';
@@ -38,8 +27,9 @@ import CancelModal from '../../../../components/Invoices/CancelModal';
 import SendModal from '../../../../components/Invoices/SendModal';
 import 'react-tabs/style/react-tabs.css';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
-import { Timeline } from 'antd';
+import { Spin, Timeline } from 'antd';
 import DeleteModal from '../../../../components/Invoices/DeleteModal';
+import { RiBankLine } from 'react-icons/ri';
 
 const Desktop = ({
   invoice,
@@ -130,6 +120,28 @@ const Desktop = ({
     });
   };
 
+  //dropdown menu stuff
+  const [open, setOpen] = useState(false);
+  const dropdownRef = useRef(null);
+
+  const toggleDropdown = () => {
+    setOpen((prev) => !prev);
+  };
+
+  //for handling when a user clicks away from the dropdown menu
+  const handleClickOutside = (event) => {
+    if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+      setOpen(false); // Close the dropdown if clicking outside
+    }
+  };
+
+  useEffect(() => {
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, []);
+
   const [modalConfirmHandler, setModalConfirmHandler] = useState(null);
 
   //hanlder function to save edits
@@ -193,7 +205,7 @@ const Desktop = ({
   if (gettingCustOpts || savingInvo) {
     content = (
       <div className="w-10/12 h-96 flex items-center justify-center">
-        <Spinner />
+        <Spin size="small" />
       </div>
     );
   } else if (gotCustOpts) {
@@ -231,7 +243,7 @@ const Desktop = ({
         modalConfirmHandler={modalConfirmHandler}
       />
     ) : (
-      <div className="w-10/12 bg-white border rounded-md border-gray-200 p-2 pb-6 flex flex-col gap-6 items-center">
+      <div className="w-10/12 bg-white border rounded-sm border-gray-200 p-2 pb-6 flex flex-col gap-6 items-center">
         <SendModal
           open={sendMod}
           setOpen={setSendMod}
@@ -261,97 +273,91 @@ const Desktop = ({
               <p className="text-xs text-stone-800">#{invoice?._id}</p>
             </div>
           </div>
-          <div className="flex items-center justify-center gap-3 w-44">
-            <InvoStatus status={invoice?.status} />
+          <div className="flex items-center justify-end gap-3 w-44">
+            <InvoStatus status={invoice?.status} full={true} />
           </div>
           <div className="w-24"></div>
-          <Dropdown
-            dismissOnClick={true}
-            renderTrigger={() => (
-              <MoreVertical size={16} className="hover:cursor-pointer" />
-            )}
-            className="w-24"
-          >
-            {invoice?.status === 'draft' ? (
-              <button
-                type="button"
-                onClick={() => setEdit(!edit)}
-                className="w-full h-full outline-none border-none"
-              >
-                <Dropdown.Item
-                  as="div"
-                  className="w-full flex items-center gap-1 text-xs text-stone-800 hover:bg-white"
-                >
-                  <EditIcon size={12} className="text-stone-800" />
-                  Edit
-                </Dropdown.Item>
-              </button>
-            ) : (
-              ''
-            )}
-
-            {invoice?.sent ? (
-              <Link
-                to={`http://localhost:5173/pay/${invoice?._id}?iat=${invoice?.token}&uid=${currentUser?._id}`}
-                target="_blank"
-              >
-                <Dropdown.Item
-                  as="div"
-                  className="text-xs text-stone-800 flex items-center gap-1 hover:bg-white"
-                >
-                  <ExternalLink size={12} />
-                  View
-                </Dropdown.Item>
-              </Link>
-            ) : (
-              ''
-            )}
-
-            <Link to="/dashboard/events" state={{ invoId: invoice?._id }}>
-              <Dropdown.Item
-                as="div"
-                className="text-xs text-stone-800 flex items-center gap-1 hover:bg-white"
-              >
-                <Clock size={12} />
-                Events
-              </Dropdown.Item>
+          {invoice?.status == 'paid' || invoice?.status == 'void' ? (
+            <Link
+              to={`/pay/${invoice?._id}?iat=${invoice?.token}`}
+              target="_blank"
+              className="text-stone-800 self-start"
+            >
+              <ExternalLink size={16} />
             </Link>
+          ) : (
+            <div className="relative self-start mt-1">
+              {' '}
+              <AlignRight
+                size={16}
+                onClick={toggleDropdown}
+                className="text-stone-800 hover:cursor-pointer"
+              />
+              {open ? (
+                <div
+                  ref={dropdownRef}
+                  className="flex justify-end absolute top-full z-50 right-0"
+                >
+                  <div className="bg-white border border-gray-200 rounded-sm flex flex-col items-center gap-1 p-2 w-24">
+                    {invoice?.status === 'draft' ||
+                    invoice?.status === 'pending' ? (
+                      <button
+                        type="button"
+                        onClick={() => setEdit(!edit)}
+                        className="w-full flex items-center gap-2 text-xs text-stone-800 hover:bg-white border border-white rounded-sm hover:border-stone-800 p-1"
+                      >
+                        <EditIcon size={12} className="text-stone-800" />
+                        Edit
+                      </button>
+                    ) : (
+                      ''
+                    )}
 
-            {invoice?.status === 'draft' ? (
-              <button
-                type="button"
-                onClick={() => setDel(!del)}
-                className="w-full h-full"
-              >
-                <Dropdown.Item
-                  as="div"
-                  className="text-xs text-stone-800 flex items-center gap-1 hover:bg-white"
-                >
-                  <Trash size={12} className="text-red-400" />
-                  Delete
-                </Dropdown.Item>
-              </button>
-            ) : (
-              ''
-            )}
-            {invoice?.status === 'pending' || invoice?.status === 'live' ? (
-              <button
-                type="button"
-                onClick={() => setCancelMod(!cancelMod)}
-                className="w-full h-full"
-              >
-                <Dropdown.Item
-                  as="div"
-                  className="text-xs text-stone-800 flex items-center gap-1 hover:bg-white"
-                >
-                  <XSquare size={12} className="text-red-400" />
-                  Cancel
-                </Dropdown.Item>
-              </button>
-            ) : (
-              ''
-            )}
-          </Dropdown>
+                    {invoice?.status === 'draft' ? (
+                      <button
+                        type="button"
+                        onClick={() => setDel(!del)}
+                        className="w-full flex items-center gap-2 text-xs text-stone-800 hover:bg-white border border-white rounded-sm hover:border-stone-800 p-1"
+                      >
+                        <Trash size={12} className="text-red-400" />
+                        Delete
+                      </button>
+                    ) : (
+                      ''
+                    )}
+
+                    {invoice?.sent ? (
+                      <Link
+                        to={`/pay/${invoice?._id}?iat=${invoice?.token}&uid=${currentUser?._id}`}
+                        target="_blank"
+                        className="w-full flex items-center justify-start gap-2 text-xs text-stone-800 hover:bg-white border border-white rounded-sm hover:border-stone-800 p-1"
+                      >
+                        <ExternalLink size={12} />
+                        View
+                      </Link>
+                    ) : (
+                      ''
+                    )}
+                    {invoice?.status === 'pending' ||
+                    invoice?.status === 'live' ? (
+                      <button
+                        type="button"
+                        onClick={() => setCancelMod(!cancelMod)}
+                        className="w-full flex items-center gap-2 text-xs text-stone-800 hover:bg-white border border-white rounded-sm hover:border-stone-800 p-1"
+                      >
+                        <XSquare size={12} className="text-red-400" />
+                        Cancel
+                      </button>
+                    ) : (
+                      ''
+                    )}
+                  </div>
+                </div>
+              ) : (
+                ''
+              )}
+            </div>
+          )}
         </div>
         <Tabs
           selectedIndex={activeTabIndex}
@@ -360,83 +366,18 @@ const Desktop = ({
         >
           <TabList>
             <Tab>Details</Tab>
-            <Tab>Transactions</Tab>
+            <Tab>Transaction</Tab>
           </TabList>
 
           <TabPanel>
             <div className="flex items-center justify-center w-72 mx-auto">
               <div className="flex flex-col gap-4 w-full items-start">
-                {invoice?.status === 'void' ? (
-                  <div className="flex flex-col gap-1 items-start w-full">
-                    <button
-                      type="button"
-                      onClick={() => setViewCan(!viewCan)}
-                      className="w-full flex flex-col bg-white items-start text-left border border-gray-200 rounded-md p-2"
-                    >
-                      <div className="w-full flex items-center justify-between">
-                        <div className="flex items-center gap-2">
-                          <p className="flex items-center gap-1 text-xs text-stone-800">
-                            <XSquare size={14} className="text-red-400" />
-                            Canceled on{' '}
-                            {moment(invoice?.canceledOn).format('MMMM D, YYYY')}
-                          </p>
-                        </div>
-                        {viewCan ? (
-                          <ChevronDown size={14} />
-                        ) : (
-                          <ChevronRight size={14} />
-                        )}
-                      </div>
-
-                      <div
-                        className={`transition-[max-height] duration-300 ease-in-out overflow-hidden w-full ${
-                          viewCan ? 'max-h-40' : 'max-h-0'
-                        }`}
-                      >
-                        <p className="text-xs text-stone-800 mt-2">Reason</p>
-                        <input
-                          type="text"
-                          placeholder="Reason"
-                          className="text-xs bg-gray-50 border border-gray-50 focus:outline-none text-stone-800 ring-0 rounded-md p-2 w-full"
-                          disabled
-                          value={invoice?.cancelMsg}
-                        />
-                      </div>
-                    </button>
-                  </div>
-                ) : (
-                  ''
-                )}
-                <div className="flex items-center w-full gap-2">
-                  <button
-                    type="button"
-                    disabled
-                    className={`flex items-center justify-center gap-1 w-3/6 p-2 border ${
-                      type === 'single' ? 'border-stone-800' : 'border-gray-200'
-                    } rounded-md`}
-                  >
-                    <CreditCard size={14} className="text-stone-800" />
-                    <p className="text-xs text-stone-800">Single</p>
-                  </button>
-                  <button
-                    type="button"
-                    disabled
-                    className={`flex items-center justify-center gap-1 w-3/6 p-2 border ${
-                      type === 'recurring'
-                        ? 'border-stone-800'
-                        : 'border-gray-200'
-                    } rounded-md`}
-                  >
-                    <Repeat size={14} className="text-stone-800" />
-                    <p className="text-xs text-stone-800">Recurring</p>
-                  </button>
-                </div>
                 <div className="flex flex-col gap-1 items-start w-full">
                   <p className="text-xs text-stone-800">Customer</p>
                   <button
                     type="button"
                     onClick={() => setViewCust(!viewCust)}
-                    className="w-full flex flex-col bg-gray-50 items-start text-left border border-gray-50 rounded-md p-2"
+                    className="w-full flex flex-col items-start text-left border border-gray-200 rounded-sm p-2"
                   >
                     <div className="w-full flex items-center justify-between">
                       <div className="flex items-center gap-2">
@@ -456,10 +397,10 @@ const Desktop = ({
                         viewCust ? 'max-h-40' : 'max-h-0'
                       }`}
                     >
-                      <p className="text-xs text-stone-800 mt-2">
+                      <p className="text-xs text-stone-800 mt-3">
                         {invoice?.customer?.email}
                       </p>
-                      <p className="text-xs text-stone-800 mt-2">
+                      <p className="text-xs text-stone-800 mt-1">
                         {invoice?.customer?.country?.label}
                       </p>
                     </div>
@@ -470,7 +411,7 @@ const Desktop = ({
                   <input
                     type="text"
                     placeholder="Title"
-                    className="text-xs bg-white border border-gray-200 focus:outline-none text-stone-800 ring-0 w-full rounded-md p-2"
+                    className="text-xs bg-white border border-gray-200 focus:outline-none text-stone-800 ring-0 w-full rounded-sm p-2"
                     disabled
                     value={title}
                   />
@@ -479,45 +420,15 @@ const Desktop = ({
                   <p className="text-xs text-stone-800">Description</p>
                   <textarea
                     placeholder="About this invoice.."
-                    className="text-xs bg-white border border-gray-200 focus:outline-none text-stone-800 ring-0 w-full rounded-md p-2 resize-none h-20"
+                    className="text-xs bg-white border border-gray-200 focus:outline-none text-stone-800 ring-0 w-full rounded-sm p-2 resize-none h-20"
                     disabled
                     value={desc}
                   />
                 </div>
-                {type === 'recurring' ? (
-                  <div className="flex flex-col items-start w-full gap-1">
-                    <div className="flex items-center w-full gap-2">
-                      <button
-                        type="button"
-                        disabled
-                        className={`text-xs text-stone-800 p-1 w-3/6 border ${
-                          int === 'monthly'
-                            ? 'border-stone-800'
-                            : 'border-gray-200'
-                        } rounded-md`}
-                      >
-                        Monthly
-                      </button>
-                      <button
-                        type="button"
-                        disabled
-                        className={`text-xs text-stone-800 p-1 w-3/6 border ${
-                          int === 'weekly'
-                            ? 'border-stone-800'
-                            : 'border-gray-200'
-                        } rounded-md`}
-                      >
-                        Weekly
-                      </button>
-                    </div>
-                  </div>
-                ) : (
-                  ''
-                )}
                 <div className="w-full flex items-center justify-center gap-2">
                   <div className="flex flex-col items-start w-4/12 gap-1">
                     <p className="text-xs text-stone-800">Amount</p>
-                    <div className="w-full p-2 bg-gray-50 text-left rounded-md">
+                    <div className="w-full p-2 border border-gray-200 text-left rounded-sm">
                       <p className="text-xs text-stone-800">
                         $
                         {parseFloat(amount)?.toLocaleString(undefined, {
@@ -527,13 +438,13 @@ const Desktop = ({
                       </p>
                     </div>
                   </div>
-                  {invoice?.paid ? (
+                  {invoice?.paidOn ? (
                     <div className="flex flex-col items-start w-8/12 gap-1">
                       <p className="text-xs text-stone-800">Paid On</p>
                       <input
                         type="text"
                         placeholder="Due Date"
-                        className="text-xs bg-gray-50 border border-gray-50 focus:outline-none text-stone-800 ring-0 w-full rounded-md p-2"
+                        className="text-xs border border-gray-200 focus:outline-none text-stone-800 ring-0 w-full rounded-sm p-2"
                         disabled
                         value={`${moment(invoice?.paidOn).format(
                           'MMMM D, YYYY'
@@ -546,7 +457,7 @@ const Desktop = ({
                       <input
                         type="text"
                         placeholder="Due Date"
-                        className="text-xs bg-gray-50 border border-gray-50 focus:outline-none text-stone-800 ring-0 w-full rounded-md p-2"
+                        className="text-xs border border-gray-200 focus:outline-none text-stone-800 ring-0 w-full rounded-sm p-2"
                         disabled
                         value={`${moment(dueDate).format('MMMM D, YYYY')}`}
                       />
@@ -561,11 +472,7 @@ const Desktop = ({
             {trxs?.length ? (
               <div className="flex flex-col items-start gap-2 min-h-64">
                 {trxs?.map((trx) => (
-                  <button
-                    type="button"
-                    onClick={() => handleSeeTx(`tx${trx?._id}`)}
-                    className="border border-gray-200 rounded-md flex flex-col p-2 w-full"
-                  >
+                  <div className="flex flex-col p-2 w-full">
                     <div className="w-full flex items-center justify-between">
                       <div className="flex items-center">
                         <div className="flex flex-col items-start">
@@ -573,29 +480,16 @@ const Desktop = ({
                             className="text-stone-800 font-medium"
                             style={{ fontSize: '11px' }}
                           >
-                            $
-                            {parseFloat(trx?.total / 100)?.toLocaleString(
-                              undefined,
-                              {
-                                minimumFractionDigits: 2,
-                                maximumFractionDigits: 2,
-                              }
-                            )}
+                            Paid on{' '}
+                            <span className="font-medium">
+                              {moment(trx?.doneOn).format('MMMM Do, yyyy')}
+                            </span>
                           </p>
                         </div>
                       </div>
-                      {seeTx === `tx${trx?._id}` ? (
-                        <ChevronDown size={14} />
-                      ) : (
-                        <ChevronRight size={14} />
-                      )}
                     </div>
 
-                    <div
-                      className={`transition-[max-height] duration-300 ease-in-out overflow-hidden w-full ${
-                        seeTx === `tx${trx?._id}` ? 'max-h-96' : 'max-h-0'
-                      }`}
-                    >
+                    <div className={`w-full mt-4`}>
                       <Timeline
                         className="text-left mt-4 ml-1"
                         pending={false}
@@ -606,7 +500,7 @@ const Desktop = ({
                             children: (
                               <p className="text-xs text-stone-800 pt-1">
                                 Invoice sent{' '}
-                                <span className="font-semibold">
+                                <span className="font-medium">
                                   $
                                   {parseFloat(
                                     trx?.amount / 100
@@ -629,7 +523,7 @@ const Desktop = ({
                             children: (
                               <p className="text-xs text-stone-800 pt-1">
                                 Total paid{' '}
-                                <span className="font-semibold">
+                                <span className="font-medium">
                                   $
                                   {parseFloat(trx?.total / 100)?.toLocaleString(
                                     undefined,
@@ -643,28 +537,12 @@ const Desktop = ({
                             ),
                           },
                           {
-                            dot: (
-                              <CheckCircle
-                                size={12}
-                                className="text-stone-800"
-                              />
-                            ),
-                            children: (
-                              <p className="text-xs text-stone-800 pt-1">
-                                Transaction done{' '}
-                                <span className="font-medium">
-                                  {moment(trx?.doneOn).format('MMMM Do, yyyy')}
-                                </span>
-                              </p>
-                            ),
-                          },
-                          {
                             dot: <X size={12} className="text-red-400" />,
                             position: 'left',
                             children: (
                               <p className="text-xs text-stone-800 pt-1">
                                 {taxType}{' '}
-                                <span className="font-semibold">
+                                <span className="font-medium">
                                   ${(trx?.tax?.amount / 100).toFixed(2)}
                                 </span>
                               </p>
@@ -676,7 +554,7 @@ const Desktop = ({
                             children: (
                               <p className="text-xs text-stone-800 pt-1">
                                 Bizvo fee{' '}
-                                <span className="font-semibold">
+                                <span className="font-medium">
                                   ${(trx?.bizvoFee / 100).toFixed(2)}
                                 </span>
                               </p>
@@ -688,24 +566,19 @@ const Desktop = ({
                             children: (
                               <p className="text-xs text-stone-800 pt-1">
                                 Processing fee{' '}
-                                <span className="font-semibold">
+                                <span className="font-medium">
                                   ${(trx?.stripeFee / 100).toFixed(2)}
                                 </span>
                               </p>
                             ),
                           },
                           {
-                            dot: (
-                              <DollarSign
-                                size={12}
-                                className="text-stone-800"
-                              />
-                            ),
+                            dot: <RiBankLine className="text-stone-800" />,
                             position: 'left',
                             children: (
                               <p className="text-xs text-stone-800 pt-1">
                                 You earn{' '}
-                                <span className="font-semibold">
+                                <span className="font-medium">
                                   $
                                   {parseFloat(
                                     trx?.earned / 100
@@ -720,12 +593,59 @@ const Desktop = ({
                         ]}
                       />
                     </div>
-                  </button>
+                  </div>
                 ))}
               </div>
+            ) : invoice?.status === 'void' ? (
+              <div className="flex flex-col gap-2 items-center justify-center w-52 mx-auto h-44">
+                <XSquare size={16} className="text-red-400" />
+                <p className="text-center text-xs text-stone-800">
+                  This invoice was canceled before any payments were made.
+                </p>
+                <p className="text-stone-800" style={{ fontSize: '11px' }}>
+                  {moment(invoice?.canceledOn).format('MMMM D, YYYY')}
+                </p>
+              </div>
             ) : (
+              // <div className="flex flex-col gap-1 items-start w-full">
+              //   <button
+              //     type="button"
+              //     onClick={() => setViewCan(!viewCan)}
+              //     className="w-full flex flex-col bg-white items-start text-left border border-gray-200 rounded-md p-2"
+              //   >
+              //     <div className="w-full flex items-center justify-between">
+              //       <div className="flex items-center gap-2">
+              //         <p className="flex items-center gap-1 text-xs text-stone-800">
+              //           <XSquare size={14} className="text-red-400" />
+              //           Canceled on{' '}
+              //           {moment(invoice?.canceledOn).format('MMMM D, YYYY')}
+              //         </p>
+              //       </div>
+              //       {viewCan ? (
+              //         <ChevronDown size={14} />
+              //       ) : (
+              //         <ChevronRight size={14} />
+              //       )}
+              //     </div>
+
+              //     <div
+              //       className={`transition-[max-height] duration-300 ease-in-out overflow-hidden w-full ${
+              //         viewCan ? 'max-h-40' : 'max-h-0'
+              //       }`}
+              //     >
+              //       <p className="text-xs text-stone-800 mt-2">Reason</p>
+              //       <input
+              //         type="text"
+              //         placeholder="Reason"
+              //         className="text-xs bg-gray-50 border border-gray-50 focus:outline-none text-stone-800 ring-0 rounded-md p-2 w-full"
+              //         disabled
+              //         value={invoice?.cancelMsg}
+              //       />
+              //     </div>
+              //   </button>
+              // </div>
               <div className="h-64 w-full flex items-center justify-center">
-                <p className="text-xs text-stone-800">No transactions</p>
+                <p className="text-xs text-stone-800">No transaction</p>
               </div>
             )}
           </TabPanel>

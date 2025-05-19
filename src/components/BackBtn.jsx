@@ -17,7 +17,7 @@ const BackBtn = ({ direction, home }) => {
     <button
       type="button"
       onClick={handleGoBack}
-      className="flex items-center justify-center text-stone-800 border border-stone-800 rounded-md p-0.5 flex-grow"
+      className="flex items-center justify-center text-stone-800 border border-stone-800 rounded-sm p-0.5 flex-grow hover:cursor-pointer"
     >
       <ChevronLeft size={14} />
     </button>

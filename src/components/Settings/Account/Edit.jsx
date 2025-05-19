@@ -109,7 +109,7 @@ const Edit = ({
                     <input
                       type="text"
                       placeholder="Address"
-                      className="text-xs bg-white border border-gray-200 focus:outline-none text-stone-800 ring-0 w-full rounded-md p-2"
+                      className="text-xs bg-white border border-gray-200 focus:outline-none text-stone-800 ring-0 w-full rounded-sm p-2"
                       disabled
                       value={currentUser?.email}
                     />
@@ -121,7 +121,7 @@ const Edit = ({
                   <input
                     type="text"
                     placeholder="Email"
-                    className="text-xs bg-gray-50 border border-gray-200 focus:border-gray-200 focus:bg-gray-200 focus:outline-none text-stone-800 focus:ring-0 w-full rounded-md p-2"
+                    className="text-xs bg-gray-50 border border-gray-200 focus:border-gray-200 focus:bg-gray-200 focus:outline-none text-stone-800 focus:ring-0 w-full rounded-sm p-2"
                     onChange={(e) => setEmail(e.target.value)}
                     value={email}
                   />
@@ -162,7 +162,7 @@ const Edit = ({
                       backgroundColor: 'rgb(249 250 251)', // Keep the same border color on hover
                     },
                     fontSize: '12px',
-                    borderRadius: '.375rem',
+                    borderRadius: '.250rem',
                     boxShadow: 'none',
                     zIndex: 999,
                     position: 'relative',
@@ -207,7 +207,7 @@ const Edit = ({
               <input
                 type="text"
                 placeholder="Name"
-                className="text-xs bg-white border border-gray-200 focus:border-gray-200 focus:bg-gray-50 hover:bg-gray-50 focus:outline-none text-stone-800 focus:ring-0 w-full rounded-md p-2"
+                className="text-xs bg-white border border-gray-200 focus:border-gray-200 focus:bg-gray-50 hover:bg-gray-50 focus:outline-none text-stone-800 focus:ring-0 w-full rounded-sm p-2"
                 onChange={(e) => setName(e.target.value)}
                 value={name}
               />
@@ -239,7 +239,7 @@ const Edit = ({
               <p className="text-xs text-stone-800">Describe your services</p>
               <textarea
                 placeholder="Describe your services.."
-                className="text-xs bg-white border border-gray-200 focus:ring-0 focus:border-gray-200 focus:outline-none focus:bg-gray-50 hover:bg-gray-50 text-stone-800 ring-0 w-full rounded-md p-2 resize-none h-20"
+                className="text-xs bg-white border border-gray-200 focus:ring-0 focus:border-gray-200 focus:outline-none focus:bg-gray-50 hover:bg-gray-50 text-stone-800 ring-0 w-full rounded-sm p-2 resize-none h-20"
                 onChange={(e) => setAbout(e.target.value)}
                 value={about}
               />

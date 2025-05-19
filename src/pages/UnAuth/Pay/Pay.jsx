@@ -2,10 +2,10 @@ import React, { useEffect, useState } from 'react';
 import Desktop from './Desktop';
 import { useParams, useSearchParams } from 'react-router-dom';
 import { useGetInvoiceToPayQuery } from '../../../api/invoicesApiSlice';
-import { Spinner } from 'flowbite-react';
 import Cookies from 'js-cookie';
 import { isMobile } from 'react-device-detect';
 import Mobile from './Mobile';
+import { Spin } from 'antd';
 
 const Pay = () => {
   const currentUser = Cookies.get('currentUser')
@@ -59,17 +59,15 @@ const Pay = () => {
   let content;
   if (isLoading || isFetching) {
     content = isMobile ? (
-      <div className="w-full h-full p-4">
-        <div className="w-full h-96 bg-white border border-gray-200 rounded-md flex items-center justify-center">
-          <Spinner />
-        </div>
+      <div className="w-full flex flex-col items-center justify-center h-96 mt-16">
+        <Spin size="small" />
       </div>
     ) : (
       <div
-        className="mx-auto h-96 mt-20 bg-white border border-gray-200 rounded-md flex items-center justify-center"
+        className="mx-auto h-96 mt-20 bg-white flex items-center justify-center"
         style={{ width: '370px' }}
       >
-        <Spinner />
+        <Spin size="small" />
       </div>
     );
   } else if (isSuccess) {

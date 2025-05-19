@@ -101,7 +101,7 @@ const CancelModal = ({ open, setOpen, invoId, refetch }) => {
             </p>
             <textarea
               placeholder="Reason for canceling"
-              className="text-xs bg-gray-50 border border-gray-200 focus:ring-0 focus:border-gray-200 focus:outline-none focus:bg-gray-200 text-stone-800 ring-0 w-full rounded-md p-2 resize-none h-16"
+              className="text-xs bg-white border border-gray-200 focus:ring-0 focus:border-gray-200 focus:outline-none focus:bg-gray-50 text-stone-800 ring-0 w-full rounded-sm p-2 resize-none h-16"
               onChange={(e) => setMsg(e.target.value)}
               value={msg}
             />
@@ -112,7 +112,7 @@ const CancelModal = ({ open, setOpen, invoId, refetch }) => {
                 type="button"
                 disabled={isLoading}
                 onClick={handleCancelInvo}
-                className=" text-stone-800 rounded-md border border-stone-800 p-1 text-xs"
+                className=" text-stone-800 rounded-sm border border-stone-800 p-1 text-xs"
               >
                 Cancel Invoice
               </button>

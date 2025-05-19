@@ -37,6 +37,7 @@ const customStyles = {
     transform: 'translate(-50%, -50%)',
     fontFamily: 'Geist',
     zIndex: 1000,
+    padding: '8px',
   },
   overlay: { zIndex: 1000 },
 };
@@ -129,10 +130,12 @@ const Edit = ({
           <div className="w-full flex items-start justify-between">
             <div className="flex flex-col items-start">
               <p className="text-sm text-stone-800">Sending Invoice</p>
-              <p className="text-xs text-stone-800">Confirm sending invoice</p>
+              <p className="text-xs text-stone-800">
+                Are you sure you want to send?
+              </p>
             </div>
             <X
-              size={16}
+              size={14}
               className="text-red-400 hover:cursor-pointer"
               onClick={() => setConfirmMod(false)}
             />
@@ -143,18 +146,26 @@ const Edit = ({
               <p className="text-xs text-stone-800">Permanent action</p>
             </div>
             <p className="text-xs text-stone-800">
-              You have selected to send this invoice. The customer will be
-              notified and able to pay once sent.
+              Limited edits can be made once sent. A payment link will be sent
+              to the customer.
             </p>
           </div>
-          <div className="w-full flex items-center justify-end">
+          <div className="w-full flex items-center justify-between">
+            <div className="flex items-center gap-1">
+              <Checkbox
+                checked={send}
+                onChange={(e) => setSend(e.target.checked)}
+              />
+              <p className="text-xs text-stone-800">Send to customer</p>
+            </div>
             <div className="flex items-center gap-2">
               <button
                 type="button"
-                className=" text-stone-800 rounded-md border border-stone-800 p-1 text-xs"
+                className=" text-stone-800 rounded-sm border cursor-pointer border-stone-800 p-1 pl-2 pr-2 text-xs"
                 onClick={modalConfirmHandler}
+                disabled={!send}
               >
-                Send Invoice
+                Send
               </button>
             </div>
           </div>
@@ -169,41 +180,10 @@ const Edit = ({
         </div>
 
         <div className="flex items-center justify-center gap-3">
-          <InvoStatus status={invoice?.status} />
-          {invoice?.sent ? (
-            ''
-          ) : (
-            <div className="flex items-center justify-start w-full">
-              {!currentUser?.bankAdded && !currentUser?.stripeOnboard ? (
-                <Tooltip
-                  content={
-                    <p className="text-xs text-stone-800 text-left">
-                      Connect a payout option before sending invoices
-                    </p>
-                  }
-                  style="light"
-                  className="w-52"
-                  arrow={false}
-                >
-                  <div className="flex items-center gap-1">
-                    <Checkbox disabled />
-                    <p className="text-xs text-stone-800">Send to customer</p>
-                  </div>
-                </Tooltip>
-              ) : (
-                <div className="flex items-center gap-1">
-                  <Checkbox
-                    checked={send}
-                    onChange={(e) => setSend(e.target.checked)}
-                  />
-                  <p className="text-xs text-stone-800">Send to customer</p>
-                </div>
-              )}
-            </div>
-          )}
+          <InvoStatus status={invoice?.status} full={true} />
         </div>
         <div className="w-24"></div>
-        <div className="flex items-center justify-end w-24 gap-3 absolute top-0 right-0 mr-1 mt-1">
+        <div className="flex items-center gap-2 absolute top-0 right-0 mr-1 mt-1">
           <button
             type="button"
             onClick={handleCancelEdits}
@@ -211,41 +191,23 @@ const Edit = ({
           >
             <X size={14} />
           </button>
-
           <button
             type="button"
             onClick={handleSaveEdits}
-            className="text-stone-800"
+            className="w-full cursor-pointer flex items-center justify-center gap-1 border border-stone-800 dark:border-white rounded-sm p-0.5 pl-1.5 pr-1.5"
           >
-            <Save size={14} />
+            <p
+              className="text-stone-800 dark:text-white"
+              style={{ fontSize: '11px' }}
+            >
+              Save
+            </p>
           </button>
         </div>
       </div>
 
       <div className="flex items-center justify-center w-72 mx-auto">
         <div className="flex flex-col gap-4 w-full items-start">
-          <div className="flex items-center w-full gap-2">
-            <button
-              type="button"
-              onClick={() => setType('single')}
-              className={`flex items-center justify-center gap-1 w-3/6 p-2 border ${
-                type === 'single' ? 'border-stone-800' : 'border-gray-200'
-              } rounded-md hover:border-stone-800`}
-            >
-              <CreditCard size={14} className="text-stone-800" />
-              <p className="text-xs text-stone-800">Single</p>
-            </button>
-            <button
-              type="button"
-              onClick={() => setType('recurring')}
-              className={`flex items-center justify-center gap-1 w-3/6 p-2 border ${
-                type === 'recurring' ? 'border-stone-800' : 'border-gray-200'
-              } rounded-md hover:border-stone-800`}
-            >
-              <Repeat size={14} className="text-stone-800" />
-              <p className="text-xs text-stone-800">Recurring</p>
-            </button>
-          </div>
           <div className="flex flex-col items-start w-full gap-1">
             <p className="text-xs text-stone-800">Customer</p>
             {invoice?.sent ? (
@@ -293,16 +255,16 @@ const Edit = ({
                   control: (baseStyles, state) => ({
                     ...baseStyles,
                     borderColor: 'rgb(229 231 235)',
-                    backgroundColor: 'rgb(249 250 251)',
+                    backgroundColor: '#fff',
                     borderWidth: 1,
                     '&:hover': {
-                      backgroundColor: 'rgb(229 231 235)', // Keep the same border color on hover
+                      backgroundColor: 'rgb(249 250 251)', // Keep the same border color on hover
                     },
                     '&:focus': {
-                      backgroundColor: 'rgb(229 231 235)', // Keep the same border color on hover
+                      backgroundColor: 'rgb(249 250 251)', // Keep the same border color on hover
                     },
                     fontSize: '12px',
-                    borderRadius: '.375rem',
+                    borderRadius: '.250rem',
                     boxShadow: 'none',
                     zIndex: 40,
                     position: 'relative',
@@ -337,6 +299,38 @@ const Edit = ({
                 className="w-full text-left"
               />
             )}
+
+            {invoice?.sent ? (
+              ''
+            ) : (
+              <div className="flex items-center justify-start w-full">
+                {!currentUser?.bankAdded && !currentUser?.stripeOnboard ? (
+                  <Tooltip
+                    content={
+                      <p className="text-xs text-stone-800 text-left">
+                        Connect a payout option before sending invoices
+                      </p>
+                    }
+                    style="light"
+                    className="w-52"
+                    arrow={false}
+                  >
+                    <div className="flex items-center gap-1">
+                      <Checkbox disabled />
+                      <p className="text-xs text-stone-800">Send to customer</p>
+                    </div>
+                  </Tooltip>
+                ) : (
+                  <div className="flex items-center gap-1">
+                    <Checkbox
+                      checked={send}
+                      onChange={(e) => setSend(e.target.checked)}
+                    />
+                    <p className="text-xs text-stone-800">Send to customer</p>
+                  </div>
+                )}
+              </div>
+            )}
           </div>
           <div className="flex flex-col items-start w-full gap-1">
             <p className="text-xs text-stone-800">Title</p>
@@ -344,7 +338,7 @@ const Edit = ({
               <input
                 type="text"
                 placeholder="Title"
-                className="border text-xs border-gray-200 bg-gray-50 focus:border-gray-200 focus:outline-none text-stone-800 hover:bg-gray-200 hover:border-gray-200 focus:bg-gray-200 focus:ring-0 w-full rounded-md p-2 pr-10"
+                className="border text-xs border-gray-200 outline-none text-stone-800 hover:bg-gray-50 focus:bg-gray-50 focus:ring-0 w-full rounded-sm p-2 pr-10"
                 onChange={(e) => setTitle(e.target.value)}
                 value={title}
                 maxLength={25}
@@ -362,7 +356,7 @@ const Edit = ({
             <div className="relative w-full">
               <textarea
                 placeholder="What is this invoice for.."
-                className="border border-gray-200 hover:border-gray-200 hover:bg-gray-200 focus:bg-gray-200 focus:border-gray-200 focus:ring-0 w-full h-20 rounded-md p-2 bg-gray-50 resize-none text-xs"
+                className="border border-gray-200 hover:bg-gray-50 focus:bg-gray-50 outline-none w-full h-20 rounded-sm p-2 resize-none text-xs"
                 onChange={(e) => setDesc(e.target.value)}
                 value={desc}
                 maxLength={100}
@@ -374,58 +368,55 @@ const Edit = ({
               </div>
             </div>
           </div>
-          {type === 'recurring' ? (
-            <div className="flex flex-col items-start w-full gap-1">
-              <div className="flex items-center w-full gap-2">
-                <button
-                  type="button"
-                  onClick={() => setInt('monthly')}
-                  className={`text-xs text-stone-800 p-1 w-3/6 border ${
-                    int === 'monthly' ? 'border-stone-800' : 'border-gray-200'
-                  } rounded-md hover:border-stone-800`}
-                >
-                  Monthly
-                </button>
-                <button
-                  type="button"
-                  onClick={() => setInt('weekly')}
-                  className={`text-xs text-stone-800 p-1 w-3/6 border ${
-                    int === 'weekly' ? 'border-stone-800' : 'border-gray-200'
-                  } rounded-md hover:border-stone-800`}
-                >
-                  Weekly
-                </button>
-              </div>
-            </div>
-          ) : (
-            ''
-          )}
+
           <div className="w-full flex items-center justify-center gap-2">
-            <div className="flex flex-col items-start w-4/12 gap-1">
-              <p className="text-xs text-stone-800">Amount</p>
-              <NumericFormat
-                value={amount}
-                thousandSeparator=","
-                decimalSeparator="."
-                placeholder="$95.00"
-                decimalScale={2}
-                fixedDecimalScale={true}
-                prefix="$"
-                allowNegative={false}
-                onValueChange={(values) => {
-                  const { value } = values;
-                  setAmount(value); // Update the state
-                }}
-                className="text-xs w-full bg-gray-50 border border-gray-200 focus:outline-none hover:bg-gray-200 focus:bg-gray-200 hover:border-gray-200 focus:border-gray-200 focus:ring-0 text-stone-800 ring-0 rounded-md p-2 pl-0.5"
-              />
-            </div>
+            {invoice?.sent ? (
+              <div className="flex flex-col items-start w-4/12 gap-1">
+                <p className="text-xs text-stone-800">Amount</p>
+                <NumericFormat
+                  value={amount}
+                  disabled
+                  thousandSeparator=","
+                  decimalSeparator="."
+                  placeholder="$95.00"
+                  decimalScale={2}
+                  fixedDecimalScale={true}
+                  prefix="$"
+                  allowNegative={false}
+                  onValueChange={(values) => {
+                    const { value } = values;
+                    setAmount(value); // Update the state
+                  }}
+                  className="text-xs w-full border border-gray-50 focus:outline-none bg-gray-50 focus:bg-gray-50  focus:ring-0 text-stone-800 ring-0 rounded-sm p-2 pl-0.5"
+                />
+              </div>
+            ) : (
+              <div className="flex flex-col items-start w-4/12 gap-1">
+                <p className="text-xs text-stone-800">Amount</p>
+                <NumericFormat
+                  value={amount}
+                  thousandSeparator=","
+                  decimalSeparator="."
+                  placeholder="$95.00"
+                  decimalScale={2}
+                  fixedDecimalScale={true}
+                  prefix="$"
+                  allowNegative={false}
+                  onValueChange={(values) => {
+                    const { value } = values;
+                    setAmount(value); // Update the state
+                  }}
+                  className="text-xs w-full border border-gray-200 focus:outline-none hover:bg-gray-50 focus:bg-gray-50  focus:ring-0 text-stone-800 ring-0 rounded-sm p-2 pl-0.5"
+                />
+              </div>
+            )}
             <div className="flex flex-col items-start w-8/12 gap-1">
               <p className="text-xs text-stone-800">Due By</p>
               <div className="relative w-full">
                 <button
                   type="button"
                   onClick={() => setSelDate(!selDate)}
-                  className="text-xs w-full flex items-center justify-start bg-gray-50 border border-gray-200 focus:outline-none hover:bg-gray-200 focus:bg-gray-200 hover:border-gray-200 focus:border-gray-200 focus:ring-0 text-stone-800 ring-0 rounded-md p-2"
+                  className="text-xs w-full flex items-center justify-start border border-gray-200 focus:outline-none hover:bg-gray-50 focus:bg-gray-50  focus:ring-0 text-stone-800 ring-0 rounded-sm p-2"
                 >
                   {dueDate
                     ? moment(dueDate).format('MMMM D, YYYY')

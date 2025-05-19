@@ -12,8 +12,6 @@ import {
 } from 'react-feather';
 import { Link } from 'react-router-dom';
 import Select from 'react-select';
-import countryList from 'react-select-country-list';
-import DateInput from 'rsuite/DateInput';
 
 const Form = ({
   handleFinishSetup,
@@ -29,8 +27,6 @@ const Form = ({
   setDesc,
   error,
   data,
-  checkingSlug,
-  checkedSlug,
   settingUp,
 }) => {
   const fileInputRef = useRef(null);
@@ -187,42 +183,6 @@ const Form = ({
                 value={desc}
               />
             </div>
-
-            {/* <div className="flex flex-col items-start w-full gap-1">
-              <p className="text-xs text-stone-600">Profile Slug</p>
-              <div className="flex w-full">
-                <div className="rounded-tl-md rounded-bl-md bg-gray-50 border border-r-0 border-gray-200 flex items-center p-2 pr-1">
-                  <p className="text-xs">bizvo.com/</p>
-                </div>
-                <input
-                  type="text"
-                  placeholder="Slug"
-                  className="border text-xs border-gray-200 bg-gray-50 focus:ring-0 focus:border-gray-200 hover:bg-gray-200 focus:outline-none focus:bg-gray-200 border-l-0 rounded-tr-md rounded-br-md p-2 pl-1 flex-1"
-                  onChange={(e) => setSlug(e.target.value)}
-                  value={slug}
-                />
-              </div>
-              {checkedSlug && (
-                <>
-                  {data?.available ? (
-                    <div className="w-full flex items-center justify-start gap-2 border border-gray-200 rounded-md p-2 mt-1">
-                      <CheckCircle size={16} className="text-green-400" />
-                      <p className="text-stone-800 text-xs">Slug available</p>
-                    </div>
-                  ) : (
-                    ''
-                  )}
-                  {!data?.available ? (
-                    <div className="w-full flex items-center justify-start gap-2 border border-gray-200 rounded-md p-2 mt-1">
-                      <AlertOctagon size={16} className="text-red-400" />
-                      <p className="text-stone-800 text-xs">Slug unavailable</p>
-                    </div>
-                  ) : (
-                    ''
-                  )}
-                </>
-              )}
-            </div> */}
 
             <div className="flex items-center gap-4 w-full">
               <Avatar size="md" img={selectedImage ? selectedImage : ''} />

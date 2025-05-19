@@ -27,7 +27,7 @@ const Desktop = ({ payouts, balance, currentUser }) => {
 
   content =
     !payouts?.length && !currentUser.bankAdded ? (
-      <div className="w-10/12 bg-white border rounded-md border-gray-200 p-2 h-96 flex items-center justify-center">
+      <div className="w-10/12 bg-white border rounded-sm border-gray-200 p-2 h-96 flex items-center justify-center">
         <div className="flex flex-col items-center text-center">
           <DollarSign size={16} className="text-stone-800 mb-2" />
           <p className="text-sm text-stone-800">No Payouts</p>
@@ -38,7 +38,7 @@ const Desktop = ({ payouts, balance, currentUser }) => {
       </div>
     ) : (
       <div className="w-10/12 flex flex-col items-start gap-2">
-        <div className="w-full flex items-center justify-between bg-white border border-gray-200 rounded-md p-2">
+        <div className="w-full flex items-center justify-between bg-white border border-gray-200 rounded-sm p-2">
           <div className="flex flex-col items-start">
             <div className="flex items-center gap-1">
               <p className="text-sm text-stone-800">Payouts</p>
@@ -46,10 +46,9 @@ const Desktop = ({ payouts, balance, currentUser }) => {
                 style="light"
                 arrow={false}
                 content={
-                  <p className="text-xs text-stone-800 w-64 text-left">
-                    Only received when bank is connected and there is an
-                    available balance. Balance will always show $0.00 if
-                    disconnected.
+                  <p className="text-xs text-stone-800 w-56 text-left">
+                    Payouts received when a bank is connected and there is an
+                    available balance.
                   </p>
                 }
               >
@@ -113,7 +112,7 @@ const Desktop = ({ payouts, balance, currentUser }) => {
                 key={index}
               >
                 <div
-                  className={`grid grid-cols-3 border border-gray-200 bg-white rounded-md p-2 hover:border-stone-800 w-full`}
+                  className={`grid grid-cols-3 border border-gray-200 bg-white rounded-sm p-2 hover:border-stone-800 w-full`}
                 >
                   <div className="flex flex-col items-start">
                     <p className="text-stone-800" style={{ fontSize: '10px' }}>
@@ -142,7 +141,7 @@ const Desktop = ({ payouts, balance, currentUser }) => {
             ))}
           </div>
         ) : (
-          <div className="w-full bg-white border rounded-md border-gray-200 p-2 h-96 flex items-center justify-center">
+          <div className="w-full bg-white border rounded-sm border-gray-200 p-2 h-96 flex items-center justify-center">
             <div className="flex flex-col items-center text-center">
               <DollarSign size={16} className="text-stone-800 mb-2" />
               <p className="text-sm text-stone-800">No Payouts</p>

@@ -33,7 +33,7 @@ const NewPayment = ({
         colorDanger: '#df1b41',
         fontFamily: 'Ideal Sans, system-ui, sans-serif',
         fontSizeBase: '12px',
-        borderRadius: '6px',
+        borderRadius: '4px',
         spacingUnit: '1px',
         gridColumnSpacing: '8px',
         gridRowSpacing: '8px',
@@ -41,19 +41,19 @@ const NewPayment = ({
       rules: {
         '.Input': {
           borderColor: 'rgb(229 231 235)',
-          backgroundColor: 'rgb(249 250 251)',
+          backgroundColor: '#fff',
           boxShadow: 'none',
           padding: '3px',
         },
         '.Input:focus': {
           borderColor: 'rgb(229 231 235)',
-          backgroundColor: 'rgb(229 231 235)',
+          backgroundColor: 'rgb(249 250 251)',
           outline: 0,
           boxShadow: 'none',
         },
         '.Input:hover': {
           borderColor: 'rgb(229 231 235)',
-          backgroundColor: 'rgb(229 231 235)',
+          backgroundColor: 'rgb(249 250 251)',
           outline: 0,
           boxShadow: 'none',
         },

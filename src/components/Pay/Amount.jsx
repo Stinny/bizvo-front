@@ -34,16 +34,11 @@ const Amount = ({ handleMoveToPayment, updating, invoice, setView, trx }) => {
   }, []);
 
   switch (invoice?.status) {
-    case 'live':
-      isLive = true;
-      break;
-    case 'paid':
-      isLive = true;
-      break;
-    case 'void':
+    case 'pending':
       isLive = true;
       break;
     default:
+      isLive = false;
       break;
   }
 
@@ -91,63 +86,26 @@ const Amount = ({ handleMoveToPayment, updating, invoice, setView, trx }) => {
         </div>
       )}
 
-      {isLive ? (
-        <>
-          {' '}
-          <AlignRight
-            size={18}
-            onClick={toggleDropdown}
-            className="text-stone-800 hover:cursor-pointer"
-          />
-          {open ? (
-            <div
-              ref={dropdownRef}
-              className="w-full flex justify-end absolute top-full z-50 right-0"
-            >
-              <div className="bg-white border border-gray-200 rounded-md flex flex-col items-center gap-2 p-2">
-                {invoice?.type === 'recurring' ? (
-                  <button
-                    type="button"
-                    onClick={() => setView('trxs')}
-                    className="w-full flex items-center gap-1 text-xs text-stone-800 hover:bg-white border border-white rounded-md hover:border-stone-800 p-1"
-                  >
-                    <Clock size={12} className="text-stone-800" />
-                    Transactions
-                  </button>
-                ) : (
-                  <button
-                    type="button"
-                    // onClick={() => setView('trxs')}
-                    className="w-full flex items-center gap-2 text-xs text-stone-800 hover:bg-white border border-white rounded-md hover:border-stone-800 p-1"
-                  >
-                    <Download size={12} className="text-stone-800" />
-                    PDF
-                  </button>
-                )}
-                <button
-                  type="button"
-                  onClick={() => setView('paymeth')}
-                  className="w-full flex items-center gap-1 text-xs text-stone-800 hover:bg-white border border-white rounded-md hover:border-stone-800 p-1"
-                >
-                  <CreditCard size={12} className="text-stone-800" />
-                  Payment
-                </button>
-              </div>
-            </div>
-          ) : (
-            ''
-          )}
-        </>
+      {invoice?.status === 'paid' ? (
+        <div className="relative">
+          <Download size={16} className="text-stone-800" />
+        </div>
       ) : (
+        ''
+      )}
+
+      {isLive ? (
         <button
           type="button"
           onClick={handleMoveToPayment}
-          className="p-2 pl-2.5 pr-2.5 border border-stone-800 text-stone-800 rounded-md text-xs font-medium"
+          className="p-2 pl-2.5 pr-2.5 border border-stone-800 text-stone-800 rounded-sm cursor-pointer text-xs font-medium"
           // disabled={isOwner || updating}
           disabled={updating}
         >
           Pay Now
         </button>
+      ) : (
+        ''
       )}
     </div>
   );

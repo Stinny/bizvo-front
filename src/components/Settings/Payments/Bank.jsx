@@ -1,7 +1,7 @@
 import { Badge, Spinner } from 'flowbite-react';
 import React, { useState } from 'react';
 import { Calendar, Edit, Save, Trash, X } from 'react-feather';
-import { BiSolidBank } from 'react-icons/bi';
+import { RiBankLine } from 'react-icons/ri';
 import {
   useChangeSchedMutation,
   useGetUpdateUrlMutation,
@@ -9,6 +9,7 @@ import {
 } from '../../../api/stripeApiSlice';
 import { showNotification } from '../../../api/toastSlice';
 import { useDispatch } from 'react-redux';
+import { Spin } from 'antd';
 
 const Bank = ({ currentUser, refetch }) => {
   const dispatch = useDispatch();
@@ -63,28 +64,20 @@ const Bank = ({ currentUser, refetch }) => {
   };
 
   return (
-    <div className="w-full flex flex-col items-center justify-center mt-2">
+    <div className="w-full flex flex-col items-start">
       {removing || changingSched ? (
-        <div className="flex items-center justify-center w-96 h-52">
-          <Spinner />
+        <div className="flex items-center justify-center w-7/12 h-32">
+          <Spin size="small" />
         </div>
       ) : (
-        <div className="flex flex-col items-start gap-2 w-80">
-          <div className="w-full flex flex-col items-start">
-            <div className="flex items-center gap-1">
-              <BiSolidBank className="text-stone-800" />
-              <p className="text-sm text-stone-800">Bank Account</p>
-            </div>
-            <p className="text-xs text-stone-800">Payouts via bank account</p>
-          </div>
-
+        <div className="flex flex-col items-start gap-2 w-7/12">
           <div className="flex flex-col gap-2 items-start w-full">
             <div className="flex flex-col gap-1 w-full items-start">
               <p className="text-xs text-stone-800">Bank ID</p>
               <input
                 type="text"
                 placeholder="Pending"
-                className="text-xs bg-gray-50 border border-gray-50 focus:outline-none text-stone-800 ring-0 w-full rounded-md p-2"
+                className="text-xs border border-gray-200 focus:outline-none text-stone-800 ring-0 w-full rounded-sm p-2"
                 disabled
                 value={currentUser?.bankId}
               />
@@ -94,7 +87,7 @@ const Bank = ({ currentUser, refetch }) => {
               <input
                 type="text"
                 placeholder="Pending"
-                className="text-xs bg-gray-50 border border-gray-50 focus:outline-none text-stone-800 ring-0 w-full rounded-md p-2"
+                className="text-xs  border border-gray-200 focus:outline-none text-stone-800 ring-0 w-full rounded-sm p-2"
                 disabled
                 value={currentUser?.bankName}
               />
@@ -109,9 +102,9 @@ const Bank = ({ currentUser, refetch }) => {
                   type="button"
                   onClick={() => setSched(!sched)}
                   style={{ fontSize: '10px' }}
-                  className="text-stone-800 p-0.5 pr-2 pl-2 border border-stone-800 rounded-md flex items-center justify-center gap-1"
+                  className="text-stone-800 p-0.5 pr-2 pl-2 border border-stone-800 rounded-sm flex items-center justify-center gap-1"
                 >
-                  <Calendar size={14} />
+                  <Calendar size={12} />
                   {schedule === 'Monthly' ? 'Monthly' : 'Weekly'}
                 </button>
                 <div className="flex items-center gap-2">
@@ -136,7 +129,7 @@ const Bank = ({ currentUser, refetch }) => {
               <div className="flex items-center gap-1">
                 <button
                   type="button"
-                  className="border border-red-400 text-red-400 rounded-md p-0.5 pl-2 pr-2"
+                  className="border border-red-400 text-red-400 rounded-sm p-0.5 pl-2 pr-2"
                   style={{ fontSize: '10px' }}
                   onClick={handleRemoveBank}
                 >
@@ -144,7 +137,7 @@ const Bank = ({ currentUser, refetch }) => {
                 </button>
                 <button
                   type="button"
-                  className=" text-stone-800 rounded-md border border-stone-800 p-0.5 pl-2 pr-2"
+                  className=" text-stone-800 rounded-sm border border-stone-800 p-0.5 pl-2 pr-2"
                   style={{ fontSize: '10px' }}
                   onClick={() => setDel(false)}
                 >
@@ -163,7 +156,7 @@ const Bank = ({ currentUser, refetch }) => {
                       schedule === 'Weekly'
                         ? 'border-stone-800'
                         : 'border-white'
-                    } text-stone-800 border rounded-md hover:border-stone-800 p-0.5 pl-2 pr-2 text-xs`}
+                    } text-stone-800 border rounded-sm hover:border-stone-800 p-0.5 pl-2 pr-2 text-xs`}
                     onClick={() => setSchedule('Weekly')}
                   >
                     Weekly
@@ -174,7 +167,7 @@ const Bank = ({ currentUser, refetch }) => {
                       schedule === 'Monthly'
                         ? 'border-stone-800'
                         : 'border-white'
-                    } text-stone-800 border rounded-md hover:border-stone-800 p-0.5 pl-2 pr-2 text-xs`}
+                    } text-stone-800 border rounded-sm hover:border-stone-800 p-0.5 pl-2 pr-2 text-xs`}
                     onClick={() => setSchedule('Monthly')}
                   >
                     Monthly

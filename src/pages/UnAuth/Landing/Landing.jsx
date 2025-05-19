@@ -31,16 +31,16 @@ const Landing = () => {
       <div className="mx-auto flex items-center gap-12">
         <div className="w-6/12 mx-auto flex flex-col gap-3 items-start">
           <p className="text-4xl text-left text-stone-800 font-bold">
-            Customer Payments Made Easy.
+            One Time Payments Made Easy.
           </p>
           <p className="text-lg text-stone-800 text-left">
-            Stop playing accountant. Collect payments the easy way and have the
-            hard stuff done for you.
+            Stop playing accountant. Collect payments the easy way with
+            tax-compliant one-time payments.
           </p>
 
           <Link
             to="/signup"
-            className="p-2 border border-stone-800 text-stone-800 rounded-md text-xs font-medium flex items-center justify-center"
+            className="p-2 border border-stone-800 text-stone-800 rounded-sm text-xs font-medium flex items-center justify-center"
           >
             Start Collecting
           </Link>

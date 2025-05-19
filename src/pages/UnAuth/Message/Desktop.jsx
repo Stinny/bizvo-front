@@ -45,11 +45,11 @@ const Desktop = ({
               </p>
             </Link>
           </div>
-          <div className="mx-auto flex flex-col w-80 gap-4 p-2 border border-gray-200 bg-white rounded-md">
+          <div className="mx-auto flex flex-col w-80 gap-4 p-2 border border-gray-200 bg-white rounded-sm">
             <div className="flex gap-1 w-full">
               <BackBtn direction={'left'} />
               <div className="flex flex-col items-start w-full">
-                <p className="text-md text-stone-800 font-medium">Message</p>
+                <p className="text-md text-stone-800 font-medium">Need Help?</p>
                 <p className="text-stone-800 text-xs">Message us below</p>
               </div>
             </div>
@@ -75,7 +75,7 @@ const Desktop = ({
                 <div className="flex flex-col items-start w-full">
                   <input
                     type="text"
-                    className={`border text-xs border-gray-200 focus:bg-gray-200 hover:bg-gray-200 focus:border-gray-200 focus:outline-none focus:ring-0 w-full rounded-md p-2 outline-none bg-gray-50`}
+                    className={`border text-xs border-gray-200 focus:bg-gray-50 hover:bg-gray-50 focus:border-gray-200 focus:outline-none focus:ring-0 w-full rounded-sm p-2 outline-none`}
                     placeholder="Email"
                     onChange={(e) => setEmail(e.target.value)}
                     value={email}
@@ -93,16 +93,16 @@ const Desktop = ({
                     control: (baseStyles, state) => ({
                       ...baseStyles,
                       borderColor: 'rgb(229 231 235)',
-                      backgroundColor: 'rgb(249 250 251)',
+                      backgroundColor: '#ffffff',
                       borderWidth: 1,
                       '&:hover': {
-                        backgroundColor: 'rgb(229 231 235)', // Keep the same border color on hover
+                        backgroundColor: 'rgb(249 250 251)', // Keep the same border color on hover
                       },
                       '&:focus': {
-                        backgroundColor: 'rgb(229 231 235)', // Keep the same border color on hover
+                        backgroundColor: 'rgb(249 250 251)', // Keep the same border color on hover
                       },
                       fontSize: '12px',
-                      borderRadius: '.375rem',
+                      borderRadius: '.250rem',
                       boxShadow: 'none',
                       zIndex: 999,
                       position: 'relative',
@@ -135,7 +135,7 @@ const Desktop = ({
               <div className="flex flex-col items-start w-full">
                 <textarea
                   type="text"
-                  className={`border text-xs border-gray-200 focus:bg-gray-200 hover:bg-gray-200 focus:border-gray-200 w-full focus:outline-none focus:ring-0 rounded-md p-2 outline outline-0 bg-gray-50 h-20 resize-none`}
+                  className={`border text-xs border-gray-200 focus:bg-gray-50 hover:bg-gray-50 focus:border-gray-200 w-full focus:outline-none focus:ring-0 rounded-sm p-2 outline-0  h-20 resize-none`}
                   placeholder="How can we help?"
                   value={body}
                   onChange={(e) => setBody(e.target.value)}
@@ -144,7 +144,7 @@ const Desktop = ({
               </div>
               <button
                 type="submit"
-                className="w-full p-2 text-stone-800 font-medium border border-stone-800 rounded-md text-xs"
+                className="w-full p-2 text-stone-800 font-medium border border-stone-800 rounded-sm text-xs"
                 disabled={isLoading}
               >
                 Send
@@ -153,8 +153,7 @@ const Desktop = ({
           </div>
           <div className="w-full flex justify-end mt-1">
             <p className="text-stone-800 text-xs">
-              Email developer{' '}
-              <span className="font-medium">justin@bizvo.io</span>
+              Or email <span className="font-medium">justin@bizvo.io</span>
             </p>
           </div>
         </div>

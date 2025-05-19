@@ -26,7 +26,7 @@ const Desktop = ({ data, currentUser }) => {
     <div className="w-10/12 flex flex-col gap-2">
       <div className="w-full grid grid-cols-8 gap-2">
         <div className="col-span-2 flex flex-col gap-2">
-          <div className="border rounded-md border-gray-200 dark:border-white bg-white dark:bg-neutral-800 flex flex-col gap-1 items-start text-left p-2 relative">
+          <div className="border rounded-sm border-gray-200 dark:border-white bg-white dark:bg-neutral-800 flex flex-col gap-1 items-start text-left p-2 relative">
             <div className="absolute top-0 right-0 mr-2 mt-2">
               <Tooltip
                 style="light"
@@ -49,7 +49,7 @@ const Desktop = ({ data, currentUser }) => {
               })}
             </p>
           </div>
-          <div className="border rounded-md border-gray-200 dark:border-white bg-white dark:bg-neutral-800 flex flex-col items-start gap-1 p-2 relative">
+          <div className="border rounded-sm border-gray-200 dark:border-white bg-white dark:bg-neutral-800 flex flex-col items-start gap-1 p-2 relative">
             <div className="absolute top-0 right-0 mr-2 mt-2">
               <Tooltip style="light" arrow={false} content={invoInfo}>
                 <Info size={12} className="text-stone-800 dark:text-white" />
@@ -92,7 +92,7 @@ const Desktop = ({ data, currentUser }) => {
               </div>
             </div>
           </div>
-          <div className="border rounded-md border-gray-200 dark:border-white bg-white dark:bg-neutral-800 flex flex-col gap-1 items-start text-left p-2 relative">
+          <div className="border rounded-sm border-gray-200 dark:border-white bg-white dark:bg-neutral-800 flex flex-col gap-1 items-start text-left p-2 relative">
             <div className="absolute top-0 right-0 mr-2 mt-2">
               <Tooltip
                 style="light"
@@ -114,7 +114,7 @@ const Desktop = ({ data, currentUser }) => {
               })}
             </p>
           </div>
-          <div className="border rounded-md border-gray-200 dark:border-white bg-white dark:bg-neutral-800 flex flex-col gap-1 items-start text-left p-2 relative">
+          <div className="border rounded-sm border-gray-200 dark:border-white bg-white dark:bg-neutral-800 flex flex-col gap-1 items-start text-left p-2 relative">
             <div className="absolute top-0 right-0 mr-2 mt-2">
               <Tooltip
                 style="light"
@@ -137,11 +137,14 @@ const Desktop = ({ data, currentUser }) => {
             </p>
           </div>
         </div>
-        <div className="col-span-6 flex flex-grow">
-          <DashEvents />
+        <div className="flex flex-col items-center justify-center w-full border border-gray-200 rounded-sm col-span-6">
+          <BarChart size={14} className="text-stone-800" />
+          <p className="text-xs text-stone-800 dark:text-white">
+            Graph display
+          </p>
         </div>
       </div>
-      <div className="border rounded-md border-gray-200 dark:border-white bg-white dark:bg-neutral-800 flex flex-col gap-1 items-start p-2 w-full">
+      <div className="border rounded-sm border-gray-200 dark:border-white bg-white dark:bg-neutral-800 flex flex-col gap-1 items-start p-2 w-full">
         <p className="text-xs text-stone-800 dark:text-white">Checklist</p>
         <div className="flex items-center w-full h-full justify-between">
           <div className="w-full flex items-center gap-2">

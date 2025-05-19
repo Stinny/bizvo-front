@@ -100,14 +100,14 @@ const Desktop = ({ customer, refetch }) => {
       handleSaveEdits={handleSaveEdits}
     />
   ) : (
-    <div className="w-10/12 bg-white border rounded-md border-gray-200 p-2 pb-6 flex flex-col gap-4 items-center justify-center">
+    <div className="w-10/12 bg-white border rounded-sm border-gray-200 p-2 pb-6 flex flex-col gap-4 items-center justify-center">
       <div className="w-full flex items-center justify-between relative">
         <div className="flex gap-1">
           <BackBtn direction={'left'} />
           <div className="flex flex-col items-start">
             <p className="text-sm text-stone-800">Viewing Customer</p>
 
-            <p className="text-xs text-stone-700">#{customer?._id}</p>
+            <p className="text-xs text-stone-800">#{customer?._id}</p>
           </div>
         </div>
         <Tooltip
@@ -125,10 +125,10 @@ const Desktop = ({ customer, refetch }) => {
           <button
             type="button"
             disabled
-            className="text-xs text-stone-800 flex items-center justify-center gap-1"
+            className="text-xs text-stone-800 flex items-center justify-center gap-1 border border-gray-200 rounded-sm p-0.5 pl-1 pr-1"
           >
-            {customer?.totalSent}
             <Send size={12} />
+            {customer?.totalSent}
           </button>
         </Tooltip>
         <div className="w-24"></div>
@@ -149,7 +149,7 @@ const Desktop = ({ customer, refetch }) => {
             <input
               type="text"
               placeholder="Name"
-              className="text-xs bg-gray-50 border border-gray-50 focus:outline-none text-stone-800 ring-0 w-full rounded-md p-2"
+              className="text-xs border border-gray-200 focus:outline-none text-stone-800 ring-0 w-full rounded-sm p-2"
               disabled
               value={name}
             />
@@ -161,7 +161,7 @@ const Desktop = ({ customer, refetch }) => {
             <input
               type="email"
               placeholder="Email"
-              className="text-xs bg-gray-50 border border-gray-50 focus:outline-none text-stone-800 ring-0 w-full rounded-md p-2"
+              className="text-xs border border-gray-200 focus:outline-none text-stone-800 ring-0 w-full rounded-sm p-2"
               disabled
               value={email}
             />
@@ -170,7 +170,7 @@ const Desktop = ({ customer, refetch }) => {
                 <input
                   type="tel"
                   placeholder="(123)-456-7890"
-                  className="text-xs bg-gray-50 border border-gray-50 focus:outline-none text-stone-800 ring-0 w-full rounded-md p-2"
+                  className="text-xs border border-gray-200 focus:outline-none text-stone-800 ring-0 w-full rounded-sm p-2"
                   disabled
                   value={phone}
                 />
@@ -184,7 +184,7 @@ const Desktop = ({ customer, refetch }) => {
             <input
               type="text"
               placeholder="Address"
-              className="text-xs bg-gray-50 border border-gray-50 focus:outline-none text-stone-800 ring-0 w-full rounded-md p-2"
+              className="text-xs border border-gray-200 focus:outline-none text-stone-800 ring-0 w-full rounded-md p-2"
               disabled
               value={address}
             />
@@ -196,11 +196,11 @@ const Desktop = ({ customer, refetch }) => {
               <div className="flex w-full">
                 <input
                   type="text"
-                  className="border w-full text-xs bg-gray-50 border-gray-50 rounded-tl-md rounded-bl-md p-2 flex-1 overflow-hidden"
+                  className="border w-full text-xs border-gray-200 border-r-0 rounded-tl-sm rounded-bl-sm p-2 flex-1 overflow-hidden"
                   value={country?.label}
                   disabled
                 />
-                <div className="rounded-tr-md rounded-br-md bg-gray-50 border border-l-0 border-gray-50 flex items-center justify-center p-1 pr-2">
+                <div className="rounded-tr-sm rounded-br-sm border border-l-0 border-gray-200 flex items-center justify-center p-1 pr-2">
                   <Tooltip
                     arrow={false}
                     style="light"
@@ -218,7 +218,7 @@ const Desktop = ({ customer, refetch }) => {
               <input
                 type="text"
                 placeholder="Postal code"
-                className="text-xs bg-gray-50 border border-gray-50 focus:outline-none text-stone-800 ring-0 w-full rounded-md p-2"
+                className="text-xs border border-gray-200 focus:outline-none text-stone-800 ring-0 w-full rounded-sm p-2"
                 disabled
                 value={zip}
               />
@@ -229,7 +229,7 @@ const Desktop = ({ customer, refetch }) => {
               <p className="text-xs text-stone-800">Description</p>
               <textarea
                 placeholder="About this customer.."
-                className="text-xs bg-gray-50 border border-gray-50 focus:outline-none text-stone-800 ring-0 w-full rounded-md p-2 resize-none h-16"
+                className="text-xs border border-gray-200 focus:outline-none text-stone-800 ring-0 w-full rounded-sm p-2 resize-none h-16"
                 disabled
                 value={desc}
               />
@@ -243,7 +243,7 @@ const Desktop = ({ customer, refetch }) => {
               <button
                 type="button"
                 onClick={() => setViewPay(!viewPay)}
-                className="w-full flex flex-col bg-gray-50 items-start text-left border border-gray-50 rounded-md p-2"
+                className="w-full flex flex-col items-start text-left border border-gray-200 rounded-sm p-2"
               >
                 <div className="w-full flex items-center justify-between">
                   <div className="flex items-center gap-2">

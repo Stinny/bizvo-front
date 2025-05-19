@@ -1,14 +1,9 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import Navbar from '../../../components/Navbar/Navbar';
 import { AlertOctagon, ChevronLeft, Layers, X } from 'react-feather';
 import SignupGBtn from '../../../components/Auth/SignupGBtn';
-import Footer from '../../../components/Footer/Footer';
-import Loading from '../../../components/Loading';
-import { Spinner } from 'flowbite-react';
-import img from '../../../assets/cardPay.svg';
-import img2 from '../../../assets/onlineBank.svg';
 import BackBtn from '../../../components/BackBtn';
+import { Spin } from 'antd';
 
 const Desktop = ({
   email,
@@ -26,7 +21,7 @@ const Desktop = ({
     <div className="flex flex-col max-w-3xl mx-auto mt-32">
       {isLoading || googling ? (
         <div className="w-full h-52 flex items-center justify-center">
-          <Spinner />
+          <Spin size="small" />
         </div>
       ) : (
         <div className="w-80 flex flex-col items-start justify-end mx-auto gap-4">
@@ -41,7 +36,7 @@ const Desktop = ({
               </p>
             </Link>
           </div>
-          <div className="mx-auto flex flex-col w-full gap-4 p-2 border border-gray-200 bg-white rounded-md">
+          <div className="mx-auto flex flex-col w-full gap-4 p-2 border border-gray-200 bg-white rounded-sm">
             <div className="flex gap-1 w-full">
               <BackBtn direction={'left'} home={true} />
               <div className="flex flex-col items-start w-full">
@@ -76,21 +71,21 @@ const Desktop = ({
               <input
                 type="email"
                 placeholder="Email"
-                className="border text-xs border-gray-200 bg-gray-50 focus:border-gray-200 focus:outline-none text-stone-800 hover:bg-gray-200 hover:border-gray-200 focus:bg-gray-200 focus:ring-0 w-full rounded-md p-2"
+                className="border text-xs border-gray-200 bg-white outline-none text-stone-800 hover:bg-gray-50 focus:bg-gray-50 focus:ring-0 w-full rounded-sm p-2"
                 onChange={(e) => setEmail(e.target.value)}
                 value={email}
               />
               <input
                 type="password"
                 placeholder="Password"
-                className="border text-xs border-gray-200 bg-gray-50 focus:border-gray-200 focus:outline-none text-stone-800 hover:bg-gray-200 hover:border-gray-200 focus:bg-gray-200 focus:ring-0 w-full rounded-md p-2"
+                className="border text-xs border-gray-200 bg-white outline-none text-stone-800 hover:bg-gray-50 focus:bg-gray-50 focus:ring-0 w-full rounded-sm p-2"
                 onChange={(e) => setPass(e.target.value)}
                 value={pass}
               />
             </form>
             <button
               type="button"
-              className="p-2 w-full border border-stone-800 text-stone-800 rounded-md text-xs font-medium"
+              className="p-2 w-full border border-stone-800 text-stone-800 rounded-sm text-xs font-medium"
               onClick={handleSignup}
             >
               Signup

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import Status from '../Payouts/Status';
 import StripeAmount from '../../../utils/StripeAmount';
-import { Check, Clipboard } from 'react-feather';
+import { Check, Clipboard, Copy } from 'react-feather';
 import { Tooltip } from 'flowbite-react';
 import { PayoutDate } from '../../../utils/PayoutDate';
 import BackBtn from '../../../components/BackBtn';
@@ -22,7 +22,7 @@ const Desktop = ({ payout }) => {
   };
 
   return (
-    <div className="w-10/12 bg-white border rounded-md border-gray-200 p-2 pb-6 flex flex-col gap-6 items-center">
+    <div className="w-10/12 bg-white border rounded-sm border-gray-200 p-2 pb-6 flex flex-col gap-6 items-center">
       <div className="w-full flex items-start justify-between">
         <div className="flex gap-1">
           <BackBtn direction={'left'} />
@@ -41,7 +41,7 @@ const Desktop = ({ payout }) => {
             <input
               type="text"
               placeholder="Name"
-              className="text-xs bg-gray-50 border border-gray-50 focus:outline-none text-stone-800 ring-0 w-full rounded-md p-2"
+              className="text-xs border border-gray-200 focus:outline-none text-stone-800 ring-0 w-full rounded-sm p-2"
               disabled
               value={payout?.bankName}
             />
@@ -53,7 +53,7 @@ const Desktop = ({ payout }) => {
                 <input
                   type="text"
                   placeholder="Name"
-                  className="text-xs bg-gray-50 border border-gray-50 focus:outline-none text-stone-800 ring-0 w-full rounded-md p-2"
+                  className="text-xs border border-gray-200 focus:outline-none text-stone-800 ring-0 w-full rounded-sm p-2"
                   disabled
                   value={payout?.refNumber}
                 />
@@ -73,8 +73,8 @@ const Desktop = ({ payout }) => {
                   style="light"
                   arrow={false}
                 >
-                  <Clipboard
-                    size={16}
+                  <Copy
+                    size={14}
                     className="text-stone-800 hover:cursor-pointer"
                     onClick={copyToClipboard}
                   />
@@ -84,11 +84,19 @@ const Desktop = ({ payout }) => {
           ) : (
             ''
           )}
+          <div className="flex flex-col items-start w-full gap-1">
+            <p className="text-xs text-stone-800">Arriving On</p>
+            <div className="text-xs border border-gray-200 w-full rounded-sm p-2 flex items-center justify-start text-left">
+              <p className="text-xs text-stone-800">
+                <PayoutDate payoutDate={payout?.arrivalDate} detail={true} />
+              </p>
+            </div>
+          </div>
           <div className="flex items-center gap-2 w-full">
             <div className="flex flex-col items-start w-8/12 gap-1">
               <p className="text-xs text-stone-800">Amount</p>
 
-              <div className="text-xs bg-gray-50 border border-gray-50 flex items-center justify-start focus:outline-none text-stone-800 ring-0 w-full rounded-md p-2">
+              <div className="text-xs border border-gray-200 flex items-center justify-start focus:outline-none text-stone-800 ring-0 w-full rounded-sm p-2">
                 <StripeAmount
                   amount={payout?.amount}
                   currency={payout?.currency}
@@ -100,18 +108,10 @@ const Desktop = ({ payout }) => {
               <input
                 type="text"
                 placeholder="Postal code"
-                className="text-xs bg-gray-50 border border-gray-50 focus:outline-none text-stone-800 ring-0 w-full rounded-md p-2"
+                className="text-xs border border-gray-200 focus:outline-none text-stone-800 ring-0 w-full rounded-sm p-2"
                 disabled
                 value={payout?.currency}
               />
-            </div>
-          </div>
-          <div className="flex flex-col items-start w-full gap-1">
-            <p className="text-xs text-stone-800">Arriving On</p>
-            <div className="text-xs bg-gray-50 border border-gray-50 w-full rounded-md p-2 flex items-center justify-start text-left">
-              <p className="text-xs text-stone-800">
-                <PayoutDate payoutDate={payout?.arrivalDate} detail={true} />
-              </p>
             </div>
           </div>
         </div>

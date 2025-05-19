@@ -1,4 +1,3 @@
-import { Avatar, Badge, Spinner, Tooltip } from 'flowbite-react';
 import React, { useState } from 'react';
 import {
   AlertOctagon,
@@ -14,8 +13,6 @@ import {
   XSquare,
 } from 'react-feather';
 import { Link } from 'react-router-dom';
-import ReactCountryFlag from 'react-country-flag';
-import moment from 'moment';
 import { useUpdateInvoForPayMutation } from '../../../api/invoicesApiSlice';
 import LinkExp from '../../../components/Pay/LinkExp';
 import Invalid from './Invalid';
@@ -26,6 +23,7 @@ import Content from '../../../components/Pay/Content';
 import Payment from '../../../components/Pay/Payment';
 import Trxs from './Trxs';
 import Method from './Method';
+import { Spin } from 'antd';
 
 const Desktop = ({
   data,
@@ -82,7 +80,7 @@ const Desktop = ({
         className="mx-auto flex flex-col items-center justify-center h-96 mt-16"
         style={{ width: '370px' }}
       >
-        <Spinner />
+        <Spin size="small" />
       </div>
     );
   } else {
@@ -96,16 +94,16 @@ const Desktop = ({
       />
     ) : (
       <div
-        className="mx-auto flex flex-col items-start mt-16"
+        className="mx-auto flex flex-col items-center mt-16"
         style={{ width: '370px' }}
       >
-        <div className="w-full flex items-center justify-center mb-6">
+        {/* <div className="w-full flex items-center justify-center mb-6">
           <LinkExp
             expDate={data?.invoice?.linkExp}
             refetch={refetch}
             isOwner={isOwner}
           />
-        </div>
+        </div> */}
 
         {succ ? (
           <div className="w-full flex items-center justify-start gap-2 border border-gray-200 bg-white rounded-md p-2 mb-2">
@@ -132,7 +130,7 @@ const Desktop = ({
           ''
         )}
 
-        <div className="w-full bg-white border border-gray-200 rounded-md flex flex-col items-start gap-6 p-2">
+        <div className="w-full bg-white border border-gray-200 rounded-sm flex flex-col items-start gap-6 p-2">
           <Status invoice={data?.invoice} />
           {view === 'details' ? (
             <>
@@ -140,6 +138,7 @@ const Desktop = ({
                 <Payment
                   setReadyForPayment={setReadyForPayment}
                   invoice={updatedInvo}
+                  biz={data?.biz}
                   trx={updatedTrx}
                   customer={data?.customer}
                   refetch={refetch}
