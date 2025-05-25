@@ -1,6 +1,13 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { AlertOctagon, CreditCard, Repeat, Save, X } from 'react-feather';
+import {
+  AlertOctagon,
+  ChevronLeft,
+  CreditCard,
+  Repeat,
+  Save,
+  X,
+} from 'react-feather';
 import { Checkbox } from 'antd';
 import Select from 'react-select';
 import { Datepicker, Tooltip } from 'flowbite-react';
@@ -94,7 +101,7 @@ const Desktop = ({
   };
 
   return (
-    <div className="w-10/12 flex flex-col gap-4 items-center bg-white border rounded-md border-gray-200 p-2 pb-6">
+    <div className="w-full flex flex-col gap-4 items-center bg-white border rounded-md border-gray-200 p-2 pb-6">
       <Modal
         isOpen={confirmMod}
         onRequestClose={() => setConfirmMod(false)}
@@ -116,7 +123,7 @@ const Desktop = ({
             />
           </div>
           <div className="flex flex-col items-start gap-2 w-full">
-            <div className="w-full text-left flex items-center gap-1 p-2 border border-gray-200 rounded-md">
+            <div className="w-full text-left flex items-center gap-1 p-2 border border-gray-200 rounded-sm">
               <AlertOctagon size={16} className="text-red-400" />
               <p className="text-xs text-stone-800">Permanent action</p>
             </div>
@@ -136,7 +143,7 @@ const Desktop = ({
             <div className="flex items-center gap-2">
               <button
                 type="button"
-                className=" text-stone-800 rounded-sm border border-stone-800 p-1 pl-2 pr-2 text-xs"
+                className=" text-stone-800 rounded-sm border border-stone-800 p-1 pl-2 pr-2 text-xs cursor-pointer"
                 onClick={modalConfirmHandler}
                 disabled={!send}
               >
@@ -152,55 +159,19 @@ const Desktop = ({
           <p className="text-xs text-stone-800">Save as draft or send now</p>
         </div>
 
-        {/* <div className="flex items-center">
-          {!currentUser?.bankAdded && !currentUser?.stripeOnboard ? (
-            <Tooltip
-              content={
-                <p className="text-xs text-stone-800 text-left">
-                  Connect a payout option in settings before sending invoices
-                </p>
-              }
-              style="light"
-              className="w-52"
-              arrow={false}
-            >
-              <div className="flex items-center gap-1">
-                <Checkbox disabled />
-                <p className="text-xs text-stone-800">Send to customer</p>
-              </div>
-            </Tooltip>
-          ) : (
-            <div className="flex items-center gap-1">
-              <Checkbox
-                checked={send}
-                onChange={(e) => setSend(e.target.checked)}
-              />
-              <p className="text-xs text-stone-800">Send to customer</p>
-            </div>
-          )}
-        </div> */}
-
         <div className="w-24"></div>
-        {/* <div className="flex items-center gap-3 absolute top-0 right-0 mr-1 mt-1">
-          <Link to="/dashboard/add" className="text-red-400">
-            <X size={14} />
-          </Link>
-          <button
-            type="button"
-            onClick={handleSaveInvoice}
-            className="text-stone-800"
+
+        <div className="flex gap-1 absolute top-0 right-0 mr-1 mt-1">
+          <Link
+            to="/dashboard/invoices"
+            className="cursor-pointer flex items-center justify-center border border-stone-800 dark:border-white rounded-sm p-1"
           >
-            <Save size={14} />
-          </button>
-        </div> */}
-        <div className="flex items-center gap-2 absolute top-0 right-0 mr-1 mt-1">
-          <Link to="/dashboard/add" className="text-red-400">
-            <X size={14} />
+            <ChevronLeft size={14} />
           </Link>
           <button
             type="button"
             onClick={handleSaveInvoice}
-            className="w-full cursor-pointer flex items-center justify-center border border-stone-800 dark:border-white rounded-sm p-0.5 pl-1.5 pr-1.5"
+            className="cursor-pointer flex items-center justify-center border border-stone-800 dark:border-white rounded-sm p-0.5 pl-1.5 pr-1.5"
           >
             <p
               className="text-stone-800 dark:text-white"
@@ -245,7 +216,7 @@ const Desktop = ({
                   fontSize: '12px',
                   borderRadius: '.250rem',
                   boxShadow: 'none',
-                  zIndex: 40,
+                  zIndex: 10,
                   position: 'relative',
                   height: 33,
                   minHeight: 33,
@@ -282,8 +253,7 @@ const Desktop = ({
                 <Tooltip
                   content={
                     <p className="text-xs text-stone-800 text-left">
-                      Connect a payout option in settings before sending
-                      invoices
+                      You need to connect a bank account to send invoices
                     </p>
                   }
                   style="light"

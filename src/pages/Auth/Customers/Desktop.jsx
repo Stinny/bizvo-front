@@ -41,13 +41,24 @@ const Desktop = ({ customers }) => {
   let content;
 
   content = customers?.length ? (
-    <div className="w-10/12 flex flex-col items-start gap-2">
+    <div className="w-full flex flex-col items-start gap-2">
       <div className="w-full flex items-center justify-between bg-white border border-gray-200 rounded-sm p-2">
-        <div className="flex flex-col items-start">
+        <div className="flex flex-col items-start w-52">
           <p className="text-sm text-stone-800">Customers</p>
           <p className="text-xs text-stone-800">Viewing all customers</p>
         </div>
-        <div className="flex items-center gap-2">
+        <Link
+          to="/dashboard/customers/add"
+          className="flex items-center justify-center gap-1 border border-stone-800 dark:border-white rounded-sm p-0.5 pl-2 pr-2"
+        >
+          <p
+            className="text-stone-800 dark:text-white"
+            style={{ fontSize: '11px' }}
+          >
+            New +
+          </p>
+        </Link>
+        <div className="flex items-center justify-end gap-2 w-64">
           <div className="flex items-center gap-1">
             <input
               type="text"

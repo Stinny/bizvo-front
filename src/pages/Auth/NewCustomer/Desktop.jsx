@@ -5,7 +5,7 @@ import Footer from '../../../components/Footer/Footer';
 import { Link } from 'react-router-dom';
 import Select from 'react-select';
 import countryList from 'react-select-country-list';
-import { AlertOctagon, Phone, Save, X } from 'react-feather';
+import { AlertOctagon, ChevronLeft, Phone, Save, X } from 'react-feather';
 import { Switch } from 'antd';
 
 const Desktop = ({
@@ -50,21 +50,24 @@ const Desktop = ({
   };
 
   return (
-    <div className="w-10/12 bg-white border rounded-md border-gray-200 p-2 pb-6 flex flex-col gap-4 items-center justify-center">
+    <div className="w-full bg-white border rounded-md border-gray-200 p-2 pb-6 flex flex-col gap-4 items-center justify-center">
       <div className="w-full flex items-center justify-between relative">
         <div className="flex flex-col items-start">
           <p className="text-sm text-stone-800">New Customer</p>
           <p className="text-xs text-stone-700">Create a new customer below</p>
         </div>
 
-        <div className="flex items-center gap-2 absolute top-0 right-0 mr-1 mt-1">
-          <Link to="/dashboard/add" className="text-red-400 cursor-pointer">
-            <X size={14} />
+        <div className="flex gap-1 absolute top-0 right-0 mr-1 mt-1">
+          <Link
+            to="/dashboard/customers"
+            className="cursor-pointer flex items-center justify-center border border-stone-800 dark:border-white rounded-sm p-1"
+          >
+            <ChevronLeft size={14} />
           </Link>
           <button
             type="button"
             onClick={handleCreateCustomer}
-            className="w-full cursor-pointer flex items-center justify-center gap-1 border border-stone-800 dark:border-white rounded-sm p-0.5 pl-1.5 pr-1.5"
+            className="cursor-pointer flex items-center justify-center gap-1 border border-stone-800 dark:border-white rounded-sm p-0.5 pl-1.5 pr-1.5"
           >
             <p
               className="text-stone-800 dark:text-white"

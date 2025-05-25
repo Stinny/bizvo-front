@@ -98,7 +98,7 @@ const Desktop = ({
   }, []);
 
   return allEvents?.length ? (
-    <div className="dark:border-white dark:bg-neutral-800 flex flex-col w-10/12 gap-2 items-start">
+    <div className="dark:border-white dark:bg-neutral-800 flex flex-col w-full gap-2 items-start">
       <EvModal open={openEv} setOpen={setOpenEv} even={evToView} />
       <div className="w-full flex items-center justify-between bg-white border border-gray-200 rounded-sm p-2">
         <div className="flex flex-col items-start">

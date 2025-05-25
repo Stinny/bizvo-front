@@ -16,6 +16,7 @@ import { Link } from 'react-router-dom';
 import Cookies from 'js-cookie';
 import { Badge } from 'antd';
 import io from 'socket.io-client';
+import { RiBankLine } from 'react-icons/ri';
 
 const Sidenav = () => {
   const [forceUpdate, setForceUpdate] = useState(false);
@@ -26,9 +27,9 @@ const Sidenav = () => {
 
   const path = window.location.pathname;
   const activeLink =
-    'w-full flex items-center gap-2 border border-stone-800 dark:border-white dark:text-white rounded-sm p-1';
+    'w-full flex items-center gap-1 border border-b-0 border-stone-800 dark:border-white dark:text-white rounded-t-sm p-1';
   const notActiveLink =
-    'w-full flex items-center gap-2 p-1 border border-white dark:border-neutral-800 rounded-sm hover:border-stone-800 dark:hover:border-white';
+    'w-full flex items-center gap-1 p-1 border border-b-0 border-white dark:border-neutral-800 rounded-t-sm hover:border-stone-800 dark:hover:border-white';
 
   useEffect(() => {
     const socket = io(import.meta.env.VITE_WEBSOCK_URL); // Change URL to your server URL
@@ -57,8 +58,8 @@ const Sidenav = () => {
   }, []);
 
   return (
-    <div className="bg-white dark:bg-neutral-800 border border-gray-200 rounded-sm flex flex-col items-start p-2 w-2/12">
-      <div className="flex flex-col gap-1 items-start w-full pb-1">
+    <div className="bg-white dark:bg-neutral-800 flex flex-col items-start">
+      <div className="flex gap-2 items-center">
         <Link
           to="/dashboard"
           className={path === '/dashboard' ? activeLink : notActiveLink}
@@ -101,33 +102,9 @@ const Sidenav = () => {
             path.startsWith('/dashboard/payouts') ? activeLink : notActiveLink
           }
         >
-          <DollarSign size={14} className="text-stone-800 dark:text-white" />
+          <RiBankLine className="text-stone-800" />
           <p className="text-xs text-stone-800 dark:text-white">Payouts</p>
         </Link>
-
-        {!currentUser?.bankAdded && !currentUser?.stripeOnboard ? (
-          <div className="w-full text-left flex flex-col items-start gap-1 p-1 border border-gray-200 rounded-sm">
-            <AlertOctagon size={12} className="text-red-400" />
-            <p
-              className="text-stone-800 text-left"
-              style={{ fontSize: '11px' }}
-            >
-              Connect a bank in{' '}
-              <span>
-                <Link
-                  to="/settings"
-                  state={{ index: 1 }}
-                  className="font-bold text-stone-800"
-                >
-                  settings
-                </Link>{' '}
-                before sending invoices.
-              </span>
-            </p>
-          </div>
-        ) : (
-          ''
-        )}
       </div>
     </div>
   );

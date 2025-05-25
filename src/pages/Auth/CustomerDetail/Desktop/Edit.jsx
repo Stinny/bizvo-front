@@ -1,5 +1,12 @@
 import React, { useState } from 'react';
-import { AlertOctagon, Phone, Save, Trash, X } from 'react-feather';
+import {
+  AlertOctagon,
+  ChevronLeft,
+  Phone,
+  Save,
+  Trash,
+  X,
+} from 'react-feather';
 import { Link } from 'react-router-dom';
 import Select from 'react-select';
 import countryList from 'react-select-country-list';
@@ -26,6 +33,7 @@ const Edit = ({
   edit,
   setEdit,
   handleSaveEdits,
+  handleCancelEdits,
   customerId,
 }) => {
   //country select options
@@ -65,21 +73,21 @@ const Edit = ({
       setDel={setDel}
     />
   ) : (
-    <div className="w-10/12 bg-white border rounded-md border-gray-200 p-2 pb-6 flex flex-col gap-4 items-center justify-center">
+    <div className="w-full bg-white border rounded-md border-gray-200 p-2 pb-6 flex flex-col gap-4 items-center justify-center">
       <div className="w-full flex items-center justify-between relative">
         <div className="flex flex-col items-start">
           <p className="text-sm text-stone-800">Editing Customer</p>
 
-          <p className="text-xs text-stone-800">#{customerId}</p>
+          <p className="text-xs text-stone-800">{customerId}</p>
         </div>
 
-        <div className="flex items-center gap-2 absolute top-0 right-0 mr-1 mt-1">
+        <div className="flex gap-1 absolute top-0 right-0 mr-1 mt-1">
           <button
             type="button"
-            onClick={() => setDel(!del)}
-            className="text-red-400 font-bold cursor-pointer"
+            onClick={handleCancelEdits}
+            className="cursor-pointer flex items-center justify-center border border-stone-800 dark:border-white rounded-sm p-1"
           >
-            <X size={14} />
+            <ChevronLeft size={14} />
           </button>
           <button
             type="button"
@@ -111,7 +119,7 @@ const Edit = ({
               <input
                 type="text"
                 placeholder="Name"
-                className="border text-xs border-gray-200 bg-gray-50 focus:border-gray-200 focus:outline-none text-stone-800 hover:bg-gray-200 hover:border-gray-200 focus:bg-gray-200 focus:ring-0 w-full rounded-md p-2 pr-10"
+                className="border text-xs border-gray-200 bg-white outline-none text-stone-800 hover:bg-gray-50 focus:bg-gray-50 focus:ring-0 w-full rounded-sm p-2 pr-10"
                 onChange={(e) => setName(e.target.value)}
                 value={name}
                 maxLength={25}
@@ -147,7 +155,7 @@ const Edit = ({
             <input
               type="email"
               placeholder="Email"
-              className="border text-xs border-gray-200 bg-gray-50 focus:border-gray-200 focus:outline-none text-stone-800 hover:bg-gray-200 hover:border-gray-200 focus:bg-gray-200 focus:ring-0 w-full rounded-md p-2"
+              className="border text-xs border-gray-200 bg-white outline-none text-stone-800 hover:bg-gray-50 focus:bg-gray-50 focus:ring-0 w-full rounded-sm p-2"
               onChange={(e) => setEmail(e.target.value)}
               value={email}
             />
@@ -155,7 +163,7 @@ const Edit = ({
               <input
                 type="tel"
                 placeholder="(123)-456-7890"
-                className="border w-full text-xs border-gray-200 bg-gray-50 focus:border-gray-200 focus:outline-none text-stone-800 hover:bg-gray-200 hover:border-gray-200 focus:bg-gray-200 focus:ring-0 rounded-md p-2"
+                className="border w-full text-xs border-gray-200 bg-white outline-none text-stone-800 hover:bg-gray-50 focus:bg-gray-50 focus:ring-0 rounded-sm p-2"
                 onChange={(e) => setPhone(e.target.value)}
                 value={phone}
               />
@@ -168,7 +176,7 @@ const Edit = ({
             <input
               type="text"
               placeholder="Address"
-              className="border text-xs border-gray-200 bg-gray-50 focus:border-gray-200 focus:outline-none text-stone-800 hover:bg-gray-200 hover:border-gray-200 focus:bg-gray-200 focus:ring-0 w-full rounded-md p-2"
+              className="border text-xs border-gray-200 bg-white outline-none text-stone-800 hover:bg-gray-50 focus:bg-gray-50 focus:ring-0 w-full rounded-sm p-2"
               onChange={(e) => setAddress(e.target.value)}
               value={address}
             />
@@ -188,16 +196,16 @@ const Edit = ({
                   control: (baseStyles, state) => ({
                     ...baseStyles,
                     borderColor: 'rgb(229 231 235)',
-                    backgroundColor: 'rgb(249 250 251)',
+                    backgroundColor: '#fff',
                     borderWidth: 1,
                     '&:hover': {
-                      backgroundColor: 'rgb(229 231 235)', // Keep the same border color on hover
+                      backgroundColor: 'rgb(249 250 251)', // Keep the same border color on hover
                     },
                     '&:focus': {
-                      backgroundColor: 'rgb(229 231 235)', // Keep the same border color on hover
+                      backgroundColor: 'rgb(249 250 251)', // Keep the same border color on hover
                     },
                     fontSize: '12px',
-                    borderRadius: '.375rem',
+                    borderRadius: '4px',
                     boxShadow: 'none',
                     zIndex: 999,
                     position: 'relative',
@@ -216,7 +224,7 @@ const Edit = ({
                   option: (provided, state) => ({
                     ...provided,
                     backgroundColor: state.isSelected
-                      ? 'rgb(229 231 235)'
+                      ? 'rgb(249 250 251)'
                       : state.isFocused
                       ? 'rgb(249 250 251)'
                       : '',
@@ -231,7 +239,7 @@ const Edit = ({
               <input
                 type="text"
                 placeholder="Postal code"
-                className="border text-xs border-gray-200 bg-gray-50 focus:border-gray-200 focus:outline-none text-stone-800 hover:bg-gray-200 hover:border-gray-200 focus:bg-gray-200 focus:ring-0 w-full rounded-md p-2"
+                className="border text-xs border-gray-200 bg-white outline-none text-stone-800 hover:bg-gray-50 focus:bg-gray-50 focus:ring-0 w-full rounded-sm p-2"
                 onChange={(e) => setZip(e.target.value)}
                 value={zip}
               />
@@ -255,7 +263,7 @@ const Edit = ({
             <div className="relative w-full">
               <textarea
                 placeholder="About this customer.."
-                className="border border-gray-200 hover:border-gray-200 hover:bg-gray-200 focus:bg-gray-200 focus:border-gray-200 focus:ring-0 w-full h-16 rounded-md p-2 bg-gray-50 resize-none text-xs"
+                className="border border-gray-200 hover:bg-gray-50 focus:bg-gray-50 w-full h-16 rounded-sm p-2 outline-none bg-white resize-none text-xs"
                 onChange={(e) => setDesc(e.target.value)}
                 value={desc}
                 maxLength={75}

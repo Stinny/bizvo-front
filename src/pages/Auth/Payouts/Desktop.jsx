@@ -3,7 +3,7 @@ import ReactPaginate from 'react-paginate';
 import { Link } from 'react-router-dom';
 import { ChevronLeft, ChevronRight, DollarSign, Info } from 'react-feather';
 import StripeAmount from '../../../utils/StripeAmount';
-import { PayoutDate } from '../../../utils/PayoutDate';
+import { RiBankLine } from 'react-icons/ri';
 import Status from './Status';
 import { Tooltip } from 'flowbite-react';
 
@@ -27,17 +27,17 @@ const Desktop = ({ payouts, balance, currentUser }) => {
 
   content =
     !payouts?.length && !currentUser.bankAdded ? (
-      <div className="w-10/12 bg-white border rounded-sm border-gray-200 p-2 h-96 flex items-center justify-center">
+      <div className="w-full bg-white border rounded-sm border-gray-200 p-2 h-96 flex items-center justify-center">
         <div className="flex flex-col items-center text-center">
-          <DollarSign size={16} className="text-stone-800 mb-2" />
+          <RiBankLine className="text-stone-800" />
           <p className="text-sm text-stone-800">No Payouts</p>
           <p className="text-xs text-stone-800 w-72">
-            Only seen when you are paid via bank account
+            View payouts from collected payments
           </p>
         </div>
       </div>
     ) : (
-      <div className="w-10/12 flex flex-col items-start gap-2">
+      <div className="w-full flex flex-col items-start gap-2">
         <div className="w-full flex items-center justify-between bg-white border border-gray-200 rounded-sm p-2">
           <div className="flex flex-col items-start">
             <div className="flex items-center gap-1">

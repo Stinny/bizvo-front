@@ -18,13 +18,13 @@ const Toast = () => {
   }, [toast.isOpen]);
 
   return toast.isOpen ? (
-    <div className="flex items-center justify-start gap-1 bg-gray-50 border border-gray-200 rounded-md p-0.5 pr-1 pl-1">
+    <div className="flex items-center justify-start gap-0.5 bg-gray-50 border border-gray-200 rounded-sm p-0.5 pr-1 pl-1">
       <X
-        size={14}
+        size={12}
         onClick={() => dispatch(hideNotification())}
         className="hover:cursor-pointer text-stone-800"
       />
-      <p className="text-stone-800 text-xs font-semibold">{toast.message}</p>
+      <p className="text-stone-800 text-xs font-medium">{toast.message}</p>
     </div>
   ) : (
     ''

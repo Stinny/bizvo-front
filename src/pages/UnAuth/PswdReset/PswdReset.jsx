@@ -6,7 +6,7 @@ import {
   useResetPswdMutation,
   useSendConfirmLinkMutation,
 } from '../../../api/authApiSlice';
-import { Spinner } from 'flowbite-react';
+import { Spin } from 'antd';
 
 const PswdReset = () => {
   const { userId } = useParams();
@@ -65,8 +65,8 @@ const PswdReset = () => {
 
   if (isLoading) {
     content = (
-      <div className="w-full flex items-center justify-center mt-16">
-        <Spinner />
+      <div className="w-full flex items-center justify-center mt-32 h-56">
+        <Spin size="small" />
       </div>
     );
   } else {

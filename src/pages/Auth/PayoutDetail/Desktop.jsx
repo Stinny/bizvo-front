@@ -22,14 +22,14 @@ const Desktop = ({ payout }) => {
   };
 
   return (
-    <div className="w-10/12 bg-white border rounded-sm border-gray-200 p-2 pb-6 flex flex-col gap-6 items-center">
+    <div className="w-full bg-white border rounded-sm border-gray-200 p-2 pb-6 flex flex-col gap-6 items-center">
       <div className="w-full flex items-start justify-between">
         <div className="flex gap-1">
           <BackBtn direction={'left'} />
           <div className="flex flex-col items-start">
             <p className="text-sm text-stone-800">Viewing Payout</p>
 
-            <p className="text-xs text-stone-800">#{payout?._id}</p>
+            <p className="text-xs text-stone-800">{payout?._id}</p>
           </div>
         </div>
         <Status status={payout?.status} />

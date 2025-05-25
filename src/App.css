@@ -111,27 +111,26 @@
 /* antd checkbox css */
 .ant-checkbox-checked .ant-checkbox-inner {
   background-color: rgb(41 37 36) !important;
-  border-color: rgb(41 37 36) !important;
+  border-color: rgb(255, 255, 255) !important;
 }
 .ant-checkbox-wrapper:hover .ant-checkbox-checked .ant-checkbox-inner {
-  background-color: rgb(41 37 36) !important;
-  border-color: rgb(41 37 36) !important;
+  border-color: rgb(177, 170, 168) !important;
 }
 .ant-checkbox-checked:hover .ant-checkbox-checked .ant-checkbox-inner {
   background-color: rgb(41 37 36) !important;
-  border-color: rgb(41 37 36) !important;
+  border-color: rgb(201, 196, 194) !important;
 }
 .ant-checkbox-checked:after {
-  border-color: rgb(41 37 36) !important;
+  border-color: rgb(194, 192, 191) !important;
 }
 .ant-checkbox:hover::after {
-  border-color: rgb(41 37 36) !important;
+  border-color: rgb(197, 194, 194) !important;
 }
 .ant-checkbox:hover .ant-checkbox-inner {
-  border-color: rgb(41 37 36) !important;
+  border-color: rgb(170, 170, 170) !important;
 }
 .ant-checkbox-wrapper:hover .ant-checkbox-inner {
-  border-color: rgb(41 37 36) !important;
+  border-color: rgb(171, 169, 168) !important;
 }
 /* changes size of everything */
 .ant-checkbox-inner,
@@ -147,13 +146,18 @@
 
 /* Style the checkbox itself when disabled */
 .ant-checkbox.ant-checkbox-disabled .ant-checkbox-inner {
-  background-color: #f5f5f5; /* Disabled background color */
-  border-color: #d9d9d9; /* Disabled border color */
+  background-color: #f5f5f5 !important; /* Disabled background color */
+  border-color: #d9d9d9 !important; /* Disabled border color */
+}
+
+.ant-checkbox.ant-checkbox-disabled .ant-checkbox-inner {
+  background-color: #f5f5f5 !important; /* Disabled background color */
+  border-color: #d9d9d9 !important; /* Disabled border color */
 }
 
 /* Style the checkmark when disabled */
 .ant-checkbox.ant-checkbox-disabled .ant-checkbox-inner::after {
-  border-color: #ffffff; /* Change checkmark color when disabled */
+  border-color: #a6a6a6; /* Change checkmark color when disabled */
 }
 
 /* padding for antd timeline component */

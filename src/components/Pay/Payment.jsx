@@ -42,7 +42,16 @@ const Payment = ({
   // }, []);
 
   return (
-    <div className="w-full flex flex-col items-start gap-6">
+    <div className="w-full flex flex-col items-start gap-4">
+      {error ? (
+        <div className="w-full flex items-center justify-start gap-2 border border-gray-200 rounded-sm p-2">
+          <AlertOctagon size={16} className="text-red-400" />
+          <p className="text-stone-800 text-xs">{error}</p>
+        </div>
+      ) : (
+        ''
+      )}
+      <Title invoice={invoice} />
       <div className="w-full pl-1">
         <Timeline
           className="text-left"
@@ -101,14 +110,7 @@ const Payment = ({
           ]}
         />
       </div>
-      {error ? (
-        <div className="w-full flex items-center justify-start gap-2 border border-gray-200 rounded-sm p-2">
-          <AlertOctagon size={16} className="text-red-400" />
-          <p className="text-stone-800 text-xs">{error}</p>
-        </div>
-      ) : (
-        ''
-      )}
+
       <div className="w-full flex flex-col items-start gap-2">
         <NewPayment
           setReadyForPayment={setReadyForPayment}

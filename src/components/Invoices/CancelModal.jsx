@@ -5,6 +5,7 @@ import Modal from 'react-modal';
 import { useCancelInvoiceMutation } from '../../api/invoicesApiSlice';
 import { showNotification } from '../../api/toastSlice';
 import { useDispatch } from 'react-redux';
+import { Spin } from 'antd';
 
 const customStyles = {
   content: {
@@ -71,7 +72,7 @@ const CancelModal = ({ open, setOpen, invoId, refetch }) => {
     >
       {isLoading ? (
         <div className="w-80 h-52 flex items-center justify-center">
-          <Spinner />
+          <Spin size="small" />
         </div>
       ) : (
         <div className="w-80 flex flex-col gap-2 items-start">
@@ -114,7 +115,7 @@ const CancelModal = ({ open, setOpen, invoId, refetch }) => {
                 onClick={handleCancelInvo}
                 className=" text-stone-800 rounded-sm border border-stone-800 p-1 text-xs"
               >
-                Cancel Invoice
+                Cancel
               </button>
             </div>
           </div>

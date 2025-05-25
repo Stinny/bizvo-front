@@ -36,52 +36,61 @@ const Desktop = ({
           ''
         )}
         <div className="flex items-center gap-3">
-          <button type="button" onClick={handleCancel} className="text-red-400">
-            <X size={14} />
-          </button>
           <button
             type="button"
             onClick={handleSaveNotis}
-            className="text-stone-800"
+            className="text-stone-800 cursor-pointer"
           >
-            <Save size={14} />
+            <Save size={16} />
           </button>
         </div>
       </div>
       <div className="flex flex-col items-start w-full gap-4">
-        <div className="flex items-center gap-3">
+        <div className="flex items-start gap-3">
           <Checkbox
             checked={news}
             onChange={(e) => setNews(e.target.checked)}
           />
           <div className="flex flex-col items-start">
-            <p className="text-xs text-stone-800">Newsletter</p>
+            <p className="text-xs text-stone-800 font-medium">Newsletter</p>
             <p className="text-xs text-stone-800">
-              Receive the monthly Bizvo newsletter
+              Stay updated with the latest from Bizvo
             </p>
           </div>
         </div>
-        <div className="flex items-center gap-3">
+        <div className="flex items-start gap-3">
           <Checkbox
             checked={paid}
             onChange={(e) => setPaid(e.target.checked)}
           />
           <div className="flex flex-col items-start">
-            <p className="text-xs text-stone-800">Payments</p>
+            <p className="text-xs text-stone-800 font-medium">Payments</p>
             <p className="text-xs text-stone-800">
-              Whenever an invoice payment is successful
+              Whenever an invoice is paid successfully
             </p>
           </div>
         </div>
-        <div className="flex items-center gap-3">
+        <div className="flex items-start gap-3">
           <Checkbox
             checked={late}
             onChange={(e) => setLate(e.target.checked)}
           />
           <div className="flex flex-col items-start">
-            <p className="text-xs text-stone-800">Overdue</p>
+            <p className="text-xs text-stone-800 font-medium">Overdue</p>
             <p className="text-xs text-stone-800">
               Whenever an invoice is overdue
+            </p>
+          </div>
+        </div>
+        <div className="flex items-start gap-3">
+          <Checkbox
+            checked={late}
+            onChange={(e) => setLate(e.target.checked)}
+          />
+          <div className="flex flex-col items-start">
+            <p className="text-xs text-stone-800 font-medium">Authentication</p>
+            <p className="text-xs text-stone-800">
+              Whenever a new device is used to log in
             </p>
           </div>
         </div>
@@ -100,37 +109,46 @@ const Desktop = ({
           <button
             type="button"
             onClick={() => setEdit(!edit)}
-            className="text-stone-800"
+            className="text-stone-800 cursor-pointer"
           >
             <EditIcon size={14} />
           </button>
         </div>
       </div>
       <div className="flex flex-col items-start w-full gap-4">
-        <div className="flex items-center gap-3">
-          <Checkbox checked={news} disabled />
+        <div className="flex items-start gap-3">
+          <Checkbox defaultChecked={news} disabled={true} />
           <div className="flex flex-col items-start">
-            <p className="text-xs text-stone-800">Newsletter</p>
+            <p className="text-xs text-stone-800 font-medium">Newsletter</p>
             <p className="text-xs text-stone-800">
               Receive the monthly Bizvo newsletter
             </p>
           </div>
         </div>
-        <div className="flex items-center gap-3">
+        <div className="flex items-start gap-3">
           <Checkbox checked={paid} disabled />
           <div className="flex flex-col items-start">
-            <p className="text-xs text-stone-800">Payments</p>
+            <p className="text-xs text-stone-800 font-medium">Payments</p>
             <p className="text-xs text-stone-800">
               Whenever an invoice payment is successful
             </p>
           </div>
         </div>
-        <div className="flex items-center gap-3">
+        <div className="flex items-start gap-3">
           <Checkbox checked={late} disabled />
           <div className="flex flex-col items-start">
-            <p className="text-xs text-stone-800">Overdue</p>
+            <p className="text-xs text-stone-800 font-medium">Overdue</p>
             <p className="text-xs text-stone-800">
               Whenever an invoice is overdue
+            </p>
+          </div>
+        </div>
+        <div className="flex items-start gap-3">
+          <Checkbox checked={late} disabled />
+          <div className="flex flex-col items-start">
+            <p className="text-xs text-stone-800 font-medium">Authentication</p>
+            <p className="text-xs text-stone-800">
+              Whenever a new device is used to log in
             </p>
           </div>
         </div>

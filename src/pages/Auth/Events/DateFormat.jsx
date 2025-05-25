@@ -17,9 +17,9 @@ const formatDate = (createdAt) => {
   if (localizedDate >= today) {
     return `Today @ ${timeString}`;
   } else if (localizedDate >= yesterday) {
-    return `Yesterday @ ${timeString}`;
+    return `Yesterday at ${timeString}`;
   } else {
-    return `${format(localizedDate, 'MMM do')} @ ${timeString}`;
+    return `${format(localizedDate, 'MMM do')} at ${timeString}`;
   }
 };
 

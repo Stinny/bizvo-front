@@ -243,7 +243,7 @@ const Desktop = ({
         modalConfirmHandler={modalConfirmHandler}
       />
     ) : (
-      <div className="w-10/12 bg-white border rounded-sm border-gray-200 p-2 pb-6 flex flex-col gap-6 items-center">
+      <div className="w-full bg-white border rounded-sm border-gray-200 p-2 pb-6 flex flex-col gap-6 items-center">
         <SendModal
           open={sendMod}
           setOpen={setSendMod}
@@ -270,7 +270,7 @@ const Desktop = ({
             <div className="flex flex-col items-start">
               <p className="text-sm text-stone-800">Viewing Invoice</p>
 
-              <p className="text-xs text-stone-800">#{invoice?._id}</p>
+              <p className="text-xs text-stone-800">{invoice?._id}</p>
             </div>
           </div>
           <div className="flex items-center justify-end gap-3 w-44">
@@ -281,7 +281,7 @@ const Desktop = ({
             <Link
               to={`/pay/${invoice?._id}?iat=${invoice?.token}`}
               target="_blank"
-              className="text-stone-800 self-start"
+              className="text-stone-800 self-start text-xs flex items-center gap-1"
             >
               <ExternalLink size={16} />
             </Link>
@@ -304,7 +304,7 @@ const Desktop = ({
                       <button
                         type="button"
                         onClick={() => setEdit(!edit)}
-                        className="w-full flex items-center gap-2 text-xs text-stone-800 hover:bg-white border border-white rounded-sm hover:border-stone-800 p-1"
+                        className="w-full flex items-center gap-2 text-xs text-stone-800 hover:bg-white border border-white rounded-sm hover:border-stone-800 p-1 cursor-pointer"
                       >
                         <EditIcon size={12} className="text-stone-800" />
                         Edit
@@ -317,7 +317,7 @@ const Desktop = ({
                       <button
                         type="button"
                         onClick={() => setDel(!del)}
-                        className="w-full flex items-center gap-2 text-xs text-stone-800 hover:bg-white border border-white rounded-sm hover:border-stone-800 p-1"
+                        className="w-full flex items-center gap-2 text-xs text-stone-800 hover:bg-white border border-white rounded-sm hover:border-stone-800 p-1 cursor-pointer"
                       >
                         <Trash size={12} className="text-red-400" />
                         Delete
@@ -343,7 +343,7 @@ const Desktop = ({
                       <button
                         type="button"
                         onClick={() => setCancelMod(!cancelMod)}
-                        className="w-full flex items-center gap-2 text-xs text-stone-800 hover:bg-white border border-white rounded-sm hover:border-stone-800 p-1"
+                        className="w-full flex items-center gap-2 text-xs text-stone-800 hover:bg-white border border-white rounded-sm hover:border-stone-800 p-1 cursor-pointer"
                       >
                         <XSquare size={12} className="text-red-400" />
                         Cancel

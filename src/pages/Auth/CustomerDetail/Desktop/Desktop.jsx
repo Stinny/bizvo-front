@@ -3,20 +3,29 @@ import Navbar from '../../../../components/Navbar/Navbar';
 import Sidenav from '../../../../components/Sidenav/Sidenav';
 import Footer from '../../../../components/Footer/Footer';
 import Edit from './Edit';
-import {
-  AlertOctagon,
-  ChevronDown,
-  ChevronRight,
-  CreditCard,
-  Edit as EditIcon,
-  Send,
-} from 'react-feather';
+import { Edit as EditIcon, Send, Trash, X } from 'react-feather';
 import { useEditCustomerMutation } from '../../../../api/customersApiSlice';
 import { showNotification } from '../../../../api/toastSlice';
 import { useDispatch } from 'react-redux';
 import ReactCountryFlag from 'react-country-flag';
 import { Tooltip } from 'flowbite-react';
 import BackBtn from '../../../../components/BackBtn';
+import { Spin } from 'antd';
+import Modal from 'react-modal';
+
+const customStyles = {
+  content: {
+    top: '30%',
+    left: '50%',
+    right: 'auto',
+    bottom: 'auto',
+    marginRight: '-50%',
+    transform: 'translate(-50%, -50%)',
+    fontFamily: 'Geist',
+    padding: '8px',
+  },
+};
+Modal.setAppElement('#root');
 
 const Desktop = ({ customer, refetch }) => {
   const dispatch = useDispatch();
@@ -30,10 +39,21 @@ const Desktop = ({ customer, refetch }) => {
   const [desc, setDesc] = useState(customer?.description);
   const [error, setError] = useState('');
   const [edit, setEdit] = useState(false);
-  const [viewPay, setViewPay] = useState(false);
+  const [del, setDel] = useState(false);
 
   //edit customer API hook
   const [editCustomer, { isLoading: editing }] = useEditCustomerMutation();
+
+  const handleCancelEdits = (e) => {
+    setEdit(false);
+    setName(customer?.name);
+    setCountry(customer?.country);
+    setEmail(customer?.email);
+    setPhone(customer?.phone);
+    setAddress(customer?.address);
+    setZip(customer?.zipcode);
+    setDesc(customer?.description);
+  };
 
   //hanlder function to save edits
   const handleSaveEdits = async (e) => {
@@ -98,16 +118,62 @@ const Desktop = ({ customer, refetch }) => {
       setEdit={setEdit}
       customerId={customer?._id}
       handleSaveEdits={handleSaveEdits}
+      handleCancelEdits={handleCancelEdits}
     />
   ) : (
-    <div className="w-10/12 bg-white border rounded-sm border-gray-200 p-2 pb-6 flex flex-col gap-4 items-center justify-center">
+    <div className="w-full bg-white border rounded-sm border-gray-200 p-2 pb-6 flex flex-col gap-4 items-center justify-center">
+      <Modal
+        isOpen={del}
+        onRequestClose={() => setDel(false)}
+        style={customStyles}
+        contentLabel="Cust Delete modal"
+      >
+        {false ? (
+          <div className="w-80 h-52 flex items-center justify-center">
+            <Spin size="small" />
+          </div>
+        ) : (
+          <div className="w-80 flex flex-col gap-2 items-start">
+            <div className="w-full flex items-start justify-between">
+              <div className="flex flex-col items-start">
+                <p className="text-sm text-stone-800">Delete Customer</p>
+                <p className="text-xs text-stone-800">
+                  Are you sure you want to delete this customer?
+                </p>
+              </div>
+              <X
+                size={16}
+                className="text-red-400 hover:cursor-pointer"
+                onClick={() => setDel(false)}
+              />
+            </div>
+            <div className="flex flex-col items-start gap-1 w-full">
+              <p className="text-xs text-stone-800">{customer?.name}</p>
+              <p className="text-xs text-stone-800">{customer?.email}</p>
+              <p className="text-xs text-stone-800">
+                {customer?.country?.label}
+              </p>
+            </div>
+
+            <div className="w-full flex items-center justify-end">
+              <button
+                type="button"
+                className="border border-red-400 text-red-400 rounded-sm p-1 text-xs cursor-pointer"
+                // onClick={handleDeleteAcc}
+              >
+                Delete
+              </button>
+            </div>
+          </div>
+        )}
+      </Modal>
       <div className="w-full flex items-center justify-between relative">
         <div className="flex gap-1">
           <BackBtn direction={'left'} />
           <div className="flex flex-col items-start">
             <p className="text-sm text-stone-800">Viewing Customer</p>
 
-            <p className="text-xs text-stone-800">#{customer?._id}</p>
+            <p className="text-xs text-stone-800">{customer?._id}</p>
           </div>
         </div>
         <Tooltip
@@ -132,7 +198,14 @@ const Desktop = ({ customer, refetch }) => {
           </button>
         </Tooltip>
         <div className="w-24"></div>
-        <div className="absolute top-0 right-0 mr-1 mt-1">
+        <div className="absolute top-0 right-0 mr-1 mt-1 flex items-center gap-2">
+          <button
+            type="button"
+            onClick={() => setDel(true)}
+            className="text-red-400 hover:cursor-pointer"
+          >
+            <Trash size={14} />
+          </button>
           <button
             type="button"
             onClick={() => setEdit(!edit)}
@@ -184,7 +257,7 @@ const Desktop = ({ customer, refetch }) => {
             <input
               type="text"
               placeholder="Address"
-              className="text-xs border border-gray-200 focus:outline-none text-stone-800 ring-0 w-full rounded-md p-2"
+              className="text-xs border border-gray-200 focus:outline-none text-stone-800 ring-0 w-full rounded-sm p-2"
               disabled
               value={address}
             />
@@ -233,47 +306,6 @@ const Desktop = ({ customer, refetch }) => {
                 disabled
                 value={desc}
               />
-            </div>
-          ) : (
-            ''
-          )}
-          {customer?.payment?.id ? (
-            <div className="flex flex-col gap-1 items-start w-full">
-              <p className="text-xs text-stone-800">Payment Method</p>
-              <button
-                type="button"
-                onClick={() => setViewPay(!viewPay)}
-                className="w-full flex flex-col items-start text-left border border-gray-200 rounded-sm p-2"
-              >
-                <div className="w-full flex items-center justify-between">
-                  <div className="flex items-center gap-2">
-                    <p className="text-xs text-stone-800">
-                      {customer?.payment?.id}
-                    </p>
-                  </div>
-                  {viewPay ? (
-                    <ChevronDown size={14} />
-                  ) : (
-                    <ChevronRight size={14} />
-                  )}
-                </div>
-
-                <div
-                  className={`transition-[max-height] duration-300 ease-in-out overflow-hidden ${
-                    viewPay ? 'max-h-40' : 'max-h-0'
-                  }`}
-                >
-                  <p className="text-xs text-stone-800 mt-4">Type</p>
-                  <p className="text-xs text-stone-800 flex items-center gap-1 mt-1">
-                    <CreditCard size={12} />
-                    {customer?.payment?.brand}
-                  </p>
-                  <p className="text-xs text-stone-800 mt-2">Last 4</p>
-                  <p className="text-xs text-stone-800">
-                    xxxx xxxx xxxx {customer?.payment?.lastFour}
-                  </p>
-                </div>
-              </button>
             </div>
           ) : (
             ''

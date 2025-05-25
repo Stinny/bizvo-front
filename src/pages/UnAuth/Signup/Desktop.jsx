@@ -85,7 +85,7 @@ const Desktop = ({
             </form>
             <button
               type="button"
-              className="p-2 w-full border border-stone-800 text-stone-800 rounded-sm text-xs font-medium"
+              className="p-2 w-full border border-stone-800 text-stone-800 rounded-sm text-xs font-medium cursor-pointer"
               onClick={handleSignup}
             >
               Signup

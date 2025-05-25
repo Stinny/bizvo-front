@@ -1,5 +1,13 @@
 import React, { useRef } from 'react';
-import { AlertOctagon, Info, Save, Upload, X } from 'react-feather';
+import {
+  AlertOctagon,
+  Download,
+  Info,
+  Save,
+  Tool,
+  Upload,
+  X,
+} from 'react-feather';
 import DateInput from 'rsuite/DateInput';
 import Select from 'react-select';
 import countryList from 'react-select-country-list';
@@ -21,6 +29,8 @@ const Edit = ({
   about,
   setAbout,
   setLogo,
+  bizType,
+  setBizType,
   setSelectedImage,
   selectedImage,
   error,
@@ -67,26 +77,17 @@ const Edit = ({
         <div className="flex items-center gap-3">
           <button
             type="button"
-            onClick={handleCancelEdit}
-            disabled={updatingAcc}
-            className="text-red-400"
-          >
-            <X size={16} />
-          </button>
-          <button
-            type="button"
             onClick={handleSaveEdits}
             disabled={updatingAcc}
-            className="text-stone-800"
+            className="text-stone-800 cursor-pointer"
           >
             <Save size={16} />
           </button>
         </div>
       </div>
 
-      <div className="w-full flex flex-col items-start gap-2">
-        <p className="text-xs text-stone-800 font-semibold">Account</p>
-        <div className="flex items-start w-full gap-2">
+      <div className="w-full flex flex-col items-start gap-4">
+        <div className="flex items-start w-full gap-4">
           <div className="flex flex-col gap-2 w-full">
             <div className="flex flex-col items-start w-full gap-1">
               {currentUser?.googleAuth ? (
@@ -121,7 +122,7 @@ const Edit = ({
                   <input
                     type="text"
                     placeholder="Email"
-                    className="text-xs bg-gray-50 border border-gray-200 focus:border-gray-200 focus:bg-gray-200 focus:outline-none text-stone-800 focus:ring-0 w-full rounded-sm p-2"
+                    className="text-xs bg-white border border-gray-200 focus:bg-gray-50 hover:bg-gray-50 outline-none text-stone-800 focus:ring-0 w-full rounded-sm p-2"
                     onChange={(e) => setEmail(e.target.value)}
                     value={email}
                   />
@@ -137,7 +138,72 @@ const Edit = ({
               )}
             </div>
           </div>
-          <div className="flex flex-col gap-2 w-full">
+          <div className="flex flex-col gap-4 w-full">
+            <div className="flex flex-col items-start w-full gap-1">
+              <p className="text-xs text-stone-800">Service Type</p>
+              <div className="w-full flex items-center gap-2">
+                <button
+                  type="button"
+                  onClick={() => setBizType('physical')}
+                  className={`w-3/6 p-2 border border-gray-200 rounded-sm text-xs text-stone-800 flex items-center justify-center gap-1 hover:bg-gray-50 cursor-pointer ${
+                    bizType === 'physical'
+                      ? 'bg-gray-50 border-gray-200'
+                      : 'bg-white'
+                  }`}
+                >
+                  <Tool size={14} /> Physical
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setBizType('digital')}
+                  className={`w-3/6 p-2 border border-gray-200 rounded-sm text-xs text-stone-800 flex items-center justify-center gap-1 hover:bg-gray-50 cursor-pointer ${
+                    bizType === 'digital'
+                      ? 'bg-gray-50 border-gray-200'
+                      : 'bg-white'
+                  }`}
+                >
+                  <Download size={14} /> Digital
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <form className="flex items-start w-full gap-4">
+          <div className="flex flex-col w-full gap-4">
+            <div className="flex flex-col items-start w-full gap-1">
+              <p className="text-xs text-stone-800">Name & Logo</p>
+
+              <div className="flex items-center gap-1 w-full">
+                <input
+                  type="text"
+                  placeholder="My Bizz"
+                  className="border text-xs border-gray-200 bg-white outline-none text-stone-800 hover:bg-gray-50 focus:bg-gray-50 w-full rounded-sm p-2"
+                  onChange={(e) => setName(e.target.value)}
+                  value={name}
+                />
+                <div className="file-upload">
+                  <input
+                    style={{ display: 'none' }}
+                    ref={fileInputRef}
+                    type="file"
+                    onChange={handleImageChange}
+                  />
+                  <button
+                    type="button"
+                    onClick={handleButtonClick}
+                    className="flex items-center justify-center cursor-pointer"
+                  >
+                    <Avatar
+                      size="sm"
+                      img={
+                        selectedImage ? selectedImage : currentUser?.logo?.url
+                      }
+                    />
+                  </button>
+                </div>
+              </div>
+            </div>
             <div className="flex flex-col items-start w-full gap-1">
               <p className="text-xs text-stone-800">Country</p>
 
@@ -198,48 +264,12 @@ const Edit = ({
               />
             </div>
           </div>
-        </div>
-        <p className="text-xs text-stone-800 font-semibold">Profile</p>
-        <form className="flex items-start w-full gap-2">
-          <div className="flex flex-col w-full gap-2">
-            <div className="flex flex-col items-start w-full gap-1">
-              <p className="text-xs text-stone-800">Name</p>
-              <input
-                type="text"
-                placeholder="Name"
-                className="text-xs bg-white border border-gray-200 focus:border-gray-200 focus:bg-gray-50 hover:bg-gray-50 focus:outline-none text-stone-800 focus:ring-0 w-full rounded-sm p-2"
-                onChange={(e) => setName(e.target.value)}
-                value={name}
-              />
-            </div>
-            <div className="flex items-center gap-4 w-full">
-              <Avatar
-                size="md"
-                img={selectedImage ? selectedImage : currentUser?.logo?.url}
-              />
-
-              <div className="file-upload">
-                <input
-                  style={{ display: 'none' }}
-                  ref={fileInputRef}
-                  type="file"
-                  onChange={handleImageChange}
-                />
-                <button
-                  onClick={handleButtonClick}
-                  className="text-xs rounded-md border border-stone-800 text-stone-800 p-1 flex items-center gap-1"
-                >
-                  Change <Upload size={12} />
-                </button>
-              </div>
-            </div>
-          </div>
           <div className="flex flex-col w-full">
             <div className="flex flex-col items-start w-full gap-1">
               <p className="text-xs text-stone-800">Describe your services</p>
               <textarea
                 placeholder="Describe your services.."
-                className="text-xs bg-white border border-gray-200 focus:ring-0 focus:border-gray-200 focus:outline-none focus:bg-gray-50 hover:bg-gray-50 text-stone-800 ring-0 w-full rounded-sm p-2 resize-none h-20"
+                className="text-xs bg-white border border-gray-200 focus:ring-0 focus:border-gray-200 focus:outline-none focus:bg-gray-50 hover:bg-gray-50 text-stone-800 ring-0 w-full rounded-sm p-2 resize-none h-28"
                 onChange={(e) => setAbout(e.target.value)}
                 value={about}
               />

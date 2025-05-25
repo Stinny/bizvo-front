@@ -16,7 +16,7 @@ const Desktop = ({
   const location = useLocation();
 
   return (
-    <div className="w-10/12 bg-white border rounded-sm border-gray-200 p-2">
+    <div className="w-full bg-white border rounded-sm border-gray-200 p-2">
       <Tabs
         selectedIndex={activeTabIndex}
         onSelect={(index) => setActiveTabIndex(index)}

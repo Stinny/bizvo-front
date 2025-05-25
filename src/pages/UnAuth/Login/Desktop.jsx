@@ -89,14 +89,14 @@ const Desktop = ({
                 <div className="w-full flex justify-end">
                   <Link
                     to="/password/request"
-                    className="text-stone-600"
+                    className="text-stone-800"
                     style={{ fontSize: '11px' }}
                   >
                     Forgot?
                   </Link>
                 </div>
               </div>
-              <button className="p-2 w-full border border-stone-800 text-stone-800 rounded-sm text-xs font-medium">
+              <button className="p-2 w-full border border-stone-800 text-stone-800 rounded-sm text-xs font-medium cursor-pointer">
                 Login
               </button>
             </form>

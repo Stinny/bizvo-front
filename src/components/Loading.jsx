@@ -3,7 +3,7 @@ import React from 'react';
 
 const Loading = () => {
   return (
-    <div className="w-10/12 flex items-center justify-center h-96">
+    <div className="w-full flex items-center justify-center h-80">
       <Spin size="small" />
     </div>
   );

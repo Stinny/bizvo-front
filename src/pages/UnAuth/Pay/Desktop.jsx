@@ -1,29 +1,17 @@
 import React, { useState } from 'react';
-import {
-  AlertOctagon,
-  Briefcase,
-  CheckCircle,
-  ChevronDown,
-  ChevronRight,
-  Info,
-  Layers,
-  Percent,
-  Send,
-  User,
-  XSquare,
-} from 'react-feather';
+import { CheckCircle, Layers, XSquare } from 'react-feather';
 import { Link } from 'react-router-dom';
 import { useUpdateInvoForPayMutation } from '../../../api/invoicesApiSlice';
-import LinkExp from '../../../components/Pay/LinkExp';
 import Invalid from './Invalid';
 import Amount from '../../../components/Pay/Amount';
 import Status from '../../../components/Pay/Status';
 import Title from '../../../components/Pay/Title';
 import Content from '../../../components/Pay/Content';
 import Payment from '../../../components/Pay/Payment';
-import Trxs from './Trxs';
 import Method from './Method';
 import { Spin } from 'antd';
+import { Avatar } from 'flowbite-react';
+import BizModal from './BizModal';
 
 const Desktop = ({
   data,
@@ -45,6 +33,7 @@ const Desktop = ({
   const [updatingInvo, setUpdatingInvo] = useState(false);
   const [updatedInvo, setUpdatedInvo] = useState({});
   const [updatedTrx, setUpdatedTrx] = useState({});
+  const [seeBiz, setSeeBiz] = useState(false);
 
   const isOwner = data?.invoice?.sellerId === currentUser?._id && uid;
 
@@ -97,39 +86,23 @@ const Desktop = ({
         className="mx-auto flex flex-col items-center mt-16"
         style={{ width: '370px' }}
       >
-        {/* <div className="w-full flex items-center justify-center mb-6">
-          <LinkExp
-            expDate={data?.invoice?.linkExp}
-            refetch={refetch}
-            isOwner={isOwner}
+        <div className="flex items-center justify-center w-full mb-6">
+          <BizModal open={seeBiz} setOpen={setSeeBiz} biz={data?.biz} />
+          <Avatar
+            size="md"
+            img={data?.biz?.logo}
+            onClick={() => setSeeBiz(!seeBiz)}
+            className="hover:cursor-pointer border border-gray-200"
           />
-        </div> */}
-
+        </div>
         {succ ? (
-          <div className="w-full flex items-center justify-start gap-2 border border-gray-200 bg-white rounded-md p-2 mb-2">
+          <div className="w-full flex items-center justify-start gap-2 border border-gray-200 bg-white rounded-sm p-2 mb-2">
             <CheckCircle size={14} className="text-green-400" />
             <p className="text-xs text-stone-800">Payment was successful</p>
           </div>
         ) : (
           ''
         )}
-        {added ? (
-          <div className="w-full flex items-center justify-start gap-2 border border-gray-200 bg-white rounded-md p-2 mb-2">
-            <CheckCircle size={14} className="text-green-400" />
-            <p className="text-xs text-stone-800">Payment method added</p>
-          </div>
-        ) : (
-          ''
-        )}
-        {rem ? (
-          <div className="w-full flex items-center justify-start gap-2 border border-gray-200 bg-white rounded-md p-2 mb-2">
-            <XSquare size={14} className="text-red-400" />
-            <p className="text-xs text-stone-800">Payment method removed</p>
-          </div>
-        ) : (
-          ''
-        )}
-
         <div className="w-full bg-white border border-gray-200 rounded-sm flex flex-col items-start gap-6 p-2">
           <Status invoice={data?.invoice} />
           {view === 'details' ? (

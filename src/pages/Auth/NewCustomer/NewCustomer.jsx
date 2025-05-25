@@ -98,10 +98,10 @@ const NewCustomer = () => {
   }
 
   return (
-    <div className="mx-auto max-w-3xl flex flex-col gap-2 h-fit">
+    <div className="mx-auto max-w-2xl flex flex-col gap-2 h-fit">
       <Navbar />
       <div className="flex items-start gap-2">
-        <Sidenav />
+        {/* <Sidenav /> */}
         {content}
       </div>
     </div>

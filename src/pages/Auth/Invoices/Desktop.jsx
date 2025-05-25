@@ -41,7 +41,7 @@ const Desktop = ({ invoices }) => {
 
   //stuff for pagination//
   const [itemOffset, setItemOffset] = useState(0);
-  const itemsPerPage = 12;
+  const itemsPerPage = 15;
 
   const endOffset = itemOffset + itemsPerPage;
   const currentInvos = filteredInvos.slice(itemOffset, endOffset);
@@ -57,14 +57,26 @@ const Desktop = ({ invoices }) => {
   let content;
 
   content = invoices?.length ? (
-    <div className="w-10/12 flex flex-col items-start gap-2">
+    <div className="w-full flex flex-col items-start gap-2">
       <div className="w-full flex items-center justify-between bg-white border border-gray-200 rounded-sm p-2">
-        <div className="flex flex-col items-start">
+        <div className="flex flex-col items-start w-52">
           <p className="text-sm text-stone-800">Invoices</p>
           <p className="text-xs text-stone-800">Viewing all invoices</p>
         </div>
 
-        <div className="flex items-center justify-end gap-2">
+        <Link
+          to="/dashboard/invoices/add"
+          className="flex items-center justify-center gap-1 border border-stone-800 dark:border-white rounded-sm p-0.5 pl-2 pr-2"
+        >
+          <p
+            className="text-stone-800 dark:text-white"
+            style={{ fontSize: '11px' }}
+          >
+            New +
+          </p>
+        </Link>
+
+        <div className="flex items-center justify-end gap-2 w-64">
           <div className="flex items-center gap-2">
             <Dropdown
               dismissOnClick={true}

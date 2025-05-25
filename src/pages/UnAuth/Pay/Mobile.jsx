@@ -21,10 +21,10 @@ import Content from '../../../components/Pay/Content';
 import Amount from '../../../components/Pay/Amount';
 import Title from '../../../components/Pay/Title';
 import Status from '../../../components/Pay/Status';
-import Trxs from './Trxs';
 import Method from './Method';
 import Payment from '../../../components/Pay/Payment';
 import { Spin } from 'antd';
+import BizModal from './BizModal';
 
 const Mobile = ({
   data,
@@ -46,6 +46,7 @@ const Mobile = ({
   const [updatingInvo, setUpdatingInvo] = useState(false);
   const [updatedInvo, setUpdatedInvo] = useState({});
   const [updatedTrx, setUpdatedTrx] = useState({});
+  const [seeBiz, setSeeBiz] = useState(false);
 
   const isOwner = data?.invoice?.sellerId === currentUser?._id && uid;
 
@@ -92,14 +93,6 @@ const Mobile = ({
       />
     ) : (
       <div className="flex flex-col items-start mt-4 p-4">
-        {/* <div className="w-full flex items-center justify-center mb-6">
-          <LinkExp
-            expDate={data?.invoice?.linkExp}
-            refetch={refetch}
-            isOwner={isOwner}
-          />
-        </div> */}
-
         {succ ? (
           <div className="w-full flex items-center justify-start gap-2 border border-gray-200 bg-white rounded-md p-2 mb-2">
             <CheckCircle size={14} className="text-green-400" />
@@ -125,7 +118,17 @@ const Mobile = ({
           ''
         )}
 
-        <div className="w-full bg-white border border-gray-200 rounded-md flex flex-col items-start gap-6 p-2">
+        <div className="flex items-center justify-center w-full mb-6">
+          <BizModal open={seeBiz} setOpen={setSeeBiz} biz={data?.biz} />
+          <Avatar
+            size="md"
+            img={data?.biz?.logo}
+            onClick={() => setSeeBiz(!seeBiz)}
+            className="hover:cursor-pointer border border-gray-200"
+          />
+        </div>
+
+        <div className="w-full bg-white border border-gray-200 rounded-md flex flex-col items-start gap-4 p-2">
           <Status invoice={data?.invoice} />
           {view === 'details' ? (
             <>
@@ -161,7 +164,6 @@ const Mobile = ({
             ''
           )}
 
-          {view === 'trxs' ? <Trxs setView={setView} trxs={data?.trxs} /> : ''}
           {view === 'paymeth' ? (
             <Method
               invoice={updatedInvo}

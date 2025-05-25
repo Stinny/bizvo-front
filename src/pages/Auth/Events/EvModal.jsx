@@ -84,7 +84,7 @@ const EvModal = ({ open, setOpen, even }) => {
             <p className="text-stone-800 dark:text-white text-xs">
               Invoice was paid{' '}
               <span className="font-medium">
-                $
+                +$
                 {parseFloat(even?.amount / 100)?.toLocaleString(undefined, {
                   minimumFractionDigits: 2,
                   maximumFractionDigits: 2,
@@ -103,7 +103,7 @@ const EvModal = ({ open, setOpen, even }) => {
         </div>
         <Link
           to={`/dashboard/invoices/${even?.invoiceId}`}
-          className="w-full flex items-center justify-between border border-gray-200 hover:border-stone-800 rounded-md p-2"
+          className="w-full flex items-center justify-between border border-gray-200 hover:border-stone-800 rounded-sm p-2"
         >
           <div className="flex flex-col items-start">
             <p className="text-xs text-stone-800 flex items-center gap-1">

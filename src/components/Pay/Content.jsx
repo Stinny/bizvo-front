@@ -151,7 +151,7 @@ const Content = ({ invoice, biz, trx, customer }) => {
         <button
           type="button"
           onClick={() => handleView('bus')}
-          className="w-full flex flex-col bg-white items-start text-left border border-gray-200 rounded-sm p-2"
+          className="w-full flex flex-col bg-white items-start text-left border border-gray-200 rounded-sm p-2 cursor-pointer"
         >
           <div className="w-full flex items-center justify-between">
             <p className="text-sm text-stone-800">Participants</p>
@@ -195,7 +195,7 @@ const Content = ({ invoice, biz, trx, customer }) => {
         <button
           type="button"
           onClick={() => handleView('due')}
-          className="w-full flex flex-col bg-white items-start text-left border border-gray-200 rounded-sm p-2"
+          className="w-full flex flex-col bg-white items-start text-left border border-gray-200 rounded-sm p-2 cursor-pointer"
         >
           <div className="w-full flex items-center justify-between">
             <p className="text-stone-800 text-sm">Details</p>
@@ -213,7 +213,7 @@ const Content = ({ invoice, biz, trx, customer }) => {
             }`}
           >
             <div className="w-full flex flex-col gap-4 items-start text-left mt-2">
-              <div className="flex items-start w-full gap-2">
+              <div className="flex items-start w-full gap-4">
                 <div className="flex flex-col gap-2 w-3/6">
                   <div className="w-full flex flex-col">
                     <p className=" text-stone-800 font-medium text-xs">
@@ -225,10 +225,10 @@ const Content = ({ invoice, biz, trx, customer }) => {
                   </div>
 
                   <div className="w-full flex flex-col">
-                    <p className="text-stone-800 font-medium text-xs">
-                      Tax type
+                    <p className=" text-stone-800 font-medium text-xs">
+                      Transaction
                     </p>
-                    <p className="text-stone-800 text-xs">{taxType}</p>
+                    <p className="text-stone-800 text-xs">{trx?._id}</p>
                   </div>
                 </div>
                 <div className="flex flex-col gap-2 w-3/6">
@@ -240,12 +240,11 @@ const Content = ({ invoice, biz, trx, customer }) => {
                       {moment(invoice?.dueDate).format('MMMM Do, YYYY')}
                     </p>
                   </div>
-
                   <div className="w-full flex flex-col">
-                    <p className=" text-stone-800 font-medium text-xs">
-                      Transaction
+                    <p className="text-stone-800 font-medium text-xs">
+                      Tax type
                     </p>
-                    <p className="text-stone-800 text-xs">{trx?._id}</p>
+                    <p className="text-stone-800 text-xs">{taxType}</p>
                   </div>
                 </div>
               </div>

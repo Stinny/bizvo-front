@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import Navbar from '../../../components/Navbar/Navbar';
 import Sidenav from '../../../components/Sidenav/Sidenav';
 import Footer from '../../../components/Footer/Footer';
@@ -12,8 +12,10 @@ const Home = () => {
     ? JSON.parse(Cookies.get('currentUser'))
     : null;
 
+  const [filter, setFilter] = useState({ label: 'Last 7 days', value: 'week' });
+
   const { data, isLoading, isSuccess, isFetching, refetch } =
-    useGetStatsTempQuery();
+    useGetStatsTempQuery({ filter: filter.value });
 
   useEffect(() => {
     refetch();
@@ -24,14 +26,21 @@ const Home = () => {
   if (isLoading || isFetching) {
     content = <Loading />;
   } else if (isSuccess) {
-    content = <Desktop data={data} currentUser={currentUser} />;
+    content = (
+      <Desktop
+        data={data}
+        currentUser={currentUser}
+        filter={filter}
+        setFilter={setFilter}
+      />
+    );
   }
 
   return (
-    <div className="mx-auto max-w-3xl flex flex-col items-start gap-2">
+    <div className="mx-auto max-w-2xl flex flex-col items-start gap-2">
       <Navbar />
       <div className="flex items-start gap-2 w-full">
-        <Sidenav />
+        {/* <Sidenav /> */}
         {content}
       </div>
     </div>

@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import {
   AlertOctagon,
   ChevronDown,
+  ChevronLeft,
   ChevronRight,
   CreditCard,
   ExternalLink,
@@ -118,7 +119,7 @@ const Edit = ({
   }, [selDate]);
 
   return (
-    <div className="w-10/12 bg-white border rounded-md border-gray-200 p-2 pb-6 flex flex-col gap-6 items-start">
+    <div className="w-full bg-white border rounded-md border-gray-200 p-2 pb-6 flex flex-col gap-6 items-start">
       <DeleteModal invoId={invoice?._id} open={del} setOpen={setDel} />
       <Modal
         isOpen={confirmMod}
@@ -176,20 +177,20 @@ const Edit = ({
         <div className="flex flex-col items-start">
           <p className="text-sm text-stone-800">Editing Invoice</p>
 
-          <p className="text-xs text-stone-800">#{invoice?._id}</p>
+          <p className="text-xs text-stone-800">{invoice?._id}</p>
         </div>
 
         <div className="flex items-center justify-center gap-3">
           <InvoStatus status={invoice?.status} full={true} />
         </div>
         <div className="w-24"></div>
-        <div className="flex items-center gap-2 absolute top-0 right-0 mr-1 mt-1">
+        <div className="flex gap-1 absolute top-0 right-0 mr-1 mt-1">
           <button
             type="button"
             onClick={handleCancelEdits}
-            className="text-red-400 font-bold"
+            className="cursor-pointer flex items-center justify-center border border-stone-800 dark:border-white rounded-sm p-1"
           >
-            <X size={14} />
+            <ChevronLeft size={14} />
           </button>
           <button
             type="button"
@@ -266,7 +267,7 @@ const Edit = ({
                     fontSize: '12px',
                     borderRadius: '.250rem',
                     boxShadow: 'none',
-                    zIndex: 40,
+                    zIndex: 10,
                     position: 'relative',
                     height: 33,
                     minHeight: 33,
@@ -308,7 +309,7 @@ const Edit = ({
                   <Tooltip
                     content={
                       <p className="text-xs text-stone-800 text-left">
-                        Connect a payout option before sending invoices
+                        You need to connect a bank account to send invoices
                       </p>
                     }
                     style="light"

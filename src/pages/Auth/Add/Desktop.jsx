@@ -15,7 +15,6 @@ const Desktop = () => {
         <div className="w-full bg-white border rounded-md border-gray-200 pt-56 pb-56 h-96 flex flex-col gap-4 items-center justify-center">
           <div className="w-60 flex justify-start">
             <p className="text-sm text-stone-800 text-left flex items-center gap-1">
-              <BackBtn direction={'left'} />
               Create something new..
             </p>
           </div>

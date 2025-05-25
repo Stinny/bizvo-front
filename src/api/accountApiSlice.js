@@ -6,7 +6,7 @@ export const accountApiSlice = apiSlice.injectEndpoints({
       query: () => `/accounts/get`,
     }),
     getStatsTemp: builder.query({
-      query: () => `/accounts/get/stats`,
+      query: ({ filter }) => `/accounts/get/stats?filter=${filter}`,
     }),
     setup: builder.mutation({
       query: (formData) => ({

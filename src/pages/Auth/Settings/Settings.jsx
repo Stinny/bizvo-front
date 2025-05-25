@@ -14,6 +14,8 @@ import {
   Book,
   ChevronLeft,
   CornerUpLeft,
+  CornerUpRight,
+  Layers,
   Lock,
   Trash,
   X,
@@ -22,8 +24,8 @@ import { Spin } from 'antd';
 import Randomstring from 'randomstring';
 import { useChangePswdMutation } from '../../../api/authApiSlice';
 import Modal from 'react-modal';
-import { de } from 'date-fns/locale';
 import { FcGoogle } from 'react-icons/fc';
+import useHandleLogoutUser from '../../../utils/logout';
 
 const customStyles = {
   content: {
@@ -55,6 +57,7 @@ const Settings = () => {
 
   const [del, setDel] = useState(false);
   const [pswd, setPswd] = useState(false);
+  const [error, setError] = useState('');
 
   //changing pswd state
   const [oldPswd, setOldPswd] = useState('');
@@ -64,6 +67,7 @@ const Settings = () => {
   const [deleteAccount, { isLoading: deletingAcc }] =
     useDeleteAccountMutation();
   const [changePswd, { isLoading: changingPswd }] = useChangePswdMutation();
+  const logout = useHandleLogoutUser();
 
   //delete form state
   const [key, setKey] = useState('');
@@ -195,7 +199,7 @@ const Settings = () => {
                   {deleteKey === key.trim() ? (
                     <button
                       type="button"
-                      className="border border-red-400 text-red-400 rounded-sm p-1 text-xs"
+                      className="border border-red-400 text-red-400 rounded-sm p-1 text-xs cursor-pointer"
                       onClick={handleDeleteAcc}
                     >
                       Delete
@@ -222,7 +226,7 @@ const Settings = () => {
         >
           {changingPswd ? (
             <div className="w-80 h-52 flex items-center justify-center">
-              <Spinner />
+              <Spin size="small" />
             </div>
           ) : (
             <div className="w-72 flex flex-col gap-2 items-start">
@@ -240,7 +244,7 @@ const Settings = () => {
                 />
               </div>
               {errorPswd ? (
-                <div className="w-full flex items-center justify-start gap-2 border border-gray-200 rounded-md p-2">
+                <div className="w-full flex items-center justify-start gap-2 border border-gray-200 rounded-sm p-2">
                   <AlertOctagon size={16} className="text-red-400" />
                   <p className="text-stone-800 text-xs">{errorPswd}</p>
                 </div>
@@ -250,12 +254,11 @@ const Settings = () => {
               {userInfo?.googleAuth ? (
                 <div className="w-full flex flex-col gap-1 items-center justify-center border border-gray-200 rounded-sm p-4">
                   <div className="flex items-center justify-center gap-2">
-                    <p className="text-sm text-stone-800">Authenticated with</p>{' '}
                     <FcGoogle className="text-lg" />
                   </div>
                   <p className="text-xs text-stone-800 text-center">
-                    Changing password is unavailable when authenticated using a
-                    Google account
+                    Your password is managed by Google. Changes can't be made
+                    here.
                   </p>
                 </div>
               ) : (
@@ -266,7 +269,7 @@ const Settings = () => {
                       <input
                         type="password"
                         placeholder="Old"
-                        className="text-xs bg-gray-50 border border-gray-200 focus:border-gray-200 focus:bg-gray-200 focus:outline-none text-stone-800 focus:ring-0 w-full rounded-md p-2"
+                        className="text-xs bg-white border border-gray-200 hover:bg-gray-50 focus:bg-gray-50 outline-none text-stone-800 w-full rounded-sm p-2"
                         onChange={(e) => setOldPswd(e.target.value)}
                         value={oldPswd}
                       />
@@ -276,7 +279,7 @@ const Settings = () => {
                       <input
                         type="password"
                         placeholder="New"
-                        className="text-xs bg-gray-50 border border-gray-200 focus:border-gray-200 focus:bg-gray-200 focus:outline-none text-stone-800 focus:ring-0 w-full rounded-md p-2"
+                        className="text-xs bg-white border border-gray-200 hover:bg-gray-50 focus:bg-gray-50 focus:outline-none text-stone-800 w-full rounded-sm p-2"
                         onChange={(e) => setNewPswd(e.target.value)}
                         value={newPswd}
                       />
@@ -286,7 +289,7 @@ const Settings = () => {
                     <div className="flex items-center gap-2">
                       <button
                         type="button"
-                        className=" text-stone-800 rounded-md border border-stone-800 p-1 text-xs"
+                        className=" text-stone-800 rounded-sm border border-stone-800 p-1 text-xs cursor-pointer"
                         onClick={handleChangePswd}
                       >
                         Change
@@ -298,24 +301,61 @@ const Settings = () => {
             </div>
           )}
         </Modal>
-        <div className="bg-white dark:bg-neutral-800 border border-gray-200 rounded-sm flex flex-col items-start p-2 w-2/12">
-          <div className="flex flex-col gap-1 items-start w-full">
+        <div className="bg-white dark:bg-neutral-800 flex flex-col items-start w-full gap-2">
+          <div className="flex items-center justify-between w-full border border-gray-200 rounded-sm p-2">
+            <Link to="/settings">
+              <p
+                className="font-bold text-stone-800 dark:text-white text-sm flex items-center"
+                style={{ fontFamily: 'Geist Mono' }}
+              >
+                <Layers size={16} className="font-black dark:text-white mr-1" />
+                Bizvo|
+                <span
+                  className="text-xs font-normal"
+                  style={{ fontFamily: 'Geist' }}
+                >
+                  Settings
+                </span>
+              </p>
+            </Link>
+
+            {!userInfo?.bankAdded && !userInfo?.stripeOnboard ? (
+              <div className="text-left flex items-center gap-1 p-1 border border-gray-200 rounded-sm">
+                <AlertOctagon size={12} className="text-red-400" />
+                <p
+                  className="text-stone-800 text-left"
+                  style={{ fontSize: '11px' }}
+                >
+                  Bank account needed
+                </p>
+              </div>
+            ) : (
+              <div className="w-24"></div>
+            )}
             <Link
               to="/dashboard"
-              className="w-full flex items-center gap-1 p-1 border border-white dark:border-neutral-800 rounded-sm hover:border-stone-800 dark:hover:border-white"
+              className="flex items-center gap-1 border border-white dark:border-neutral-800 dark:hover:border-white"
             >
-              <CornerUpLeft
-                size={12}
-                className="text-stone-800 dark:text-white"
-              />
               <p className="text-xs text-stone-800 dark:text-white">
                 Dashboard
               </p>
+              <CornerUpRight
+                size={12}
+                className="text-stone-800 dark:text-white"
+              />
             </Link>
+          </div>
+          <Desktop
+            refetch={refetch}
+            currentUser={userInfo}
+            activeTabIndex={activeTabIndex}
+            setActiveTabIndex={setActiveTabIndex}
+          />
+          <div className="w-full flex items-center justify-end gap-3">
             <button
               type="button"
               onClick={() => setPswd(!pswd)}
-              className="w-full flex items-center gap-1 p-1 text-xs border border-white dark:border-neutral-800 rounded-sm hover:border-stone-800 dark:hover:border-white"
+              className="flex items-center gap-1 text-xs border border-white dark:border-neutral-800 dark:hover:border-white cursor-pointer"
             >
               <Lock size={12} className="text-stone-800 dark:text-white" />
               Password
@@ -323,50 +363,20 @@ const Settings = () => {
             <button
               type="button"
               onClick={() => setDel(!del)}
-              className="w-full flex items-center gap-1 p-1 text-xs border border-white dark:border-neutral-800 rounded-sm hover:border-stone-800 dark:hover:border-white"
+              className="flex items-center gap-1 text-xs border border-white dark:border-neutral-800 dark:hover:border-white cursor-pointer"
             >
               <Trash size={12} className="text-red-400 dark:text-white" />
-              Delete
+              Delete Account
             </button>
-
-            {!userInfo?.bankAdded && !userInfo?.stripeOnboard ? (
-              <div className="w-full text-left flex flex-col items-start gap-1 p-1 border border-gray-200 rounded-sm">
-                <AlertOctagon size={12} className="text-red-400" />
-                <p
-                  className="text-stone-800 text-left"
-                  style={{ fontSize: '11px' }}
-                >
-                  Connect a bank in{' '}
-                  <span>
-                    <Link
-                      to="/settings"
-                      state={{ index: 1 }}
-                      className="font-bold text-stone-800"
-                    >
-                      payouts
-                    </Link>{' '}
-                    before sending invoices.
-                  </span>
-                </p>
-              </div>
-            ) : (
-              ''
-            )}
           </div>
         </div>
-        <Desktop
-          refetch={refetch}
-          currentUser={userInfo}
-          activeTabIndex={activeTabIndex}
-          setActiveTabIndex={setActiveTabIndex}
-        />
       </>
     );
   }
 
   return (
-    <div className="mx-auto max-w-3xl flex flex-col items-start gap-2 h-fit">
-      <Navbar />
+    <div className="mx-auto max-w-2xl flex flex-col items-start gap-2 h-fit">
+      {/* <Navbar /> */}
       <div className="flex items-start gap-2 w-full">{content}</div>
     </div>
   );
