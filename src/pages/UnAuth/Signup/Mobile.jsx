@@ -4,6 +4,7 @@ import { AlertOctagon, Layers } from 'react-feather';
 import { Link } from 'react-router-dom';
 import BackBtn from '../../../components/BackBtn';
 import SignupGBtn from '../../../components/Auth/SignupGBtn';
+import { Spin } from 'antd';
 
 const Mobile = ({
   email,
@@ -18,25 +19,25 @@ const Mobile = ({
   const [googling, setGoogling] = useState(false);
 
   return (
-    <div className="flex flex-col w-full mx-auto p-4">
+    <div className="flex flex-col w-full mx-auto p-2">
       {isLoading || googling ? (
-        <div className="w-full h-full flex items-center justify-center">
-          <Spinner />
+        <div className="w-full h-screen flex items-center justify-center">
+          <Spin size="small" />
         </div>
       ) : (
-        <div className="w-full flex flex-col items-start justify-end mx-auto gap-4 mt-10">
+        <div className="w-full flex flex-col items-start justify-end mx-auto gap-6 mt-8">
           <div className="w-full flex items-center justify-center">
             <Link to="/">
               <p
-                className="font-bold text-stone-800 dark:text-white text-md flex items-center gap-1"
+                className="font-bold text-stone-800 dark:text-white text-sm flex items-center gap-1"
                 style={{ fontFamily: 'Geist Mono' }}
               >
-                <Layers size={18} className="font-black dark:text-white" />
+                <Layers size={16} className="font-black dark:text-white" />
                 Bizvo
               </p>
             </Link>
           </div>
-          <div className="mx-auto flex flex-col w-full gap-4 p-2 border border-gray-200 bg-white rounded-md">
+          <div className="mx-auto flex flex-col w-full gap-4 p-2 border border-gray-200 bg-white rounded-sm">
             <div className="flex gap-1 w-full">
               <BackBtn direction={'left'} home={true} />
               <div className="flex flex-col items-start w-full">
@@ -71,21 +72,21 @@ const Mobile = ({
               <input
                 type="email"
                 placeholder="Email"
-                className="border text-xs border-gray-200 bg-gray-50 focus:border-gray-200 focus:outline-none text-stone-800 hover:bg-gray-200 hover:border-gray-200 focus:bg-gray-200 focus:ring-0 w-full rounded-md p-2"
+                className="border text-xs border-gray-200 bg-white outline-none text-stone-800 hover:bg-gray-50 focus:bg-gray-50 w-full rounded-sm p-2"
                 onChange={(e) => setEmail(e.target.value)}
                 value={email}
               />
               <input
                 type="password"
                 placeholder="Password"
-                className="border text-xs border-gray-200 bg-gray-50 focus:border-gray-200 focus:outline-none text-stone-800 hover:bg-gray-200 hover:border-gray-200 focus:bg-gray-200 focus:ring-0 w-full rounded-md p-2"
+                className="border text-xs border-gray-200 bg-white outline-none text-stone-800 hover:bg-gray-50 focus:bg-gray-50 w-full rounded-sm p-2"
                 onChange={(e) => setPass(e.target.value)}
                 value={pass}
               />
             </form>
             <button
               type="button"
-              className="p-2 w-full border border-stone-800 text-stone-800 rounded-md text-sm"
+              className="p-2 w-full border border-stone-800 text-stone-800 rounded-sm text-xs"
               onClick={handleSignup}
             >
               Signup

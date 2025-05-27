@@ -63,7 +63,10 @@ const Navbar = () => {
   let content;
 
   content = currentUser ? (
-    <nav className="w-full bg-transparent flex flex-col relative overflow-visible">
+    <nav className="w-full bg-transparent flex flex-col relative overflow-visible mt-2">
+      <div className="w-full mx-auto flex justify-center items-center h-6 mb-1">
+        <Toast />
+      </div>
       <div className="max-w-3xl bg-white dark:bg-neutral-800 flex justify-between items-center border border-gray-200 dark:border-white rounded-sm p-2">
         <Link to="/dashboard">
           <p
@@ -75,7 +78,6 @@ const Navbar = () => {
           </p>
         </Link>
 
-        {/* <Toast /> */}
         <Sidenav />
 
         <div className="flex items-center justify-end" ref={avatarRef}>

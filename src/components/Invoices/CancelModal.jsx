@@ -113,7 +113,7 @@ const CancelModal = ({ open, setOpen, invoId, refetch }) => {
                 type="button"
                 disabled={isLoading}
                 onClick={handleCancelInvo}
-                className=" text-stone-800 rounded-sm border border-stone-800 p-1 text-xs"
+                className=" text-stone-800 rounded-sm border border-stone-800 p-1 text-xs cursor-pointer"
               >
                 Cancel
               </button>

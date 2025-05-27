@@ -4,6 +4,7 @@ import { AlertOctagon, Layers } from 'react-feather';
 import { Link } from 'react-router-dom';
 import BackBtn from '../../../components/BackBtn';
 import LoginGBtn from '../../../components/Auth/LoginGBtn';
+import { Spin } from 'antd';
 
 const Mobile = ({
   email,
@@ -18,13 +19,13 @@ const Mobile = ({
   const [googling, setGoogling] = useState(false);
 
   return (
-    <div className="flex flex-col w-full mx-auto p-4">
+    <div className="flex flex-col w-full mx-auto p-2">
       {isLoading || googling ? (
-        <div className="w-full h-full flex items-center justify-center">
-          <Spinner />
+        <div className="w-full h-screen flex items-center justify-center">
+          <Spin size="small" />
         </div>
       ) : (
-        <div className="w-full flex flex-col items-start mx-auto gap-4 mt-10">
+        <div className="w-full flex flex-col items-start mx-auto gap-6 mt-8">
           <div className="w-full flex items-center justify-center">
             <Link to="/">
               <p
@@ -71,7 +72,7 @@ const Mobile = ({
               <input
                 type="email"
                 placeholder="Email"
-                className="border text-xs border-gray-200 bg-gray-50 focus:border-gray-200 focus:outline-none text-stone-800 hover:bg-gray-200 hover:border-gray-200 focus:bg-gray-200 focus:ring-0 w-full rounded-md p-2"
+                className="border text-xs border-gray-200 bg-white outline-none text-stone-800 hover:bg-gray-50 focus:bg-gray-50 w-full rounded-sm p-2"
                 onChange={(e) => setEmail(e.target.value)}
                 value={email}
               />
@@ -79,7 +80,7 @@ const Mobile = ({
                 <input
                   type="password"
                   placeholder="Password"
-                  className="border text-xs border-gray-200 bg-gray-50 focus:border-gray-200 focus:outline-none text-stone-800 hover:bg-gray-200 hover:border-gray-200 focus:bg-gray-200 focus:ring-0 w-full rounded-md p-2"
+                  className="border text-xs border-gray-200 bg-white outline-none text-stone-800 hover:bg-gray-50 focus:bg-gray-50 w-full rounded-sm p-2"
                   onChange={(e) => setPass(e.target.value)}
                   value={pass}
                 />
@@ -93,7 +94,7 @@ const Mobile = ({
                   </Link>
                 </div>
               </div>
-              <button className="p-2 w-full border border-stone-800 text-stone-800 rounded-md text-sm">
+              <button className="p-2 w-full border border-stone-800 text-stone-800 rounded-sm text-xs">
                 Login
               </button>
             </form>

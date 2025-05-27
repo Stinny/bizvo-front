@@ -12,6 +12,7 @@ import { Tooltip } from 'flowbite-react';
 import BackBtn from '../../../../components/BackBtn';
 import { Spin } from 'antd';
 import Modal from 'react-modal';
+import Delete from './Delete';
 
 const customStyles = {
   content: {
@@ -122,51 +123,7 @@ const Desktop = ({ customer, refetch }) => {
     />
   ) : (
     <div className="w-full bg-white border rounded-sm border-gray-200 p-2 pb-6 flex flex-col gap-4 items-center justify-center">
-      <Modal
-        isOpen={del}
-        onRequestClose={() => setDel(false)}
-        style={customStyles}
-        contentLabel="Cust Delete modal"
-      >
-        {false ? (
-          <div className="w-80 h-52 flex items-center justify-center">
-            <Spin size="small" />
-          </div>
-        ) : (
-          <div className="w-80 flex flex-col gap-2 items-start">
-            <div className="w-full flex items-start justify-between">
-              <div className="flex flex-col items-start">
-                <p className="text-sm text-stone-800">Delete Customer</p>
-                <p className="text-xs text-stone-800">
-                  Are you sure you want to delete this customer?
-                </p>
-              </div>
-              <X
-                size={16}
-                className="text-red-400 hover:cursor-pointer"
-                onClick={() => setDel(false)}
-              />
-            </div>
-            <div className="flex flex-col items-start gap-1 w-full">
-              <p className="text-xs text-stone-800">{customer?.name}</p>
-              <p className="text-xs text-stone-800">{customer?.email}</p>
-              <p className="text-xs text-stone-800">
-                {customer?.country?.label}
-              </p>
-            </div>
-
-            <div className="w-full flex items-center justify-end">
-              <button
-                type="button"
-                className="border border-red-400 text-red-400 rounded-sm p-1 text-xs cursor-pointer"
-                // onClick={handleDeleteAcc}
-              >
-                Delete
-              </button>
-            </div>
-          </div>
-        )}
-      </Modal>
+      <Delete customer={customer} del={del} setDel={setDel} refetch={refetch} />
       <div className="w-full flex items-center justify-between relative">
         <div className="flex gap-1">
           <BackBtn direction={'left'} />

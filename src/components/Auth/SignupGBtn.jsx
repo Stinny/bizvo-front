@@ -69,7 +69,7 @@ const SignupGBtn = ({ setError, setGoogling }) => {
     <button
       type="button"
       onClick={signupWithGoogle}
-      className="p-2 w-full border border-gray-200 bg-white hover:bg-gray-50 text-stone-800 rounded-sm text-xs flex items-center justify-center gap-1"
+      className="p-2 w-full border border-gray-200 bg-white hover:bg-gray-50 text-stone-800 rounded-sm text-xs flex items-center justify-center gap-1 cursor-pointer"
     >
       <FcGoogle className="text-lg" /> Google
     </button>

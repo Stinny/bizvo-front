@@ -56,12 +56,8 @@ const Invalid = ({ invoId, token, exp, customer, invoice }) => {
         <div className="w-full bg-white border border-gray-200 rounded-md flex flex-col gap-4 items-center justify-center p-2">
           <div className="w-full flex justify-between items-start">
             <div className="flex flex-col items-start">
-              <p className="text-stone-800 text-sm">
-                {invoice?.type === 'recurring'
-                  ? 'Recurring Invoice'
-                  : 'Invoice'}
-              </p>
-              <p className="text-stone-800 text-xs">#{invoId}</p>
+              <p className="text-stone-800 text-sm">Invoice</p>
+              <p className="text-stone-800 text-xs">{invoId}</p>
             </div>
             <InvoStatus status={invoice?.status} />
           </div>

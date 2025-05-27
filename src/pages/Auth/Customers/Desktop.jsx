@@ -122,7 +122,7 @@ const Desktop = ({ customers }) => {
       )}
     </div>
   ) : (
-    <div className="w-10/12 bg-white border rounded-md border-gray-200 p-2 h-96 flex items-center justify-center">
+    <div className="w-full bg-white border rounded-md border-gray-200 p-2 h-96 flex items-center justify-center">
       <div className="flex flex-col items-center text-center">
         <Users size={16} className="text-stone-800 mb-2" />
         <p className="text-sm text-stone-800">No Customers</p>
@@ -131,7 +131,7 @@ const Desktop = ({ customers }) => {
         </p>
         <Link
           to="/dashboard/customers/add"
-          className="flex items-center justify-center gap-1 border border-stone-800 rounded-md p-0.5 pl-2 pr-2 mt-2"
+          className="flex items-center justify-center gap-1 border border-stone-800 rounded-sm p-0.5 pl-2 pr-2 mt-2"
         >
           <p className="text-stone-800" style={{ fontSize: '11px' }}>
             New +

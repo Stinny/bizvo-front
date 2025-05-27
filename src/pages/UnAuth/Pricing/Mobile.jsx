@@ -13,45 +13,46 @@ import {
 import { BsStripe } from 'react-icons/bs';
 import { Timeline } from 'antd';
 import BackBtn from '../../../components/BackBtn';
+import { RiBankLine } from 'react-icons/ri';
 
 const Mobile = () => {
   return (
-    <div className="flex flex-col w-full mx-auto p-4">
-      <div className="w-full flex flex-col items-start mx-auto">
+    <div className="flex flex-col w-full mx-auto p-2 mt-8">
+      <div className="w-full flex flex-col items-start mx-auto gap-2">
         <div className="w-full flex items-center justify-center">
-          <Link to="/" className="h-full flex gap-1 items-center">
-            <Layers size={18} className="font-black" />
+          <Link to="/">
             <p
-              className="font-bold text-stone-800 text-md"
-              style={{ fontFamily: 'Space Mono, monospace' }}
+              className="font-bold text-stone-800 dark:text-white text-sm flex items-center gap-1"
+              style={{ fontFamily: 'Geist Mono' }}
             >
+              <Layers size={16} className="font-black dark:text-white" />
               Bizvo
             </p>
           </Link>
         </div>
-        <div className="w-full flex flex-col gap-4 p-2 border border-gray-200 rounded-md mt-4">
+        <div className="w-full flex flex-col gap-4 p-2 border border-gray-200 rounded-sm mt-4">
           <div className="flex gap-1 w-full">
             <BackBtn direction={'left'} />
             <div className="mx-auto flex flex-col items-start w-full">
               <p className="text-md text-stone-800 font-semibold">Pricing</p>
-              <p className="text-xs text-stone-700 text-left">
+              <p className="text-xs text-stone-800 text-left">
                 No monthly fees or card needed
               </p>
             </div>
           </div>
           <div className="w-full flex items-center gap-2">
-            <div className="p-2 rounded-md border border-gray-200 flex flex-col items-center justify-center">
+            <div className="p-2 rounded-sm border border-gray-200 flex flex-col items-center justify-center">
               <p className="text-lg text-stone-800 font-semibold">2%</p>
             </div>
             <div className="flex flex-col text-left items-start">
               <p className="text-sm text-stone-800">Transaction Fee</p>
-              <p className="text-xs text-stone-700">
+              <p className="text-xs text-stone-800">
                 Only taken when an invoivce is paid. Helps us cover expenses and
                 be paid.
               </p>
             </div>
           </div>
-          <div className="p-2 rounded-md border border-gray-200 flex flex-col items-center justify-center w-full">
+          <div className="p-2 rounded-sm border border-gray-200 flex flex-col items-center justify-center w-full">
             <p className="text-xs text-stone-800 flex items-center gap-1">
               additional fee of 2.9% + 30¢ by{' '}
               <a href="https://stripe.com/pricing" target="_blank">
@@ -60,15 +61,7 @@ const Mobile = () => {
             </p>
           </div>
         </div>
-        <div className="w-full flex items-center justify-end mt-1">
-          <Link
-            to="/docs"
-            state={{ view: { value: 'payments', label: 'Payments' } }}
-            className="flex items-center gap-1 text-stone-800 text-xs"
-          >
-            See docs <ChevronRight size={14} />
-          </Link>
-        </div>
+
         <div className="flex flex-col w-full items-start p-2">
           <p className="text-xs text-stone-800 mb-4">Ex. Transaction</p>
 
@@ -124,7 +117,7 @@ const Mobile = () => {
                 ),
               },
               {
-                dot: <DollarSign size={14} className="text-stone-800" />,
+                dot: <RiBankLine className="text-stone-800" />,
                 position: 'left',
                 children: (
                   <p className="text-md text-stone-800">

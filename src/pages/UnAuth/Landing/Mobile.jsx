@@ -7,38 +7,44 @@ import Subscribe from '../../../components/Landing/Subscribe';
 import Footer from '../../../components/Footer/Footer';
 import Why from '../../../components/Landing/Why';
 import DiffPays from '../../../components/Landing/DiffPays';
+import { Layers } from 'react-feather';
 
 const Mobile = ({ badges, currentBadge }) => {
   return (
-    <div className="flex flex-col gap-10 w-full p-4 mx-auto relative">
-      <Navbar />
-      <div className="mx-auto flex flex-col gap-8">
-        <div className="w-full flex flex-col gap-3 items-start">
-          <p className="text-4xl text-left text-stone-800 font-bold">
-            Customer Payments Made Easy.
-          </p>
-          <p className="text-xl text-stone-800 text-left">
-            Stop playing accountant. Collect payments the easy way and have the
-            hard stuff done for you.
-          </p>
-
-          <Link
-            to="/signup"
-            className="p-2 border border-stone-800 text-stone-800 rounded-md text-xs font-medium flex items-center justify-center"
-          >
-            Start Collecting
-          </Link>
-        </div>
-        <div className="w-full relative">
-          <img src={img} className="w-full" />
-          <div className="absolute left-6 top-1/2 transform -translate-y-1/2 bg-stone-800 text-white rounded-md text-xs font-medium p-1">
-            {badges[currentBadge]}
-          </div>
-        </div>
+    <div className="flex flex-col gap-6 w-full items-center justify-center mt-8 p-2">
+      <Link to="/">
+        <p
+          className="font-bold text-stone-800 dark:text-white text-sm flex items-center gap-1"
+          style={{ fontFamily: 'Geist Mono' }}
+        >
+          <Layers size={16} className="font-black dark:text-white" />
+          Bizvo
+        </p>
+      </Link>
+      <div className="flex flex-col items-center justify-center gap-1">
+        <p className="text-3xl text-stone-800 font-bold text-center">
+          One-Time Payments Made Easy.
+        </p>
+        <p className="text-sm text-stone-800 text-center">
+          Tax-compliant one-time payments for service businesses. Collect
+          payments without the hassle — easy for you and your customers.
+        </p>
+      </div>
+      <div className="flex items-center gap-1">
+        <Link
+          to="/login"
+          className="p-2 bg-stone-800 border border-stone-800 text-white rounded-sm text-xs font-medium flex items-center justify-center"
+        >
+          Login
+        </Link>
+        <Link
+          to="/signup"
+          className="p-2 border border-stone-800 text-stone-800 rounded-sm text-xs font-medium flex items-center justify-center"
+        >
+          Start Collecting
+        </Link>
       </div>
       <Features />
-      <Why />
-      <DiffPays />
       <Subscribe />
       <Footer />
     </div>

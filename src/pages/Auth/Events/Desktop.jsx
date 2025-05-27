@@ -175,12 +175,12 @@ const Desktop = ({
       )}
     </div>
   ) : (
-    <div className="w-10/12 bg-white border rounded-sm border-gray-200 p-2 h-96 flex items-center justify-center">
+    <div className="w-full bg-white border rounded-sm border-gray-200 p-2 h-96 flex items-center justify-center">
       <div className="flex flex-col items-center text-center">
         <Clock size={16} className="text-stone-800 mb-2" />
         <p className="text-sm text-stone-800">No events</p>
         <p className="text-xs text-stone-800 w-72">
-          View events related to invoices
+          View events related to your account
         </p>
       </div>
     </div>

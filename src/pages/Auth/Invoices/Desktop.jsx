@@ -226,7 +226,7 @@ const Desktop = ({ invoices }) => {
       )}
     </div>
   ) : (
-    <div className="w-10/12 bg-white border rounded-md border-gray-200 p-2 h-96 flex items-center justify-center">
+    <div className="w-full bg-white border rounded-md border-gray-200 p-2 h-96 flex items-center justify-center">
       <div className="flex flex-col items-center text-center">
         <FileText size={16} className="text-stone-800 mb-2" />
         <p className="text-sm text-stone-800">No Invoices</p>

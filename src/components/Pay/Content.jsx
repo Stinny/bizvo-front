@@ -44,9 +44,9 @@ const Content = ({ invoice, biz, trx, customer }) => {
 
   let trxItems = [
     {
-      dot: <Send size={14} className="text-stone-800" />,
+      dot: <Send size={12} className="text-stone-800" />,
       children: (
-        <p className="text-sm text-stone-800">
+        <p className="text-xs text-stone-800 pt-1">
           Invoiced for{' '}
           <span className="font-medium">
             $
@@ -59,9 +59,9 @@ const Content = ({ invoice, biz, trx, customer }) => {
       ),
     },
     {
-      dot: <Percent size={14} className="text-stone-800" />,
+      dot: <Percent size={12} className="text-stone-800" />,
       children: (
-        <p className="text-sm text-stone-800">
+        <p className="text-xs text-stone-800 pt-1">
           Added tax{' '}
           <span className="font-medium">
             ${(trx?.tax?.amount / 100).toFixed(2)}
@@ -73,9 +73,9 @@ const Content = ({ invoice, biz, trx, customer }) => {
 
   if (trx?.done) {
     trxItems.push({
-      dot: <CreditCard size={14} className="text-stone-800" />,
+      dot: <CreditCard size={12} className="text-stone-800" />,
       children: (
-        <p className="text-sm text-stone-800">
+        <p className="text-xs text-stone-800 pt-1">
           Total paid{' '}
           <span className="font-medium">
             $
@@ -88,9 +88,9 @@ const Content = ({ invoice, biz, trx, customer }) => {
       ),
     });
     trxItems.push({
-      dot: <CheckCircle size={14} className="text-stone-800" />,
+      dot: <CheckCircle size={12} className="text-stone-800" />,
       children: (
-        <p className="text-sm text-stone-800">
+        <p className="text-xs text-stone-800 pt-1">
           Paid on{' '}
           <span className="font-medium">
             {moment(trx?.doneOn).format('MMMM Do, yyyy')}
@@ -100,9 +100,9 @@ const Content = ({ invoice, biz, trx, customer }) => {
     });
   } else if (trx?.void) {
     trxItems.push({
-      dot: <CreditCard size={14} className="text-stone-800" />,
+      dot: <CreditCard size={12} className="text-stone-800" />,
       children: (
-        <p className="text-sm text-stone-800">
+        <p className="text-xs text-stone-800 pt-1">
           Total due{' '}
           <span className="font-medium">
             $
@@ -115,14 +115,16 @@ const Content = ({ invoice, biz, trx, customer }) => {
       ),
     });
     trxItems.push({
-      dot: <XSquare size={14} className="text-red-400" />,
-      children: <p className="text-sm text-stone-800">Invoice was canceled</p>,
+      dot: <XSquare size={12} className="text-red-400" />,
+      children: (
+        <p className="text-xs text-stone-800 pt-1">Invoice was canceled</p>
+      ),
     });
   } else {
     trxItems.push({
-      dot: <CreditCard size={14} className="text-stone-800" />,
+      dot: <CreditCard size={12} className="text-stone-800" />,
       children: (
-        <p className="text-sm text-stone-800">
+        <p className="text-xs text-stone-800 pt-1">
           Total due{' '}
           <span className="font-medium">
             $
@@ -136,7 +138,9 @@ const Content = ({ invoice, biz, trx, customer }) => {
     });
     trxItems.push({
       dot: <Badge dot={true} status="processing" color="#000" />,
-      children: <p className="text-sm text-stone-800">Waiting for payment</p>,
+      children: (
+        <p className="text-xs text-stone-800 pt-1">Waiting for payment</p>
+      ),
     });
   }
 

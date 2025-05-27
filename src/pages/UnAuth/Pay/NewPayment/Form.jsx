@@ -141,6 +141,14 @@ const Form = ({
   return (
     <div className="w-full flex flex-col gap-2 items-start">
       <div className="w-full cursor-pointer flex flex-col flex-grow border border-gray-200 rounded-sm p-2">
+        {error ? (
+          <div className="w-full flex items-center justify-start gap-2 border border-gray-200 rounded-sm p-2">
+            <AlertOctagon size={16} className="text-red-400" />
+            <p className="text-stone-800 text-xs">{error}</p>
+          </div>
+        ) : (
+          ''
+        )}
         <div
           className={`transition-[max-height] duration-300 ease-in-out overflow-hidden w-full ${
             view === 'new' ? 'min-h-32' : 'max-h-0'
@@ -153,7 +161,7 @@ const Form = ({
           />
 
           {paying ? (
-            <div className="w-full p-2 flex items-center justify-center">
+            <div className="w-full p-2 flex items-center justify-center h-10 mt-1">
               <Spin size="small" />
             </div>
           ) : (

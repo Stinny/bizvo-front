@@ -26,6 +26,7 @@ import { useChangePswdMutation } from '../../../api/authApiSlice';
 import Modal from 'react-modal';
 import { FcGoogle } from 'react-icons/fc';
 import useHandleLogoutUser from '../../../utils/logout';
+import Toast from '../../../components/Toast';
 
 const customStyles = {
   content: {
@@ -302,6 +303,9 @@ const Settings = () => {
           )}
         </Modal>
         <div className="bg-white dark:bg-neutral-800 flex flex-col items-start w-full gap-2">
+          <div className="w-full mx-auto flex justify-center items-center h-6">
+            <Toast />
+          </div>
           <div className="flex items-center justify-between w-full border border-gray-200 rounded-sm p-2">
             <Link to="/settings">
               <p

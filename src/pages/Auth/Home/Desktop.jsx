@@ -169,7 +169,7 @@ const Desktop = ({ data, currentUser, filter, setFilter }) => {
             <div className="flex flex-col items-start gap-3">
               <div className="flex items-center gap-1">
                 <FileText
-                  size={14}
+                  size={12}
                   className="text-stone-800 dark:text-white"
                 />
                 <p className="text-stone-800 dark:text-white text-sm">
@@ -180,7 +180,7 @@ const Desktop = ({ data, currentUser, filter, setFilter }) => {
                 </p>
               </div>
               <div className="flex items-center gap-1">
-                <Send size={14} className="text-stone-800 dark:text-white" />
+                <Send size={12} className="text-stone-800 dark:text-white" />
                 <p className="text-stone-800 dark:text-white text-sm">
                   {parseFloat(data?.invoSent)?.toLocaleString(undefined, {
                     minimumFractionDigits: 0,
@@ -190,7 +190,7 @@ const Desktop = ({ data, currentUser, filter, setFilter }) => {
               </div>
               <div className="flex items-center gap-1">
                 <CreditCard
-                  size={14}
+                  size={12}
                   className="text-stone-800 dark:text-white"
                 />
                 <p className="text-stone-800 text-sm dark:text-white">

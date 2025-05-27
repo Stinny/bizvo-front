@@ -47,12 +47,15 @@ const Desktop = ({
     try {
       const updateReq = await updateInvoForPay({ invoiceId: invoId }).unwrap();
 
-      if (updateReq?.msg === 'Tax added') {
+      if (updateReq?.valid) {
         //need to do something with updateReq.invoice
         setUpdatedInvo(updateReq?.invoice);
         setUpdatedTrx(updateReq?.trx);
         setUpdatingInvo(false);
         setReadyForPayment(true);
+      } else {
+        refetch();
+        setUpdatingInvo(false);
       }
     } catch (err) {
       console.log(err);
@@ -103,7 +106,7 @@ const Desktop = ({
         ) : (
           ''
         )}
-        <div className="w-full bg-white border border-gray-200 rounded-sm flex flex-col items-start gap-6 p-2">
+        <div className="w-full bg-white border border-gray-200 rounded-sm flex flex-col items-start gap-4 p-2">
           <Status invoice={data?.invoice} />
           {view === 'details' ? (
             <>

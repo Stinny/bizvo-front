@@ -43,23 +43,15 @@ const Payment = ({
 
   return (
     <div className="w-full flex flex-col items-start gap-4">
-      {error ? (
-        <div className="w-full flex items-center justify-start gap-2 border border-gray-200 rounded-sm p-2">
-          <AlertOctagon size={16} className="text-red-400" />
-          <p className="text-stone-800 text-xs">{error}</p>
-        </div>
-      ) : (
-        ''
-      )}
       <Title invoice={invoice} />
       <div className="w-full pl-1">
         <Timeline
           className="text-left"
           items={[
             {
-              dot: <Send size={14} className="text-stone-800" />,
+              dot: <Send size={12} className="text-stone-800" />,
               children: (
-                <p className="text-sm text-stone-800">
+                <p className="text-xs text-stone-800 pt-1">
                   Invoiced for{' '}
                   <span className="font-medium">
                     $
@@ -72,9 +64,9 @@ const Payment = ({
               ),
             },
             {
-              dot: <Percent size={14} className="text-stone-800" />,
+              dot: <Percent size={12} className="text-stone-800" />,
               children: (
-                <p className="text-sm text-stone-800">
+                <p className="text-xs text-stone-800 pt-1">
                   Added tax{' '}
                   <span className="font-medium">
                     $
@@ -87,9 +79,9 @@ const Payment = ({
               ),
             },
             {
-              dot: <CreditCard size={14} className="text-stone-800" />,
+              dot: <CreditCard size={12} className="text-stone-800" />,
               children: (
-                <p className="text-sm text-stone-800">
+                <p className="text-xs text-stone-800 pt-1">
                   Total due{' '}
                   <span className="font-medium">
                     $
@@ -104,7 +96,9 @@ const Payment = ({
             {
               dot: <Badge dot={true} status="processing" color="#000" />,
               children: (
-                <p className="text-sm text-stone-800">Waiting for payment</p>
+                <p className="text-xs text-stone-800 pt-1">
+                  Waiting for payment
+                </p>
               ),
             },
           ]}

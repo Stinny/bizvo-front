@@ -18,15 +18,15 @@ const MobilePlaceholder = ({ currentUser }) => {
   const logout = useHandleLogoutUser();
 
   return (
-    <div className="h-screen w-full p-4 mx-auto flex items-center justify-center">
-      <div className="w-full mx-auto flex flex-col gap-6 items-center justify-center mb-20">
+    <div className="h-screen w-full mx-auto flex items-center justify-center">
+      <div className="w-full mx-auto flex flex-col gap-6 items-center justify-center">
         <div className="w-full flex items-center justify-center">
-          <Link to="/" className="h-full flex gap-1 items-center">
-            <Layers size={20} className="font-black" />
+          <Link to="/">
             <p
-              className="font-bold text-stone-800 text-lg"
-              style={{ fontFamily: 'Space Mono, monospace' }}
+              className="font-bold text-stone-800 dark:text-white text-sm flex items-center gap-1"
+              style={{ fontFamily: 'Geist Mono' }}
             >
+              <Layers size={16} className="font-black dark:text-white" />
               Bizvo
             </p>
           </Link>
@@ -51,7 +51,7 @@ const MobilePlaceholder = ({ currentUser }) => {
         <button
           type="button"
           onClick={() => logout('logout')}
-          className="p-1 bg-white rounded-md text-stone-800 border border-stone-800 flex items-center justify-center gap-1 text-xs"
+          className="p-1 bg-white rounded-sm text-stone-800 border border-stone-800 flex items-center justify-center gap-1 text-xs"
         >
           Logout
           <LogOut size={14} />
