@@ -31,6 +31,7 @@ const App = () => {
     <Router>
       <Routes>
         <Route path="/" element={<NoAuth />}>
+          {/* <Route path="*" element={<NotFound />} /> */}
           <Route index element={<Landing />} />
 
           <Route path="login" element={<Login />} />

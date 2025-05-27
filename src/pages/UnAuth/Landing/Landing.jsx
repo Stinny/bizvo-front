@@ -18,7 +18,7 @@ const Landing = () => {
   return isMobile ? (
     <Mobile />
   ) : (
-    <div className="flex flex-col gap-10 max-w-3xl mx-auto items-center justify-center mt-32">
+    <div className="flex flex-col gap-10 max-w-3xl mx-auto items-center justify-center mt-20">
       <Link to="/">
         <p
           className="font-bold text-stone-800 dark:text-white text-sm flex items-center gap-1"

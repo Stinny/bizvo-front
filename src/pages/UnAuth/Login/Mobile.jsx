@@ -37,7 +37,7 @@ const Mobile = ({
               </p>
             </Link>
           </div>
-          <div className="mx-auto flex flex-col w-full gap-4 p-2 border border-gray-200 bg-white rounded-md">
+          <div className="mx-auto flex flex-col w-full gap-4 p-2 bg-white rounded-md">
             <div className="flex gap-1 w-full">
               <BackBtn direction={'left'} home={true} />
               <div className="flex flex-col items-start w-full">
@@ -76,7 +76,7 @@ const Mobile = ({
                 onChange={(e) => setEmail(e.target.value)}
                 value={email}
               />
-              <div className="flex flex-col items-start w-full">
+              <div className="flex flex-col items-start w-full gap-1">
                 <input
                   type="password"
                   placeholder="Password"

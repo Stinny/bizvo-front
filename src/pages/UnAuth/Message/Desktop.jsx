@@ -27,7 +27,7 @@ const Desktop = ({
   ];
 
   return (
-    <div className="flex flex-col max-w-3xl mx-auto mt-32">
+    <div className="flex flex-col max-w-3xl mx-auto mt-20">
       {isLoading ? (
         <div className="w-full h-52 flex items-center justify-center">
           <Spinner />

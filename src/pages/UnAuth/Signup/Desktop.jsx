@@ -18,7 +18,7 @@ const Desktop = ({
   const [googling, setGoogling] = useState(false);
 
   return (
-    <div className="flex flex-col max-w-3xl mx-auto mt-32">
+    <div className="flex flex-col max-w-3xl mx-auto mt-20">
       {isLoading || googling ? (
         <div className="w-full h-52 flex items-center justify-center">
           <Spin size="small" />

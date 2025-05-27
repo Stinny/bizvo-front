@@ -87,7 +87,7 @@ const Subscribe = () => {
       </div>
     </div>
   ) : (
-    <div className="flex flex-col items-center gap-1 w-96 mx-auto">
+    <div className="flex flex-col items-center gap-1 w-80 mx-auto">
       {showSuccess && (
         <div className="w-full flex items-center justify-start gap-2 bg-white border border-gray-200 rounded-sm p-2">
           <CheckCircle size={16} className="text-green-500" />
@@ -100,7 +100,7 @@ const Subscribe = () => {
           <p className="text-stone-800 text-xs">{error}</p>
         </div>
       )}
-      <form onSubmit={handleSignup} className="w-full flex gap-2">
+      <form onSubmit={handleSignup} className="w-full flex gap-1">
         <input
           className="h-8 w-full text-xs border border-gray-200 rounded-sm p-2 bg-white hover:bg-gray-50 focus:bg-gray-50 outline-none focus:ring-0"
           type="email"
@@ -110,7 +110,7 @@ const Subscribe = () => {
         />
         <button
           type="submit"
-          className="p-2 border-stone-800 border rounded-sm text-stone-800 text-xs font-medium cursor-pointer"
+          className="p-1.5 border-stone-800 border rounded-sm text-stone-800 text-xs font-medium cursor-pointer"
           disabled={isLoading}
         >
           <ChevronRight size={14} className="text-stone-800" />

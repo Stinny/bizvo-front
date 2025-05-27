@@ -37,7 +37,7 @@ const Mobile = ({
               </p>
             </Link>
           </div>
-          <div className="mx-auto flex flex-col w-full gap-4 p-2 border border-gray-200 bg-white rounded-sm">
+          <div className="mx-auto flex flex-col w-full gap-4 p-2 bg-white rounded-sm">
             <div className="flex gap-1 w-full">
               <BackBtn direction={'left'} home={true} />
               <div className="flex flex-col items-start w-full">
