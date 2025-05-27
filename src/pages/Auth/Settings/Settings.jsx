@@ -302,7 +302,7 @@ const Settings = () => {
             </div>
           )}
         </Modal>
-        <div className="bg-white dark:bg-neutral-800 flex flex-col items-start w-full gap-2">
+        <div className="bg-white dark:bg-neutral-800 flex flex-col items-start w-full gap-2 mt-2">
           <div className="w-full mx-auto flex justify-center items-center h-6">
             <Toast />
           </div>

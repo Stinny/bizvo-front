@@ -12,21 +12,10 @@ import DiffPays from '../../../components/Landing/DiffPays';
 import Why from '../../../components/Landing/Why';
 
 const Landing = () => {
-  const badges = ['Sales Tax', 'VAT', 'GST', 'Refunds', 'Chargebacks']; // Badge text options
-  const [currentBadge, setCurrentBadge] = useState(0);
-
-  // Cycle through badges every 5 seconds
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentBadge((prev) => (prev + 1) % badges.length);
-    }, 2000);
-    return () => clearInterval(interval); // Cleanup interval on component unmount
-  }, [badges.length]);
-
   return isMobile ? (
-    <Mobile badges={badges} currentBadge={currentBadge} />
+    <Mobile />
   ) : (
-    <div className="flex flex-col gap-6 max-w-3xl mx-auto items-center justify-center mt-32">
+    <div className="flex flex-col gap-10 max-w-3xl mx-auto items-center justify-center mt-32">
       <Link to="/">
         <p
           className="font-bold text-stone-800 dark:text-white text-sm flex items-center gap-1"
