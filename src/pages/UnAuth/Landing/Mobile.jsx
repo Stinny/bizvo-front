@@ -7,12 +7,12 @@ import Subscribe from '../../../components/Landing/Subscribe';
 import Footer from '../../../components/Footer/Footer';
 import Why from '../../../components/Landing/Why';
 import DiffPays from '../../../components/Landing/DiffPays';
-import { Layers } from 'react-feather';
+import { ChevronDown, Layers } from 'react-feather';
 
 const Mobile = () => {
   return (
-    <div className="flex flex-col gap-6 w-full items-center justify-center p-2">
-      <div className="min-h-screen flex flex-col justify-center items-center gap-6">
+    <div className="flex flex-col gap-10 w-full items-center justify-center p-4">
+      <div className="min-h-screen flex flex-col items-center justify-center gap-6 relative">
         <Link to="/">
           <p
             className="font-bold text-stone-800 dark:text-white text-sm flex items-center gap-1"
@@ -23,7 +23,7 @@ const Mobile = () => {
           </p>
         </Link>
         <div className="flex flex-col items-center justify-center gap-2">
-          <p className="text-2xl text-stone-800 font-bold text-center">
+          <p className="text-3xl text-stone-800 font-bold text-center">
             One-Time Payments Made Easy.
           </p>
           <p className="text-sm text-stone-800 text-center">
@@ -44,6 +44,10 @@ const Mobile = () => {
           >
             Start Collecting
           </Link>
+        </div>
+        <div className="w-full flex items-center justify-center h-24"></div>
+        <div className="w-full flex items-center justify-center absolute bottom-25">
+          <ChevronDown size={18} className="text-stone-800 dark:text-white" />
         </div>
       </div>
       <Features />
