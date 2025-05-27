@@ -22,7 +22,7 @@ const Mobile = () => {
             Bizvo
           </p>
         </Link>
-        <div className="flex flex-col items-center justify-center gap-2">
+        <div className="flex flex-col items-center justify-center gap-2 max-w-2xl">
           <p className="text-3xl text-stone-800 font-bold text-center">
             One-Time Payments Made Easy.
           </p>
@@ -46,7 +46,7 @@ const Mobile = () => {
           </Link>
         </div>
         <div className="w-full flex items-center justify-center h-44"></div>
-        <div className="w-full flex items-center justify-center absolute bottom-50">
+        <div className="w-full flex items-center justify-center absolute bottom-3/12">
           <ChevronDown size={18} className="text-stone-800 dark:text-white" />
         </div>
       </div>
