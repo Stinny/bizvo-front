@@ -5,13 +5,11 @@ import Desktop from './Desktop';
 import { useNavigate } from 'react-router-dom';
 import Cookies from 'js-cookie';
 import { useSignupMutation } from '../../../api/authApiSlice';
+import { redirectIfAuthenticated } from '../../../utils/redirectAuth';
 
 const Signup = () => {
   const navigate = useNavigate();
-
-  const currentUser = Cookies.get('currentUser')
-    ? JSON.parse(Cookies.get('currentUser'))
-    : null;
+  redirectIfAuthenticated();
 
   //signup API hook
   const [signup, { isLoading }] = useSignupMutation();

@@ -10,8 +10,11 @@ import { isMobile } from 'react-device-detect';
 import Mobile from './Mobile';
 import DiffPays from '../../../components/Landing/DiffPays';
 import Why from '../../../components/Landing/Why';
+import { redirectIfAuthenticated } from '../../../utils/redirectAuth';
 
 const Landing = () => {
+  redirectIfAuthenticated();
+
   return isMobile ? (
     <Mobile />
   ) : (

@@ -141,7 +141,7 @@ const Navbar = () => {
                 <button
                   type="button"
                   onClick={() => logout('logout')}
-                  className="flex items-center justify-center"
+                  className="flex items-center justify-center cursor-pointer"
                 >
                   <LogOut
                     size={14}

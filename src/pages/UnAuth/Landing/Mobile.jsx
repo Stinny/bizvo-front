@@ -45,8 +45,8 @@ const Mobile = () => {
             Start Collecting
           </Link>
         </div>
-        <div className="w-full flex items-center justify-center h-24"></div>
-        <div className="w-full flex items-center justify-center absolute bottom-25">
+        <div className="w-full flex items-center justify-center h-44"></div>
+        <div className="w-full flex items-center justify-center absolute bottom-50">
           <ChevronDown size={18} className="text-stone-800 dark:text-white" />
         </div>
       </div>

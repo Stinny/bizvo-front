@@ -5,9 +5,11 @@ import Desktop from './Desktop';
 import { useLoginMutation } from '../../../api/authApiSlice';
 import { useNavigate } from 'react-router-dom';
 import Cookies from 'js-cookie';
+import { redirectIfAuthenticated } from '../../../utils/redirectAuth';
 
 const Login = () => {
   const navigate = useNavigate();
+  redirectIfAuthenticated();
 
   //login API hook
   const [login, { isLoading }] = useLoginMutation();
